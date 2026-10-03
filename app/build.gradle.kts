@@ -20,6 +20,16 @@ android {
         versionName = "1.0"
     }
 
+    // A fixed debug key (not a secret) so every build is signed identically and can update an installed copy.
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
