@@ -67,7 +67,7 @@ are fine. `GameState` keeps `gifts`, `remainingGifts`, `selectedGifts`, `current
 ## Currency system
 
 `CurrencyType` is an enum (`code`, `symbol`, `displayName`, `fractionDigits`, `flag`). Amounts are
-`BigDecimal` (no floating-point drift). `CurrencyFormatter` prints e.g. `₩50,000`, `$25.00`,
+`BigDecimal` (no floating-point drift). `CurrencyFormatter` prints e.g. `₱500.00`, `$25.00`,
 `¥3,000`, `€20.00`. No conversion happens — the currency is just part of the prize text.
 Blank amounts are valid; `AmountParser` rejects bad input and too many decimals (KRW/JPY have none).
 
