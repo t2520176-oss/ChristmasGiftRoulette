@@ -131,7 +131,9 @@ fun RouletteScreen(
     BackHandler { requestLeave() }
 
     BoxWithConstraints(modifier.fillMaxSize().safeDrawingPadding()) {
-        val landscape = maxWidth > maxHeight * 1.15f
+        val availableWidth = maxWidth
+        val availableHeight = maxHeight
+        val landscape = availableWidth > availableHeight * 1.15f
         val topBarHeight = 64.dp
         val remainingCount = wheelGifts.size
         val spinLabel = when {
@@ -149,7 +151,7 @@ fun RouletteScreen(
                 modifier = Modifier.height(topBarHeight),
             )
             if (landscape) {
-                val wheelSize = minOf(maxHeight - topBarHeight - 12.dp, maxWidth * 0.55f, 900.dp).coerceAtLeast(160.dp)
+                val wheelSize = minOf(availableHeight - topBarHeight - 12.dp, availableWidth * 0.55f, 900.dp).coerceAtLeast(160.dp)
                 Row(
                     Modifier.fillMaxSize().padding(horizontal = 16.dp),
                     horizontalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterHorizontally),
@@ -168,7 +170,7 @@ fun RouletteScreen(
                 }
             } else {
                 val reserved = 64.dp + 76.dp + 24.dp + 64.dp + topBarHeight // ribbon, chip, button, paddings
-                val wheelSize = minOf(maxWidth - 24.dp, maxHeight - reserved, 860.dp).coerceAtLeast(200.dp)
+                val wheelSize = minOf(availableWidth - 24.dp, availableHeight - reserved, 860.dp).coerceAtLeast(200.dp)
                 Column(
                     Modifier.fillMaxSize().padding(horizontal = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
