@@ -4,6 +4,7 @@ import com.example.christmasgiftroulette.game.GameState
 import com.example.christmasgiftroulette.game.RouletteEngine
 import com.example.christmasgiftroulette.model.CurrencyType
 import com.example.christmasgiftroulette.model.GiftDraft
+import com.example.christmasgiftroulette.model.GiftIconType
 import com.example.christmasgiftroulette.model.GiftItem
 import java.math.BigDecimal
 import org.json.JSONArray
@@ -29,7 +30,7 @@ object SessionSerializer {
         root.put("defaultCurrency", session.defaultCurrency.code)
         root.put("drafts", JSONArray().apply {
             session.drafts.forEach { d ->
-                put(JSONObject().put("id", d.id).put("name", d.name).put("amount", d.amountText).put("currency", d.currency.code))
+                put(JSONObject().put("id", d.id).put("name", d.name).put("amount", d.amountText).put("currency", d.currency.code).put("icon", d.icon.key))
             }
         })
         val game = session.game
@@ -39,7 +40,7 @@ object SessionSerializer {
                     put(
                         JSONObject().put("id", g.id).put("name", g.name)
                             .put("amount", g.amount?.toPlainString() ?: JSONObject.NULL)
-                            .put("currency", g.currency.code),
+                            .put("currency", g.currency.code).put("icon", g.icon.key),
                     )
                 }
             })
@@ -60,6 +61,7 @@ object SessionSerializer {
                     name = it.getString("name"),
                     amountText = it.getString("amount"),
                     currency = CurrencyType.fromCode(it.getString("currency")),
+                    icon = GiftIconType.fromKey(it.optString("icon")),
                 )
             }
             val gameJson = root.getJSONObject("game")
@@ -69,6 +71,7 @@ object SessionSerializer {
                     name = it.getString("name"),
                     amount = if (it.isNull("amount")) null else BigDecimal(it.getString("amount")),
                     currency = CurrencyType.fromCode(it.getString("currency")),
+                    icon = GiftIconType.fromKey(it.optString("icon")),
                 )
             }
             val game = if (gifts.isEmpty()) {

@@ -16,6 +16,7 @@ import com.example.christmasgiftroulette.game.RouletteEngine
 import com.example.christmasgiftroulette.game.WheelMath
 import com.example.christmasgiftroulette.model.CurrencyType
 import com.example.christmasgiftroulette.model.GiftDraft
+import com.example.christmasgiftroulette.model.GiftIconType
 import java.util.UUID
 import kotlin.random.Random
 import kotlinx.coroutines.FlowPreview
@@ -119,18 +120,27 @@ class GiftRouletteViewModel(application: Application) : AndroidViewModel(applica
         )
     }
 
-    /** Tap-to-add suggestion: fills the first unnamed row, otherwise appends a new row. */
-    fun addSuggestedGift(name: String) {
+    /**
+     * Tap-to-add suggestion: fills the first unnamed row, otherwise appends a new one.
+     * Returns the id of the row that was filled, or null when the list is full.
+     */
+    fun addSuggestedGift(name: String, icon: GiftIconType): String? {
         val setup = _uiState.value.setup
         val blank = setup.rows.firstOrNull { it.name.isBlank() }
         if (blank != null) {
-            updateGiftName(blank.id, name)
-        } else if (setup.giftCount >= GameRules.MAX_GIFTS) {
-            postMessage("A game can have at most ${GameRules.MAX_GIFTS} gifts")
-        } else {
-            updateSetup { it.copy(rows = it.rows + newDraft(it.defaultCurrency).copy(name = name)) }
+            updateRow(blank.id) { it.copy(name = name, icon = icon) }
+            return blank.id
         }
+        if (setup.giftCount >= GameRules.MAX_GIFTS) {
+            postMessage("A game can have at most ${GameRules.MAX_GIFTS} gifts")
+            return null
+        }
+        val draft = newDraft(setup.defaultCurrency).copy(name = name, icon = icon)
+        updateSetup { it.copy(rows = it.rows + draft) }
+        return draft.id
     }
+
+    fun setGiftIcon(id: String, icon: GiftIconType) = updateRow(id) { it.copy(icon = icon) }
 
     fun startRoulette() {
         val state = _uiState.value

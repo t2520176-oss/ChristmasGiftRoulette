@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import com.example.christmasgiftroulette.model.GiftItem
+import com.example.christmasgiftroulette.ui.components.drawGiftIcon
 import com.example.christmasgiftroulette.ui.components.drawSparkle
 import com.example.christmasgiftroulette.ui.theme.ChristmasColors
 import kotlin.math.PI
@@ -175,7 +176,8 @@ private fun DrawScope.drawWheel(gifts: List<GiftItem>, textMeasurer: TextMeasure
     // labels
     val showAmount = n <= 14
     val labelRight = radius * 0.93f
-    val maxLabelWidth = (radius * 0.66f).toInt().coerceAtLeast(1)
+    val showIcons = n <= 14
+    val maxLabelWidth = (radius * (if (showIcons) 0.50f else 0.66f)).toInt().coerceAtLeast(1)
     val chord = 2f * (radius * 0.6f) * sin(Math.toRadians((sweep / 2f).toDouble().coerceAtMost(80.0))).toFloat()
     val maxFont = radius * 0.10f
     val nameFont = min(maxFont, chord * if (showAmount) 0.34f else 0.55f).coerceAtLeast(radius * 0.035f)
@@ -211,6 +213,10 @@ private fun DrawScope.drawWheel(gifts: List<GiftItem>, textMeasurer: TextMeasure
             y += nameLayout.size.height
             if (amountLayout != null) {
                 drawText(amountLayout, topLeft = Offset(c.x + labelRight - amountLayout.size.width, y))
+            }
+            if (showIcons) {
+                val side = min(chord * 0.7f, radius * 0.19f)
+                drawGiftIcon(gift.icon, Offset(c.x + radius * 0.24f, c.y - side / 2f), side)
             }
         }
     }

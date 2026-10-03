@@ -42,7 +42,7 @@ fun GiftRow(gift: GiftItem, number: Int? = null, modifier: Modifier = Modifier) 
             if (number != null) {
                 Text("$number.", style = MaterialTheme.typography.titleMedium, color = ChristmasColors.Red)
             } else {
-                GiftIcon(Modifier.size(32.dp))
+                GiftIconView(gift.icon, Modifier.size(34.dp))
             }
             Text(
                 gift.name,

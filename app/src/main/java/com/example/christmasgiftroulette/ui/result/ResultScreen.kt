@@ -181,7 +181,7 @@ private fun WinnerCard(gift: GiftItem, modifier: Modifier = Modifier) {
             Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            GlowingGiftBox()
+            GlowingGiftBox(icon = gift.icon)
             Text(
                 gift.name,
                 style = MaterialTheme.typography.headlineMedium,

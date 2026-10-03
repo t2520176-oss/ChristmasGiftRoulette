@@ -11,6 +11,7 @@ data class GiftItem(
     val name: String,
     val amount: BigDecimal?,
     val currency: CurrencyType,
+    val icon: GiftIconType = GiftIconType.GIFT,
 ) {
     /** e.g. "₩15,000" or null when the gift has no amount. */
     val formattedAmount: String?
@@ -23,4 +24,5 @@ data class GiftDraft(
     val name: String = "",
     val amountText: String = "",
     val currency: CurrencyType = CurrencyType.DEFAULT,
+    val icon: GiftIconType = GiftIconType.GIFT,
 )

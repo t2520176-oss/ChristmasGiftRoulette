@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.christmasgiftroulette.model.GiftIconType
 import com.example.christmasgiftroulette.ui.theme.ChristmasColors
 import kotlin.math.PI
 import kotlin.math.cos
@@ -42,7 +43,7 @@ internal fun DrawScope.drawSparkle(center: Offset, radius: Float, color: Color) 
 
 /** Gift box with a pulsing golden halo and twinkling sparkles around it. */
 @Composable
-fun GlowingGiftBox(size: Dp = 112.dp, modifier: Modifier = Modifier) {
+fun GlowingGiftBox(size: Dp = 112.dp, modifier: Modifier = Modifier, icon: GiftIconType = GiftIconType.GIFT) {
     val transition = rememberInfiniteTransition(label = "glow")
     val pulse = transition.animateFloat(
         initialValue = 0f,
@@ -74,6 +75,6 @@ fun GlowingGiftBox(size: Dp = 112.dp, modifier: Modifier = Modifier) {
                 )
             }
         }
-        GiftIcon(Modifier.size(size))
+        GiftIconView(icon, Modifier.size(size))
     }
 }

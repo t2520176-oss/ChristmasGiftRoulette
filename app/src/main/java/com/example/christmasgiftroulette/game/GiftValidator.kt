@@ -35,7 +35,7 @@ object GiftValidator {
                 continue
             }
             val amount = (AmountParser.parse(draft.amountText, draft.currency) as AmountParseResult.Valid).amount
-            gifts += GiftItem(draft.id, draft.name.trim(), amount, draft.currency)
+            gifts += GiftItem(draft.id, draft.name.trim(), amount, draft.currency, draft.icon)
         }
         val general = when {
             drafts.size < GameRules.MIN_GIFTS -> "Add at least ${GameRules.MIN_GIFTS} gifts to start"

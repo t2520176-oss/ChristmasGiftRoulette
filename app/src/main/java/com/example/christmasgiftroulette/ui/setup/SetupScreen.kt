@@ -54,10 +54,13 @@ import com.example.christmasgiftroulette.game.GameRules
 import com.example.christmasgiftroulette.game.GiftValidator
 import com.example.christmasgiftroulette.game.RowValidation
 import com.example.christmasgiftroulette.model.CurrencyType
+import com.example.christmasgiftroulette.model.GiftIconType
 import com.example.christmasgiftroulette.ui.components.ChristmasButton
 import com.example.christmasgiftroulette.ui.components.GiftIcon
+import com.example.christmasgiftroulette.ui.components.GiftIconView
 import com.example.christmasgiftroulette.ui.components.GiftInputRow
 import com.example.christmasgiftroulette.ui.components.GiftValueDialog
+import com.example.christmasgiftroulette.ui.components.IconPickerDialog
 import com.example.christmasgiftroulette.ui.components.SectionCard
 import com.example.christmasgiftroulette.ui.components.TitleSign
 import com.example.christmasgiftroulette.ui.components.rememberMessageSnackbar
@@ -72,7 +75,8 @@ class SetupActions(
     val onAddGift: () -> Unit,
     val onRemoveGift: (String) -> Unit,
     val onNameChange: (String, String) -> Unit,
-    val onQuickName: (String) -> Unit,
+    val onQuickGift: (name: String, icon: GiftIconType) -> String?,
+    val onIconChange: (id: String, icon: GiftIconType) -> Unit,
     val onValueChange: (id: String, amountText: String, currency: CurrencyType) -> Unit,
     val onStart: () -> Unit,
     val onOpenSettings: () -> Unit,
@@ -81,7 +85,19 @@ class SetupActions(
 
 private val WideBreakpoint = 840.dp
 private val QuickCounts = listOf(3, 5, 8, 10, 15, 20)
-private val Suggestions = listOf("Chocolate", "Mug", "Socks", "Perfume", "Toy car", "Gift card", "Cash prize", "Candle", "Book", "Mystery gift")
+private class Suggestion(val name: String, val icon: GiftIconType)
+
+private val Suggestions = listOf(
+    Suggestion("Cash prize", GiftIconType.CASH),
+    Suggestion("Chocolate", GiftIconType.CHOCOLATE),
+    Suggestion("Mug", GiftIconType.MUG),
+    Suggestion("Socks", GiftIconType.SOCKS),
+    Suggestion("Perfume", GiftIconType.PERFUME),
+    Suggestion("Toy car", GiftIconType.TOY_CAR),
+    Suggestion("Book", GiftIconType.BOOK),
+    Suggestion("Gift card", GiftIconType.CARD),
+    Suggestion("Mystery gift", GiftIconType.GIFT),
+)
 
 @Composable
 fun SetupScreen(state: GiftRouletteUiState, actions: SetupActions, modifier: Modifier = Modifier) {
@@ -89,6 +105,7 @@ fun SetupScreen(state: GiftRouletteUiState, actions: SetupActions, modifier: Mod
     val rowErrors = remember(setup.rows) { GiftValidator.validate(setup.rows).rowErrors }
     val snackbar = rememberMessageSnackbar(state.message, actions.onMessageConsumed)
     var editingId by rememberSaveable { mutableStateOf<String?>(null) }
+    var iconPickId by rememberSaveable { mutableStateOf<String?>(null) }
 
     Scaffold(
         modifier = modifier,
@@ -112,11 +129,11 @@ fun SetupScreen(state: GiftRouletteUiState, actions: SetupActions, modifier: Mod
                                 TitleSign()
                                 CountSection(setup.giftCount, actions)
                             }
-                            GiftList(state, rowErrors, actions, showIntro = false, onEditValue = { editingId = it }, modifier = Modifier.weight(1f).fillMaxSize())
+                            GiftList(state, rowErrors, actions, showIntro = false, onEditValue = { editingId = it }, onPickIcon = { iconPickId = it }, modifier = Modifier.weight(1f).fillMaxSize())
                         }
                     } else {
                         GiftList(
-                            state, rowErrors, actions, showIntro = true, onEditValue = { editingId = it },
+                            state, rowErrors, actions, showIntro = true, onEditValue = { editingId = it }, onPickIcon = { iconPickId = it },
                             modifier = Modifier.widthIn(max = 640.dp).fillMaxSize().padding(horizontal = 16.dp),
                         )
                     }
@@ -134,6 +151,18 @@ fun SetupScreen(state: GiftRouletteUiState, actions: SetupActions, modifier: Mod
                 )
             }
         }
+    }
+
+    val picking = iconPickId?.let { id -> setup.rows.firstOrNull { it.id == id } }
+    if (picking != null) {
+        IconPickerDialog(
+            selected = picking.icon,
+            onSelect = { icon ->
+                actions.onIconChange(picking.id, icon)
+                iconPickId = null
+            },
+            onDismiss = { iconPickId = null },
+        )
     }
 
     val editing = editingId?.let { id -> setup.rows.firstOrNull { it.id == id } }
@@ -158,6 +187,7 @@ private fun GiftList(
     actions: SetupActions,
     showIntro: Boolean,
     onEditValue: (String) -> Unit,
+    onPickIcon: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val setup = state.setup
@@ -176,11 +206,19 @@ private fun GiftList(
             SectionCard(
                 number = 2,
                 title = "Name your gifts",
-                subtitle = "Type a name, or tap a suggestion. Tap \"Add value\" to set an optional price.",
+                subtitle = "Tap a suggestion (cash prizes too) or type a name. Tap the picture to change it.",
             ) {
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    items(Suggestions, key = { it }) { name ->
-                        AssistChip(onClick = { actions.onQuickName(name) }, label = { Text(name, fontWeight = FontWeight.Bold) })
+                    items(Suggestions, key = { it.name }) { suggestion ->
+                        AssistChip(
+                            onClick = {
+                                val id = actions.onQuickGift(suggestion.name, suggestion.icon)
+                                // a cash prize is all about the amount, so ask for it right away
+                                if (suggestion.icon == GiftIconType.CASH && id != null) onEditValue(id)
+                            },
+                            leadingIcon = { GiftIconView(suggestion.icon, Modifier.size(24.dp)) },
+                            label = { Text(suggestion.name, fontWeight = FontWeight.Bold) },
+                        )
                     }
                 }
             }
@@ -193,6 +231,7 @@ private fun GiftList(
                 showNameError = setup.showErrors,
                 onNameChange = { actions.onNameChange(row.id, it) },
                 onEditValue = { onEditValue(row.id) },
+                onPickIcon = { onPickIcon(row.id) },
                 onDelete = { actions.onRemoveGift(row.id) },
             )
         }

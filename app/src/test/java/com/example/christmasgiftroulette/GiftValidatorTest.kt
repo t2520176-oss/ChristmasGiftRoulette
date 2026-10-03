@@ -3,6 +3,7 @@ package com.example.christmasgiftroulette
 import com.example.christmasgiftroulette.game.GiftValidator
 import com.example.christmasgiftroulette.model.CurrencyType
 import com.example.christmasgiftroulette.model.GiftDraft
+import com.example.christmasgiftroulette.model.GiftIconType
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
@@ -47,6 +48,18 @@ class GiftValidatorTest {
         val result = GiftValidator.validate(listOf(draft("1", "Only one")))
         assertFalse(result.isValid)
         assertNotNull(result.generalError)
+    }
+
+    @Test
+    fun iconIsCarriedFromDraftToGift() {
+        val result = GiftValidator.validate(
+            listOf(
+                GiftDraft("1", "Cash prize", "50,000", CurrencyType.KRW, GiftIconType.CASH),
+                draft("2", "Plain"),
+            ),
+        )
+        assertEquals(listOf(GiftIconType.CASH, GiftIconType.GIFT), result.gifts.map { it.icon })
+        assertEquals("₩50,000", result.gifts[0].formattedAmount)
     }
 
     @Test
