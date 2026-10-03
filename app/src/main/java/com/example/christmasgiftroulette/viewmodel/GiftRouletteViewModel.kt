@@ -111,15 +111,25 @@ class GiftRouletteViewModel(application: Application) : AndroidViewModel(applica
     fun updateGiftName(id: String, name: String) =
         updateRow(id) { it.copy(name = name.take(GameRules.MAX_NAME_LENGTH)) }
 
-    fun updateGiftAmount(id: String, amountText: String) =
-        updateRow(id) { it.copy(amountText = amountText.take(MAX_AMOUNT_TEXT)) }
+    /** Sets a gift's optional value and currency together; the chosen currency becomes the default for new gifts. */
+    fun setGiftValue(id: String, amountText: String, currency: CurrencyType) = updateSetup { s ->
+        s.copy(
+            defaultCurrency = currency,
+            rows = s.rows.map { if (it.id == id) it.copy(amountText = amountText.take(MAX_AMOUNT_TEXT), currency = currency) else it },
+        )
+    }
 
-    fun updateGiftCurrency(id: String, currency: CurrencyType) = updateRow(id) { it.copy(currency = currency) }
-
-    fun setDefaultCurrency(currency: CurrencyType) = updateSetup { it.copy(defaultCurrency = currency) }
-
-    fun applyCurrencyToAll(currency: CurrencyType) = updateSetup { s ->
-        s.copy(defaultCurrency = currency, rows = s.rows.map { it.copy(currency = currency) })
+    /** Tap-to-add suggestion: fills the first unnamed row, otherwise appends a new row. */
+    fun addSuggestedGift(name: String) {
+        val setup = _uiState.value.setup
+        val blank = setup.rows.firstOrNull { it.name.isBlank() }
+        if (blank != null) {
+            updateGiftName(blank.id, name)
+        } else if (setup.giftCount >= GameRules.MAX_GIFTS) {
+            postMessage("A game can have at most ${GameRules.MAX_GIFTS} gifts")
+        } else {
+            updateSetup { it.copy(rows = it.rows + newDraft(it.defaultCurrency).copy(name = name)) }
+        }
     }
 
     fun startRoulette() {

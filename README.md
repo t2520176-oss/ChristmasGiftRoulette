@@ -79,7 +79,7 @@ Add one line to `model/CurrencyType.kt`, e.g.
 CHF("CHF", "CHF ", "Swiss Franc", 2, "🇨🇭"),
 ```
 
-Dropdowns, chips, formatting, validation and persistence pick it up automatically.
+Currency chips, formatting, validation and persistence pick it up automatically.
 
 ## Sound & vibration
 

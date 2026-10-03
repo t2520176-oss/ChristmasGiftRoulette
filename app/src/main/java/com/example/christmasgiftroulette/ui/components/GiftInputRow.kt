@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -14,25 +15,30 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.christmasgiftroulette.game.RowValidation
-import com.example.christmasgiftroulette.model.CurrencyType
+import com.example.christmasgiftroulette.model.AmountParseResult
+import com.example.christmasgiftroulette.model.AmountParser
+import com.example.christmasgiftroulette.model.CurrencyFormatter
 import com.example.christmasgiftroulette.model.GiftDraft
 import com.example.christmasgiftroulette.ui.theme.ChristmasColors
 
 /**
- * One editable gift: name, optional amount and currency. Lays out in one line on wide rows and in
- * two lines on narrow ones. Errors are shown with text (not just colour).
+ * One gift: a name field plus a single tappable value button (opens [GiftValueDialog]).
+ * Wide rows put everything on one line; narrow rows put the value button underneath.
  */
 @Composable
 fun GiftInputRow(
@@ -41,14 +47,17 @@ fun GiftInputRow(
     validation: RowValidation?,
     showNameError: Boolean,
     onNameChange: (String) -> Unit,
-    onAmountChange: (String) -> Unit,
-    onCurrencyChange: (CurrencyType) -> Unit,
+    onEditValue: () -> Unit,
     onDelete: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val nameError = if (showNameError) validation?.nameError else null
-    // amount problems are shown live as soon as something invalid was typed
-    val amountError = validation?.amountError
+    val valueLabel = remember(draft.amountText, draft.currency) {
+        when (val parsed = AmountParser.parse(draft.amountText, draft.currency)) {
+            is AmountParseResult.Valid -> parsed.amount?.let { CurrencyFormatter.format(it, draft.currency) }
+            is AmountParseResult.Invalid -> draft.amountText
+        }
+    }
 
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -56,7 +65,7 @@ fun GiftInputRow(
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
     ) {
         BoxWithConstraints(Modifier.padding(horizontal = 12.dp, vertical = 10.dp)) {
-            val wide = maxWidth >= 560.dp
+            val wide = maxWidth >= 520.dp
             val nameField: @Composable (Modifier) -> Unit = { m ->
                 OutlinedTextField(
                     value = draft.name,
@@ -66,20 +75,18 @@ fun GiftInputRow(
                     label = { Text("Gift name") },
                     isError = nameError != null,
                     supportingText = nameError?.let { { Text(it) } },
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 )
             }
-            val amountField: @Composable (Modifier) -> Unit = { m ->
-                OutlinedTextField(
-                    value = draft.amountText,
-                    onValueChange = onAmountChange,
-                    modifier = m,
-                    singleLine = true,
-                    label = { Text("Amount (optional)") },
-                    isError = amountError != null,
-                    supportingText = amountError?.let { { Text(it) } },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal, imeAction = ImeAction.Next),
-                )
+            val valueButton: @Composable (Modifier) -> Unit = { m ->
+                FilledTonalButton(onClick = onEditValue, modifier = m.heightIn(min = 52.dp)) {
+                    Text(
+                        text = valueLabel ?: "＋ Add value (optional)",
+                        fontWeight = if (valueLabel != null) FontWeight.ExtraBold else FontWeight.Medium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
             }
             val deleteButton: @Composable () -> Unit = {
                 IconButton(onClick = onDelete, modifier = Modifier.size(48.dp)) {
@@ -87,24 +94,22 @@ fun GiftInputRow(
                 }
             }
             if (wide) {
-                Row(verticalAlignment = Alignment.Top, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.Top) {
                     IndexBadge(index, Modifier.padding(top = 14.dp))
-                    nameField(Modifier.weight(1.5f))
-                    amountField(Modifier.weight(1f))
-                    CurrencyDropdown(draft.currency, onCurrencyChange, Modifier.width(150.dp))
+                    nameField(Modifier.weight(1.4f))
+                    valueButton(Modifier.weight(1f).padding(top = 4.dp))
                     Column(Modifier.padding(top = 4.dp)) { deleteButton() }
                 }
             } else {
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                     Row(verticalAlignment = Alignment.Top, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         IndexBadge(index, Modifier.padding(top = 14.dp))
                         nameField(Modifier.weight(1f))
                         Column(Modifier.padding(top = 4.dp)) { deleteButton() }
                     }
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.Top) {
+                    Row {
                         Spacer(Modifier.width(32.dp))
-                        amountField(Modifier.weight(1f))
-                        CurrencyDropdown(draft.currency, onCurrencyChange, Modifier.width(140.dp))
+                        valueButton(Modifier.fillMaxWidth())
                     }
                 }
             }
