@@ -1,0 +1,12 @@
+*.iml
+.gradle/
+local.properties
+.idea/
+.DS_Store
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+*.hprof
+# Exported APKs are build outputs (a copy is produced in /output by ./gradlew assembleDebug)
+output/
