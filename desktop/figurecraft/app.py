@@ -51,6 +51,21 @@ def main(argv: list[str] | None = None) -> int:
     if "--smoke-test" in argv:                      # used by the build: start, render once, exit
         from PySide6.QtCore import QTimer
         QTimer.singleShot(int(os.environ.get("FIGURECRAFT_SMOKE_MS", "6000")), app.quit)
+    shot = os.environ.get("FIGURECRAFT_AUTOSHOT")        # build/CI aid: demo-generate, screenshot, quit
+    if shot and "--smoke-test" in argv:
+        from PySide6.QtCore import QTimer
+
+        def _go():
+            win.gen._insert_example()
+            win.gen.start_generation()
+
+        def _poll():
+            if win.gen._generating or win.gen.ws is None:
+                QTimer.singleShot(1000, _poll)
+                return
+            QTimer.singleShot(4000, lambda: (win.grab().save(shot), app.quit()))
+        QTimer.singleShot(1500, _go)
+        QTimer.singleShot(4000, _poll)
     log.info("FigureCraft %s started (provider=%s, lang=%s)", __version__, settings.provider, settings.language)
     return app.exec()
 

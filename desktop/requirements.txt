@@ -5,6 +5,7 @@ scipy>=1.11
 Pillow>=10.0
 trimesh>=4.0
 networkx>=3.0
+lxml>=5.0                 # trimesh needs it to read 3MF files
 shapely>=2.0              # section/polygon helpers used by trimesh in some code paths
 mapbox-earcut>=1.0        # polygon triangulation for caps
 manifold3d>=2.5           # robust mesh booleans (flat bottom, base, colour parts)

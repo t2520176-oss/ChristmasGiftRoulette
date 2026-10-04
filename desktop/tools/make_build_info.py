@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from figurecraft import __version__  # noqa: E402
 
 DEPS = ["PySide6", "trimesh", "numpy", "scipy", "Pillow", "lib3mf", "manifold3d",
-        "scikit-image", "fast-simplification", "mapbox-earcut", "networkx", "requests", "cryptography", "pyinstaller"]
+        "scikit-image", "lxml", "fast-simplification", "mapbox-earcut", "networkx", "requests", "cryptography", "pyinstaller"]
 
 
 def dep_versions() -> list[str]:
