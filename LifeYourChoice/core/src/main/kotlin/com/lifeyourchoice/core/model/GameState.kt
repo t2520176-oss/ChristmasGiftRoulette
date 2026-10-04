@@ -41,7 +41,11 @@ class ChoiceOutcome(
     val hint: Boolean,
     /** Short "time passes" lines (from the life rules). */
     val notes: List<String> = emptyList(),
-    val newAchievements: List<String> = emptyList()
+    val newAchievements: List<String> = emptyList(),
+    /** Which weighted outcome happened (index into the choice's outcomes), or -1. */
+    val outcomeIndex: Int = -1,
+    /** Only the text of the weighted outcome (cinematic reactions can replace the rest). */
+    val outcomeText: String = ""
 )
 
 /**
@@ -84,8 +88,15 @@ class GameState(
     val recentEvents: MutableList<String> = mutableListOf(),
     val achievementsThisLife: MutableSet<String> = mutableSetOf(),
     /** Scenario ids that have been played, in order (used for variety and for tests). */
-    val playedOrder: MutableList<String> = mutableListOf()
+    val playedOrder: MutableList<String> = mutableListOf(),
+    var look: PlayerLook? = null,
+    /** Highest cinematic chapter card already shown in this life. */
+    var chapterShown: Int = 0,
+    /** Age at the previous cinematic scene, used for "3 YEARS LATER" captions. */
+    var lastSceneAge: Int = 0
 ) {
+    val playerLook: PlayerLook get() = look ?: PlayerLook.fromPreset(gender, appearance)
+
     val ageYears: Int get() = ageMonths / 12
     val chapter: Chapter get() = Chapter.forAge(ageYears)
 

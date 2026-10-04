@@ -38,7 +38,8 @@ object LifeReportBuilder {
             mottoText = motto.text,
             mottoCategory = motto.category.label,
             achievements = s.achievementsThisLife.toList(),
-            timestamp = nowMillis
+            timestamp = nowMillis,
+            look = s.look
         )
     }
 }

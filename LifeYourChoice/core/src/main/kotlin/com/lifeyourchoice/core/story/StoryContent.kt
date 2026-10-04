@@ -1,5 +1,6 @@
 package com.lifeyourchoice.core.story
 
+import com.lifeyourchoice.core.story.packs.ActionStories
 import com.lifeyourchoice.core.story.packs.BusinessStories
 import com.lifeyourchoice.core.story.packs.CareerStories
 import com.lifeyourchoice.core.story.packs.FillerStories
@@ -18,7 +19,7 @@ object StoryContent {
     fun library(): StoryLibrary = StoryLibrary(
         listOf(
             SchoolStories, FamilyStories, FriendshipStories, CareerStories, MoneyStories, LoveStories,
-            BusinessStories, MajorStories, RandomStories, MilestoneStories, PayoffStories, FillerStories
+            BusinessStories, MajorStories, RandomStories, MilestoneStories, PayoffStories, FillerStories, ActionStories
         )
     )
 }

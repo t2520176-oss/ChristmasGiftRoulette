@@ -7,6 +7,7 @@ import com.lifeyourchoice.core.model.Gender
 import com.lifeyourchoice.core.model.HistoryEntry
 import com.lifeyourchoice.core.model.NpcRole
 import com.lifeyourchoice.core.model.NpcState
+import com.lifeyourchoice.core.model.PlayerLook
 import com.lifeyourchoice.core.model.SceneArt
 import com.lifeyourchoice.core.model.Stat
 import com.lifeyourchoice.core.model.StatDelta
@@ -98,6 +99,7 @@ class GameEngine(
         val ctx = EffectContext(state, rng)
         choice.effects.forEach { it.apply(ctx) }
         val outcome = pickOutcome(choice, rng)
+        val outcomeIndex = if (outcome == null) -1 else choice.outcomes.indexOf(outcome)
         outcome?.effects?.forEach { it.apply(ctx) }
 
         // Engine bookkeeping that content should not have to repeat.
@@ -150,7 +152,9 @@ class GameEngine(
             deltas = deltas,
             hint = choice.hint,
             notes = notes,
-            newAchievements = achievementsNow
+            newAchievements = achievementsNow,
+            outcomeIndex = outcomeIndex,
+            outcomeText = outcome?.result?.takeIf { it.isNotBlank() }?.let { TextTemplate.render(it, state) } ?: ""
         )
         state.pendingOutcome = out
         return out
@@ -231,7 +235,8 @@ class GameEngine(
             gender: Gender,
             appearance: Int,
             seed: Long = Random.nextLong(),
-            director: StoryDirector = RuleBasedDirector()
+            director: StoryDirector = RuleBasedDirector(),
+            look: PlayerLook? = null
         ): GameEngine {
             val rng = Random(seed)
             val startAge = 14 + rng.nextInt(2)
@@ -241,7 +246,8 @@ class GameEngine(
                 gender = gender,
                 appearance = appearance,
                 ageMonths = startAge * 12 + rng.nextInt(6),
-                plannedEndAge = 76 + rng.nextInt(10)
+                plannedEndAge = 76 + rng.nextInt(10),
+                look = look
             )
             fun jitter(base: Int) = (base + rng.nextInt(-5, 6)).coerceIn(5, 95)
             state.stats[Stat.HEALTH] = jitter(76)
