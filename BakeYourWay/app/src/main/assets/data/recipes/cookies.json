@@ -1,0 +1,324 @@
+{
+  "profileSets": {
+    "cookie": [
+      {
+        "method": "OVEN",
+        "temperatureC": 180,
+        "temperatureF": 350,
+        "timeMin": 10,
+        "timeMax": 13,
+        "preheat": true,
+        "preheatMinutes": 10,
+        "prep": "Line two baking sheets with parchment paper.",
+        "cook": "Scoop rounded tablespoons of dough onto the sheets, about 5 cm (2 in) apart. Bake one sheet at a time at {temp} for {time}, until the edges are set and lightly golden.",
+        "check": "The edges should be golden and the centers just set. They look a little soft but firm up as the cookies cool.",
+        "notes": [
+          "Bake one tray at a time on the middle rack for even browning.",
+          "Cookies keep cooking on the hot tray, so let them rest for 5 minutes before moving them."
+        ],
+        "batchCapacity": 12
+      },
+      {
+        "method": "AIR_FRYER",
+        "temperatureC": 160,
+        "temperatureF": 320,
+        "timeMin": 6,
+        "timeMax": 9,
+        "preheat": true,
+        "preheatMinutes": 3,
+        "prep": "Line the basket with perforated air fryer parchment (or lightly grease it). Never put loose parchment into a preheated air fryer without food on top to hold it down.",
+        "cook": "Place 3-4 slightly flattened scoops of dough in the basket, well apart because they spread. Air fry at {temp} for {time}, until the edges are golden.",
+        "check": "The edges should be set and golden. The centers can look slightly soft - they firm up as the cookies cool.",
+        "notes": [
+          "Air fryer batches are small, so expect several rounds - the time per batch stays the same.",
+          "Flatten the dough balls slightly so they cook through evenly."
+        ],
+        "batchCapacity": 4
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "id": "chocolate_chip_cookies",
+      "name": "Chocolate Chip Cookies",
+      "category": "COOKIES",
+      "description": "Classic cookies with crisp edges, soft centers and plenty of chocolate.",
+      "imageKey": "chocolate",
+      "baseFlourAmount": 1,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "baking_soda", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "softened"},
+        {"ingredient": "granulated_sugar", "amount": 0.25, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "brown_sugar", "amount": 0.3333333333, "unit": "CUP", "prep": "packed", "role": "SUGAR"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"}
+      ],
+      "yield": {"base": 20, "singular": "cookie", "plural": "cookies", "note": "Medium cookies from about 1 1/2 tablespoons of dough each."},
+      "sweetness": {
+        "less": {"multiplier": 0.8, "note": "Sugar also controls how much cookies spread and brown, so the reduction for this recipe is a modest 20%.", "expectedChanges": ["Cookies may spread a little less", "May brown slightly less and feel a bit more cake-like"], "suggestedAlternatives": ["vanilla", "cinnamon", "raisins"]}
+      },
+      "profileSet": "cookie",
+      "steps": [
+        {"title": "Cream Butter and Sugars", "text": "Beat the softened butter with the sugars until light and fluffy, about 2 minutes."},
+        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs and vanilla until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, baking soda and salt."},
+        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture and mix on low speed until just combined. Do not overmix."},
+        {"kind": "ADD_INS"},
+        {"title": "Chill the Dough", "text": "Cover and chill the dough for 30 minutes so it is easy to scoop and the cookies keep their shape."},
+        {"title": "Cool", "text": "Let the cookies cool on the tray for 5 minutes, then move them to a wire rack.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "chocolate_chips", "default": true, "amountMultiplier": 1.5},
+        {"id": "nuts"},
+        {"id": "mixed_nuts"},
+        {"id": "raisins"},
+        {"id": "oats"},
+        {"id": "coconut"},
+        {"id": "vanilla"},
+        {"id": "cinnamon"}
+      ],
+      "toppingSuggestions": [
+        "chocolate_chips_top",
+        "flaky_salt",
+        "coarse_sugar",
+        "mixed_nuts_top",
+        "caramel_drizzle",
+        "sliced_almonds",
+        "ice_cream"
+      ],
+      "tips": [
+        "Chilling the dough for 30 minutes gives thicker, chewier cookies.",
+        "Use room-temperature (not melted) butter for the best texture.",
+        "Pull the cookies out when the centers still look slightly soft - they finish on the tray."
+      ]
+    },
+    {
+      "id": "sugar_cookies",
+      "name": "Sugar Cookies",
+      "category": "COOKIES",
+      "description": "Soft, buttery cookies with lightly crisp edges and a sweet vanilla flavor.",
+      "imageKey": "vanilla",
+      "baseFlourAmount": 2,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 2, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "baking_powder", "amount": 1, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "butter", "amount": 0.75, "unit": "CUP", "prep": "softened"},
+        {"ingredient": "granulated_sugar", "amount": 0.75, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "vanilla_extract", "amount": 2, "unit": "TSP"}
+      ],
+      "yield": {"base": 24, "singular": "cookie", "plural": "cookies", "note": "Medium cookies from about 1 1/2 tablespoons of dough each."},
+      "sweetness": {
+        "less": {"multiplier": 0.85, "note": "Sugar cookies depend on sugar for spread, crisp edges and tenderness, so the reduction is small - about 15%.", "expectedChanges": ["Cookies spread a little less and look paler", "Edges may be a bit less crisp"], "suggestedAlternatives": ["vanilla", "cinnamon"]}
+      },
+      "profileSet": "cookie",
+      "steps": [
+        {"title": "Cream Butter and Sugars", "text": "Beat the softened butter with the sugars until light and fluffy, about 2 minutes."},
+        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs and vanilla until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, baking powder and salt."},
+        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture and mix on low speed until just combined. Do not overmix."},
+        {"kind": "ADD_INS"},
+        {"title": "Chill the Dough", "text": "Cover and chill the dough for 30 minutes so it is easy to scoop and the cookies keep their shape."},
+        {"title": "Cool", "text": "Let the cookies cool on the tray for 5 minutes, then move them to a wire rack.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "vanilla"},
+        {"id": "cinnamon"},
+        {"id": "chocolate_chips"},
+        {"id": "coconut"},
+        {"id": "almonds"},
+        {"id": "nuts"}
+      ],
+      "toppingSuggestions": [
+        "coarse_sugar",
+        "cinnamon_sugar",
+        "glaze_drizzle",
+        "vanilla_buttercream",
+        "powdered_sugar_dust",
+        "chocolate_chips_top",
+        "lemon_glaze"
+      ],
+      "tips": [
+        "Roll the dough balls in a little extra sugar for sparkly, crackly tops.",
+        "Chill the dough so the cookies keep their shape in the heat.",
+        "Take them out while the centers still look soft for a chewy texture."
+      ]
+    },
+    {
+      "id": "oatmeal_cookies",
+      "name": "Oatmeal Cookies",
+      "category": "COOKIES",
+      "description": "Chewy, hearty cookies with warm cinnamon.",
+      "imageKey": "oat",
+      "baseFlourAmount": 1,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "rolled_oats", "amount": 1.5, "unit": "CUP"},
+        {"ingredient": "baking_soda", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "cinnamon", "amount": 1, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "softened"},
+        {"ingredient": "brown_sugar", "amount": 0.5, "unit": "CUP", "prep": "packed", "role": "SUGAR"},
+        {"ingredient": "granulated_sugar", "amount": 0.25, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"}
+      ],
+      "yield": {"base": 24, "singular": "cookie", "plural": "cookies", "note": "Medium cookies from about 1 1/2 tablespoons of dough each."},
+      "sweetness": {
+        "less": {"multiplier": 0.8, "note": "Oatmeal cookies are already a little less sweet than most, so a 20% reduction works well.", "expectedChanges": ["Cookies may spread a little less", "Slightly paler color and a more oaty flavor"], "suggestedAlternatives": ["raisins", "cinnamon", "vanilla"]}
+      },
+      "profileSet": "cookie",
+      "steps": [
+        {"title": "Cream Butter and Sugars", "text": "Beat the softened butter with the sugars until light and fluffy, about 2 minutes."},
+        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs and vanilla until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, oats, baking soda, cinnamon and salt."},
+        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture and mix on low speed until just combined. Do not overmix."},
+        {"kind": "ADD_INS"},
+        {"title": "Cool", "text": "Let the cookies cool on the tray for 5 minutes, then move them to a wire rack.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "raisins"},
+        {"id": "chocolate_chips"},
+        {"id": "nuts"},
+        {"id": "coconut"},
+        {"id": "vanilla"},
+        {"id": "cinnamon"},
+        {"id": "banana"},
+        {"id": "mixed_nuts"}
+      ],
+      "toppingSuggestions": [
+        "oats_topping",
+        "coarse_sugar",
+        "mixed_nuts_top",
+        "chocolate_chips_top",
+        "caramel_drizzle",
+        "ice_cream"
+      ],
+      "tips": [
+        "Let the dough rest for 10 minutes so the oats absorb some moisture.",
+        "Rolled oats give a chewier cookie than quick oats - do not use instant oats.",
+        "Press the dough balls down slightly before baking for even cooking."
+      ]
+    },
+    {
+      "id": "peanut_butter_cookies",
+      "name": "Peanut Butter Cookies",
+      "category": "COOKIES",
+      "description": "Rich, tender cookies with the classic fork-crisscross top.",
+      "imageKey": "peanut",
+      "baseFlourAmount": 1,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "baking_soda", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "butter", "amount": 0.3333333333, "unit": "CUP", "prep": "softened"},
+        {"ingredient": "peanut_butter", "amount": 0.5, "unit": "CUP"},
+        {"ingredient": "brown_sugar", "amount": 0.25, "unit": "CUP", "prep": "packed", "role": "SUGAR"},
+        {"ingredient": "granulated_sugar", "amount": 0.25, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "vanilla_extract", "amount": 0.5, "unit": "TSP"}
+      ],
+      "yield": {"base": 18, "singular": "cookie", "plural": "cookies", "note": "Medium cookies from about 1 1/2 tablespoons of dough each."},
+      "sweetness": {
+        "less": {"multiplier": 0.8, "note": "Sugar controls spread and tenderness in these cookies, so the reduction is a modest 20%.", "expectedChanges": ["Cookies may spread a little less", "Slightly less browned, with a stronger peanut flavor"], "suggestedAlternatives": ["vanilla", "cinnamon", "raisins"]}
+      },
+      "profileSet": "cookie",
+      "steps": [
+        {"title": "Cream Butter and Sugars", "text": "Beat the softened butter with the sugars until light and fluffy, about 2 minutes."},
+        {"title": "Add Eggs and Vanilla", "text": "Beat in the peanut butter, eggs and vanilla until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, baking soda and salt."},
+        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture and mix on low speed until just combined. Do not overmix."},
+        {"kind": "ADD_INS"},
+        {"title": "Chill the Dough", "text": "Cover and chill the dough for 30 minutes so it is easy to scoop and the cookies keep their shape."},
+        {"title": "Cool", "text": "Let the cookies cool on the tray for 5 minutes, then move them to a wire rack.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "chocolate_chips"},
+        {"id": "mixed_nuts"},
+        {"id": "oats"},
+        {"id": "vanilla"},
+        {"id": "cinnamon"},
+        {"id": "raisins"},
+        {"id": "coconut"}
+      ],
+      "toppingSuggestions": [
+        "coarse_sugar",
+        "chocolate_chips_top",
+        "mixed_nuts_top",
+        "peanut_butter_drizzle",
+        "chocolate_ganache",
+        "flaky_salt"
+      ],
+      "tips": [
+        "Press each ball flat with a fork in a crisscross pattern - this helps them cook evenly.",
+        "Use regular creamy peanut butter (not natural, oil-separated) for the most reliable texture.",
+        "Cookies are fragile when hot - let them set on the tray."
+      ]
+    },
+    {
+      "id": "double_chocolate_cookies",
+      "name": "Double Chocolate Cookies",
+      "category": "COOKIES",
+      "description": "Fudgy chocolate cookies loaded with chocolate chips.",
+      "imageKey": "chocolate",
+      "baseFlourAmount": 1,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "cocoa_powder", "amount": 0.25, "unit": "CUP"},
+        {"ingredient": "baking_soda", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "softened"},
+        {"ingredient": "granulated_sugar", "amount": 0.3333333333, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "brown_sugar", "amount": 0.3333333333, "unit": "CUP", "prep": "packed", "role": "SUGAR"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"}
+      ],
+      "yield": {"base": 20, "singular": "cookie", "plural": "cookies", "note": "Medium cookies from about 1 1/2 tablespoons of dough each."},
+      "sweetness": {
+        "less": {"multiplier": 0.8, "note": "Cocoa is bitter, so cutting more than about 20% would make these taste dark and dry.", "expectedChanges": ["Slightly more bitter chocolate flavor", "Cookies may spread a little less"], "suggestedAlternatives": ["vanilla", "cinnamon", "raisins"]}
+      },
+      "profileSet": "cookie",
+      "steps": [
+        {"title": "Cream Butter and Sugars", "text": "Beat the softened butter with the sugars until light and fluffy, about 2 minutes."},
+        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs and vanilla until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, cocoa powder, baking soda and salt."},
+        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture and mix on low speed until just combined. Do not overmix."},
+        {"kind": "ADD_INS"},
+        {"title": "Chill the Dough", "text": "Cover and chill the dough for 30 minutes so it is easy to scoop and the cookies keep their shape."},
+        {"title": "Cool", "text": "Let the cookies cool on the tray for 5 minutes, then move them to a wire rack.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "chocolate_chips", "default": true, "amountMultiplier": 1.5},
+        {"id": "nuts"},
+        {"id": "mixed_nuts"},
+        {"id": "coconut"},
+        {"id": "raisins"},
+        {"id": "vanilla"},
+        {"id": "cinnamon"},
+        {"id": "almonds"}
+      ],
+      "toppingSuggestions": [
+        "chocolate_chips_top",
+        "flaky_salt",
+        "coarse_sugar",
+        "mixed_nuts_top",
+        "caramel_drizzle",
+        "chocolate_ganache",
+        "ice_cream"
+      ],
+      "tips": [
+        "Sift the cocoa with the flour to avoid dry lumps.",
+        "These cookies look done before they are - judge by the edges, not the color.",
+        "Chill the dough for thicker cookies."
+      ]
+    }
+  ]
+}

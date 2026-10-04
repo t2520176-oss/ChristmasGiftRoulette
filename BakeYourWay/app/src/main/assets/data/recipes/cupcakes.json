@@ -1,0 +1,295 @@
+{
+  "profileSets": {
+    "cupcake": [
+      {
+        "method": "OVEN",
+        "temperatureC": 175,
+        "temperatureF": 350,
+        "timeMin": 18,
+        "timeMax": 22,
+        "preheat": true,
+        "preheatMinutes": 10,
+        "prep": "Line a 12-cup muffin tin with paper liners.",
+        "cook": "Fill each liner about 2/3 full with batter. Bake at {temp} for {time}, until the tops spring back when lightly pressed.",
+        "check": "A toothpick inserted into the center of a cupcake should come out clean.",
+        "notes": [
+          "Let the cupcakes cool completely before frosting, or the frosting will melt.",
+          "Rotate the tin halfway through if your oven has hot spots."
+        ],
+        "batchCapacity": 12
+      },
+      {
+        "method": "AIR_FRYER",
+        "temperatureC": 160,
+        "temperatureF": 320,
+        "timeMin": 10,
+        "timeMax": 14,
+        "preheat": true,
+        "preheatMinutes": 3,
+        "prep": "Set air-fryer-safe silicone or foil cupcake cups in the basket, leaving space around each one.",
+        "cook": "Fill each cup about 2/3 full. Air fry at {temp} for {time}, until risen and golden.",
+        "check": "A toothpick inserted into the center of a cupcake should come out clean. If the tops brown too fast, cover loosely with foil.",
+        "notes": [
+          "Air fryers vary a lot - start checking at the early end of the range.",
+          "Weigh down loose paper liners so they cannot lift toward the heating element."
+        ],
+        "batchCapacity": 4
+      },
+      {
+        "method": "STEAM",
+        "timeMin": 15,
+        "timeMax": 20,
+        "heatLevel": "Medium steam",
+        "prep": "Set heat-safe silicone or foil cups in a steamer basket, leaving space between them. Wrap the lid in a clean kitchen towel to catch drips.",
+        "cook": "Fill each cup about 2/3 full. Cover and steam at a steady medium steam for {time}. Do not lift the lid during the first 10 minutes.",
+        "check": "A toothpick inserted into the center of a cupcake should come out clean. Steamed cupcakes stay pale and extra soft.",
+        "notes": [
+          "Steamed cupcakes do not brown - that is normal.",
+          "Keep the water at a steady simmer and top it up with hot water if needed."
+        ],
+        "batchCapacity": 6
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "id": "vanilla_cupcakes",
+      "name": "Vanilla Cupcakes",
+      "category": "CUPCAKES",
+      "description": "Light, tender cupcakes with a soft vanilla crumb - perfect for frosting.",
+      "imageKey": "vanilla",
+      "baseFlourAmount": 1.5,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1.5, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "baking_powder", "amount": 2, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "softened"},
+        {"ingredient": "granulated_sugar", "amount": 0.75, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "milk", "amount": 0.5, "unit": "CUP"},
+        {"ingredient": "vanilla_extract", "amount": 2, "unit": "TSP"}
+      ],
+      "yield": {"base": 12, "singular": "cupcake", "plural": "cupcakes", "note": "Based on a standard 12-cup muffin tin."},
+      "sweetness": {
+        "less": {"multiplier": 0.8, "note": "Sugar helps give cupcakes their soft, tender crumb, so the reduction for this recipe is about 20%.", "expectedChanges": ["Crumb may be slightly less tender and moist", "Tops brown a little less"], "suggestedAlternatives": ["vanilla", "strawberries", "banana"]}
+      },
+      "profileSet": "cupcake",
+      "steps": [
+        {"title": "Cream Butter and Sugar", "text": "In a large bowl, beat the softened butter and sugar until pale and fluffy, about 3 minutes."},
+        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs one at a time, then the vanilla, scraping down the bowl."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, baking powder and salt."},
+        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture in two or three additions, alternating with the milk. Mix until just smooth."},
+        {"kind": "ADD_INS"},
+        {"title": "Cool", "text": "Cool the cupcakes in the tin for 5 minutes, then move them to a wire rack to cool completely before frosting.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "chocolate_chips"},
+        {"id": "strawberries"},
+        {"id": "blueberries"},
+        {"id": "banana"},
+        {"id": "coconut"},
+        {"id": "nuts"},
+        {"id": "almonds"},
+        {"id": "vanilla"},
+        {"id": "cinnamon"},
+        {"id": "cream_cheese"},
+        {"id": "chocolate_drizzle"}
+      ],
+      "toppingSuggestions": [
+        "vanilla_buttercream",
+        "chocolate_frosting",
+        "cream_cheese_frosting",
+        "strawberry_frosting",
+        "whipped_cream",
+        "fresh_fruit",
+        "powdered_sugar_dust",
+        "glaze_drizzle",
+        "chocolate_ganache"
+      ],
+      "tips": [
+        "Room-temperature butter, eggs and milk blend into a smoother batter.",
+        "Use an ice cream scoop for evenly sized cupcakes.",
+        "Frost only when the cupcakes are completely cool."
+      ]
+    },
+    {
+      "id": "chocolate_cupcakes",
+      "name": "Chocolate Cupcakes",
+      "category": "CUPCAKES",
+      "description": "Moist, rich cupcakes with deep cocoa flavor.",
+      "imageKey": "chocolate",
+      "baseFlourAmount": 1.5,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1.5, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "cocoa_powder", "amount": 0.3333333333, "unit": "CUP"},
+        {"ingredient": "baking_powder", "amount": 1, "unit": "TSP"},
+        {"ingredient": "baking_soda", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "softened"},
+        {"ingredient": "granulated_sugar", "amount": 1, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "milk", "amount": 0.75, "unit": "CUP"},
+        {"ingredient": "vanilla_extract", "amount": 2, "unit": "TSP"}
+      ],
+      "yield": {"base": 12, "singular": "cupcake", "plural": "cupcakes", "note": "Based on a standard 12-cup muffin tin."},
+      "sweetness": {
+        "less": {"multiplier": 0.8, "note": "Cocoa is bitter, so these keep most of their sugar - about 20% less is the safe limit.", "expectedChanges": ["Chocolate flavor tastes a little more intense", "Crumb may be slightly less tender"], "suggestedAlternatives": ["vanilla", "banana", "strawberries"]}
+      },
+      "profileSet": "cupcake",
+      "steps": [
+        {"title": "Cream Butter and Sugar", "text": "In a large bowl, beat the softened butter and sugar until pale and fluffy, about 3 minutes."},
+        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs one at a time, then the vanilla, scraping down the bowl."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, cocoa powder, baking powder, baking soda and salt."},
+        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture in two or three additions, alternating with the milk. Mix until just smooth."},
+        {"kind": "ADD_INS"},
+        {"title": "Cool", "text": "Cool the cupcakes in the tin for 5 minutes, then move them to a wire rack to cool completely before frosting.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "chocolate_chips"},
+        {"id": "strawberries"},
+        {"id": "banana"},
+        {"id": "coconut"},
+        {"id": "nuts"},
+        {"id": "almonds"},
+        {"id": "vanilla"},
+        {"id": "cream_cheese"},
+        {"id": "chocolate_drizzle"},
+        {"id": "mixed_nuts"}
+      ],
+      "toppingSuggestions": [
+        "vanilla_buttercream",
+        "chocolate_frosting",
+        "cream_cheese_frosting",
+        "strawberry_frosting",
+        "whipped_cream",
+        "fresh_fruit",
+        "powdered_sugar_dust",
+        "glaze_drizzle",
+        "chocolate_ganache"
+      ],
+      "tips": [
+        "Sift the cocoa with the flour to avoid dry lumps.",
+        "Do not overbake - chocolate cupcakes dry out quickly.",
+        "A teaspoon of instant coffee dissolved in the milk deepens the chocolate flavor."
+      ]
+    },
+    {
+      "id": "strawberry_cupcakes",
+      "name": "Strawberry Cupcakes",
+      "category": "CUPCAKES",
+      "description": "Pink-flecked cupcakes with real strawberry pieces.",
+      "imageKey": "strawberry",
+      "baseFlourAmount": 1.5,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1.5, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "baking_powder", "amount": 2, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "softened"},
+        {"ingredient": "granulated_sugar", "amount": 0.75, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "milk", "amount": 0.5, "unit": "CUP"},
+        {"ingredient": "vanilla_extract", "amount": 1.5, "unit": "TSP"}
+      ],
+      "yield": {"base": 12, "singular": "cupcake", "plural": "cupcakes", "note": "Based on a standard 12-cup muffin tin."},
+      "sweetness": {
+        "less": {"multiplier": 0.8, "note": "The strawberries add natural sweetness and juiciness, so about 20% less sugar still tastes sweet.", "expectedChanges": ["Crumb may be slightly less tender", "Tops brown a little less"], "suggestedAlternatives": ["strawberries", "vanilla", "blueberries"]}
+      },
+      "profileSet": "cupcake",
+      "steps": [
+        {"title": "Cream Butter and Sugar", "text": "In a large bowl, beat the softened butter and sugar until pale and fluffy, about 3 minutes."},
+        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs one at a time, then the vanilla, scraping down the bowl."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, baking powder and salt."},
+        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture in two or three additions, alternating with the milk. Mix until just smooth."},
+        {"kind": "ADD_INS"},
+        {"title": "Cool", "text": "Cool the cupcakes in the tin for 5 minutes, then move them to a wire rack to cool completely before frosting.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "strawberries", "default": true},
+        {"id": "blueberries"},
+        {"id": "chocolate_chips"},
+        {"id": "banana"},
+        {"id": "coconut"},
+        {"id": "almonds"},
+        {"id": "vanilla"},
+        {"id": "cream_cheese"}
+      ],
+      "toppingSuggestions": [
+        "strawberry_frosting",
+        "vanilla_buttercream",
+        "whipped_cream",
+        "fresh_fruit",
+        "cream_cheese_frosting",
+        "powdered_sugar_dust",
+        "chocolate_ganache"
+      ],
+      "tips": [
+        "Pat the chopped strawberries dry with paper towels so they do not make the batter soggy.",
+        "Chop the berries small so they spread evenly through the batter.",
+        "Berries release juice - the cupcakes will be extra moist, so do not overbake."
+      ]
+    },
+    {
+      "id": "banana_cupcakes",
+      "name": "Banana Cupcakes",
+      "category": "CUPCAKES",
+      "description": "Soft, naturally sweet cupcakes made with ripe bananas.",
+      "imageKey": "banana",
+      "baseFlourAmount": 1.5,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1.5, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "baking_powder", "amount": 1.5, "unit": "TSP"},
+        {"ingredient": "baking_soda", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "cinnamon", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "butter", "amount": 0.3333333333, "unit": "CUP", "prep": "softened"},
+        {"ingredient": "granulated_sugar", "amount": 0.75, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "banana", "amount": 0.75, "unit": "CUP", "prep": "mashed"},
+        {"ingredient": "milk", "amount": 0.25, "unit": "CUP"},
+        {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"}
+      ],
+      "yield": {"base": 12, "singular": "cupcake", "plural": "cupcakes", "note": "Based on a standard 12-cup muffin tin."},
+      "sweetness": {
+        "less": {"multiplier": 0.75, "note": "Ripe bananas provide lots of sweetness, so about 25% less sugar works well.", "expectedChanges": ["Crumb stays moist thanks to the banana", "Tops brown a little less"], "suggestedAlternatives": ["banana", "raisins", "cinnamon", "vanilla"]}
+      },
+      "profileSet": "cupcake",
+      "steps": [
+        {"title": "Cream Butter and Sugar", "text": "In a large bowl, beat the softened butter and sugar until pale and fluffy, about 3 minutes."},
+        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs one at a time, then the vanilla, scraping down the bowl."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, baking powder, baking soda, salt and cinnamon."},
+        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture in two or three additions, alternating with the milk. Mix until just smooth."},
+        {"kind": "ADD_INS"},
+        {"title": "Cool", "text": "Cool the cupcakes in the tin for 5 minutes, then move them to a wire rack to cool completely before frosting.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "banana"},
+        {"id": "chocolate_chips"},
+        {"id": "raisins"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "nuts"},
+        {"id": "coconut"},
+        {"id": "cream_cheese"},
+        {"id": "mixed_nuts"}
+      ],
+      "toppingSuggestions": [
+        "cream_cheese_frosting",
+        "vanilla_buttercream",
+        "caramel_drizzle",
+        "sliced_banana",
+        "mixed_nuts_top",
+        "powdered_sugar_dust",
+        "chocolate_ganache"
+      ],
+      "tips": [
+        "Use very ripe bananas with plenty of brown spots.",
+        "Mash the bananas well so there are no large lumps.",
+        "These cupcakes are tender - let them cool in the tin for 5 minutes before moving."
+      ]
+    }
+  ]
+}

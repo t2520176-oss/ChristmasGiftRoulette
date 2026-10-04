@@ -1,0 +1,53 @@
+{
+  "ingredients": [
+    { "id": "all_purpose_flour", "name": "All-purpose flour", "gramsPerCup": 120, "allergens": ["WHEAT"] },
+    { "id": "bread_flour", "name": "Bread flour", "gramsPerCup": 127, "allergens": ["WHEAT"] },
+
+    { "id": "granulated_sugar", "name": "Granulated sugar", "gramsPerCup": 200 },
+    { "id": "brown_sugar", "name": "Brown sugar", "gramsPerCup": 213 },
+    { "id": "powdered_sugar", "name": "Powdered sugar", "gramsPerCup": 120 },
+
+    { "id": "baking_powder", "name": "Baking powder", "style": "SPOON", "gramsPerCup": 230 },
+    { "id": "baking_soda", "name": "Baking soda", "style": "SPOON", "gramsPerCup": 288 },
+    { "id": "salt", "name": "Salt", "style": "SPOON", "gramsPerCup": 288 },
+    { "id": "cinnamon", "name": "Ground cinnamon", "style": "SPOON", "gramsPerCup": 125 },
+    { "id": "vanilla_extract", "name": "Vanilla extract", "style": "SPOON", "gramsPerCup": 208 },
+    { "id": "garlic_powder", "name": "Garlic powder", "style": "SPOON", "gramsPerCup": 150 },
+    { "id": "instant_yeast", "name": "Instant or active dry yeast", "style": "SPOON", "gramsPerCup": 150 },
+
+    { "id": "cocoa_powder", "name": "Unsweetened cocoa powder", "gramsPerCup": 85 },
+    { "id": "cornstarch", "name": "Cornstarch", "gramsPerCup": 128 },
+    { "id": "cornmeal", "name": "Yellow cornmeal", "gramsPerCup": 157 },
+    { "id": "rolled_oats", "name": "Rolled oats", "gramsPerCup": 90 },
+
+    { "id": "milk", "name": "Milk", "style": "LIQUID", "gramsPerCup": 245, "allergens": ["MILK"] },
+    { "id": "buttermilk", "name": "Buttermilk", "style": "LIQUID", "gramsPerCup": 245, "allergens": ["MILK"] },
+    { "id": "heavy_cream", "name": "Heavy cream", "style": "LIQUID", "gramsPerCup": 238, "allergens": ["MILK"] },
+    { "id": "water", "name": "Water", "style": "LIQUID", "gramsPerCup": 240 },
+    { "id": "vegetable_oil", "name": "Vegetable oil", "style": "LIQUID", "gramsPerCup": 218 },
+    { "id": "lemon_juice", "name": "Lemon juice", "style": "LIQUID", "gramsPerCup": 244 },
+
+    { "id": "butter", "name": "Butter", "gramsPerCup": 227, "allergens": ["MILK"] },
+    {
+      "id": "egg", "name": "Eggs", "style": "COUNT", "gramsPerPiece": 50,
+      "pieceSingular": "large egg", "piecePlural": "large eggs", "rounding": "EGG", "allergens": ["EGG"]
+    },
+    { "id": "plain_yogurt", "name": "Thick plain yogurt", "gramsPerCup": 245, "allergens": ["MILK"] },
+    { "id": "peanut_butter", "name": "Peanut butter", "gramsPerCup": 258, "allergens": ["PEANUTS"] },
+    { "id": "cream_cheese", "name": "Cream cheese", "gramsPerCup": 232, "allergens": ["MILK"] },
+    { "id": "cheddar", "name": "Shredded cheddar cheese", "gramsPerCup": 113, "allergens": ["MILK"] },
+
+    { "id": "chocolate_chips", "name": "Chocolate chips", "gramsPerCup": 170, "allergens": ["MILK", "SOY"] },
+    { "id": "walnuts", "name": "Walnuts", "gramsPerCup": 120, "allergens": ["TREE_NUTS"] },
+    { "id": "almonds", "name": "Sliced almonds", "gramsPerCup": 92, "allergens": ["TREE_NUTS"] },
+    { "id": "mixed_nuts", "name": "Mixed nuts", "gramsPerCup": 135, "allergens": ["TREE_NUTS", "PEANUTS"] },
+    { "id": "raisins", "name": "Raisins", "gramsPerCup": 145 },
+    { "id": "coconut", "name": "Shredded coconut", "gramsPerCup": 85 },
+
+    { "id": "banana", "name": "Ripe banana", "gramsPerCup": 225 },
+    { "id": "blueberries", "name": "Blueberries", "gramsPerCup": 150 },
+    { "id": "strawberries", "name": "Strawberries", "gramsPerCup": 150 },
+    { "id": "apple", "name": "Apple", "gramsPerCup": 125 },
+    { "id": "apple_sliced", "name": "Apples", "gramsPerCup": 110 }
+  ]
+}

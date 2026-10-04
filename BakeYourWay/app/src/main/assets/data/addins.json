@@ -1,0 +1,92 @@
+{
+  "addIns": [
+    {
+      "id": "chocolate_chips", "name": "Chocolate Chips", "emoji": "🍫", "placement": "FOLD_IN",
+      "lines": [{ "ingredient": "chocolate_chips", "perFlourCup": 0.5, "unit": "CUP" }],
+      "sweetHint": "A small amount of chocolate chips"
+    },
+    {
+      "id": "nuts", "name": "Nuts", "emoji": "🥜", "placement": "FOLD_IN",
+      "lines": [{ "ingredient": "walnuts", "perFlourCup": 0.3333333333, "unit": "CUP", "prep": "chopped" }]
+    },
+    {
+      "id": "mixed_nuts", "name": "Mixed Nuts", "emoji": "🥜", "placement": "FOLD_IN",
+      "lines": [{ "ingredient": "mixed_nuts", "perFlourCup": 0.3333333333, "unit": "CUP", "prep": "chopped" }]
+    },
+    {
+      "id": "almonds", "name": "Almonds", "emoji": "🌰", "placement": "BEFORE_COOK_TOP",
+      "lines": [{ "ingredient": "almonds", "perFlourCup": 0.25, "unit": "CUP" }],
+      "instruction": "Sprinkle the sliced almonds over the tops and press them in lightly."
+    },
+    {
+      "id": "raisins", "name": "Raisins", "emoji": "🍇", "placement": "FOLD_IN",
+      "lines": [{ "ingredient": "raisins", "perFlourCup": 0.3333333333, "unit": "CUP" }],
+      "naturalSweet": true, "sweetHint": "Raisins or other dried fruit"
+    },
+    {
+      "id": "banana", "name": "Banana", "emoji": "🍌", "placement": "FOLD_IN",
+      "lines": [{ "ingredient": "banana", "perFlourCup": 0.25, "unit": "CUP", "prep": "mashed" }],
+      "naturalSweet": true, "sweetHint": "Ripe banana"
+    },
+    {
+      "id": "blueberries", "name": "Blueberries", "emoji": "🍇", "placement": "FOLD_IN",
+      "lines": [{ "ingredient": "blueberries", "perFlourCup": 0.5, "unit": "CUP", "prep": "fresh or frozen" }],
+      "naturalSweet": true, "sweetHint": "More berries"
+    },
+    {
+      "id": "strawberries", "name": "Strawberries", "emoji": "🍓", "placement": "FOLD_IN",
+      "lines": [{ "ingredient": "strawberries", "perFlourCup": 0.5, "unit": "CUP", "prep": "finely chopped" }],
+      "naturalSweet": true, "sweetHint": "Extra strawberries"
+    },
+    {
+      "id": "apple", "name": "Apple", "emoji": "🍎", "placement": "FOLD_IN",
+      "lines": [{ "ingredient": "apple", "perFlourCup": 0.5, "unit": "CUP", "prep": "peeled and finely diced" }],
+      "naturalSweet": true, "sweetHint": "Apple"
+    },
+    {
+      "id": "cinnamon", "name": "Cinnamon", "emoji": "🍂", "placement": "FOLD_IN",
+      "lines": [{ "ingredient": "cinnamon", "perFlourCup": 0.5, "unit": "TSP" }],
+      "naturalSweet": true, "sweetHint": "Cinnamon"
+    },
+    {
+      "id": "cheese", "name": "Cheese", "emoji": "🧀", "placement": "FOLD_IN",
+      "lines": [{ "ingredient": "cheddar", "perFlourCup": 0.5, "unit": "CUP" }]
+    },
+    {
+      "id": "coconut", "name": "Coconut", "emoji": "🥥", "placement": "FOLD_IN",
+      "lines": [{ "ingredient": "coconut", "perFlourCup": 0.3333333333, "unit": "CUP" }]
+    },
+    {
+      "id": "oats", "name": "Oats", "emoji": "🌾", "placement": "FOLD_IN",
+      "lines": [{ "ingredient": "rolled_oats", "perFlourCup": 0.25, "unit": "CUP" }]
+    },
+    {
+      "id": "vanilla", "name": "Vanilla", "emoji": "🍦", "placement": "FOLD_IN",
+      "lines": [{ "ingredient": "vanilla_extract", "perFlourCup": 0.5, "unit": "TSP" }],
+      "naturalSweet": true, "sweetHint": "Extra vanilla"
+    },
+    {
+      "id": "cream_cheese", "name": "Cream Cheese", "emoji": "🧁", "placement": "BEFORE_COOK_TOP",
+      "lines": [{ "ingredient": "cream_cheese", "perFlourCup": 0.25, "unit": "CUP", "prep": "softened" }],
+      "instruction": "Dot small spoonfuls of softened cream cheese over the batter and swirl them in lightly with a knife."
+    },
+    {
+      "id": "chocolate_drizzle", "name": "Chocolate Drizzle", "emoji": "🍫", "placement": "AFTER_COOK",
+      "lines": [
+        { "ingredient": "chocolate_chips", "perFlourCup": 0.125, "unit": "CUP" },
+        { "ingredient": "vegetable_oil", "perFlourCup": 0.5, "unit": "TSP" }
+      ],
+      "instruction": "Melt the drizzle chocolate chips with the oil in 20-second bursts in the microwave, stirring in between, then drizzle over the cooled bakes."
+    },
+    {
+      "id": "streusel", "name": "Streusel", "emoji": "🍂", "placement": "BEFORE_COOK_TOP",
+      "lines": [
+        { "ingredient": "all_purpose_flour", "perFlourCup": 0.125, "unit": "CUP" },
+        { "ingredient": "brown_sugar", "perFlourCup": 0.125, "unit": "CUP" },
+        { "ingredient": "butter", "perFlourCup": 1.0, "unit": "TBSP", "prep": "cold, cubed" },
+        { "ingredient": "cinnamon", "perFlourCup": 0.25, "unit": "TSP" }
+      ],
+      "instruction": "Rub the streusel ingredients together with your fingertips into coarse crumbs, then sprinkle them over the tops and press in lightly."
+    }
+  ]
+}

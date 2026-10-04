@@ -1,0 +1,355 @@
+{
+  "profileSets": {
+    "muffin": [
+      {
+        "method": "OVEN",
+        "temperatureC": 180,
+        "temperatureF": 350,
+        "timeMin": 18,
+        "timeMax": 22,
+        "preheat": true,
+        "preheatMinutes": 10,
+        "prep": "Line a 12-cup muffin tin with paper liners (or grease it lightly).",
+        "cook": "Divide the batter evenly between the muffin cups, filling each about 3/4 full. Bake at {temp} for {time}, until the tops are golden.",
+        "check": "A toothpick inserted into the center of a muffin should come out clean or with a few moist crumbs.",
+        "notes": [
+          "Ovens differ - start checking at the early end of the range.",
+          "Rest the muffins in the tin for 5 minutes before moving them to a wire rack."
+        ],
+        "batchCapacity": 12
+      },
+      {
+        "method": "AIR_FRYER",
+        "temperatureC": 160,
+        "temperatureF": 320,
+        "timeMin": 12,
+        "timeMax": 16,
+        "preheat": true,
+        "preheatMinutes": 3,
+        "prep": "Set heat-safe paper or silicone muffin cups in the air fryer basket, a few at a time, leaving space between them.",
+        "cook": "Spoon the batter into the cups, filling each about 2/3 full. Air fry at {temp} for {time}, until risen and golden.",
+        "check": "A toothpick inserted into the center of a muffin should come out clean or with a few moist crumbs. If the tops brown too fast, cover loosely with foil.",
+        "notes": [
+          "Air fryers run hot and vary a lot - check around the 12-minute mark.",
+          "Use cups that fit your basket, and weigh down loose paper liners so they cannot lift toward the heating element."
+        ],
+        "batchCapacity": 4
+      },
+      {
+        "method": "STEAM",
+        "timeMin": 15,
+        "timeMax": 20,
+        "heatLevel": "Medium steam",
+        "prep": "Set heat-safe silicone or foil cups in a steamer basket or on a rack, leaving space between them. Wrap the lid in a clean kitchen towel so water does not drip onto the muffins.",
+        "cook": "Fill each cup about 2/3 full. Cover and steam at a steady medium steam for {time}. Do not lift the lid during the first 10 minutes.",
+        "check": "A toothpick inserted into the center of a muffin should come out clean. Steamed muffins stay pale and very soft.",
+        "notes": [
+          "Steamed muffins do not brown - that is normal.",
+          "Keep the water at a steady simmer and top it up with hot water if it runs low."
+        ],
+        "batchCapacity": 6
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "id": "blueberry_muffins",
+      "name": "Blueberry Muffins",
+      "category": "MUFFINS",
+      "description": "Soft, golden muffins bursting with juicy blueberries.",
+      "imageKey": "blueberry",
+      "baseFlourAmount": 1,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "granulated_sugar", "amount": 0.3333333333, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "baking_powder", "amount": 1.5, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "milk", "amount": 0.5, "unit": "CUP"},
+        {"ingredient": "butter", "amount": 0.25, "unit": "CUP", "prep": "melted"},
+        {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"}
+      ],
+      "yield": {"base": 6, "singular": "muffin", "plural": "muffins", "note": "Based on a standard 12-cup muffin tin."},
+      "sweetness": {
+        "less": {"multiplier": 0.75, "note": "Blueberry muffins stay soft and tender with about 25% less sugar, and the berries add their own natural sweetness.", "expectedChanges": ["May brown slightly less on top", "Crumb may be a touch less moist and tender"], "suggestedAlternatives": ["banana", "raisins", "cinnamon", "vanilla", "chocolate_chips"]}
+      },
+      "profileSet": "muffin",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the eggs, milk, melted butter and vanilla until smooth."},
+        {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. A few lumps are fine - overmixing makes tough muffins."},
+        {"kind": "ADD_INS"},
+        {"title": "Cool", "text": "Let the muffins cool for a few minutes before serving. They are best the day they are made.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "blueberries", "default": true},
+        {"id": "chocolate_chips"},
+        {"id": "banana"},
+        {"id": "raisins"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "nuts"},
+        {"id": "almonds"},
+        {"id": "streusel"},
+        {"id": "chocolate_drizzle"}
+      ],
+      "toppingSuggestions": [
+        "streusel",
+        "glaze_drizzle",
+        "extra_berries",
+        "sliced_almonds",
+        "chocolate_chips_top",
+        "cinnamon_sugar",
+        "cream_cheese_drizzle",
+        "oats_topping",
+        "mixed_nuts_top"
+      ],
+      "tips": [
+        "Use frozen blueberries straight from the freezer - do not thaw them, or the batter turns purple.",
+        "Stir only until the flour disappears. A few lumps are fine and keep muffins tender.",
+        "Room-temperature eggs and milk blend more evenly into the batter."
+      ]
+    },
+    {
+      "id": "chocolate_chip_muffins",
+      "name": "Chocolate Chip Muffins",
+      "category": "MUFFINS",
+      "description": "Bakery-style muffins studded with melty chocolate chips.",
+      "imageKey": "chocolate",
+      "baseFlourAmount": 1,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "granulated_sugar", "amount": 0.3333333333, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "baking_powder", "amount": 1.5, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "milk", "amount": 0.5, "unit": "CUP"},
+        {"ingredient": "butter", "amount": 0.25, "unit": "CUP", "prep": "melted"},
+        {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"}
+      ],
+      "yield": {"base": 6, "singular": "muffin", "plural": "muffins", "note": "Based on a standard 12-cup muffin tin."},
+      "sweetness": {
+        "less": {"multiplier": 0.75, "note": "The chocolate chips bring plenty of sweetness, so about 25% less sugar in the batter is rarely noticed.", "expectedChanges": ["May brown slightly less on top", "Crumb may be a touch less tender"], "suggestedAlternatives": ["banana", "raisins", "cinnamon", "vanilla"]}
+      },
+      "profileSet": "muffin",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the eggs, milk, melted butter and vanilla until smooth."},
+        {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. A few lumps are fine - overmixing makes tough muffins."},
+        {"kind": "ADD_INS"},
+        {"title": "Cool", "text": "Let the muffins cool for a few minutes before serving. They are best the day they are made.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "chocolate_chips", "default": true},
+        {"id": "nuts"},
+        {"id": "banana"},
+        {"id": "raisins"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "coconut"},
+        {"id": "almonds"},
+        {"id": "streusel"},
+        {"id": "mixed_nuts"}
+      ],
+      "toppingSuggestions": [
+        "streusel",
+        "glaze_drizzle",
+        "extra_berries",
+        "sliced_almonds",
+        "chocolate_chips_top",
+        "cinnamon_sugar",
+        "cream_cheese_drizzle",
+        "oats_topping",
+        "mixed_nuts_top"
+      ],
+      "tips": [
+        "Toss the chips in a spoonful of the measured flour so they do not all sink to the bottom.",
+        "Save a few chips to sprinkle on top for a bakery look.",
+        "Do not overmix - stir just until no dry flour remains."
+      ]
+    },
+    {
+      "id": "banana_muffins",
+      "name": "Banana Muffins",
+      "category": "MUFFINS",
+      "description": "Moist, naturally sweet muffins made with ripe bananas.",
+      "imageKey": "banana",
+      "baseFlourAmount": 1,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "brown_sugar", "amount": 0.25, "unit": "CUP", "prep": "packed", "role": "SUGAR"},
+        {"ingredient": "baking_powder", "amount": 1, "unit": "TSP"},
+        {"ingredient": "baking_soda", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "cinnamon", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "banana", "amount": 0.5, "unit": "CUP", "prep": "mashed"},
+        {"ingredient": "milk", "amount": 0.25, "unit": "CUP"},
+        {"ingredient": "butter", "amount": 3, "unit": "TBSP", "prep": "melted"},
+        {"ingredient": "vanilla_extract", "amount": 0.5, "unit": "TSP"}
+      ],
+      "yield": {"base": 6, "singular": "muffin", "plural": "muffins", "note": "Based on a standard 12-cup muffin tin."},
+      "sweetness": {
+        "less": {"multiplier": 0.7, "note": "Ripe bananas supply lots of natural sweetness, so this recipe tolerates about 30% less sugar very well.", "expectedChanges": ["May brown slightly less on top", "Muffins stay moist thanks to the banana"], "suggestedAlternatives": ["banana", "raisins", "cinnamon", "vanilla"]}
+      },
+      "profileSet": "muffin",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, brown sugar, baking powder, baking soda, salt and cinnamon."},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, mash the ripe bananas well, then whisk in the eggs, milk, melted butter and vanilla."},
+        {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. A few lumps are fine."},
+        {"kind": "ADD_INS"},
+        {"title": "Cool", "text": "Let the muffins cool for a few minutes before serving.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "banana"},
+        {"id": "chocolate_chips"},
+        {"id": "raisins"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "nuts"},
+        {"id": "oats"},
+        {"id": "coconut"},
+        {"id": "streusel"},
+        {"id": "mixed_nuts"}
+      ],
+      "toppingSuggestions": [
+        "streusel",
+        "glaze_drizzle",
+        "extra_berries",
+        "sliced_almonds",
+        "chocolate_chips_top",
+        "cinnamon_sugar",
+        "cream_cheese_drizzle",
+        "oats_topping",
+        "mixed_nuts_top"
+      ],
+      "tips": [
+        "The riper the bananas (lots of brown spots), the sweeter and moister the muffins.",
+        "Freeze overripe bananas whole and thaw them before mashing.",
+        "Do not overmix - stir just until combined."
+      ]
+    },
+    {
+      "id": "apple_cinnamon_muffins",
+      "name": "Apple Cinnamon Muffins",
+      "category": "MUFFINS",
+      "description": "Warmly spiced muffins with tender pieces of apple.",
+      "imageKey": "apple",
+      "baseFlourAmount": 1,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "granulated_sugar", "amount": 0.3333333333, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "baking_powder", "amount": 1.5, "unit": "TSP"},
+        {"ingredient": "cinnamon", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "milk", "amount": 0.5, "unit": "CUP"},
+        {"ingredient": "butter", "amount": 0.25, "unit": "CUP", "prep": "melted"},
+        {"ingredient": "vanilla_extract", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "apple", "amount": 0.5, "unit": "CUP", "prep": "peeled and finely diced"}
+      ],
+      "yield": {"base": 6, "singular": "muffin", "plural": "muffins", "note": "Based on a standard 12-cup muffin tin."},
+      "sweetness": {
+        "less": {"multiplier": 0.75, "note": "The apples and cinnamon carry a lot of flavor, so about 25% less sugar still tastes good.", "expectedChanges": ["May brown slightly less on top", "Crumb may be a touch less moist"], "suggestedAlternatives": ["raisins", "cinnamon", "vanilla"]}
+      },
+      "profileSet": "muffin",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder, cinnamon and salt."},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the eggs, milk, melted butter and vanilla until smooth."},
+        {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. Fold in the diced apple."},
+        {"kind": "ADD_INS"},
+        {"title": "Cool", "text": "Let the muffins cool for a few minutes before serving.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "raisins"},
+        {"id": "nuts"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "oats"},
+        {"id": "streusel"},
+        {"id": "chocolate_drizzle"},
+        {"id": "cream_cheese"}
+      ],
+      "toppingSuggestions": [
+        "streusel",
+        "cinnamon_sugar",
+        "glaze_drizzle",
+        "oats_topping",
+        "mixed_nuts_top",
+        "sliced_almonds",
+        "cream_cheese_drizzle",
+        "caramel_drizzle"
+      ],
+      "tips": [
+        "Dice the apple small (about 1 cm / 1/2 in) so it cooks through in the muffin.",
+        "Firm, slightly tart apples such as Granny Smith keep their shape best.",
+        "Toss the diced apple with a pinch of cinnamon before folding it in."
+      ]
+    },
+    {
+      "id": "vanilla_muffins",
+      "name": "Vanilla Muffins",
+      "category": "MUFFINS",
+      "description": "A simple, tender base muffin that welcomes any add-in.",
+      "imageKey": "vanilla",
+      "baseFlourAmount": 1,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "granulated_sugar", "amount": 0.3333333333, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "baking_powder", "amount": 1.5, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "milk", "amount": 0.5, "unit": "CUP"},
+        {"ingredient": "butter", "amount": 0.25, "unit": "CUP", "prep": "melted"},
+        {"ingredient": "vanilla_extract", "amount": 1.5, "unit": "TSP"}
+      ],
+      "yield": {"base": 6, "singular": "muffin", "plural": "muffins", "note": "Based on a standard 12-cup muffin tin."},
+      "sweetness": {
+        "less": {"multiplier": 0.75, "note": "Plain muffins rely on their sugar for flavor, so this recipe is reduced by a moderate 25%.", "expectedChanges": ["May brown slightly less on top", "Crumb may be a touch less tender"], "suggestedAlternatives": ["vanilla", "banana", "raisins", "cinnamon"]}
+      },
+      "profileSet": "muffin",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the eggs, milk, melted butter and vanilla until smooth."},
+        {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. A few lumps are fine - overmixing makes tough muffins."},
+        {"kind": "ADD_INS"},
+        {"title": "Cool", "text": "Let the muffins cool for a few minutes before serving. They are best the day they are made.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "chocolate_chips"},
+        {"id": "blueberries"},
+        {"id": "strawberries"},
+        {"id": "banana"},
+        {"id": "raisins"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "nuts"},
+        {"id": "almonds"},
+        {"id": "coconut"},
+        {"id": "streusel"},
+        {"id": "cream_cheese"}
+      ],
+      "toppingSuggestions": [
+        "streusel",
+        "glaze_drizzle",
+        "extra_berries",
+        "sliced_almonds",
+        "chocolate_chips_top",
+        "cinnamon_sugar",
+        "cream_cheese_drizzle",
+        "oats_topping",
+        "mixed_nuts_top"
+      ],
+      "tips": [
+        "This is a great base for add-ins: try blueberries, chocolate chips or cinnamon.",
+        "Stir only until the flour disappears for a tender crumb.",
+        "A spoonful of yogurt or sour cream in place of some milk makes them extra soft."
+      ]
+    }
+  ]
+}

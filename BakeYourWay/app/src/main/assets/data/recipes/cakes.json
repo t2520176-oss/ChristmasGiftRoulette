@@ -1,0 +1,162 @@
+{
+  "profileSets": {
+    "cake": [
+      {
+        "method": "OVEN",
+        "temperatureC": 175,
+        "temperatureF": 350,
+        "timeMin": 28,
+        "timeMax": 35,
+        "preheat": true,
+        "preheatMinutes": 10,
+        "prep": "Grease your pan ({pan}) and line the bottom with parchment paper.",
+        "cook": "Pour the batter into the pan and smooth the top. Bake at {temp} for {time}, until golden and the cake springs back when lightly pressed.",
+        "check": "A toothpick inserted into the center should come out clean.",
+        "notes": [
+          "Cool in the pan for 10 minutes before turning out.",
+          "Smaller or larger pans change the baking time - start checking early with a small pan."
+        ]
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "id": "simple_vanilla_cake",
+      "name": "Simple Vanilla Cake",
+      "category": "CAKES",
+      "description": "A soft, buttery one-bowl-style vanilla cake that is easy to dress up.",
+      "imageKey": "cake",
+      "baseFlourAmount": 1.5,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1.5, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "baking_powder", "amount": 2, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "softened"},
+        {"ingredient": "granulated_sugar", "amount": 1, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "milk", "amount": 0.6666666667, "unit": "CUP"},
+        {"ingredient": "vanilla_extract", "amount": 2, "unit": "TSP"}
+      ],
+      "yield": {"base": 8, "singular": "slice", "plural": "slices", "note": "Based on one 8 in (20 cm) round cake."},
+      "sweetness": {
+        "less": {"multiplier": 0.8, "note": "Sugar keeps cake tender and moist, so the reduction is about 20% - going lower can make it dry and dense.", "expectedChanges": ["Crumb may be slightly less tender and moist", "Crust browns a little less"], "suggestedAlternatives": ["vanilla", "strawberries", "banana", "cinnamon"]}
+      },
+      "profileSet": "cake",
+      "steps": [
+        {"title": "Cream Butter and Sugar", "text": "Beat the softened butter and sugar until pale and fluffy, about 3 minutes."},
+        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs one at a time, then the vanilla."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, baking powder and salt."},
+        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture in two additions, alternating with the milk. Mix until just smooth."},
+        {"kind": "ADD_INS"},
+        {"title": "Cool", "text": "Cool in the pan for 10 minutes, then turn out onto a wire rack and cool completely before frosting.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "chocolate_chips"},
+        {"id": "strawberries"},
+        {"id": "blueberries"},
+        {"id": "banana"},
+        {"id": "coconut"},
+        {"id": "nuts"},
+        {"id": "almonds"},
+        {"id": "vanilla"},
+        {"id": "cinnamon"},
+        {"id": "cream_cheese"},
+        {"id": "chocolate_drizzle"}
+      ],
+      "toppingSuggestions": [
+        "vanilla_buttercream",
+        "chocolate_frosting",
+        "cream_cheese_frosting",
+        "strawberry_frosting",
+        "whipped_cream",
+        "fresh_fruit",
+        "powdered_sugar_dust",
+        "lemon_glaze",
+        "chocolate_ganache",
+        "caramel_drizzle"
+      ],
+      "tips": [
+        "Room-temperature ingredients mix into a smoother, higher-rising batter.",
+        "Do not open the oven door during the first 20 minutes.",
+        "Frost only when the cake is completely cool."
+      ],
+      "panOptions": [
+        {"maxFlourCups": 1.0, "text": "6 in / 15 cm round pan"},
+        {"maxFlourCups": 1.75, "text": "8 in / 20 cm round or square pan"},
+        {"maxFlourCups": 2.5, "text": "9 in / 23 cm round or square pan"},
+        {"maxFlourCups": 3.5, "text": "9×13 in / 23×33 cm pan"},
+        {"maxFlourCups": 6.0, "text": "two 9×13 in / 23×33 cm pans, or three 9 in / 23 cm round pans"}
+      ]
+    },
+    {
+      "id": "chocolate_cake",
+      "name": "Chocolate Cake",
+      "category": "CAKES",
+      "description": "A moist, deeply chocolatey oil-based cake.",
+      "imageKey": "chocolate",
+      "baseFlourAmount": 1.5,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1.5, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "cocoa_powder", "amount": 0.3333333333, "unit": "CUP"},
+        {"ingredient": "baking_powder", "amount": 1, "unit": "TSP"},
+        {"ingredient": "baking_soda", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "granulated_sugar", "amount": 1, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "milk", "amount": 0.75, "unit": "CUP"},
+        {"ingredient": "vegetable_oil", "amount": 0.3333333333, "unit": "CUP"},
+        {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"}
+      ],
+      "yield": {"base": 8, "singular": "slice", "plural": "slices", "note": "Based on one 8 in (20 cm) round cake."},
+      "sweetness": {
+        "less": {"multiplier": 0.8, "note": "Cocoa is bitter and sugar keeps the crumb moist, so the safe reduction is about 20%.", "expectedChanges": ["Chocolate flavor tastes a little more intense", "Crumb may be slightly less moist"], "suggestedAlternatives": ["vanilla", "banana", "strawberries"]}
+      },
+      "profileSet": "cake",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, cocoa powder, sugar, baking powder, baking soda and salt."},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the eggs, milk, oil and vanilla until smooth."},
+        {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and whisk until smooth - the batter will be fairly thin."},
+        {"kind": "ADD_INS"},
+        {"title": "Cool", "text": "Cool in the pan for 10 minutes, then turn out onto a wire rack and cool completely before frosting.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "chocolate_chips"},
+        {"id": "strawberries"},
+        {"id": "banana"},
+        {"id": "coconut"},
+        {"id": "nuts"},
+        {"id": "almonds"},
+        {"id": "vanilla"},
+        {"id": "cream_cheese"},
+        {"id": "chocolate_drizzle"},
+        {"id": "mixed_nuts"}
+      ],
+      "toppingSuggestions": [
+        "vanilla_buttercream",
+        "chocolate_frosting",
+        "cream_cheese_frosting",
+        "strawberry_frosting",
+        "whipped_cream",
+        "fresh_fruit",
+        "powdered_sugar_dust",
+        "lemon_glaze",
+        "chocolate_ganache",
+        "caramel_drizzle"
+      ],
+      "tips": [
+        "The batter is thin - that is what makes the cake moist.",
+        "Sift the cocoa to avoid dry lumps.",
+        "Do not overbake - chocolate cake dries out quickly."
+      ],
+      "panOptions": [
+        {"maxFlourCups": 1.0, "text": "6 in / 15 cm round pan"},
+        {"maxFlourCups": 1.75, "text": "8 in / 20 cm round or square pan"},
+        {"maxFlourCups": 2.5, "text": "9 in / 23 cm round or square pan"},
+        {"maxFlourCups": 3.5, "text": "9×13 in / 23×33 cm pan"},
+        {"maxFlourCups": 6.0, "text": "two 9×13 in / 23×33 cm pans, or three 9 in / 23 cm round pans"}
+      ]
+    }
+  ]
+}

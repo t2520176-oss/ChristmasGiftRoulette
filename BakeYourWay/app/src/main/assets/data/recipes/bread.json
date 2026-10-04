@@ -1,0 +1,359 @@
+{
+  "profileSets": {
+    "yeastLoaf": [
+      {
+        "method": "OVEN",
+        "temperatureC": 190,
+        "temperatureF": 375,
+        "timeMin": 30,
+        "timeMax": 35,
+        "preheat": true,
+        "preheatMinutes": 15,
+        "cook": "Bake the loaf at {temp} for {time}, until deep golden brown.",
+        "check": "The loaf should sound hollow when you tap the bottom, and read about 93-99°C / 200-210°F in the center.",
+        "notes": [
+          "If the top browns too fast, tent loosely with foil.",
+          "Let the loaf cool for at least 30 minutes before slicing - it is still setting inside."
+        ]
+      }
+    ],
+    "rolls": [
+      {
+        "method": "OVEN",
+        "temperatureC": 190,
+        "temperatureF": 375,
+        "timeMin": 15,
+        "timeMax": 20,
+        "preheat": true,
+        "preheatMinutes": 15,
+        "cook": "Bake the rolls at {temp} for {time}, until golden brown on top.",
+        "check": "The rolls should be golden and sound hollow when tapped on the bottom.",
+        "notes": [
+          "Rolls that touch each other bake up soft with pull-apart sides.",
+          "Brush with melted butter as soon as they come out for a soft, shiny crust."
+        ],
+        "batchCapacity": 12
+      }
+    ],
+    "quickLoaf": [
+      {
+        "method": "OVEN",
+        "temperatureC": 175,
+        "temperatureF": 350,
+        "timeMin": 55,
+        "timeMax": 65,
+        "preheat": true,
+        "preheatMinutes": 10,
+        "prep": "Grease your pan ({pan}) and line it with parchment paper, leaving an overhang to lift the loaf out.",
+        "cook": "Pour the batter into the pan and smooth the top. Bake at {temp} for {time}, until deep golden and risen.",
+        "check": "A toothpick inserted into the center should come out clean or with a few moist crumbs.",
+        "notes": [
+          "If the top browns too fast, tent loosely with foil.",
+          "Smaller pans bake faster - start checking early. Cool in the pan for 10 minutes before turning out."
+        ]
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "id": "basic_white_bread",
+      "name": "Basic White Bread",
+      "category": "BREAD",
+      "description": "A soft, golden sandwich loaf with a tender crumb.",
+      "imageKey": "bread",
+      "baseFlourAmount": 3,
+      "flourIngredient": "bread_flour",
+      "ingredients": [
+        {"ingredient": "bread_flour", "amount": 3, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "instant_yeast", "amount": 2.25, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 1.5, "unit": "TSP"},
+        {"ingredient": "granulated_sugar", "amount": 2, "unit": "TBSP", "role": "SUGAR"},
+        {"ingredient": "water", "amount": 1, "unit": "CUP", "prep": "warm, about 40°C / 105°F"},
+        {"ingredient": "butter", "amount": 2, "unit": "TBSP", "prep": "melted"}
+      ],
+      "yield": {"base": 12, "singular": "slice", "plural": "slices", "note": "Based on one 9×5 in loaf."},
+      "sweetness": {
+        "less": {"multiplier": 0.75, "note": "Sugar is only a small supporting ingredient here: it feeds the yeast a little and helps browning, so the reduction is modest - about 25%.", "expectedChanges": ["Barely noticeable change in sweetness", "Crust may be slightly paler"], "suggestedAlternatives": ["raisins", "cinnamon"]}
+      },
+      "profileSet": "yeastLoaf",
+      "preheatTiming": "BEFORE_COOK",
+      "steps": [
+        {"title": "Activate the Yeast", "text": "Stir the yeast and sugar into the warm water and leave for 5 minutes, until foamy. If it does not foam, start again with fresh yeast."},
+        {"title": "Make the Dough", "text": "Mix the flour and salt in a large bowl. Add the foamy yeast mixture and melted butter and stir until a shaggy dough forms."},
+        {"title": "Knead", "text": "Knead on a lightly floured surface for 8-10 minutes (or 5-6 minutes in a stand mixer with a dough hook) until smooth and elastic."},
+        {"kind": "ADD_INS"},
+        {"title": "First Rise", "text": "Place the dough in a lightly oiled bowl, cover and let it rise in a warm place for about 1 hour, until doubled in size."},
+        {"title": "Shape", "text": "Gently press the dough into a rectangle, roll it up tightly and place it seam-side down in your greased pan ({pan})."},
+        {"title": "Second Rise", "text": "Cover and let rise for 30-45 minutes, until the dough crowns about 2.5 cm (1 in) above the rim of the pan."},
+        {"title": "Cool", "text": "Turn the loaf out onto a wire rack and cool for at least 30 minutes before slicing.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "raisins"},
+        {"id": "cinnamon"},
+        {"id": "cheese"},
+        {"id": "oats"},
+        {"id": "nuts"}
+      ],
+      "toppingSuggestions": ["melted_butter", "honey_butter", "butter_jam", "savory_butter", "oats_topping", "fresh_fruit"],
+      "tips": [
+        "Water that is too hot kills yeast - it should feel comfortably warm, not hot.",
+        "A warm, draft-free spot (such as the oven with only the light on) helps the dough rise.",
+        "Flour the surface lightly - too much extra flour makes the loaf dense."
+      ],
+      "panOptions": [
+        {"maxFlourCups": 1.25, "text": "mini loaf pan, about 6×3 in / 15×8 cm - check about 10 minutes early"},
+        {"maxFlourCups": 2.0, "text": "small 8×4 in / 20×10 cm loaf pan - check a few minutes early"},
+        {"maxFlourCups": 3.5, "text": "9×5 in / 23×13 cm loaf pan"},
+        {"maxFlourCups": 6.0, "text": "two 9×5 in / 23×13 cm loaf pans - divide the dough evenly"}
+      ]
+    },
+    {
+      "id": "milk_bread",
+      "name": "Milk Bread",
+      "category": "BREAD",
+      "description": "Extra soft, slightly sweet bread with a fluffy, pull-apart crumb.",
+      "imageKey": "bread",
+      "baseFlourAmount": 3,
+      "flourIngredient": "bread_flour",
+      "ingredients": [
+        {"ingredient": "bread_flour", "amount": 3, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "instant_yeast", "amount": 2.25, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 1, "unit": "TSP"},
+        {"ingredient": "granulated_sugar", "amount": 0.25, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "milk", "amount": 0.75, "unit": "CUP", "prep": "warm, about 40°C / 105°F"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "butter", "amount": 3, "unit": "TBSP", "prep": "softened"}
+      ],
+      "yield": {"base": 12, "singular": "slice", "plural": "slices", "note": "Based on one 9×5 in loaf."},
+      "sweetness": {
+        "less": {"multiplier": 0.75, "note": "Milk bread is meant to be lightly sweet and soft; a 25% reduction keeps the soft crumb while tasting less sweet.", "expectedChanges": ["Slightly less sweet with a paler crust", "Crumb stays soft"], "suggestedAlternatives": ["raisins", "cinnamon", "vanilla"]}
+      },
+      "profileSet": "yeastLoaf",
+      "profileOverrides": [
+        {"method": "OVEN", "temperatureC": 175, "temperatureF": 350, "timeMin": 30, "timeMax": 35, "preheat": true, "preheatMinutes": 15, "cook": "Bake the loaf at {temp} for {time}. If the top browns quickly, tent loosely with foil after about 20 minutes.", "check": "The loaf should be deep golden, sound hollow when you tap the bottom, and read about 93-99°C / 200-210°F in the center.", "notes": ["The sugar and milk make the crust brown quickly - keep an eye on it.", "Let the loaf cool for at least 30 minutes before slicing."]}
+      ],
+      "preheatTiming": "BEFORE_COOK",
+      "steps": [
+        {"title": "Activate the Yeast", "text": "Stir the yeast and a pinch of the sugar into the warm milk and leave for 5 minutes, until foamy."},
+        {"title": "Make the Dough", "text": "Mix the flour, remaining sugar and salt. Add the foamy milk, the egg and the softened butter and stir until a shaggy dough forms."},
+        {"title": "Knead", "text": "Knead for about 10 minutes (or 6-8 in a stand mixer) until very smooth, stretchy and slightly tacky."},
+        {"kind": "ADD_INS"},
+        {"title": "First Rise", "text": "Place the dough in a lightly oiled bowl, cover and let it rise in a warm place for about 1 hour, until doubled in size."},
+        {"title": "Shape", "text": "Gently press the dough into a rectangle, roll it up tightly and place it seam-side down in your greased pan ({pan})."},
+        {"title": "Second Rise", "text": "Cover and let rise for 30-45 minutes, until the dough crowns above the rim of the pan."},
+        {"title": "Finish", "text": "Brush the top with a little melted butter, then turn the loaf out onto a wire rack and cool for at least 30 minutes before slicing.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "raisins"},
+        {"id": "cinnamon"},
+        {"id": "chocolate_chips"},
+        {"id": "coconut"},
+        {"id": "cheese"},
+        {"id": "vanilla"},
+        {"id": "nuts"}
+      ],
+      "toppingSuggestions": [
+        "melted_butter",
+        "honey_butter",
+        "butter_jam",
+        "fresh_fruit",
+        "powdered_sugar_dust",
+        "oats_topping"
+      ],
+      "tips": [
+        "The dough is soft and a little sticky - resist adding lots of extra flour.",
+        "Use whole milk for the softest crumb.",
+        "Wrapped well, the loaf stays soft for 2-3 days."
+      ],
+      "panOptions": [
+        {"maxFlourCups": 1.25, "text": "mini loaf pan, about 6×3 in / 15×8 cm - check about 10 minutes early"},
+        {"maxFlourCups": 2.0, "text": "small 8×4 in / 20×10 cm loaf pan - check a few minutes early"},
+        {"maxFlourCups": 3.5, "text": "9×5 in / 23×13 cm loaf pan"},
+        {"maxFlourCups": 6.0, "text": "two 9×5 in / 23×13 cm loaf pans - divide the dough evenly"}
+      ]
+    },
+    {
+      "id": "banana_bread",
+      "name": "Banana Bread",
+      "category": "BREAD",
+      "description": "Moist, tender banana loaf with golden edges.",
+      "imageKey": "banana",
+      "baseFlourAmount": 1.5,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1.5, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "baking_soda", "amount": 1, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "cinnamon", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "banana", "amount": 1, "unit": "CUP", "prep": "mashed, about 3 ripe bananas"},
+        {"ingredient": "granulated_sugar", "amount": 0.75, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "butter", "amount": 0.3333333333, "unit": "CUP", "prep": "melted"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"}
+      ],
+      "yield": {"base": 10, "singular": "slice", "plural": "slices", "note": "Based on one 8½×4½ in loaf."},
+      "sweetness": {
+        "less": {"multiplier": 0.7, "note": "Ripe bananas supply lots of natural sweetness, so this loaf tolerates about 30% less sugar very well.", "expectedChanges": ["Slightly paler crust", "Loaf stays moist thanks to the bananas"], "suggestedAlternatives": ["banana", "raisins", "cinnamon", "vanilla"]}
+      },
+      "profileSet": "quickLoaf",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a medium bowl, whisk together the flour, baking soda, salt and cinnamon."},
+        {"title": "Mix Wet Ingredients", "text": "In a large bowl, mash the bananas well, then stir in the sugar, melted butter, egg and vanilla."},
+        {"title": "Combine", "text": "Add the dry ingredients to the banana mixture and stir until just combined. Do not overmix."},
+        {"kind": "ADD_INS"},
+        {"title": "Cool", "text": "Cool in the pan for 10 minutes, then lift out onto a wire rack. Cool before slicing.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "nuts"},
+        {"id": "chocolate_chips"},
+        {"id": "raisins"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "oats"},
+        {"id": "coconut"},
+        {"id": "banana"},
+        {"id": "streusel"},
+        {"id": "mixed_nuts"},
+        {"id": "almonds"}
+      ],
+      "toppingSuggestions": [
+        "streusel",
+        "glaze_drizzle",
+        "cinnamon_sugar",
+        "oats_topping",
+        "mixed_nuts_top",
+        "sliced_banana",
+        "honey_butter",
+        "cream_cheese_drizzle"
+      ],
+      "tips": [
+        "The blacker the banana skins, the sweeter and more flavorful the bread.",
+        "Mix just until the flour disappears - overmixing makes banana bread tough.",
+        "Slice a banana lengthwise and lay it on top before baking for a bakery look."
+      ],
+      "panOptions": [
+        {"maxFlourCups": 1.0, "text": "mini loaf pan, about 6×3 in / 15×8 cm - check about 15 minutes early"},
+        {"maxFlourCups": 2.0, "text": "8½×4½ in / 22×11 cm loaf pan"},
+        {"maxFlourCups": 4.5, "text": "two 8½×4½ in / 22×11 cm loaf pans - divide the batter evenly"},
+        {"maxFlourCups": 6.0, "text": "three 8½×4½ in / 22×11 cm loaf pans - divide the batter evenly"}
+      ]
+    },
+    {
+      "id": "cinnamon_bread",
+      "name": "Cinnamon Bread",
+      "category": "BREAD",
+      "description": "A tender quick loaf with a ribbon of cinnamon sugar through the middle.",
+      "imageKey": "cinnamon",
+      "baseFlourAmount": 2,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 2, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "baking_powder", "amount": 2, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "granulated_sugar", "amount": 0.5, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "milk", "amount": 0.75, "unit": "CUP"},
+        {"ingredient": "butter", "amount": 0.3333333333, "unit": "CUP", "prep": "melted"},
+        {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"},
+        {"ingredient": "brown_sugar", "amount": 0.25, "unit": "CUP", "prep": "packed", "role": "SUGAR", "group": "Cinnamon swirl"},
+        {"ingredient": "cinnamon", "amount": 2, "unit": "TSP", "group": "Cinnamon swirl"}
+      ],
+      "yield": {"base": 10, "singular": "slice", "plural": "slices", "note": "Based on one 8½×4½ in loaf."},
+      "sweetness": {
+        "less": {"multiplier": 0.75, "note": "Sugar appears in both the batter and the cinnamon swirl, so both are reduced by about 25%.", "expectedChanges": ["The swirl is a little less sweet and sticky", "May brown slightly less"], "suggestedAlternatives": ["raisins", "cinnamon", "vanilla"]}
+      },
+      "profileSet": "quickLoaf",
+      "profileOverrides": [
+        {"method": "OVEN", "temperatureC": 175, "temperatureF": 350, "timeMin": 45, "timeMax": 55, "preheat": true, "preheatMinutes": 10, "prep": "Grease your pan ({pan}) and line it with parchment paper, leaving an overhang to lift the loaf out.", "cook": "Pour the batter into the pan and smooth the top. Bake at {temp} for {time}, until golden and risen.", "check": "A toothpick inserted into the center should come out clean or with a few moist crumbs.", "notes": ["If the top browns too fast, tent loosely with foil.", "Smaller pans bake faster - start checking early."]}
+      ],
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, baking powder, salt and the batter sugar."},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the egg, milk, melted butter and vanilla."},
+        {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined."},
+        {"kind": "ADD_INS"},
+        {"title": "Add the Cinnamon Swirl", "text": "Stir the brown sugar and cinnamon together. Spread half the batter in the pan, sprinkle with half the cinnamon sugar, add the rest of the batter and top with the remaining cinnamon sugar. Swirl once or twice with a knife."},
+        {"title": "Cool", "text": "Cool in the pan for 10 minutes, then lift out onto a wire rack. Cool before slicing.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "raisins"},
+        {"id": "nuts"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "apple"},
+        {"id": "chocolate_chips"},
+        {"id": "cream_cheese"}
+      ],
+      "toppingSuggestions": [
+        "glaze_drizzle",
+        "cream_cheese_drizzle",
+        "cinnamon_sugar",
+        "honey_butter",
+        "melted_butter",
+        "powdered_sugar_dust"
+      ],
+      "tips": [
+        "Do not stir the swirl too much - a couple of passes with a knife is enough.",
+        "A cinnamon-sugar sprinkle on top gives a crunchy crust.",
+        "This loaf is best the day it is made, but toasts beautifully the next day."
+      ],
+      "panOptions": [
+        {"maxFlourCups": 1.0, "text": "mini loaf pan, about 6×3 in / 15×8 cm - check about 15 minutes early"},
+        {"maxFlourCups": 2.0, "text": "8½×4½ in / 22×11 cm loaf pan"},
+        {"maxFlourCups": 4.5, "text": "two 8½×4½ in / 22×11 cm loaf pans - divide the batter evenly"},
+        {"maxFlourCups": 6.0, "text": "three 8½×4½ in / 22×11 cm loaf pans - divide the batter evenly"}
+      ]
+    },
+    {
+      "id": "dinner_rolls",
+      "name": "Simple Dinner Rolls",
+      "category": "BREAD",
+      "description": "Soft, buttery pull-apart rolls.",
+      "imageKey": "bread",
+      "baseFlourAmount": 3,
+      "flourIngredient": "bread_flour",
+      "ingredients": [
+        {"ingredient": "bread_flour", "amount": 3, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "instant_yeast", "amount": 2.25, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 1, "unit": "TSP"},
+        {"ingredient": "granulated_sugar", "amount": 0.25, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "milk", "amount": 0.75, "unit": "CUP", "prep": "warm, about 40°C / 105°F"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "butter", "amount": 0.25, "unit": "CUP", "prep": "melted"}
+      ],
+      "yield": {"base": 12, "singular": "roll", "plural": "rolls", "note": "Based on one 9×13 in pan."},
+      "sweetness": {
+        "less": {"multiplier": 0.75, "note": "Rolls only need a little sugar; reducing it by about 25% is barely noticeable.", "expectedChanges": ["Barely noticeable change in sweetness", "Tops may be slightly paler"], "suggestedAlternatives": ["raisins", "cinnamon"]}
+      },
+      "profileSet": "rolls",
+      "preheatTiming": "BEFORE_COOK",
+      "steps": [
+        {"title": "Activate the Yeast", "text": "Stir the yeast and a pinch of the sugar into the warm milk and leave for 5 minutes, until foamy."},
+        {"title": "Make the Dough", "text": "Mix the flour, remaining sugar and salt. Add the foamy milk, egg and melted butter and stir until a shaggy dough forms."},
+        {"title": "Knead", "text": "Knead for 8-10 minutes (or 5-6 in a stand mixer) until smooth and elastic."},
+        {"kind": "ADD_INS"},
+        {"title": "First Rise", "text": "Place the dough in a lightly oiled bowl, cover and let it rise in a warm place for about 1 hour, until doubled in size."},
+        {"title": "Shape the Rolls", "text": "Divide the dough into equal pieces (about 4 rolls for every cup of flour) and roll each into a smooth ball. Arrange them close together, just touching, in your greased pan ({pan})."},
+        {"title": "Second Rise", "text": "Cover and let rise for 30 minutes, until puffy."},
+        {"title": "Finish", "text": "Brush the warm rolls with melted butter and serve.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "cheese"},
+        {"id": "cinnamon"},
+        {"id": "raisins"},
+        {"id": "oats"},
+        {"id": "nuts"}
+      ],
+      "toppingSuggestions": ["melted_butter", "honey_butter", "savory_butter", "extra_cheese", "flaky_salt", "butter_jam"],
+      "tips": [
+        "Rolls should just touch each other so they rise upward and bake up soft.",
+        "Cover the dough with a damp towel while it rises so it does not dry out.",
+        "Make ahead: shape the rolls, refrigerate overnight, then let them come to room temperature before baking."
+      ],
+      "panOptions": [
+        {"maxFlourCups": 1.5, "text": "8 in / 20 cm round or square pan - about 6 rolls"},
+        {"maxFlourCups": 3.5, "text": "9×13 in / 23×33 cm pan"},
+        {"maxFlourCups": 6.0, "text": "two 9×13 in / 23×33 cm pans or two baking sheets"}
+      ]
+    }
+  ]
+}

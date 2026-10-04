@@ -1,0 +1,211 @@
+{
+  "profileSets": {
+    "brownie": [
+      {
+        "method": "OVEN",
+        "temperatureC": 175,
+        "temperatureF": 350,
+        "timeMin": 22,
+        "timeMax": 28,
+        "preheat": true,
+        "preheatMinutes": 10,
+        "prep": "Grease your pan ({pan}) and line it with parchment paper, leaving an overhang to lift the brownies out.",
+        "cook": "Spread the batter evenly in the pan. Bake at {temp} for {time}, until the edges are set and the center is just firm.",
+        "check": "A toothpick inserted into the center should come out with a few moist crumbs, not wet batter. Do not overbake - brownies firm up as they cool.",
+        "notes": [
+          "Thicker brownies (smaller pan) need longer and thinner ones (larger pan) bake faster - start checking early.",
+          "Cool completely before cutting for clean squares."
+        ]
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "id": "classic_brownies",
+      "name": "Classic Brownies",
+      "category": "BROWNIES",
+      "description": "Chewy, fudgy cocoa brownies with a shiny, crackly top.",
+      "imageKey": "chocolate",
+      "baseFlourAmount": 0.5,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 0.5, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "cocoa_powder", "amount": 0.3333333333, "unit": "CUP"},
+        {"ingredient": "baking_powder", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "melted"},
+        {"ingredient": "granulated_sugar", "amount": 1, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"}
+      ],
+      "yield": {"base": 16, "singular": "square", "plural": "squares", "note": "Based on an 8×8 in pan."},
+      "sweetness": {
+        "less": {"multiplier": 0.8, "note": "Sugar gives brownies their chewy, crackly top and moist, fudgy center, so the safe reduction is about 20%.", "expectedChanges": ["Top may be less shiny and crackly", "Slightly more cake-like and less fudgy"], "suggestedAlternatives": ["vanilla", "cinnamon"]}
+      },
+      "profileSet": "brownie",
+      "steps": [
+        {"title": "Mix Butter, Sugar and Cocoa", "text": "In a large bowl, stir the melted butter, sugar and cocoa powder until smooth."},
+        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs one at a time, then the vanilla, and stir for about a minute until glossy."},
+        {"title": "Add Flour", "text": "Stir in the flour, baking powder and salt until just combined. Do not overmix."},
+        {"kind": "ADD_INS"},
+        {"title": "Cool", "text": "Cool completely in the pan, then lift out and cut into squares.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "nuts", "amountMultiplier": 3},
+        {"id": "chocolate_chips", "amountMultiplier": 2},
+        {"id": "mixed_nuts", "amountMultiplier": 3},
+        {"id": "coconut", "amountMultiplier": 3},
+        {"id": "almonds", "amountMultiplier": 2},
+        {"id": "cream_cheese", "amountMultiplier": 2},
+        {"id": "vanilla", "amountMultiplier": 2},
+        {"id": "cinnamon", "amountMultiplier": 2},
+        {"id": "chocolate_drizzle", "amountMultiplier": 2}
+      ],
+      "toppingSuggestions": [
+        "powdered_sugar_dust",
+        "ice_cream",
+        "whipped_cream",
+        "chocolate_ganache",
+        "caramel_drizzle",
+        "flaky_salt",
+        "mixed_nuts_top",
+        "fresh_fruit"
+      ],
+      "tips": [
+        "For a crackly top, stir the batter well after adding the eggs.",
+        "Cool the brownies completely before cutting - a knife dipped in hot water makes clean edges.",
+        "Chill them for 30 minutes for neater squares."
+      ],
+      "panOptions": [
+        {"maxFlourCups": 0.75, "text": "8×8 in / 20×20 cm square pan"},
+        {"maxFlourCups": 1.25, "text": "9×13 in / 23×33 cm pan"},
+        {"maxFlourCups": 2.5, "text": "two 9×13 in / 23×33 cm pans, or one 13×18 in / 33×46 cm half-sheet pan"},
+        {"maxFlourCups": 6.0, "text": "several 9×13 in / 23×33 cm pans - bake them one or two at a time"}
+      ]
+    },
+    {
+      "id": "chocolate_brownies",
+      "name": "Chocolate Brownies",
+      "category": "BROWNIES",
+      "description": "Extra-fudgy brownies made with melted chocolate chips and cocoa.",
+      "imageKey": "chocolate",
+      "baseFlourAmount": 0.5,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 0.5, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "cocoa_powder", "amount": 0.25, "unit": "CUP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP"},
+        {"ingredient": "chocolate_chips", "amount": 0.5, "unit": "CUP"},
+        {"ingredient": "granulated_sugar", "amount": 0.75, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"}
+      ],
+      "yield": {"base": 16, "singular": "square", "plural": "squares", "note": "Based on an 8×8 in pan."},
+      "sweetness": {
+        "less": {"multiplier": 0.8, "note": "The chocolate chips add sweetness too, but sugar gives the fudgy texture, so the reduction is about 20%.", "expectedChanges": ["Slightly deeper, less sweet chocolate flavor", "Top may be less shiny and crackly"], "suggestedAlternatives": ["vanilla", "cinnamon"]}
+      },
+      "profileSet": "brownie",
+      "steps": [
+        {"title": "Melt the Chocolate", "text": "Melt the butter and chocolate chips together in a saucepan over low heat (or in the microwave in short bursts), stirring until smooth. Let it cool for 5 minutes."},
+        {"title": "Add Sugar, Eggs and Vanilla", "text": "Whisk the sugar into the chocolate mixture, then beat in the eggs one at a time and the vanilla until glossy."},
+        {"title": "Add Flour and Cocoa", "text": "Stir in the flour, cocoa powder and salt until just combined. Do not overmix."},
+        {"kind": "ADD_INS"},
+        {"title": "Cool", "text": "Cool completely in the pan, then lift out and cut into squares.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "nuts", "amountMultiplier": 3},
+        {"id": "mixed_nuts", "amountMultiplier": 3},
+        {"id": "coconut", "amountMultiplier": 3},
+        {"id": "almonds", "amountMultiplier": 2},
+        {"id": "cream_cheese", "amountMultiplier": 2},
+        {"id": "vanilla", "amountMultiplier": 2},
+        {"id": "cinnamon", "amountMultiplier": 2},
+        {"id": "chocolate_drizzle", "amountMultiplier": 2}
+      ],
+      "toppingSuggestions": [
+        "powdered_sugar_dust",
+        "ice_cream",
+        "whipped_cream",
+        "chocolate_ganache",
+        "caramel_drizzle",
+        "flaky_salt",
+        "mixed_nuts_top",
+        "fresh_fruit"
+      ],
+      "tips": [
+        "Let the melted chocolate cool slightly before adding the eggs so they do not scramble.",
+        "These are fudgy - a few moist crumbs on the toothpick are perfect.",
+        "Store in the fridge for an even denser, fudgier texture."
+      ],
+      "panOptions": [
+        {"maxFlourCups": 0.75, "text": "8×8 in / 20×20 cm square pan"},
+        {"maxFlourCups": 1.25, "text": "9×13 in / 23×33 cm pan"},
+        {"maxFlourCups": 2.5, "text": "two 9×13 in / 23×33 cm pans, or one 13×18 in / 33×46 cm half-sheet pan"},
+        {"maxFlourCups": 6.0, "text": "several 9×13 in / 23×33 cm pans - bake them one or two at a time"}
+      ]
+    },
+    {
+      "id": "walnut_brownies",
+      "name": "Walnut Brownies",
+      "category": "BROWNIES",
+      "description": "Classic fudgy brownies with crunchy walnuts.",
+      "imageKey": "walnut",
+      "baseFlourAmount": 0.5,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 0.5, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "cocoa_powder", "amount": 0.3333333333, "unit": "CUP"},
+        {"ingredient": "baking_powder", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "melted"},
+        {"ingredient": "granulated_sugar", "amount": 1, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"}
+      ],
+      "yield": {"base": 16, "singular": "square", "plural": "squares", "note": "Based on an 8×8 in pan."},
+      "sweetness": {
+        "less": {"multiplier": 0.8, "note": "Sugar gives brownies their chewy, crackly top and moist, fudgy center, so the safe reduction is about 20%.", "expectedChanges": ["Top may be less shiny and crackly", "Slightly more cake-like and less fudgy"], "suggestedAlternatives": ["vanilla", "cinnamon"]}
+      },
+      "profileSet": "brownie",
+      "steps": [
+        {"title": "Mix Butter, Sugar and Cocoa", "text": "In a large bowl, stir the melted butter, sugar and cocoa powder until smooth."},
+        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs one at a time, then the vanilla, and stir for about a minute until glossy."},
+        {"title": "Add Flour", "text": "Stir in the flour, baking powder and salt until just combined. Do not overmix."},
+        {"kind": "ADD_INS"},
+        {"title": "Cool", "text": "Cool completely in the pan, then lift out and cut into squares.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "nuts", "default": true, "amountMultiplier": 3},
+        {"id": "chocolate_chips", "amountMultiplier": 2},
+        {"id": "mixed_nuts", "amountMultiplier": 3},
+        {"id": "almonds", "amountMultiplier": 2},
+        {"id": "coconut", "amountMultiplier": 3},
+        {"id": "vanilla", "amountMultiplier": 2},
+        {"id": "cinnamon", "amountMultiplier": 2},
+        {"id": "chocolate_drizzle", "amountMultiplier": 2}
+      ],
+      "toppingSuggestions": [
+        "powdered_sugar_dust",
+        "ice_cream",
+        "whipped_cream",
+        "chocolate_ganache",
+        "caramel_drizzle",
+        "flaky_salt",
+        "mixed_nuts_top",
+        "fresh_fruit"
+      ],
+      "tips": [
+        "Toast the walnuts for 5 minutes first for a deeper flavor.",
+        "Save a handful of walnuts to press on top of the batter before baking.",
+        "Chop the nuts coarsely so every square has crunch."
+      ],
+      "panOptions": [
+        {"maxFlourCups": 0.75, "text": "8×8 in / 20×20 cm square pan"},
+        {"maxFlourCups": 1.25, "text": "9×13 in / 23×33 cm pan"},
+        {"maxFlourCups": 2.5, "text": "two 9×13 in / 23×33 cm pans, or one 13×18 in / 33×46 cm half-sheet pan"},
+        {"maxFlourCups": 6.0, "text": "several 9×13 in / 23×33 cm pans - bake them one or two at a time"}
+      ]
+    }
+  ]
+}

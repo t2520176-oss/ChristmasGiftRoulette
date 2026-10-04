@@ -1,0 +1,32 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- paper liner -->
+    <path
+        android:fillColor="#D93A5E"
+        android:pathData="M35,62h38l-5,22a3,3 0,0 1,-3 2.5h-22a3,3 0,0 1,-3 -2.5z" />
+    <path
+        android:fillColor="#F26A87"
+        android:pathData="M45,62h3l-1,24h-3zM55,62h3l0,24h-3zM65,62h3l1,24h-3z" />
+    <!-- cake dome -->
+    <path
+        android:fillColor="#C98A52"
+        android:pathData="M32,62c0,-12 10,-18 22,-18s22,6 22,18z" />
+    <!-- frosting swirl -->
+    <path
+        android:fillColor="#FFB7C5"
+        android:pathData="M38,50c0,-8 7,-13 16,-13s16,5 16,13c0,3 -4,4 -16,4s-16,-1 -16,-4z" />
+    <path
+        android:fillColor="#FFD3DC"
+        android:pathData="M44,40c0,-6 4,-10 10,-10s10,4 10,10c0,2 -3,3 -10,3s-10,-1 -10,-3z" />
+    <!-- cherry -->
+    <path
+        android:fillColor="#B71C3C"
+        android:pathData="M54,25m-5,0a5,5 0,1 1,10 0a5,5 0,1 1,-10 0" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.7"
+        android:pathData="M52,23m-1.4,0a1.4,1.4 0,1 1,2.8 0a1.4,1.4 0,1 1,-2.8 0" />
+</vector>

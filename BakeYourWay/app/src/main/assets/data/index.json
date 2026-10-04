@@ -1,0 +1,19 @@
+{
+  "ingredients": "ingredients.json",
+  "addIns": "addins.json",
+  "toppings": "toppings.json",
+  "recipeFiles": [
+    "recipes/muffins.json",
+    "recipes/cookies.json",
+    "recipes/cupcakes.json",
+    "recipes/bread.json",
+    "recipes/pancakes.json",
+    "recipes/brownies.json",
+    "recipes/scones.json",
+    "recipes/pie.json",
+    "recipes/cakes.json",
+    "recipes/quickbreads.json",
+    "recipes/biscuits.json",
+    "recipes/more.json"
+  ]
+}

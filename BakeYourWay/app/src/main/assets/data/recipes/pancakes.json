@@ -1,0 +1,257 @@
+{
+  "profileSets": {
+    "pancake": [
+      {
+        "method": "STOVETOP",
+        "timeMin": 3,
+        "timeMax": 5,
+        "heatLevel": "Medium",
+        "prep": "Lightly grease the pan with a little butter or oil and wipe off any excess.",
+        "cook": "Pour about 1/4 cup of batter per pancake, leaving space between them. Cook over medium heat for about {time} in total: until bubbles form and the edges look set, then flip once.",
+        "check": "Both sides should be golden and the center should feel springy, not wet.",
+        "notes": [
+          "Keep the heat at medium - too hot burns the outside before the center cooks.",
+          "The first pancake is a test: adjust the heat after it.",
+          "Keep finished pancakes warm on a rack in a 95°C / 200°F oven."
+        ],
+        "batchCapacity": 3
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "id": "classic_pancakes",
+      "name": "Classic Pancakes",
+      "category": "PANCAKES",
+      "description": "Fluffy diner-style pancakes with golden edges.",
+      "imageKey": "pancake",
+      "baseFlourAmount": 1,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "granulated_sugar", "amount": 1, "unit": "TBSP", "role": "SUGAR"},
+        {"ingredient": "baking_powder", "amount": 2, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "milk", "amount": 0.75, "unit": "CUP"},
+        {"ingredient": "butter", "amount": 2, "unit": "TBSP", "prep": "melted"},
+        {"ingredient": "vanilla_extract", "amount": 0.5, "unit": "TSP"}
+      ],
+      "yield": {"base": 6, "singular": "pancake", "plural": "pancakes", "note": "About 4 in (10 cm) across."},
+      "sweetness": {
+        "less": {"multiplier": 0.5, "note": "Pancakes use only a little sugar for flavor and browning, so you can halve it with very little effect on the batter. The toppings usually supply the sweetness.", "expectedChanges": ["Barely noticeable difference in the batter", "Pancakes may be slightly paler"], "suggestedAlternatives": ["banana", "blueberries", "cinnamon", "vanilla"]}
+      },
+      "profileSet": "pancake",
+      "preheatTiming": "BEFORE_COOK",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the egg, milk, melted butter and vanilla until smooth."},
+        {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. A few lumps are fine."},
+        {"kind": "ADD_INS"},
+        {"title": "Rest the Batter", "text": "Let the batter rest for 5 minutes while you get the pan ready. This gives fluffier pancakes."},
+        {"title": "Serve", "text": "Serve warm with your favorite toppings.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "banana"},
+        {"id": "blueberries"},
+        {"id": "strawberries"},
+        {"id": "chocolate_chips"},
+        {"id": "nuts"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "oats"},
+        {"id": "coconut"},
+        {"id": "apple"}
+      ],
+      "toppingSuggestions": [
+        "maple_syrup",
+        "fresh_fruit",
+        "butter_jam",
+        "whipped_cream",
+        "honey_butter",
+        "sliced_banana",
+        "powdered_sugar_berries",
+        "chocolate_chips_top"
+      ],
+      "tips": [
+        "Do not overmix - lumpy batter makes tender pancakes.",
+        "Flip when the surface is covered in bubbles and the edges look dry.",
+        "Wipe the pan between batches if it starts to smoke."
+      ]
+    },
+    {
+      "id": "banana_pancakes",
+      "name": "Banana Pancakes",
+      "category": "PANCAKES",
+      "description": "Soft pancakes with mashed banana mixed right into the batter.",
+      "imageKey": "banana",
+      "baseFlourAmount": 1,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "granulated_sugar", "amount": 1, "unit": "TBSP", "role": "SUGAR"},
+        {"ingredient": "baking_powder", "amount": 2, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "cinnamon", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "banana", "amount": 0.3333333333, "unit": "CUP", "prep": "mashed"},
+        {"ingredient": "milk", "amount": 0.5, "unit": "CUP"},
+        {"ingredient": "butter", "amount": 2, "unit": "TBSP", "prep": "melted"},
+        {"ingredient": "vanilla_extract", "amount": 0.5, "unit": "TSP"}
+      ],
+      "yield": {"base": 6, "singular": "pancake", "plural": "pancakes", "note": "About 4 in (10 cm) across."},
+      "sweetness": {
+        "less": {"multiplier": 0.5, "note": "Ripe banana already sweetens the batter, so the added sugar can be cut by half.", "expectedChanges": ["Barely noticeable difference thanks to the banana", "Pancakes may be slightly paler"], "suggestedAlternatives": ["banana", "cinnamon", "vanilla", "blueberries"]}
+      },
+      "profileSet": "pancake",
+      "preheatTiming": "BEFORE_COOK",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder, salt and cinnamon."},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, mash the banana well, then whisk in the egg, milk, melted butter and vanilla until smooth."},
+        {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. A few lumps are fine."},
+        {"kind": "ADD_INS"},
+        {"title": "Rest the Batter", "text": "Let the batter rest for 5 minutes while you get the pan ready. This gives fluffier pancakes."},
+        {"title": "Serve", "text": "Serve warm with your favorite toppings.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "banana"},
+        {"id": "chocolate_chips"},
+        {"id": "nuts"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "oats"},
+        {"id": "blueberries"},
+        {"id": "coconut"}
+      ],
+      "toppingSuggestions": [
+        "maple_syrup",
+        "sliced_banana",
+        "honey_butter",
+        "mixed_nuts_top",
+        "caramel_drizzle",
+        "whipped_cream",
+        "fresh_fruit"
+      ],
+      "tips": [
+        "Use very ripe bananas - they mash easily and taste sweeter.",
+        "Banana batter browns faster, so keep the heat at medium-low if needed.",
+        "These pancakes are tender; flip them gently."
+      ]
+    },
+    {
+      "id": "blueberry_pancakes",
+      "name": "Blueberry Pancakes",
+      "category": "PANCAKES",
+      "description": "Fluffy pancakes dotted with juicy blueberries.",
+      "imageKey": "blueberry",
+      "baseFlourAmount": 1,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "granulated_sugar", "amount": 1, "unit": "TBSP", "role": "SUGAR"},
+        {"ingredient": "baking_powder", "amount": 2, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "milk", "amount": 0.75, "unit": "CUP"},
+        {"ingredient": "butter", "amount": 2, "unit": "TBSP", "prep": "melted"},
+        {"ingredient": "vanilla_extract", "amount": 0.5, "unit": "TSP"}
+      ],
+      "yield": {"base": 6, "singular": "pancake", "plural": "pancakes", "note": "About 4 in (10 cm) across."},
+      "sweetness": {
+        "less": {"multiplier": 0.5, "note": "Blueberries bring their own sweetness and the toppings add more, so the batter sugar can be halved.", "expectedChanges": ["Barely noticeable difference in the batter", "Pancakes may be slightly paler"], "suggestedAlternatives": ["banana", "cinnamon", "vanilla"]}
+      },
+      "profileSet": "pancake",
+      "preheatTiming": "BEFORE_COOK",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the egg, milk, melted butter and vanilla until smooth."},
+        {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. A few lumps are fine."},
+        {"kind": "ADD_INS"},
+        {"title": "Rest the Batter", "text": "Let the batter rest for 5 minutes while you get the pan ready. This gives fluffier pancakes."},
+        {"title": "Serve", "text": "Serve warm with your favorite toppings.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "blueberries", "default": true},
+        {"id": "banana"},
+        {"id": "strawberries"},
+        {"id": "chocolate_chips"},
+        {"id": "nuts"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "oats"},
+        {"id": "coconut"}
+      ],
+      "toppingSuggestions": [
+        "maple_syrup",
+        "extra_berries",
+        "whipped_cream",
+        "butter_jam",
+        "honey_butter",
+        "powdered_sugar_berries",
+        "fresh_fruit"
+      ],
+      "tips": [
+        "Sprinkle the berries onto the pancakes right after pouring the batter so they do not burst in the bowl.",
+        "Frozen blueberries work well - use them straight from the freezer.",
+        "Lower the heat slightly if the berries start to burn."
+      ]
+    },
+    {
+      "id": "chocolate_pancakes",
+      "name": "Chocolate Pancakes",
+      "category": "PANCAKES",
+      "description": "Cocoa-rich pancakes that taste like breakfast dessert.",
+      "imageKey": "chocolate",
+      "baseFlourAmount": 1,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "cocoa_powder", "amount": 2, "unit": "TBSP"},
+        {"ingredient": "granulated_sugar", "amount": 2, "unit": "TBSP", "role": "SUGAR"},
+        {"ingredient": "baking_powder", "amount": 2, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "milk", "amount": 0.75, "unit": "CUP"},
+        {"ingredient": "butter", "amount": 2, "unit": "TBSP", "prep": "melted"},
+        {"ingredient": "vanilla_extract", "amount": 0.5, "unit": "TSP"}
+      ],
+      "yield": {"base": 6, "singular": "pancake", "plural": "pancakes", "note": "About 4 in (10 cm) across."},
+      "sweetness": {
+        "less": {"multiplier": 0.75, "note": "Cocoa is bitter, so these keep more sugar than other pancakes - about 25% less is the safe reduction.", "expectedChanges": ["Slightly more bitter chocolate flavor", "Pancakes may look a little paler"], "suggestedAlternatives": ["banana", "vanilla", "strawberries"]}
+      },
+      "profileSet": "pancake",
+      "preheatTiming": "BEFORE_COOK",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, cocoa powder, sugar, baking powder and salt."},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the egg, milk, melted butter and vanilla until smooth."},
+        {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. A few lumps are fine."},
+        {"kind": "ADD_INS"},
+        {"title": "Rest the Batter", "text": "Let the batter rest for 5 minutes while you get the pan ready. This gives fluffier pancakes."},
+        {"title": "Serve", "text": "Serve warm with your favorite toppings.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "chocolate_chips"},
+        {"id": "banana"},
+        {"id": "strawberries"},
+        {"id": "nuts"},
+        {"id": "vanilla"},
+        {"id": "coconut"},
+        {"id": "cinnamon"}
+      ],
+      "toppingSuggestions": [
+        "sliced_banana",
+        "whipped_cream",
+        "maple_syrup",
+        "chocolate_ganache",
+        "fresh_fruit",
+        "powdered_sugar_berries",
+        "peanut_butter_drizzle"
+      ],
+      "tips": [
+        "Chocolate pancakes are hard to judge by color - check that the edges are set and bubbles have popped.",
+        "Use medium-low heat; cocoa batter scorches easily.",
+        "Sift the cocoa to avoid dry lumps."
+      ]
+    }
+  ]
+}

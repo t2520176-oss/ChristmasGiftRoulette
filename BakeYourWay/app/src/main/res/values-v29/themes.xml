@@ -1,0 +1,7 @@
+<resources>
+    <!-- The app is light-only: do not let the system force-darken it. -->
+    <style name="Theme.BakeYourWay" parent="Base.Theme.BakeYourWay">
+        <item name="android:forceDarkAllowed">false</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
+    </style>
+</resources>

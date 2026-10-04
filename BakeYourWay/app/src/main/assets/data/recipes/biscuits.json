@@ -1,0 +1,128 @@
+{
+  "profileSets": {
+    "biscuit": [
+      {
+        "method": "OVEN",
+        "temperatureC": 220,
+        "temperatureF": 425,
+        "timeMin": 12,
+        "timeMax": 16,
+        "preheat": true,
+        "preheatMinutes": 15,
+        "prep": "Line a baking sheet with parchment paper.",
+        "cook": "Place the biscuits close together on the sheet (they rise taller when their sides touch). Bake at {temp} for {time}, until tall and golden brown.",
+        "check": "The tops should be deep golden and the biscuits should feel light for their size.",
+        "notes": [
+          "A very hot oven makes the butter steam, creating flaky layers.",
+          "Serve warm - biscuits are best within an hour of baking."
+        ],
+        "batchCapacity": 8
+      },
+      {
+        "method": "AIR_FRYER",
+        "temperatureC": 170,
+        "temperatureF": 340,
+        "timeMin": 8,
+        "timeMax": 12,
+        "preheat": true,
+        "preheatMinutes": 3,
+        "prep": "Line the basket with perforated air fryer parchment, or lightly grease it.",
+        "cook": "Place 3-4 biscuits in the basket so their sides just touch. Air fry at {temp} for {time}, until tall and golden.",
+        "check": "The tops should be golden and the biscuits should feel light for their size. If they brown too fast, cover loosely with foil.",
+        "notes": [
+          "Air fryers vary a lot - start checking at the early end of the range.",
+          "Do not crowd the basket - biscuits need room to rise."
+        ],
+        "batchCapacity": 4
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "id": "buttermilk_biscuits",
+      "name": "Buttermilk Biscuits",
+      "category": "BISCUITS",
+      "description": "Tall, flaky biscuits with buttery layers.",
+      "imageKey": "biscuit",
+      "baseFlourAmount": 2,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 2, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "baking_powder", "amount": 3, "unit": "TSP"},
+        {"ingredient": "baking_soda", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "granulated_sugar", "amount": 1, "unit": "TBSP", "role": "SUGAR"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "very cold, cubed"},
+        {"ingredient": "buttermilk", "amount": 0.75, "unit": "CUP"}
+      ],
+      "yield": {"base": 8, "singular": "biscuit", "plural": "biscuits", "note": "Cut with a 6 cm (2 1/2 in) cutter."},
+      "sweetness": {
+        "less": {"multiplier": 0.5, "note": "Biscuits are barely sweet - only a tablespoon of sugar - so halving it makes almost no difference.", "expectedChanges": ["Barely noticeable difference", "Tops may be slightly paler"], "suggestedAlternatives": ["raisins", "cinnamon"]}
+      },
+      "profileSet": "biscuit",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the dry ingredients."},
+        {"title": "Cut In the Butter", "text": "Rub or grate the very cold butter into the flour until the mixture looks like coarse crumbs with pea-sized pieces."},
+        {"title": "Add the Buttermilk", "text": "Pour in the buttermilk and stir with a fork until a shaggy dough forms. Do not overmix."},
+        {"kind": "ADD_INS"},
+        {"title": "Fold and Cut", "text": "Turn the dough onto a floured surface and pat it to about 2.5 cm (1 in) thick. Fold it in thirds twice for flaky layers, pat out again and cut straight down with a floured cutter - do not twist."},
+        {"title": "Finish", "text": "Brush the warm biscuits with a little melted butter if you like.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "cheese"},
+        {"id": "raisins"},
+        {"id": "cinnamon"},
+        {"id": "oats"},
+        {"id": "nuts"}
+      ],
+      "toppingSuggestions": ["honey_butter", "melted_butter", "butter_jam", "savory_butter", "extra_cheese", "flaky_salt"],
+      "tips": [
+        "Keep the butter and buttermilk very cold.",
+        "Press the cutter straight down - twisting seals the edges and stops the rise.",
+        "Pat out and cut quickly; overworked dough makes tough biscuits."
+      ]
+    },
+    {
+      "id": "cheddar_biscuits",
+      "name": "Cheddar Biscuits",
+      "category": "BISCUITS",
+      "description": "Savory, cheesy biscuits with a hint of garlic.",
+      "imageKey": "cheese",
+      "baseFlourAmount": 2,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 2, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "baking_powder", "amount": 3, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "garlic_powder", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "granulated_sugar", "amount": 2, "unit": "TSP", "role": "SUGAR"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "very cold, cubed"},
+        {"ingredient": "cheddar", "amount": 0.75, "unit": "CUP"},
+        {"ingredient": "buttermilk", "amount": 0.75, "unit": "CUP"}
+      ],
+      "yield": {"base": 8, "singular": "biscuit", "plural": "biscuits", "note": "Cut with a 6 cm (2 1/2 in) cutter."},
+      "sweetness": {
+        "less": {"multiplier": 0.5, "note": "These savory biscuits use just 2 teaspoons of sugar, so halving it makes almost no difference.", "expectedChanges": ["No noticeable difference"], "suggestedAlternatives": []}
+      },
+      "profileSet": "biscuit",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, baking powder, salt, garlic powder and sugar."},
+        {"title": "Cut In the Butter", "text": "Rub or grate the very cold butter into the flour until the mixture looks like coarse crumbs with pea-sized pieces. Stir in the cheddar."},
+        {"title": "Add the Buttermilk", "text": "Pour in the buttermilk and stir with a fork until a shaggy dough forms. Do not overmix."},
+        {"kind": "ADD_INS"},
+        {"title": "Fold and Cut", "text": "Turn the dough onto a floured surface and pat it to about 2.5 cm (1 in) thick. Fold it in thirds once, pat out again and cut straight down with a floured cutter - do not twist."},
+        {"title": "Finish", "text": "Brush the warm biscuits with melted butter if you like.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "cheese"},
+        {"id": "cinnamon"}
+      ],
+      "toppingSuggestions": ["savory_butter", "melted_butter", "extra_cheese", "honey_butter", "flaky_salt"],
+      "tips": [
+        "Use freshly shredded cheddar - pre-shredded cheese has anti-caking powder that dries the dough.",
+        "Keep the butter and buttermilk very cold.",
+        "A garlic-butter brush right out of the oven makes them irresistible."
+      ]
+    }
+  ]
+}

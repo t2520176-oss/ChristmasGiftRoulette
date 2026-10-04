@@ -1,0 +1,270 @@
+{
+  "profileSets": {
+    "scone": [
+      {
+        "method": "OVEN",
+        "temperatureC": 200,
+        "temperatureF": 400,
+        "timeMin": 15,
+        "timeMax": 20,
+        "preheat": true,
+        "preheatMinutes": 10,
+        "prep": "Line a baking sheet with parchment paper.",
+        "cook": "Arrange the scones about 5 cm (2 in) apart on the sheet. Bake at {temp} for {time}, until risen and golden brown on top.",
+        "check": "The tops should be golden and a toothpick inserted into the thickest part should come out clean.",
+        "notes": [
+          "Cold butter and a hot oven give tall, flaky scones.",
+          "Scones are best eaten warm on the day they are baked."
+        ],
+        "batchCapacity": 8
+      },
+      {
+        "method": "AIR_FRYER",
+        "temperatureC": 170,
+        "temperatureF": 340,
+        "timeMin": 10,
+        "timeMax": 14,
+        "preheat": true,
+        "preheatMinutes": 3,
+        "prep": "Line the basket with perforated air fryer parchment, or lightly grease it.",
+        "cook": "Place 3-4 scones in the basket with space between them. Air fry at {temp} for {time}, until risen and golden.",
+        "check": "The tops should be golden and a toothpick inserted into the thickest part should come out clean. If they brown too fast, cover loosely with foil.",
+        "notes": [
+          "Air fryers vary a lot - start checking at the early end of the range.",
+          "Do not crowd the basket; scones need room to rise."
+        ],
+        "batchCapacity": 4
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "id": "classic_scones",
+      "name": "Classic Scones",
+      "category": "SCONES",
+      "description": "Tender, buttery scones with a golden top.",
+      "imageKey": "scone",
+      "baseFlourAmount": 2,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 2, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "granulated_sugar", "amount": 0.25, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "baking_powder", "amount": 3, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "cold, cubed"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "heavy_cream", "amount": 0.5, "unit": "CUP"}
+      ],
+      "yield": {"base": 8, "singular": "scone", "plural": "scones", "note": "Based on one round of dough cut into 8 wedges."},
+      "sweetness": {
+        "less": {"multiplier": 0.75, "note": "Scones are only lightly sweet by design, so about 25% less sugar still tastes good - especially with jam or cream.", "expectedChanges": ["Tops may be slightly paler", "Crumb may be a little less tender"], "suggestedAlternatives": ["raisins", "cinnamon", "vanilla"]}
+      },
+      "profileSet": "scone",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
+        {"title": "Cut In the Butter", "text": "Rub or cut the cold butter into the dry ingredients with your fingertips or a pastry cutter until the mixture looks like coarse crumbs with some pea-sized pieces."},
+        {"title": "Add the Wet Ingredients", "text": "Whisk the egg and cream together, pour into the dry mixture and stir with a fork until a shaggy dough forms."},
+        {"kind": "ADD_INS"},
+        {"title": "Shape", "text": "Turn the dough onto a lightly floured surface and gently pat it into a round about 2 cm (3/4 in) thick - knead only 2-3 times. Cut into wedges (about 4 for every cup of flour) and brush the tops with a little cream or milk."},
+        {"title": "Cool", "text": "Let the scones cool on the sheet for 5-10 minutes before serving.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "raisins"},
+        {"id": "blueberries"},
+        {"id": "chocolate_chips"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "nuts"},
+        {"id": "almonds"},
+        {"id": "cheese"},
+        {"id": "coconut"}
+      ],
+      "toppingSuggestions": [
+        "butter_jam",
+        "whipped_cream",
+        "honey_butter",
+        "lemon_curd",
+        "glaze_drizzle",
+        "fresh_fruit",
+        "powdered_sugar_dust",
+        "coarse_sugar"
+      ],
+      "tips": [
+        "Keep the butter cold - warm butter melts into the flour and makes flat, tough scones.",
+        "Handle the dough as little as possible.",
+        "Cut straight down with a knife - do not twist, or the scones will not rise evenly."
+      ]
+    },
+    {
+      "id": "raisin_scones",
+      "name": "Raisin Scones",
+      "category": "SCONES",
+      "description": "Classic scones studded with plump raisins.",
+      "imageKey": "raisin",
+      "baseFlourAmount": 2,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 2, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "granulated_sugar", "amount": 0.25, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "baking_powder", "amount": 3, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "cold, cubed"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "heavy_cream", "amount": 0.5, "unit": "CUP"}
+      ],
+      "yield": {"base": 8, "singular": "scone", "plural": "scones", "note": "Based on one round of dough cut into 8 wedges."},
+      "sweetness": {
+        "less": {"multiplier": 0.75, "note": "Scones are only lightly sweet by design, so about 25% less sugar still tastes good - especially with jam or cream.", "expectedChanges": ["Tops may be slightly paler", "Crumb may be a little less tender"], "suggestedAlternatives": ["raisins", "cinnamon", "vanilla"]}
+      },
+      "profileSet": "scone",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
+        {"title": "Cut In the Butter", "text": "Rub or cut the cold butter into the dry ingredients with your fingertips or a pastry cutter until the mixture looks like coarse crumbs with some pea-sized pieces."},
+        {"title": "Add the Wet Ingredients", "text": "Whisk the egg and cream together, pour into the dry mixture and stir with a fork until a shaggy dough forms."},
+        {"kind": "ADD_INS"},
+        {"title": "Shape", "text": "Turn the dough onto a lightly floured surface and gently pat it into a round about 2 cm (3/4 in) thick - knead only 2-3 times. Cut into wedges (about 4 for every cup of flour) and brush the tops with a little cream or milk."},
+        {"title": "Cool", "text": "Let the scones cool on the sheet for 5-10 minutes before serving.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "raisins", "default": true, "amountMultiplier": 1},
+        {"id": "blueberries"},
+        {"id": "chocolate_chips"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "nuts"},
+        {"id": "almonds"},
+        {"id": "cheese"},
+        {"id": "coconut"}
+      ],
+      "toppingSuggestions": [
+        "butter_jam",
+        "whipped_cream",
+        "honey_butter",
+        "lemon_curd",
+        "glaze_drizzle",
+        "fresh_fruit",
+        "powdered_sugar_dust",
+        "coarse_sugar"
+      ],
+      "tips": [
+        "Keep the butter cold - warm butter melts into the flour and makes flat, tough scones.",
+        "Handle the dough as little as possible.",
+        "Cut straight down with a knife - do not twist, or the scones will not rise evenly."
+      ]
+    },
+    {
+      "id": "blueberry_scones",
+      "name": "Blueberry Scones",
+      "category": "SCONES",
+      "description": "Buttery scones with bursts of blueberry.",
+      "imageKey": "blueberry",
+      "baseFlourAmount": 2,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 2, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "granulated_sugar", "amount": 0.25, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "baking_powder", "amount": 3, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "cold, cubed"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "heavy_cream", "amount": 0.5, "unit": "CUP"}
+      ],
+      "yield": {"base": 8, "singular": "scone", "plural": "scones", "note": "Based on one round of dough cut into 8 wedges."},
+      "sweetness": {
+        "less": {"multiplier": 0.75, "note": "Scones are only lightly sweet by design, so about 25% less sugar still tastes good - especially with jam or cream.", "expectedChanges": ["Tops may be slightly paler", "Crumb may be a little less tender"], "suggestedAlternatives": ["cinnamon", "vanilla", "raisins"]}
+      },
+      "profileSet": "scone",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
+        {"title": "Cut In the Butter", "text": "Rub or cut the cold butter into the dry ingredients with your fingertips or a pastry cutter until the mixture looks like coarse crumbs with some pea-sized pieces."},
+        {"title": "Add the Wet Ingredients", "text": "Whisk the egg and cream together, pour into the dry mixture and stir with a fork until a shaggy dough forms."},
+        {"kind": "ADD_INS"},
+        {"title": "Shape", "text": "Turn the dough onto a lightly floured surface and gently pat it into a round about 2 cm (3/4 in) thick - knead only 2-3 times. Cut into wedges (about 4 for every cup of flour) and brush the tops with a little cream or milk."},
+        {"title": "Cool", "text": "Let the scones cool on the sheet for 5-10 minutes before serving.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "blueberries", "default": true, "amountMultiplier": 0.75},
+        {"id": "raisins"},
+        {"id": "chocolate_chips"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "nuts"},
+        {"id": "almonds"},
+        {"id": "cheese"},
+        {"id": "coconut"}
+      ],
+      "toppingSuggestions": [
+        "butter_jam",
+        "whipped_cream",
+        "honey_butter",
+        "lemon_curd",
+        "glaze_drizzle",
+        "fresh_fruit",
+        "powdered_sugar_dust",
+        "coarse_sugar"
+      ],
+      "tips": [
+        "Keep the butter cold - warm butter melts into the flour and makes flat, tough scones.",
+        "Handle the dough as little as possible.",
+        "Cut straight down with a knife - do not twist, or the scones will not rise evenly."
+      ]
+    },
+    {
+      "id": "chocolate_chip_scones",
+      "name": "Chocolate Chip Scones",
+      "category": "SCONES",
+      "description": "Tender scones with melty chocolate chips.",
+      "imageKey": "chocolate",
+      "baseFlourAmount": 2,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 2, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "granulated_sugar", "amount": 0.25, "unit": "CUP", "role": "SUGAR"},
+        {"ingredient": "baking_powder", "amount": 3, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "cold, cubed"},
+        {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
+        {"ingredient": "heavy_cream", "amount": 0.5, "unit": "CUP"}
+      ],
+      "yield": {"base": 8, "singular": "scone", "plural": "scones", "note": "Based on one round of dough cut into 8 wedges."},
+      "sweetness": {
+        "less": {"multiplier": 0.75, "note": "Scones are only lightly sweet by design, so about 25% less sugar still tastes good - especially with jam or cream.", "expectedChanges": ["Tops may be slightly paler", "Crumb may be a little less tender"], "suggestedAlternatives": ["cinnamon", "vanilla", "raisins"]}
+      },
+      "profileSet": "scone",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
+        {"title": "Cut In the Butter", "text": "Rub or cut the cold butter into the dry ingredients with your fingertips or a pastry cutter until the mixture looks like coarse crumbs with some pea-sized pieces."},
+        {"title": "Add the Wet Ingredients", "text": "Whisk the egg and cream together, pour into the dry mixture and stir with a fork until a shaggy dough forms."},
+        {"kind": "ADD_INS"},
+        {"title": "Shape", "text": "Turn the dough onto a lightly floured surface and gently pat it into a round about 2 cm (3/4 in) thick - knead only 2-3 times. Cut into wedges (about 4 for every cup of flour) and brush the tops with a little cream or milk."},
+        {"title": "Cool", "text": "Let the scones cool on the sheet for 5-10 minutes before serving.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "chocolate_chips", "default": true, "amountMultiplier": 0.75},
+        {"id": "raisins"},
+        {"id": "blueberries"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "nuts"},
+        {"id": "almonds"},
+        {"id": "cheese"},
+        {"id": "coconut"}
+      ],
+      "toppingSuggestions": [
+        "butter_jam",
+        "whipped_cream",
+        "honey_butter",
+        "lemon_curd",
+        "glaze_drizzle",
+        "fresh_fruit",
+        "powdered_sugar_dust",
+        "coarse_sugar"
+      ],
+      "tips": [
+        "Keep the butter cold - warm butter melts into the flour and makes flat, tough scones.",
+        "Handle the dough as little as possible.",
+        "Cut straight down with a knife - do not twist, or the scones will not rise evenly."
+      ]
+    }
+  ]
+}

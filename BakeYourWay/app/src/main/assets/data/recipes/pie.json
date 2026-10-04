@@ -1,0 +1,150 @@
+{
+  "profileSets": {
+    "pie": [
+      {
+        "method": "OVEN",
+        "temperatureC": 200,
+        "temperatureF": 400,
+        "timeMin": 45,
+        "timeMax": 55,
+        "preheat": true,
+        "preheatMinutes": 15,
+        "cook": "Place the pie on a baking sheet on the lower oven rack to catch drips. Bake at {temp} for {time}, until the crust is deep golden and the filling is bubbling through the vents.",
+        "check": "The crust should be deep golden and the juices bubbling thickly through the vents. If the edges brown too quickly, cover them with strips of foil.",
+        "notes": [
+          "Let the pie cool for at least 2 hours so the filling can set before slicing.",
+          "A smaller or deeper pie dish changes the time - start checking early."
+        ]
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "id": "apple_pie",
+      "name": "Apple Pie",
+      "category": "PIE",
+      "description": "A double-crust pie with tender cinnamon apples and a flaky, buttery crust.",
+      "imageKey": "apple",
+      "baseFlourAmount": 2.5,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 2.5, "unit": "CUP", "role": "FLOUR", "group": "Crust"},
+        {"ingredient": "salt", "amount": 1, "unit": "TSP", "group": "Crust"},
+        {"ingredient": "granulated_sugar", "amount": 1, "unit": "TBSP", "group": "Crust"},
+        {"ingredient": "butter", "amount": 1, "unit": "CUP", "prep": "very cold, cubed", "group": "Crust"},
+        {"ingredient": "water", "amount": 6, "unit": "TBSP", "prep": "ice-cold", "group": "Crust"},
+        {"ingredient": "apple_sliced", "amount": 6, "unit": "CUP", "prep": "peeled, cored and thinly sliced", "group": "Filling"},
+        {"ingredient": "granulated_sugar", "amount": 0.5, "unit": "CUP", "role": "SUGAR", "group": "Filling"},
+        {"ingredient": "brown_sugar", "amount": 0.25, "unit": "CUP", "prep": "packed", "role": "SUGAR", "group": "Filling"},
+        {"ingredient": "cornstarch", "amount": 2, "unit": "TBSP", "group": "Filling"},
+        {"ingredient": "cinnamon", "amount": 1, "unit": "TSP", "group": "Filling"},
+        {"ingredient": "lemon_juice", "amount": 1, "unit": "TBSP", "group": "Filling"},
+        {"ingredient": "butter", "amount": 2, "unit": "TBSP", "prep": "cut into small pieces", "group": "Filling"},
+        {"ingredient": "milk", "amount": 1, "unit": "TBSP", "prep": "for brushing the top", "group": "Filling"}
+      ],
+      "yield": {"base": 8, "singular": "slice", "plural": "slices", "note": "Based on one 9 in (23 cm) double-crust pie."},
+      "sweetness": {
+        "less": {"multiplier": 0.75, "note": "Apples are naturally sweet and the cornstarch sets the filling, so about 25% less sugar still gives a juicy, set pie.", "expectedChanges": ["Filling is a little tarter", "Filling may be slightly juicier", "Crust browns a touch less"], "suggestedAlternatives": ["cinnamon", "vanilla", "raisins"]}
+      },
+      "profileSet": "pie",
+      "preheatTiming": "BEFORE_COOK",
+      "steps": [
+        {"title": "Make the Crust", "text": "Whisk the flour, salt and sugar. Cut in the cold butter with your fingertips or a pastry cutter until pea-sized pieces remain. Sprinkle in the ice water 1 tablespoon at a time, tossing, until the dough just holds together when squeezed."},
+        {"title": "Chill the Dough", "text": "Divide the dough into two discs (one slightly larger), wrap them and chill for at least 1 hour."},
+        {"title": "Make the Filling", "text": "Toss the sliced apples with both sugars, the cornstarch, cinnamon and lemon juice until evenly coated."},
+        {"kind": "ADD_INS"},
+        {"title": "Assemble the Pie", "text": "Roll out the larger disc and fit it into your pie dish ({pan}). Add the filling and dot with the butter. Roll out the second disc, lay it over the top, trim and crimp the edges, cut 4-5 steam vents and brush the top with the milk."},
+        {"title": "Cool", "text": "Cool the pie on a wire rack for at least 2 hours before slicing.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "raisins"},
+        {"id": "nuts"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "cheese"}
+      ],
+      "toppingSuggestions": [
+        "ice_cream",
+        "whipped_cream",
+        "caramel_drizzle",
+        "cinnamon_sugar",
+        "coarse_sugar",
+        "honey_butter",
+        "mixed_nuts_top"
+      ],
+      "tips": [
+        "Keep everything cold - cold butter and ice water make a flaky crust.",
+        "Mix a variety of apples (tart and sweet) for the best flavor and texture.",
+        "Do not skip the vents - they let steam escape so the crust stays crisp."
+      ],
+      "panOptions": [
+        {"maxFlourCups": 1.5, "text": "6-7 in / 15-18 cm pie dish - about 5 slices"},
+        {"maxFlourCups": 3.25, "text": "9 in / 23 cm pie dish"},
+        {"maxFlourCups": 6.0, "text": "two 9 in / 23 cm pie dishes, or one 9×13 in / 23×33 cm slab pie dish"}
+      ]
+    },
+    {
+      "id": "blueberry_pie",
+      "name": "Blueberry Pie",
+      "category": "PIE",
+      "description": "A juicy double-crust pie filled with sweet-tart blueberries.",
+      "imageKey": "blueberry",
+      "baseFlourAmount": 2.5,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 2.5, "unit": "CUP", "role": "FLOUR", "group": "Crust"},
+        {"ingredient": "salt", "amount": 1, "unit": "TSP", "group": "Crust"},
+        {"ingredient": "granulated_sugar", "amount": 1, "unit": "TBSP", "group": "Crust"},
+        {"ingredient": "butter", "amount": 1, "unit": "CUP", "prep": "very cold, cubed", "group": "Crust"},
+        {"ingredient": "water", "amount": 6, "unit": "TBSP", "prep": "ice-cold", "group": "Crust"},
+        {"ingredient": "blueberries", "amount": 5, "unit": "CUP", "prep": "fresh or frozen (do not thaw)", "group": "Filling"},
+        {"ingredient": "granulated_sugar", "amount": 0.75, "unit": "CUP", "role": "SUGAR", "group": "Filling"},
+        {"ingredient": "cornstarch", "amount": 3, "unit": "TBSP", "group": "Filling"},
+        {"ingredient": "lemon_juice", "amount": 1, "unit": "TBSP", "group": "Filling"},
+        {"ingredient": "cinnamon", "amount": 0.25, "unit": "TSP", "group": "Filling"},
+        {"ingredient": "butter", "amount": 1, "unit": "TBSP", "prep": "cut into small pieces", "group": "Filling"},
+        {"ingredient": "milk", "amount": 1, "unit": "TBSP", "prep": "for brushing the top", "group": "Filling"}
+      ],
+      "yield": {"base": 8, "singular": "slice", "plural": "slices", "note": "Based on one 9 in (23 cm) double-crust pie."},
+      "sweetness": {
+        "less": {"multiplier": 0.75, "note": "Blueberries are naturally sweet and the cornstarch sets the filling, so about 25% less sugar works; the pie will taste fruitier and a little tarter.", "expectedChanges": ["Filling is tarter and more fruity", "Filling may be slightly juicier", "Crust browns a touch less"], "suggestedAlternatives": ["cinnamon", "vanilla", "strawberries"]}
+      },
+      "profileSet": "pie",
+      "preheatTiming": "BEFORE_COOK",
+      "steps": [
+        {"title": "Make the Crust", "text": "Whisk the flour, salt and sugar. Cut in the cold butter with your fingertips or a pastry cutter until pea-sized pieces remain. Sprinkle in the ice water 1 tablespoon at a time, tossing, until the dough just holds together when squeezed."},
+        {"title": "Chill the Dough", "text": "Divide the dough into two discs (one slightly larger), wrap them and chill for at least 1 hour."},
+        {"title": "Make the Filling", "text": "Gently toss the blueberries with the sugar, cornstarch, lemon juice and cinnamon until evenly coated."},
+        {"kind": "ADD_INS"},
+        {"title": "Assemble the Pie", "text": "Roll out the larger disc and fit it into your pie dish ({pan}). Add the filling and dot with the butter. Roll out the second disc, lay it over the top, trim and crimp the edges, cut 4-5 steam vents and brush the top with the milk."},
+        {"title": "Cool", "text": "Cool the pie on a wire rack for at least 2 hours before slicing.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "strawberries"},
+        {"id": "nuts"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "almonds"}
+      ],
+      "toppingSuggestions": [
+        "ice_cream",
+        "whipped_cream",
+        "coarse_sugar",
+        "lemon_glaze",
+        "fresh_fruit",
+        "cinnamon_sugar",
+        "powdered_sugar_berries"
+      ],
+      "tips": [
+        "Use the cornstarch exactly as written - blueberries release lots of juice.",
+        "Bake until you see thick bubbles - that means the cornstarch has set the filling.",
+        "Cool for at least 2 hours, or the filling will run."
+      ],
+      "panOptions": [
+        {"maxFlourCups": 1.5, "text": "6-7 in / 15-18 cm pie dish - about 5 slices"},
+        {"maxFlourCups": 3.25, "text": "9 in / 23 cm pie dish"},
+        {"maxFlourCups": 6.0, "text": "two 9 in / 23 cm pie dishes, or one 9×13 in / 23×33 cm slab pie dish"}
+      ]
+    }
+  ]
+}

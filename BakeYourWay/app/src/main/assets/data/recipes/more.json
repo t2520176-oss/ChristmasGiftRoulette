@@ -1,0 +1,129 @@
+{
+  "profileSets": {
+    "crepe": [
+      {
+        "method": "STOVETOP",
+        "timeMin": 1,
+        "timeMax": 2,
+        "heatLevel": "Medium",
+        "prep": "Lightly butter a non-stick pan and wipe off any excess.",
+        "cook": "Pour in about 1/4 cup of batter and swirl the pan to coat it thinly. Cook over medium heat for about {time} per crepe, until the edges lift and the underside is lightly golden, then flip and cook about 30 seconds more.",
+        "check": "The crepe should be thin and lightly golden with lacy edges.",
+        "notes": [
+          "The first crepe is a test - adjust the heat after it.",
+          "Stack finished crepes on a plate; they will not stick together."
+        ]
+      }
+    ],
+    "flatbread": [
+      {
+        "method": "STOVETOP",
+        "timeMin": 3,
+        "timeMax": 5,
+        "heatLevel": "Medium-high",
+        "prep": "Have a dry, heavy skillet ready - no oil is needed.",
+        "cook": "Roll or pat each piece into a round about 3 mm (1/8 in) thick. Cook in the dry pan over medium-high heat for about {time} in total, flipping once, until puffed and browned in spots.",
+        "check": "Both sides should be browned in spots and the flatbread should puff slightly.",
+        "notes": [
+          "Keep the finished flatbreads wrapped in a clean towel so they stay soft.",
+          "If the dough sticks to the rolling pin, dust it lightly with flour."
+        ],
+        "batchCapacity": 2
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "id": "crepes",
+      "name": "Simple Crepes",
+      "category": "MORE",
+      "description": "Thin, delicate French-style crepes for sweet or savory fillings.",
+      "imageKey": "crepe",
+      "baseFlourAmount": 1,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
+        {"ingredient": "granulated_sugar", "amount": 1, "unit": "TBSP", "role": "SUGAR"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "milk", "amount": 0.5, "unit": "CUP"},
+        {"ingredient": "water", "amount": 0.5, "unit": "CUP"},
+        {"ingredient": "butter", "amount": 2, "unit": "TBSP", "prep": "melted"}
+      ],
+      "yield": {"base": 8, "singular": "crepe", "plural": "crepes", "note": "About 20 cm (8 in) across."},
+      "sweetness": {
+        "less": {"multiplier": 0.5, "note": "Crepes use only a little sugar and are usually filled or topped, so you can halve it without any trouble.", "expectedChanges": ["Barely noticeable difference in the crepe", "Crepes may be slightly paler"], "suggestedAlternatives": ["banana", "strawberries", "cinnamon", "vanilla"]}
+      },
+      "profileSet": "crepe",
+      "preheatTiming": "BEFORE_COOK",
+      "steps": [
+        {"title": "Make the Batter", "text": "Whisk the flour, salt and sugar. Add the eggs, milk, water and melted butter and whisk until completely smooth and thin like heavy cream."},
+        {"kind": "ADD_INS"},
+        {"title": "Rest the Batter", "text": "Let the batter rest for 20-30 minutes if you have time - it makes the crepes more tender. Thin it with a splash of water if it seems thick."},
+        {"title": "Serve", "text": "Fill and fold or roll the warm crepes and serve right away.", "kind": "AFTER_COOK"}
+      ],
+      "addIns": [
+        {"id": "banana"},
+        {"id": "strawberries"},
+        {"id": "blueberries"},
+        {"id": "chocolate_chips"},
+        {"id": "cinnamon"},
+        {"id": "vanilla"},
+        {"id": "nuts"},
+        {"id": "coconut"}
+      ],
+      "toppingSuggestions": [
+        "maple_syrup",
+        "fresh_fruit",
+        "whipped_cream",
+        "powdered_sugar_dust",
+        "chocolate_ganache",
+        "sliced_banana",
+        "lemon_curd",
+        "butter_jam"
+      ],
+      "tips": [
+        "A blender makes a perfectly smooth batter in seconds.",
+        "Swirl the pan right away - the batter sets quickly.",
+        "Crepes freeze well: stack with parchment between each."
+      ]
+    },
+    {
+      "id": "yogurt_flatbread",
+      "name": "Yogurt Flatbread",
+      "category": "MORE",
+      "description": "Soft, pan-cooked flatbreads made with just a few pantry ingredients.",
+      "imageKey": "flatbread",
+      "baseFlourAmount": 1,
+      "flourIngredient": "all_purpose_flour",
+      "ingredients": [
+        {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
+        {"ingredient": "baking_powder", "amount": 1, "unit": "TSP"},
+        {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
+        {"ingredient": "granulated_sugar", "amount": 1, "unit": "TSP", "role": "SUGAR"},
+        {"ingredient": "plain_yogurt", "amount": 0.75, "unit": "CUP"}
+      ],
+      "yield": {"base": 4, "singular": "flatbread", "plural": "flatbreads", "note": "About 15 cm (6 in) across."},
+      "sweetness": {
+        "less": {"multiplier": 0.5, "note": "Only 1 teaspoon of sugar is used, so halving it makes almost no difference.", "expectedChanges": ["No noticeable difference"], "suggestedAlternatives": []}
+      },
+      "profileSet": "flatbread",
+      "preheatTiming": "BEFORE_COOK",
+      "steps": [
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, baking powder, salt and sugar."},
+        {"title": "Add the Yogurt", "text": "Stir in the yogurt until a soft, slightly sticky dough forms. Add a spoonful of flour if it is too sticky to handle."},
+        {"title": "Knead and Divide", "text": "Knead on a floured surface for 1-2 minutes until smooth, then divide into equal pieces (about 4 for every cup of flour) and cover with a towel."},
+        {"kind": "ADD_INS"}
+      ],
+      "addIns": [
+        {"id": "cheese"}
+      ],
+      "toppingSuggestions": ["savory_butter", "melted_butter", "flaky_salt", "extra_cheese", "honey_butter", "butter_jam"],
+      "tips": [
+        "Use thick plain yogurt (Greek-style) for the softest dough.",
+        "Brush the hot flatbreads with garlic butter right away.",
+        "No yeast and no resting time - the baking powder does the work."
+      ]
+    }
+  ]
+}
