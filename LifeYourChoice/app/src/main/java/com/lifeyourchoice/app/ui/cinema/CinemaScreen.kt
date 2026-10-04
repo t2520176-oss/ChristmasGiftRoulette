@@ -212,7 +212,8 @@ private fun TitleCard(t: TitleState) {
                     t.sub?.split("\n")?.forEachIndexed { i, line ->
                         Spacer(Modifier.height(if (i == 0) 10.dp else 6.dp))
                         Text(line, color = if (i == 0) Ly.TextDim else Color.White, fontSize = if (i == 0) 15.sp else 28.sp,
-                            fontWeight = if (i == 0) FontWeight.Medium else FontWeight.Black, letterSpacing = if (i == 0) 4.sp else 3.sp, textAlign = TextAlign.Center)
+                            fontWeight = if (i == 0) FontWeight.Medium else FontWeight.Black, letterSpacing = if (i == 0) 4.sp else 3.sp, textAlign = TextAlign.Center,
+                            lineHeight = if (i == 0) 20.sp else 36.sp)
                     }
                     Spacer(Modifier.height(14.dp))
                     Box(Modifier.width(60.dp).height(2.dp).background(Ly.Gold.copy(alpha = 0.7f)))
