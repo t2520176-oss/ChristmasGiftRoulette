@@ -7,7 +7,7 @@ object CineContent {
     fun library(): CineLibrary = CineLibrary(
         listOf(
             SchoolCine, FamilyCine, FriendCine, CareerCine, LoveCine, BusinessCine, MajorCine, PayoffCine, LifeCine,
-            YouthCine, WorkMoneyCine, HomeLoveCine, LaterLifeCine
+            YouthCine, WorkMoneyCine, HomeLoveCine, LaterLifeCine, MiscCine
         )
     )
 }
