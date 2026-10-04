@@ -45,8 +45,7 @@ echo === GUI smoke test (starts the window, 8 seconds, then exits) ===
 set FIGURECRAFT_SMOKE_MS=8000
 set FIGURECRAFT_HOME=%TEMP%\figurecraft-smoke
 "%OUT%\FigureCraft\FigureCraft.exe" --smoke-test
-set SMOKE=PASSED (exit code %ERRORLEVEL%)
-if not %ERRORLEVEL%==0 ( set SMOKE=FAILED (exit code %ERRORLEVEL%) )
+if errorlevel 1 (set "SMOKE=FAILED") else (set "SMOKE=PASSED")
 set FIGURECRAFT_HOME=
 
 echo === Creating portable ZIP ===
