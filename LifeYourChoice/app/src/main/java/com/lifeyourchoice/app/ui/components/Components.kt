@@ -195,9 +195,9 @@ fun DeltaChip(stat: Stat, delta: Int, modifier: Modifier = Modifier) {
     ) {
         Text(Ly.statGlyph(stat), color = Ly.statColor(stat), fontSize = 12.sp, fontWeight = FontWeight.Black)
         Spacer(Modifier.width(6.dp))
-        Text(stat.label, color = Ly.Text, fontSize = 13.sp)
+        Text(stat.label, color = Ly.Text, fontSize = 13.sp, maxLines = 1, softWrap = false)
         Spacer(Modifier.width(8.dp))
-        Text((if (good) "+" else "") + delta, color = tint, fontSize = 14.sp, fontWeight = FontWeight.Black)
+        Text((if (good) "+" else "") + delta, color = tint, fontSize = 14.sp, fontWeight = FontWeight.Black, maxLines = 1, softWrap = false)
     }
 }
 

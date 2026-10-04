@@ -271,7 +271,7 @@ private fun ToastOverlay(session: GameSession) {
         Modifier.fillMaxWidth().statusBarsPadding().padding(top = 54.dp, start = 16.dp, end = 16.dp).appear(a, -14f),
         horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
-        t.deltas.chunked(3).forEach { row ->
+        t.deltas.chunked(2).forEach { row ->
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) { row.forEach { DeltaChip(it.stat, it.delta) } }
         }
         if (t.hint) Text("Your decision may matter someday.", color = Ly.Gold, fontSize = 13.sp, fontStyle = FontStyle.Italic, fontWeight = FontWeight.SemiBold)
