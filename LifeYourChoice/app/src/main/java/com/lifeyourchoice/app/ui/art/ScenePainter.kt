@@ -83,7 +83,7 @@ fun DrawScope.paintTimeOfDay(time: com.lifeyourchoice.core.cinema.TimeOfDay) {
         com.lifeyourchoice.core.cinema.TimeOfDay.DAY -> {}
         com.lifeyourchoice.core.cinema.TimeOfDay.MORNING -> drawRect(Brush.verticalGradient(listOf(Color(0x33FFE2A8), Color(0x11FFE2A8))))
         com.lifeyourchoice.core.cinema.TimeOfDay.EVENING -> drawRect(Brush.verticalGradient(listOf(Color(0x44FF8A3D), Color(0x22C05A8A))))
-        com.lifeyourchoice.core.cinema.TimeOfDay.NIGHT -> drawRect(Brush.verticalGradient(listOf(Color(0x880A1440), Color(0x990A1030))))
+        com.lifeyourchoice.core.cinema.TimeOfDay.NIGHT -> drawRect(Brush.verticalGradient(listOf(Color(0x4D0A1440), Color(0x590A1030))))
     }
 }
 

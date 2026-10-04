@@ -19,7 +19,10 @@ class Look(
     val topAccent: Color,
     val outfit: OutfitStyle? = null,
     val pants: Color = Color(0xFF1E2744)
-)
+) {
+    /** The same person in a different kind of clothes (formal for a wedding, casual at home). */
+    fun withOutfit(o: OutfitStyle?): Look = Look(name, skin, hair, style, top, topAccent, o, pants)
+}
 
 /** Palettes used by character creation. Indexes are stored in [PlayerLook]. */
 object Palettes {

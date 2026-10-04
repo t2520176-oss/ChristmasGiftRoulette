@@ -245,9 +245,27 @@ class CineDirector(
                 else -> setCamera(b.shot, b.speaker.takeIf { it.hasBody }, other)
             }
         }
+        else if (b.speaker.hasBody && !b.offscreen) reframeForSpeaker(b.speaker)
         if (instant && b.speaker.hasBody && !b.offscreen) actor(b.speaker).apply { speaking = false; gesture = Gesture.NONE }
         remaining = if (instant) 0 else (b.ms ?: speechMs(text))
         return !instant
+    }
+
+    /** True when [id] would be inside the current camera frame. */
+    private fun inFrame(id: ActorId): Boolean {
+        val st = actors[id] ?: return false
+        if (!st.visible) return false
+        val a = camera.a?.let { actors[it] }
+        val b = camera.b?.let { actors[it] }
+        val t = CameraMath.target(camera.shot, a?.x, b?.x, a?.seated == true, b?.seated == true)
+        return kotlin.math.abs(st.x - t.cx) <= 0.5f / t.zoom - 0.04f
+    }
+
+    /** Film grammar: when someone speaks without an explicit shot, never leave them outside the frame. */
+    private fun reframeForSpeaker(speaker: ActorId) {
+        if (inFrame(speaker)) return
+        val tight = camera.shot == Shot.CLOSE_UP || camera.shot == Shot.REACTION || camera.shot == Shot.PUSH_IN
+        setCamera(if (tight) Shot.CLOSE_UP else Shot.MEDIUM, speaker, null)
     }
 
     private fun setCamera(shot: Shot, a: ActorId?, b: ActorId?) {

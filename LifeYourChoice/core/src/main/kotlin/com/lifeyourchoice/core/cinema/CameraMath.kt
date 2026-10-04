@@ -15,23 +15,28 @@ object CameraMath {
     const val FACE_Y = 0.40f
     const val CHEST_Y = 0.54f
 
-    fun target(shot: Shot, ax: Float?, bx: Float?): Target {
+    /** A seated head is about this much lower on the stage than a standing one. */
+    const val SEATED_DROP = 0.13f
+
+    fun target(shot: Shot, ax: Float?, bx: Float?, aSeated: Boolean = false, bSeated: Boolean = false): Target {
         val a = ax ?: 0.5f
+        val drop = if (aSeated) SEATED_DROP else 0f
+        val pairDrop = (if (aSeated) SEATED_DROP else 0f) * 0.5f + (if (bSeated) SEATED_DROP else 0f) * 0.5f
         val raw = when (shot) {
             Shot.ESTABLISHING, Shot.WIDE -> Target(0.5f, 0.5f, 1f)
-            Shot.MEDIUM -> Target(a, CHEST_Y - 0.02f, 1.75f)
-            Shot.CLOSE_UP -> Target(a, FACE_Y, 2.9f)
-            Shot.REACTION -> Target(a, FACE_Y + 0.02f, 2.35f)
-            Shot.PUSH_IN -> Target(a, FACE_Y + 0.03f, 2.5f)
-            Shot.FOLLOW -> Target(a, 0.52f, 1.35f)
+            Shot.MEDIUM -> Target(a, CHEST_Y - 0.02f + drop, 1.75f)
+            Shot.CLOSE_UP -> Target(a, FACE_Y + drop, 2.9f)
+            Shot.REACTION -> Target(a, FACE_Y + 0.02f + drop, 2.35f)
+            Shot.PUSH_IN -> Target(a, FACE_Y + 0.03f + drop, 2.5f)
+            Shot.FOLLOW -> Target(a, 0.52f + drop * 0.5f, 1.35f)
             Shot.TWO_SHOT -> {
                 val b = bx ?: a
-                Target((a + b) / 2f, 0.5f, (0.95f / (abs(a - b) + 0.35f)).coerceIn(1.15f, 2.0f))
+                Target((a + b) / 2f, 0.5f + pairDrop * 0.6f, (0.95f / (abs(a - b) + 0.35f)).coerceIn(1.15f, 2.0f))
             }
             Shot.OVER_SHOULDER -> {
                 // Camera sits behind the listener: their shoulder frames the speaker.
                 val b = bx ?: (a + 0.3f)
-                Target(a + (b - a) * 0.38f, FACE_Y + 0.07f, 2.05f)
+                Target(a + (b - a) * min(0.38f, 0.16f / max(abs(b - a), 0.01f)), FACE_Y + 0.07f + pairDrop, 2.05f)
             }
         }
         return clamp(raw)

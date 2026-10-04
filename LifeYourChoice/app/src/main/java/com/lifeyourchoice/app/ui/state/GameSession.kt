@@ -249,8 +249,9 @@ class GameSession(
         }
         ChapterCards.markShown(st)
         val d = CineDirector(sc2, st, pre)
-        val rt = StageRuntime(castFor(st))
-        rt.reset(sc2.env, sc2.time, castFor(st))
+        val cast = castFor(st, st.ageYears, sc2.env)
+        val rt = StageRuntime(cast)
+        rt.reset(sc2.env, sc2.time, cast)
         script = sc2
         director = d
         stage = rt

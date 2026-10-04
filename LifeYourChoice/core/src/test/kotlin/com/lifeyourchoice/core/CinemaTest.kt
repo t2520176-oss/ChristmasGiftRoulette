@@ -141,7 +141,7 @@ class CinemaTest {
         }
         val share = scripted * 100 / (scripted + generated)
         println("Scenes played: $scripted hand-written cinematics, $generated auto-staged ($share% scripted)")
-        assertTrue("too few scripted scenes: $share%", share >= 20)
+        assertTrue("too few scripted scenes: $share%", share >= 90)
     }
 
     @Test fun chapterCardsAppearOnceAndFollowTheAge() {
@@ -238,5 +238,59 @@ class CinemaTest {
         assertTrue(out.outcomeIndex in 0..1)
         assertTrue(out.outcomeText.isNotBlank())
         assertEquals(Education.HIGH_SCHOOL, engine.state.education)
+    }
+
+    /** Whoever is speaking on screen must be inside the camera's frame, and everyone on stage must be on stage. */
+    @Test fun speakersAreAlwaysInFrame() {
+        val problems = mutableListOf<String>()
+        fun check(label: String, script: CineScript, pick: Int?) {
+            val d = CineDirector(script, TestSupport.freshState())
+            var lastSerial = -1
+            var settleAt = -1L
+            var t = 0L
+            var chosen = false
+            var guard = 0
+            while (d.phase != Phase.DONE && guard++ < 8000) {
+                d.update(50); t += 50
+                val c = d.caption
+                if (c != null && c.serial != lastSerial) { lastSerial = c.serial; settleAt = t + 1000 }
+                if (settleAt in 0..t) {
+                    settleAt = -1
+                    val sp = c
+                    if (sp != null && sp.speaker.hasBody) {
+                        val st = d.actors[sp.speaker]
+                        val cam = d.camera
+                        val a = cam.a?.let { d.actors[it] }; val b = cam.b?.let { d.actors[it] }
+                        val tg = CameraMath.target(cam.shot, a?.x, b?.x, a?.seated == true, b?.seated == true)
+                        // A deliberate cutaway to the listener's reaction is allowed.
+                        val cutaway = cam.shot == Shot.REACTION && cam.a != sp.speaker
+                        if (st != null && st.visible && !cutaway) {
+                            val half = 0.5f / tg.zoom
+                            if (kotlin.math.abs(st.x - tg.cx) > half - 0.02f) problems += "$label: ${sp.speaker} speaks at x=${"%.2f".format(st.x)} outside ${cam.shot} frame (cx=${"%.2f".format(tg.cx)}, zoom=${"%.2f".format(tg.zoom)})"
+                        }
+                    }
+                    for (st in d.visibleActors) if (st.x < 0.03f || st.x > 0.97f) if (!st.moving) problems += "$label: ${st.id} parked off the edge at x=${st.x}"
+                }
+                if (d.phase == Phase.CHOOSING && !chosen) {
+                    chosen = true
+                    if (pick == null) break
+                    d.choose(pick, ChoiceOutcome(script.scenarioId, "x", "Something happened.", emptyList(), false))
+                }
+            }
+        }
+        for (script in cine.all) {
+            check(script.scenarioId, script, null)
+            for (i in script.choices.keys) check("${script.scenarioId}#$i", script, i)
+        }
+        val unique = problems.distinct()
+        println("Framing problems: ${unique.size}")
+        unique.take(60).forEach { println("  $it") }
+        assertTrue("Framing problems:\n" + unique.take(40).joinToString("\n"), unique.isEmpty())
+    }
+
+    @Test fun almostEveryStoryScenarioHasAHandWrittenCinematic() {
+        val missing = story.all.map { it.id }.filter { it !in cine.byScenario }
+        println("Scenarios without a hand-written cinematic (${missing.size}): $missing")
+        assertTrue("Too many scenarios fall back to auto-staging: $missing", missing.size <= story.all.size / 20)
     }
 }

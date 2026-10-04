@@ -108,7 +108,7 @@ fun EndingScreen(session: GameSession, record: LifeRecord, plan: EndingPlan, sta
 @Composable
 private fun RunFrame(state: GameState, frame: MontageFrame, pushScale: Float, modifier: Modifier = Modifier) {
     val rt = remember(frame.id, frame.playerAge) {
-        val cast = castFor(state, frame.playerAge)
+        val cast = castFor(state, frame.playerAge, frame.env)
         StageRuntime(cast).also { it.reset(frame.env, frame.time, cast); it.pushScale = pushScale }
     }
     val d = remember(frame.id, frame.playerAge) { CineDirector(frame.toScript(), state) }

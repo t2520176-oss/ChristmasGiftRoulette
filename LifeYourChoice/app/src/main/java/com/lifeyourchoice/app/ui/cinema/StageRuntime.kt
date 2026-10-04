@@ -8,6 +8,7 @@ import com.lifeyourchoice.app.ui.art.Face
 import com.lifeyourchoice.app.ui.art.FigurePose
 import com.lifeyourchoice.app.ui.art.Look
 import com.lifeyourchoice.app.ui.art.Looks
+import com.lifeyourchoice.app.ui.art.OutfitStyle
 import com.lifeyourchoice.app.ui.art.PoseSolver
 import com.lifeyourchoice.core.cinema.ActorId
 import com.lifeyourchoice.core.cinema.ActorStage
@@ -20,6 +21,7 @@ import com.lifeyourchoice.core.cinema.Gesture
 import com.lifeyourchoice.core.cinema.Prop
 import com.lifeyourchoice.core.cinema.Shot
 import com.lifeyourchoice.core.cinema.TimeOfDay
+import com.lifeyourchoice.core.model.CareerTrack
 import com.lifeyourchoice.core.model.GameState
 import com.lifeyourchoice.core.model.Gender
 import com.lifeyourchoice.core.model.SceneArt
@@ -31,14 +33,42 @@ import kotlin.math.sin
 /** Who an actor is on screen: resolved once per scene. */
 class CastInfo(val look: Look, val gender: Gender, val age: Int, val scale: Float)
 
+private val FORMAL_PLACES = setOf(SceneArt.WEDDING, SceneArt.INTERVIEW_ROOM, SceneArt.MEETING, SceneArt.OFFICE, SceneArt.RESTAURANT)
+private val CASUAL_PLACES = setOf(
+    SceneArt.LIVING_ROOM, SceneArt.KITCHEN, SceneArt.BEDROOM, SceneArt.APARTMENT, SceneArt.NEW_HOME, SceneArt.PARK,
+    SceneArt.STREET, SceneArt.BASKETBALL_COURT, SceneArt.SCHOOL_YARD, SceneArt.COFFEE_SHOP, SceneArt.HOSPITAL, SceneArt.AIRPORT
+)
+
+/**
+ * What an everyday character wears: formal for a wedding or an interview, casual at home or in the park,
+ * otherwise something that suits their age (and, for the player, their work).
+ */
+private fun dress(age: Int, env: SceneArt?, career: CareerTrack?): OutfitStyle? {
+    if (env != null && env in FORMAL_PLACES) return if (age < 19 && env != SceneArt.WEDDING) null else OutfitStyle.JACKET
+    if (age < 19) return null
+    if (env != null && env in CASUAL_PLACES) return if (age < 40) OutfitStyle.HOODIE else OutfitStyle.SHIRT
+    return when {
+        age >= 66 -> OutfitStyle.SHIRT
+        career == CareerTrack.SKILLED_WORKER || career == CareerTrack.CREATOR -> OutfitStyle.HOODIE
+        career == CareerTrack.DOCTOR -> OutfitStyle.COAT
+        career == CareerTrack.EMPLOYEE || career == CareerTrack.MANAGER || career == CareerTrack.BUSINESS_OWNER ||
+            career == CareerTrack.ENTREPRENEUR -> OutfitStyle.JACKET
+        else -> OutfitStyle.SHIRT
+    }
+}
+
 /** Builds the look/age of every possible actor from the life state (names, genders and looks stay stable). */
-fun castFor(state: GameState, playerAge: Int = state.ageYears): Map<ActorId, CastInfo> {
+fun castFor(state: GameState, playerAge: Int = state.ageYears, env: SceneArt? = null): Map<ActorId, CastInfo> {
     val out = HashMap<ActorId, CastInfo>()
     for (a in ActorId.values()) {
         if (!a.hasBody) continue
         val g = a.gender(state)
         val age = if (a == ActorId.PLAYER) playerAge else (playerAge + a.ageOffset).coerceIn(if (a.adult) 14 else 4, 95)
-        val look = if (a == ActorId.PLAYER) Looks.forPlayer(state.gender, state.playerLook) else Looks.forActor(a, g, state.seed)
+        val base = if (a == ActorId.PLAYER) Looks.forPlayer(state.gender, state.playerLook) else Looks.forActor(a, g, state.seed)
+        val look = if (base.outfit == null) {
+            val career = if (state.employed) state.career else null
+            base.withOutfit(dress(age, env, if (a == ActorId.PLAYER) career else null))
+        } else base
         out[a] = CastInfo(look, g, age, if (a.adult) 1f else 0.6f)
     }
     return out
@@ -165,15 +195,19 @@ class StageRuntime(var cast: Map<ActorId, CastInfo>) {
 
     // ------------------------------------------------------------------ camera
 
+    private fun framing(shot: Shot, a: ActorId?, b: ActorId?, d: CineDirector): CameraMath.Target {
+        val sa = a?.let { d.actors[it] }
+        val sb = b?.let { d.actors[it] }
+        return CameraMath.target(shot, sa?.x, sb?.x, sa?.seated == true, sb?.seated == true)
+    }
+
     private fun updateCamera(dt: Float, d: CineDirector) {
         val cam: CameraDirective = d.camera
-        val ax = cam.a?.let { d.actors[it]?.x }
-        val bx = cam.b?.let { d.actors[it]?.x }
         if (cam.serial != lastCamSerial) {
             lastCamSerial = cam.serial
             camShot = cam.shot; camA = cam.a; camB = cam.b
             val moveMs = CameraMath.moveMs(cam.shot)
-            val t = CameraMath.target(cam.shot, ax, bx)
+            val t = framing(cam.shot, cam.a, cam.b, d)
             when {
                 cam.shot == Shot.ESTABLISHING -> {
                     camX = 0.5f; camY = 0.5f; camZoom = 1.12f
@@ -194,7 +228,7 @@ class StageRuntime(var cast: Map<ActorId, CastInfo>) {
                 }
             }
         }
-        val t = CameraMath.target(camShot, camA?.let { d.actors[it]?.x }, camB?.let { d.actors[it]?.x })
+        val t = framing(camShot, camA, camB, d)
         if (camDuration > 0f) {
             camElapsed += dt
             val p = (camElapsed / camDuration).coerceIn(0f, 1f)
