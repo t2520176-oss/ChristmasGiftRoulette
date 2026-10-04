@@ -79,5 +79,5 @@ def test_noisy_three_colour_texture_does_not_waste_a_fourth_slot():
     base = np.vstack([np.tile([122, 63, 196], (n, 1)), np.tile([242, 237, 224], (n, 1)), np.tile([17, 17, 17], (n, 1))]).astype(float)
     cols = np.clip(base + rng.normal(0, 18, base.shape), 0, 255).astype(np.uint8)
     pal = color.extract_palette(cols, np.ones(len(cols)), 4)
-    assert [p.name for p in pal] == sorted([p.name for p in pal], key=lambda n: ["IVORY", "PURPLE", "BLACK"].index(n)) or len(pal) == 3
     assert len(pal) == 3
+    assert {p.name for p in pal} & {"PURPLE", "LAVENDER"} and {p.name for p in pal} & {"BLACK", "GRAY", "NAVY"}
