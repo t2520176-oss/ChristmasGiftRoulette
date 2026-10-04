@@ -50,6 +50,7 @@ import com.lifeyourchoice.app.ui.components.rememberAppear
 import com.lifeyourchoice.app.ui.state.GameSession
 import com.lifeyourchoice.app.ui.theme.Ly
 import com.lifeyourchoice.core.model.LifeCardModel
+import com.lifeyourchoice.core.engine.Achievements
 import com.lifeyourchoice.core.model.LifeRecord
 import com.lifeyourchoice.core.model.SceneArt
 import com.lifeyourchoice.core.model.Stat
@@ -142,7 +143,7 @@ private fun ReportHeader(record: LifeRecord) {
         Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0x66040913), Color.Transparent, Ly.Navy900))))
         Column(Modifier.fillMaxSize().padding(top = 14.dp).appear(a, 12f), horizontalAlignment = Alignment.CenterHorizontally) {
             Text("YOUR LIFE REPORT", color = Ly.Gold, fontSize = 22.sp, fontWeight = FontWeight.Black, letterSpacing = 3.sp)
-            CharacterPortrait(record.gender, record.appearance, record.ageReached, Modifier.height(150.dp).aspectRatio(5f / 6f), happiness = record.happiness)
+            CharacterPortrait(record.gender, record.appearance, record.ageReached, Modifier.height(150.dp).aspectRatio(5f / 6f), happiness = record.happiness, look = record.look)
             Spacer(Modifier.weight(1f))
             // Ending ribbon.
             Box(
@@ -172,6 +173,17 @@ private fun StatsTable(record: LifeRecord) {
         ValueRow("Reputation", record.reputation, Stat.REPUTATION)
         ValueRow("Friendship", record.friendship, Stat.FRIENDSHIP)
         ValueRow("Happiness", record.happiness, Stat.HAPPINESS)
+        val titles = record.achievements.mapNotNull { Achievements.get(it)?.title }
+        if (titles.isNotEmpty()) {
+            Spacer(Modifier.height(8.dp))
+            Text("Major achievements:", color = Ly.TextDim, fontSize = 15.sp)
+            titles.take(6).forEach { t ->
+                Row(Modifier.padding(top = 3.dp)) {
+                    Text("★", color = Ly.Gold, fontSize = 13.sp, modifier = Modifier.padding(end = 8.dp, top = 1.dp))
+                    Text(t, color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
+                }
+            }
+        }
     }
 }
 
@@ -243,7 +255,7 @@ fun LifeCardView(model: LifeCardModel, modifier: Modifier = Modifier) {
             Text("LIFE: YOUR CHOICE", color = Ly.Gold, fontSize = 15.sp, fontWeight = FontWeight.Black, letterSpacing = 4.sp)
             Spacer(Modifier.height(10.dp))
             Box(Modifier.size(84.dp).clip(CircleShape).background(Ly.Navy700).border(BorderStroke(2.dp, Ly.Gold), CircleShape)) {
-                CharacterPortrait(model.gender, model.appearance, model.ageReached, Modifier.fillMaxSize().padding(top = 6.dp))
+                CharacterPortrait(model.gender, model.appearance, model.ageReached, Modifier.fillMaxSize().padding(top = 6.dp), look = model.look)
             }
             Spacer(Modifier.height(8.dp))
             Text(model.playerName, color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Black)

@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -85,9 +86,7 @@ fun EndingScreen(session: GameSession, record: LifeRecord, plan: EndingPlan, sta
 
     Box(
         Modifier.fillMaxSize().background(Color.Black)
-            .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) {
-                if (step != null && step !is EndStep.Motto) index++ else if (step is EndStep.Motto) index++
-            }
+            .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) { if (step != null) index++ }
     ) {
         when (step) {
             is EndStep.Finale -> FinaleScene(plan, state, step, record)
@@ -159,9 +158,11 @@ private fun MemoryScene(state: GameState, frame: MontageFrame, ms: Int) {
             Text(frame.caption, color = Color.White, fontSize = 21.sp, lineHeight = 28.sp, fontStyle = FontStyle.Italic, textAlign = TextAlign.Center,
                 modifier = Modifier.padding(top = 6.dp).widthIn(max = 480.dp))
         }
-        // film-like dip between memories
-        val dip by animateFloatAsState(1f, tween(ms), label = "dip")
-        Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = (1f - dip).coerceIn(0f, 1f) * 0f)))
+        // Film-like dip: each memory fades up from black and back down before the next one.
+        var shown by remember(frame.id) { mutableStateOf(false) }
+        LaunchedEffect(frame.id) { shown = true; delay((ms - 700).toLong()); shown = false }
+        val dip by animateFloatAsState(if (shown) 0f else 1f, tween(if (shown) 700 else 600), label = "dip")
+        Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = dip)))
     }
 }
 

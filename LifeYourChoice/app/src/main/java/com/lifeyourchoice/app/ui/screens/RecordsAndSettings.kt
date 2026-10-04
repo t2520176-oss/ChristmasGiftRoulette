@@ -115,7 +115,7 @@ private fun RecordCard(r: LifeRecord, onClick: () -> Unit) {
             .padding(14.dp)
     ) {
         Box(Modifier.size(62.dp).clip(CircleShape).background(Ly.Navy700).border(BorderStroke(2.dp, Ly.Gold.copy(alpha = 0.8f)), CircleShape)) {
-            CharacterPortrait(r.gender, r.appearance, r.ageReached, Modifier.fillMaxSize().padding(top = 5.dp), happiness = r.happiness)
+            CharacterPortrait(r.gender, r.appearance, r.ageReached, Modifier.fillMaxSize().padding(top = 5.dp), happiness = r.happiness, look = r.look)
         }
         Spacer(Modifier.width(14.dp))
         Column(Modifier.weight(1f)) {
@@ -164,20 +164,38 @@ fun SettingsScreen(session: GameSession) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text("SETTINGS", color = Ly.Gold, fontSize = 22.sp, fontWeight = FontWeight.Black, letterSpacing = 3.sp, modifier = Modifier.padding(vertical = 12.dp))
-            Column(Modifier.widthIn(max = 520.dp).fillMaxWidth().panel().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                SettingRow("Sound effects", s.soundEffects) { session.updateSettings(Settings(it, s.music, s.volume)) }
-                SettingRow("Background music", s.music) { session.updateSettings(Settings(s.soundEffects, it, s.volume)) }
-                Text("Volume", color = Ly.Text, fontSize = 15.sp)
-                Slider(
-                    value = s.volume, onValueChange = { session.updateSettings(Settings(s.soundEffects, s.music, it)) },
-                    colors = SliderDefaults.colors(thumbColor = Ly.Gold, activeTrackColor = Ly.Blue, inactiveTrackColor = Ly.Navy600)
+            Column(Modifier.widthIn(max = 520.dp).fillMaxWidth().panel().padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                SectionLabel("STORY")
+                SettingRow("Cinematic mode (animated scenes)", s.cinematic) { session.updateSettings(s.copy(cinematic = it)) }
+                SettingRow("Subtitles", s.subtitles) { session.updateSettings(s.copy(subtitles = it)) }
+                if (!s.voiceEnabled || !session.voiceAvailable) {
+                    Text("Subtitles are always shown when no voice is available.", color = Ly.TextDim, fontSize = 11.sp)
+                }
+            }
+            Spacer(Modifier.height(16.dp))
+            Column(Modifier.widthIn(max = 520.dp).fillMaxWidth().panel().padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                SectionLabel("VOICE")
+                SettingRow("Spoken dialogue", s.voiceEnabled) { session.updateSettings(s.copy(voiceEnabled = it)) }
+                VolumeRow("Voice volume", s.voiceVolume, s.voiceEnabled) { session.updateSettings(s.copy(voiceVolume = it)) }
+                Text(
+                    if (session.voiceAvailable) "Voices are produced on this device and work offline."
+                    else "No offline voice was found on this device. The story plays with subtitles only.",
+                    color = Ly.TextDim, fontSize = 11.sp, lineHeight = 16.sp
                 )
+            }
+            Spacer(Modifier.height(16.dp))
+            Column(Modifier.widthIn(max = 520.dp).fillMaxWidth().panel().padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                SectionLabel("SOUND")
+                SettingRow("Sound effects", s.soundEffects) { session.updateSettings(s.copy(soundEffects = it)) }
+                VolumeRow("Effects volume", s.sfxVolume, s.soundEffects) { session.updateSettings(s.copy(sfxVolume = it)) }
+                SettingRow("Background music", s.music) { session.updateSettings(s.copy(music = it)) }
+                VolumeRow("Music volume", s.musicVolume, s.music) { session.updateSettings(s.copy(musicVolume = it)) }
             }
             Spacer(Modifier.height(16.dp))
             Column(Modifier.widthIn(max = 520.dp).fillMaxWidth().panel().padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text("ABOUT", color = Ly.Gold, fontSize = 12.sp, fontWeight = FontWeight.Black, letterSpacing = 2.sp)
-                Text("LIFE: YOUR CHOICE  ·  Version 1.0", color = Ly.Text, fontSize = 14.sp, fontWeight = FontWeight.Bold)
-                Text("Works completely offline. No account, no internet, no ads, no purchases. Your lives, records and achievements are stored only on this device.",
+                Text("LIFE: YOUR CHOICE  ·  Version 2A · The Cinematic Life", color = Ly.Text, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                Text("Works completely offline. Every scene is performed by a built-in animation engine; there is no AI service, no cloud voice, no account, no ads and no purchases. Your lives, records and achievements are stored only on this device.",
                     color = Ly.TextDim, fontSize = 13.sp, lineHeight = 19.sp)
                 Text("“Every decision builds the life you will live.”", color = Ly.TextDim, fontSize = 13.sp, fontStyle = FontStyle.Italic)
             }
@@ -206,6 +224,22 @@ private fun SettingRow(label: String, checked: Boolean, onChange: (Boolean) -> U
         Switch(
             checked = checked, onCheckedChange = onChange,
             colors = SwitchDefaults.colors(checkedThumbColor = Ly.Gold, checkedTrackColor = Ly.Blue, uncheckedTrackColor = Ly.Navy600, uncheckedThumbColor = Ly.TextDim)
+        )
+    }
+}
+
+@Composable
+private fun SectionLabel(text: String) {
+    Text(text, color = Ly.Gold, fontSize = 12.sp, fontWeight = FontWeight.Black, letterSpacing = 2.sp)
+}
+
+@Composable
+private fun VolumeRow(label: String, value: Float, enabled: Boolean, onChange: (Float) -> Unit) {
+    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        Text(label, color = if (enabled) Ly.Text else Ly.TextDim, fontSize = 14.sp, modifier = Modifier.width(120.dp))
+        Slider(
+            value = value, onValueChange = onChange, enabled = enabled, modifier = Modifier.weight(1f),
+            colors = SliderDefaults.colors(thumbColor = Ly.Gold, activeTrackColor = Ly.Blue, inactiveTrackColor = Ly.Navy600)
         )
     }
 }

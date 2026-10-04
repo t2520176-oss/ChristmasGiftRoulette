@@ -26,7 +26,7 @@ class AndroidAudio(private val context: Context) : AudioPlayer {
                 .setUsage(AudioAttributes.USAGE_GAME)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .build()
-            val p = SoundPool.Builder().setMaxStreams(4).setAudioAttributes(attrs).build()
+            val p = SoundPool.Builder().setMaxStreams(6).setAudioAttributes(attrs).build()
             ids[Sfx.TAP] = p.load(context, R.raw.sfx_tap, 1)
             ids[Sfx.SELECT] = p.load(context, R.raw.sfx_select, 1)
             ids[Sfx.GOOD] = p.load(context, R.raw.sfx_good, 1)
@@ -34,6 +34,12 @@ class AndroidAudio(private val context: Context) : AudioPlayer {
             ids[Sfx.ACHIEVEMENT] = p.load(context, R.raw.sfx_achievement, 1)
             ids[Sfx.PAGE] = p.load(context, R.raw.sfx_page, 1)
             ids[Sfx.MOTTO] = p.load(context, R.raw.sfx_motto, 1)
+            ids[Sfx.KNOCK] = p.load(context, R.raw.sfx_knock, 1)
+            ids[Sfx.WHOOSH] = p.load(context, R.raw.sfx_whoosh, 1)
+            ids[Sfx.PHONE] = p.load(context, R.raw.sfx_phone, 1)
+            ids[Sfx.CHEER] = p.load(context, R.raw.sfx_cheer, 1)
+            ids[Sfx.DOOR] = p.load(context, R.raw.sfx_door, 1)
+            ids[Sfx.BELL] = p.load(context, R.raw.sfx_bell, 1)
             pool = p
         } catch (e: Exception) {
             pool = null
@@ -44,7 +50,7 @@ class AndroidAudio(private val context: Context) : AudioPlayer {
         if (!settings.soundEffects) return
         try {
             val id = ids[sfx] ?: return
-            val v = settings.volume.coerceIn(0f, 1f)
+            val v = settings.sfxVolume.coerceIn(0f, 1f)
             pool?.play(id, v, v, 1, 0, 1f)
         } catch (e: Exception) {
             // ignore
@@ -67,7 +73,8 @@ class AndroidAudio(private val context: Context) : AudioPlayer {
             val shouldPlay = settings.music && inForeground
             if (shouldPlay) {
                 val mp = music ?: MediaPlayer.create(context, R.raw.music_calm)?.apply { isLooping = true }.also { music = it }
-                mp?.setVolume(settings.volume * 0.4f, settings.volume * 0.4f)
+                val mv = settings.musicVolume.coerceIn(0f, 1f) * 0.4f
+                mp?.setVolume(mv, mv)
                 if (mp != null && !mp.isPlaying) mp.start()
             } else {
                 music?.let { if (it.isPlaying) it.pause() }

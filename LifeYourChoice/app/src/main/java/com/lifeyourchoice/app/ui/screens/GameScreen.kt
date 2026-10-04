@@ -102,7 +102,7 @@ private fun Stage(session: GameSession, hud: Hud, modifier: Modifier) {
             CharacterPortrait(
                 hud.gender, hud.appearance, hud.ageYears,
                 Modifier.align(Alignment.BottomStart).padding(start = 6.dp).height(h).aspectRatio(5f / 6f),
-                happiness = hud.stat(Stat.HAPPINESS)
+                happiness = hud.stat(Stat.HAPPINESS), look = hud.look
             )
         }
         // Fade the art into the story panel.
@@ -248,7 +248,7 @@ private fun StatsOverlay(session: GameSession, hud: Hud) {
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(Modifier.size(54.dp).clip(CircleShape).background(Ly.Navy700).border(BorderStroke(2.dp, Ly.Gold), CircleShape)) {
-                    CharacterPortrait(hud.gender, hud.appearance, hud.ageYears, Modifier.fillMaxSize().padding(top = 5.dp), happiness = hud.stat(Stat.HAPPINESS))
+                    CharacterPortrait(hud.gender, hud.appearance, hud.ageYears, Modifier.fillMaxSize().padding(top = 5.dp), happiness = hud.stat(Stat.HAPPINESS), look = hud.look)
                 }
                 Spacer(Modifier.width(12.dp))
                 Column(Modifier.weight(1f)) {

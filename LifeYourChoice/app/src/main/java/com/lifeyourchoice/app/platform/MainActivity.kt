@@ -32,6 +32,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onPause() {
         viewModel.audio.setForeground(false)
+        viewModel.session.stopVoice()
         super.onPause()
     }
 }

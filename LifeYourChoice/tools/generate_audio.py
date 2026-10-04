@@ -72,6 +72,46 @@ for f in chord:
     motto.append((0, track))
 write("sfx_motto", mix(*motto), 0.8)
 
+# ---- cinematic scene sounds (Version 2A)
+def noise_burst(dur, lowpass, amp, decay, seed):
+    r = random.Random(seed)
+    out, lp = [], 0.0
+    for i in range(int(dur * SR)):
+        t = i / SR
+        lp += (r.uniform(-1, 1) - lp) * lowpass
+        out.append(lp * amp * math.exp(-decay * t))
+    return out
+
+
+# knock: two short wooden thumps
+write("sfx_knock", mix((0, note(190, 0.12, 0.7, 0.001, 38, (1.0, 0.5, 0.3))), (0.0, noise_burst(0.08, 0.25, 0.5, 40, 1)),
+                       (0.22, note(175, 0.12, 0.7, 0.001, 38, (1.0, 0.5, 0.3))), (0.22, noise_burst(0.08, 0.25, 0.5, 40, 2))))
+
+# whoosh: filtered noise swell (a train passing, a quick movement)
+whoosh, lp = [], 0.0
+rw = random.Random(11)
+for i in range(int(0.9 * SR)):
+    t = i / (0.9 * SR)
+    lp += (rw.uniform(-1, 1) - lp) * (0.04 + 0.35 * math.sin(math.pi * t))
+    whoosh.append(lp * math.sin(math.pi * t) ** 1.5 * 0.9)
+write("sfx_whoosh", whoosh)
+
+# phone: two short electronic rings
+ring = lambda t0: (t0, [0.25 * math.sin(2 * math.pi * 1320 * i / SR) * (0.6 + 0.4 * math.sin(2 * math.pi * 22 * i / SR)) * min(1, i / (0.01 * SR)) * max(0, 1 - i / (0.32 * SR))
+                         for i in range(int(0.32 * SR))])
+write("sfx_phone", mix(ring(0), ring(0.45)))
+
+# cheer: a bright rising arpeggio with sparkle
+write("sfx_cheer", mix(*[(i * 0.07, note(f, 0.5, 0.3, 0.004, 5)) for i, f in enumerate([NOTE["G4"], NOTE["C5"], NOTE["E5"], NOTE["G5"], NOTE["C6"]])],
+                       (0.1, noise_burst(0.7, 0.5, 0.18, 4, 3))))
+
+# door: low thud with a latch click
+write("sfx_door", mix((0, note(95, 0.35, 0.8, 0.002, 12, (1.0, 0.6, 0.3))), (0, noise_burst(0.15, 0.15, 0.6, 18, 4)),
+                      (0.16, note(1900, 0.03, 0.25, 0.001, 90, (1.0,)))))
+
+# bell: soft double chime
+write("sfx_bell", mix((0, note(NOTE["G5"], 1.2, 0.35, 0.002, 3.2, (1.0, 0.5, 0.25))), (0.5, note(NOTE["E5"], 1.4, 0.35, 0.002, 2.8, (1.0, 0.5, 0.25)))))
+
 # ---- background music: a calm, seamless loop (Am - F - C - G), 32 s
 BAR = 8.0
 CHORDS = [

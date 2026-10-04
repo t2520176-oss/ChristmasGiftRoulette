@@ -3,6 +3,13 @@
 
     <!-- Fully offline: this app requests no permissions. -->
 
+    <!-- Lets the game find the device's own text-to-speech engine (offline voices only). -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"

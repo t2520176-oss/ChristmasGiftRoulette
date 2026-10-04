@@ -341,6 +341,9 @@ class GameSession(
     /** The Look the cinematic voice should use for the player. */
     val playerVoiceType: Int get() = engine?.state?.playerLook?.voice ?: 0
 
+    /** True when recorded clips or an offline device voice can speak; otherwise the game is subtitle-only. */
+    val voiceAvailable: Boolean get() = voice.available
+
     fun speak(line: VoiceLine, onDone: () -> Unit): Boolean {
         if (!settings.voiceEnabled || !voice.available) return false
         return voice.speak(line, settings.voiceVolume, onDone)

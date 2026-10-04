@@ -16,8 +16,8 @@ android {
         applicationId = "com.lifeyourchoice.game"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "2A"
     }
 
     // A fixed debug key (not a secret) so every build is signed identically and can update an installed copy.

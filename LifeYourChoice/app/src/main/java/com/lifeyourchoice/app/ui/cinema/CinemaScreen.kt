@@ -102,8 +102,10 @@ fun CinemaScreen(session: GameSession) {
             c.speaker, info?.gender ?: com.lifeyourchoice.core.model.Gender.BOY, info?.age ?: 30,
             if (c.speaker == ActorId.PLAYER) session.playerVoiceType else 0, c.emotion
         )
+        // Hold first so an instantly finishing clip cannot release a hold that was not yet placed.
+        d.holdForVoice()
         val started = session.speak(VoiceLine(c.text, c.audio, c.speaker, pitch, rate)) { d.voiceFinished() }
-        if (started) d.holdForVoice()
+        if (!started) d.voiceFinished()
     }
 
     BoxWithConstraints(Modifier.fillMaxSize().background(Color.Black)) {
