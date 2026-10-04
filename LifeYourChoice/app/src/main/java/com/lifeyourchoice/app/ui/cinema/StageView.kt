@@ -27,7 +27,7 @@ import com.lifeyourchoice.app.ui.art.paintTimeOfDay
 private const val FIGURE_UNITS = 222f
 private const val FLOOR_Y = 0.92f
 private const val FIGURE_HEIGHT = 0.60f
-private const val MAX_STAGE_ASPECT = 1.25f
+internal const val MAX_STAGE_ASPECT = 1.25f
 
 /**
  * The movie screen: environment and actors drawn together, then moved by the camera

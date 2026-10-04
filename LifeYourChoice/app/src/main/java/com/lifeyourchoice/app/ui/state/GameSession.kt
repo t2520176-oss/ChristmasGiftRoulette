@@ -265,6 +265,7 @@ class GameSession(
         rt.reset(sc2.env, sc2.time, cast)
         script = sc2
         director = d
+        cineCaption = null
         syncCinemaUi(d)
         stage = rt
         presented = p
@@ -288,7 +289,9 @@ class GameSession(
     }
 
     private fun syncCinemaUi(d: CineDirector) {
-        cineCaption = d.caption
+        // The last spoken line stays on screen while characters walk, and goes away with a title card.
+        val c = d.caption
+        if (c != null) cineCaption = c else if (d.title != null) cineCaption = null
         cineTitle = d.title
         cinePhase = d.phase
     }

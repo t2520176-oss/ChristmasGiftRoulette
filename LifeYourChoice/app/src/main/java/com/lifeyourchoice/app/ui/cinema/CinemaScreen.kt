@@ -134,11 +134,19 @@ fun CinemaScreen(session: GameSession) {
 
 @Composable
 private fun StageWithOverlays(session: GameSession, d: CineDirector, rt: StageRuntime, hud: Hud, tap: Modifier, modifier: Modifier) {
-    Box(modifier.then(tap)) {
+    BoxWithConstraints(modifier.then(tap)) {
+        // On a tall screen the picture keeps a film-like shape and the subtitles sit in the space below it.
+        val stageHeight = minOf(maxHeight, maxWidth * MAX_STAGE_ASPECT)
+        val subtitlesBelow = maxHeight - stageHeight > 110.dp
+        val show = session.settings.subtitles || !session.voice.available || !session.settings.voiceEnabled
         StageView(rt, Modifier.fillMaxSize())
         TopBar(session, d, hud)
-        val show = session.settings.subtitles || !session.voice.available || !session.settings.voiceEnabled
-        session.cineCaption?.let { if (show) DialogueBox(it, Modifier.align(Alignment.BottomStart)) }
+        session.cineCaption?.let {
+            if (show) {
+                val place = if (subtitlesBelow) Modifier.align(Alignment.TopStart).padding(top = stageHeight) else Modifier.align(Alignment.BottomStart)
+                DialogueBox(it, place)
+            }
+        }
         session.cineTitle?.let { TitleCard(it) }
     }
 }
