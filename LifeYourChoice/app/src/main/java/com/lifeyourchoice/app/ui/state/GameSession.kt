@@ -8,11 +8,13 @@ import com.lifeyourchoice.app.ui.cinema.castFor
 import com.lifeyourchoice.core.cinema.ActorId
 import com.lifeyourchoice.core.cinema.Beat
 import com.lifeyourchoice.core.cinema.ChapterCards
+import com.lifeyourchoice.core.cinema.Caption
 import com.lifeyourchoice.core.cinema.CineDirector
 import com.lifeyourchoice.core.cinema.CineLibrary
 import com.lifeyourchoice.core.cinema.CineScript
 import com.lifeyourchoice.core.cinema.EndingPlan
 import com.lifeyourchoice.core.cinema.MontageBuilder
+import com.lifeyourchoice.core.cinema.TitleState
 import com.lifeyourchoice.core.cinema.Phase
 import com.lifeyourchoice.core.cinema.scripts.CineContent
 import com.lifeyourchoice.core.engine.Achievements
@@ -124,6 +126,15 @@ class GameSession(
     var script: CineScript? by mutableStateOf(null)
         private set
     var toast: Toast? by mutableStateOf(null)
+        private set
+
+    // The director is plain Kotlin (no Compose), so the screen cannot observe it directly. These mirrors are
+    // refreshed every frame and only change (and so only recompose the UI) when a line, card or phase changes.
+    var cineCaption: Caption? by mutableStateOf(null)
+        private set
+    var cineTitle: TitleState? by mutableStateOf(null)
+        private set
+    var cinePhase: Phase by mutableStateOf(Phase.PLAYING)
         private set
     private var toastSerial = 0
     private var reactionEnded = false
@@ -254,6 +265,7 @@ class GameSession(
         rt.reset(sc2.env, sc2.time, cast)
         script = sc2
         director = d
+        syncCinemaUi(d)
         stage = rt
         presented = p
         stageArt = p.art
@@ -269,9 +281,16 @@ class GameSession(
         val rt = stage ?: return
         d.update(dtMs)
         rt.update(dtMs, d)
+        syncCinemaUi(d)
         for (cue in d.drainCues()) cueSfx(cue)
         if (d.phase == Phase.CHOOSING) markViewed()
         if (d.phase == Phase.DONE && cineOutcome != null && !reactionEnded) endCineScene()
+    }
+
+    private fun syncCinemaUi(d: CineDirector) {
+        cineCaption = d.caption
+        cineTitle = d.title
+        cinePhase = d.phase
     }
 
     private fun cueSfx(cue: String) {
@@ -296,11 +315,11 @@ class GameSession(
 
     /** True when this cinematic was watched before, so SKIP may be offered. */
     val canSkip: Boolean
-        get() = script?.scenarioId?.let { it in progress.viewedScenes } == true && director?.phase != Phase.CHOOSING
+        get() = script?.scenarioId?.let { it in progress.viewedScenes } == true && cinePhase != Phase.CHOOSING
 
-    fun tapCinema() { director?.tap() }
+    fun tapCinema() { director?.let { it.tap(); syncCinemaUi(it) } }
 
-    fun skipCinema() { director?.skip() }
+    fun skipCinema() { director?.let { it.skip(); syncCinemaUi(it) } }
 
     /** The player picked one of the choices at the end of the scene. */
     fun chooseCinematic(choiceIndex: Int) {
@@ -310,6 +329,7 @@ class GameSession(
         val out = commitChoice(choiceIndex) ?: return
         cineOutcome = out
         d.choose(choiceIndex, out)
+        syncCinemaUi(d)
         engine?.let { refreshHud(it) }
     }
 

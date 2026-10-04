@@ -94,7 +94,7 @@ fun CinemaScreen(session: GameSession) {
     }
 
     // Speak each new line (recorded clip or offline TTS); subtitles always work without it.
-    val caption = d.caption
+    val caption = session.cineCaption
     LaunchedEffect(d, caption?.serial) {
         val c = caption ?: return@LaunchedEffect
         if (c.text.isBlank()) return@LaunchedEffect
@@ -112,7 +112,7 @@ fun CinemaScreen(session: GameSession) {
     BoxWithConstraints(Modifier.fillMaxSize().background(Color.Black)) {
         val wide = maxWidth > 760.dp && maxWidth > maxHeight
         val choiceMaxHeight = maxHeight * 0.58f
-        val choosing = d.phase == Phase.CHOOSING
+        val choosing = session.cinePhase == Phase.CHOOSING
         val tap = Modifier.clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) {
             if (!choosing) session.tapCinema()
         }
@@ -138,8 +138,8 @@ private fun StageWithOverlays(session: GameSession, d: CineDirector, rt: StageRu
         StageView(rt, Modifier.fillMaxSize())
         TopBar(session, d, hud)
         val show = session.settings.subtitles || !session.voice.available || !session.settings.voiceEnabled
-        d.caption?.let { if (show) DialogueBox(it, d, Modifier.align(Alignment.BottomStart)) }
-        d.title?.let { TitleCard(it) }
+        session.cineCaption?.let { if (show) DialogueBox(it, Modifier.align(Alignment.BottomStart)) }
+        session.cineTitle?.let { TitleCard(it) }
     }
 }
 
@@ -176,7 +176,7 @@ private fun TopBar(session: GameSession, d: CineDirector, hud: Hud) {
 
 /** Speaker name and subtitle, in the style of a film. Narration is italic and nameless. */
 @Composable
-private fun DialogueBox(c: Caption, d: CineDirector, modifier: Modifier) {
+private fun DialogueBox(c: Caption, modifier: Modifier) {
     val a = rememberAppear(0, key = c.serial)
     val narrator = c.speaker == ActorId.NARRATOR
     Box(Modifier.fillMaxWidth().then(modifier).padding(horizontal = 12.dp, vertical = 12.dp).appear(a, 8f)) {
@@ -238,7 +238,7 @@ private fun ChoicePanel(session: GameSession, d: CineDirector, modifier: Modifie
         modifier.navigationBarsPadding().verticalScroll(rememberScrollState()).padding(horizontal = 12.dp, vertical = 10.dp),
         verticalArrangement = Arrangement.spacedBy(9.dp)
     ) {
-        if (p == null || d.phase != Phase.CHOOSING) {
+        if (p == null || session.cinePhase != Phase.CHOOSING) {
             Spacer(Modifier.height(10.dp))
             return@Column
         }
