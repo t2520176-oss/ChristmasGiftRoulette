@@ -134,7 +134,7 @@ class StageRuntime(var cast: Map<ActorId, CastInfo>) {
             f.facing += (wantFacing - f.facing) * min(1f, 9f * dt)
             f.appeared += ((if (st.visible) 1f else 0f) - f.appeared) * min(1f, 8f * dt)
             if (f.moving) f.walk += dt * (if (f.running) 15f else 9.5f)
-            PoseSolver.solve(f.gesture, f.emotion, f.speaking, f.moving, f.running, f.seated, clock + id.ordinal * 0.7f, f.walk, f.target)
+            PoseSolver.solve(f.gesture, f.emotion, f.speaking, f.moving, f.running, f.seated, clock + id.ordinal * 0.7f, f.walk, f.target, f.prop)
             f.pose.approach(f.target, speed)
             // blinking and talking
             f.blinkTimer -= dt
@@ -190,7 +190,7 @@ class StageRuntime(var cast: Map<ActorId, CastInfo>) {
                     camX = t.cx; camY = t.cy; camZoom = t.zoom
                     camFromX = camX; camFromY = camY; camFromZ = camZoom
                     camDuration = 0f
-                    cutFlash = 0.35f
+                    cutFlash = 0.22f
                 }
             }
         }

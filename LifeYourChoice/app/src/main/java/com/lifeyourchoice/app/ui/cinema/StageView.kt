@@ -20,7 +20,7 @@ import com.lifeyourchoice.app.ui.art.drawFigure
 import com.lifeyourchoice.app.ui.art.drawFigureShadow
 import com.lifeyourchoice.app.ui.art.paintTimeOfDay
 
-private const val FIGURE_UNITS = 215f
+private const val FIGURE_UNITS = 222f
 private const val FLOOR_Y = 0.92f
 private const val FIGURE_HEIGHT = 0.60f
 

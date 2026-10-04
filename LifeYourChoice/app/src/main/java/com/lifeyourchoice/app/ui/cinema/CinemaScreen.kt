@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -110,6 +111,7 @@ fun CinemaScreen(session: GameSession) {
 
     BoxWithConstraints(Modifier.fillMaxSize().background(Color.Black)) {
         val wide = maxWidth > 760.dp && maxWidth > maxHeight
+        val choiceMaxHeight = maxHeight * 0.58f
         val choosing = d.phase == Phase.CHOOSING
         val tap = Modifier.clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) {
             if (!choosing) session.tapCinema()
@@ -122,7 +124,7 @@ fun CinemaScreen(session: GameSession) {
         } else {
             Column(Modifier.fillMaxSize()) {
                 StageWithOverlays(session, d, rt, hud, tap, Modifier.weight(1f).fillMaxWidth())
-                if (choosing) ChoicePanel(session, d, Modifier.fillMaxWidth().background(Ly.Navy900))
+                if (choosing) ChoicePanel(session, d, Modifier.fillMaxWidth().heightIn(max = choiceMaxHeight).background(Ly.Navy900))
             }
         }
         ToastOverlay(session)

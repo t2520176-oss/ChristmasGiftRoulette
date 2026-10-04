@@ -62,10 +62,12 @@ class FigurePose {
 }
 
 /** Turns "what the actor is doing" into joint angles. [t] is seconds, [walk] the walk-cycle phase. */
+private val HELD_IN_HAND = setOf(Prop.CUP, Prop.BOOK, Prop.DOCUMENTS, Prop.FLOWERS, Prop.BOX)
+
 object PoseSolver {
     fun solve(
         gesture: Gesture, emotion: Emotion, speaking: Boolean, moving: Boolean, running: Boolean,
-        seated: Boolean, t: Float, walk: Float, out: FigurePose
+        seated: Boolean, t: Float, walk: Float, out: FigurePose, prop: Prop = Prop.NONE
     ) {
         val p = out
         p.rUa = 6f; p.rFa = 8f; p.lUa = 6f; p.lFa = 8f; p.lForward = 0f; p.armsFront = 0f
@@ -78,10 +80,10 @@ object PoseSolver {
             Emotion.SAD, Emotion.DISAPPOINTED -> { p.lean = 4f; p.headNod = 13f; p.shoulderDrop = 4f }
             Emotion.TIRED -> { p.lean = 5f; p.headNod = 9f; p.shoulderDrop = 5f; p.bob = sin(t * 1.4f) * 0.8f }
             Emotion.PROUD, Emotion.CONFIDENT -> { p.lean = -2f; p.headNod = -4f }
-            Emotion.ANGRY -> { p.rUa = 14f; p.rFa = 100f; p.lUa = 14f; p.lFa = 100f; p.lean = 3f }
+            Emotion.ANGRY -> { p.rUa = 30f; p.rFa = -52f; p.lUa = 30f; p.lFa = -52f; p.lean = 3f }
             Emotion.AFRAID -> { p.rUa = 14f; p.rFa = -75f; p.lUa = 14f; p.lFa = -75f; p.armsFront = 1f; p.shoulderDrop = -3f }
             Emotion.EXCITED -> { p.rUa = 32f + 12f * sin(t * 9f); p.rFa = 80f; p.lUa = 32f + 12f * sin(t * 9f + 2f); p.lFa = 80f; p.bob = abs(sin(t * 9f)) * 2.5f }
-            Emotion.LAUGHING -> { p.lean = 3f * sin(t * 14f); p.headNod = -8f; p.bob = abs(sin(t * 14f)) * 2f; p.rUa = 25f; p.rFa = 90f }
+            Emotion.LAUGHING -> { p.lean = 3f * sin(t * 14f); p.headNod = -8f; p.bob = abs(sin(t * 14f)) * 2f; p.rUa = 25f; p.rFa = 90f; p.lUa = 20f; p.lFa = -70f; p.armsFront = 1f }
             Emotion.THOUGHTFUL -> p.headTilt = 6f
             Emotion.WORRIED -> { p.headNod = 5f; p.shoulderDrop = 2f }
             Emotion.EMBARRASSED -> { p.headNod = 8f; p.headTilt = 6f }
@@ -92,7 +94,7 @@ object PoseSolver {
         // Explicit gestures.
         when (gesture) {
             Gesture.NONE -> {}
-            Gesture.EXPLAIN -> { p.rUa = 28f; p.rFa = 100f + 14f * sin(t * 5f); p.lUa = 22f; p.lFa = 72f + 12f * sin(t * 4.3f + 1f) }
+            Gesture.EXPLAIN -> { p.rUa = 28f; p.rFa = 100f + 14f * sin(t * 5f); p.lUa = 16f; p.lFa = -62f + 6f * sin(t * 4.3f + 1f); p.armsFront = 1f }
             Gesture.POINT -> { p.rUa = 78f; p.rFa = 86f }
             Gesture.SHRUG -> { p.rUa = 30f; p.rFa = 120f; p.lUa = 30f; p.lFa = 120f; p.shoulderDrop = -5f; p.headTilt = 6f }
             Gesture.WAVE -> { p.rUa = 140f; p.rFa = 160f + 26f * sin(t * 9f) }
@@ -105,13 +107,17 @@ object PoseSolver {
             Gesture.HANDSHAKE -> { p.rUa = 80f; p.rFa = 88f + 5f * sin(t * 6f); p.lean = 3f }
             Gesture.HUG -> { p.rUa = 70f; p.rFa = 100f; p.lUa = 70f; p.lFa = 100f; p.lForward = 1f; p.lean = 5f; p.headTilt = 6f; p.armsFront = 1f }
             Gesture.PHONE -> { p.rUa = 28f; p.rFa = -157f; p.headTilt = -6f }
-            Gesture.TYPE -> { p.rUa = 14f; p.rFa = 86f + 6f * sin(t * 18f); p.lUa = 14f; p.lFa = 86f + 6f * sin(t * 18f + 2f); p.headNod = 6f; p.armsFront = 1f }
+            Gesture.TYPE -> { p.lForward = 1f; p.rUa = 14f; p.rFa = 86f + 6f * sin(t * 18f); p.lUa = 14f; p.lFa = 86f + 6f * sin(t * 18f + 2f); p.headNod = 6f; p.armsFront = 1f }
             Gesture.CLAP -> { p.rUa = 24f; p.rFa = -100f + 14f * sin(t * 12f); p.lUa = 24f; p.lFa = -100f - 14f * sin(t * 12f); p.armsFront = 1f }
             Gesture.FACEPALM -> { p.rUa = 20f; p.rFa = -160f; p.headNod = 16f; p.lean = 4f }
             Gesture.SCRATCH_HEAD -> { p.rUa = 66f; p.rFa = 172f + 8f * sin(t * 6f); p.headTilt = 6f }
             Gesture.FIST_PUMP -> { p.rUa = 36f; p.rFa = 150f + 14f * abs(sin(t * 8f)); p.bob = abs(sin(t * 8f)) * 3f }
             Gesture.GENTLE_SMILE -> p.headTilt = 4f
         }
+
+        // Carrying something in the hand: bring it up in front of the body.
+        val holding = gesture == Gesture.NONE && !speaking && prop in HELD_IN_HAND
+        if (holding) { p.rUa = 20f; p.rFa = 90f }
 
         // Talking with the hands, a little.
         if (speaking && gesture == Gesture.NONE && !moving) {
@@ -126,8 +132,11 @@ object PoseSolver {
             p.shinL = swing - 16f * max(0f, -sin(walk + 0.8f)) - 2f
             p.shinR = -swing - 16f * max(0f, sin(walk + 0.8f)) - 2f
             if (gesture == Gesture.NONE) {
-                p.lUa = -swing * 0.9f; p.rUa = swing * 0.9f
-                p.lFa = p.lUa + (if (running) 70f else 12f); p.rFa = p.rUa + (if (running) 70f else 12f)
+                // The left arm is mirrored (positive = away from the facing side), so equal angles swing the
+                // arms in opposite directions, against the legs. The forearm always bends forward.
+                val bend = if (running) 70f else 12f
+                if (!holding) { p.rUa = swing * 0.9f; p.rFa = p.rUa + bend }
+                p.lUa = swing * 0.9f; p.lFa = p.lUa - bend
             }
             p.bob += abs(sin(walk)) * (if (running) 5f else 2.5f)
             p.lean += if (running) 10f else 2f
@@ -141,6 +150,7 @@ private const val THIGH = 50f
 private const val SHIN = 50f
 private const val UPPER = 42f
 private const val FORE = 40f
+private const val HEAD_SCALE = 0.74f
 
 private fun vec(deg: Float): Offset {
     val r = deg * 0.017453292f
@@ -210,7 +220,7 @@ private fun DrawScope.drawFigureLocal(look: Look, gender: Gender, age: Int, pose
         val h = e + d(fa) * FORE
         return e to h
     }
-    val lSign = if (pose.lForward > 0.5f) 1f else -1f
+    val lSign = -1f + 2f * pose.lForward.coerceIn(0f, 1f)
     val (lE, lH) = armPts(shL, pose.lUa, pose.lFa, lSign)
     val (rE, rH) = armPts(shR, pose.rUa, pose.rFa, 1f)
     fun drawArm(sh: Offset, e: Offset, h: Offset, back: Boolean) {
@@ -228,7 +238,7 @@ private fun DrawScope.drawFigureLocal(look: Look, gender: Gender, age: Int, pose
         lineTo(hip.x + 19f, hip.y + 4f); lineTo(hip.x - 19f, hip.y + 4f); close()
     }
     drawPath(torso, Brush.verticalGradient(listOf(top, shade(top, 0.3f)), startY = shoulderC.y, endY = hip.y))
-    drawCircle(top, 15f, Offset(shL.x, shL.y + 4f)); drawCircle(top, 15f, Offset(shR.x, shR.y + 4f))
+    drawCircle(top, 11.5f, Offset(shL.x, shL.y + 5f)); drawCircle(top, 11.5f, Offset(shR.x, shR.y + 5f))
     when (style) {
         OutfitStyle.JACKET -> {
             val v = Path().apply { moveTo(shoulderC.x - 10f, shoulderC.y); lineTo(hip.x, hip.y - 28f); lineTo(shoulderC.x + 10f, shoulderC.y); close() }
@@ -249,8 +259,11 @@ private fun DrawScope.drawFigureLocal(look: Look, gender: Gender, age: Int, pose
     }
 
     // head (back hair, neck, face, front hair)
-    val headScale = 0.62f
-    val neck = shoulderC + up * 9f + Offset(0f, pose.headNod * 0.25f)
+    val headScale = HEAD_SCALE
+    val neck = shoulderC + up * 6f + Offset(0f, pose.headNod * 0.25f)
+    // A solid neck from the shoulder line to the chin, so the head never floats above the body.
+    drawRoundRect(shade(skin, 0.12f), Offset(neck.x - 6.5f, neck.y - 4f), Size(13f, shoulderC.y - neck.y + 14f), CornerRadius(4f))
+    if (style == OutfitStyle.HOODIE) drawOval(shade(top, 0.3f), Offset(shoulderC.x - 18f, shoulderC.y - 4f), Size(36f, 14f))
     translate(neck.x, neck.y) {
         rotate(pose.headTilt + pose.lean + pose.headNod * 0.15f, Offset.Zero) {
             translate(-50f * headScale, -78f * headScale) {

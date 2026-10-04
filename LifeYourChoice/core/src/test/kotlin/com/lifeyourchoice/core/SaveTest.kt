@@ -98,4 +98,45 @@ class SaveTest {
         assertTrue(repo.loadRecords().isEmpty())
         assertEquals(0, repo.loadProgress().livesCompleted)
     }
+
+    /** Files written by Version 1 lack every Version 2A field; they must still load. */
+    @Test fun versionOneSavesStillLoad() {
+        val dir = tmp()
+        val repo = FileSaveRepository(dir)
+        val e = GameEngine.newLife(TestSupport.library, "Old", Gender.BOY, 0, 99)
+        repeat(6) { step(e) }
+        repo.saveGame(e.state)
+        val record = LifeReportBuilder.build(e.state, 1, emptyList(), 0L)
+        repo.addRecord(record)
+        repo.saveProgress(Progress(setOf("first_paycheck"), 1, listOf("x")))
+        repo.saveSettings(Settings())
+
+        fun strip(file: String, vararg keys: String) {
+            val f = File(dir, file)
+            fun clean(el: kotlinx.serialization.json.JsonElement): kotlinx.serialization.json.JsonElement = when (el) {
+                is kotlinx.serialization.json.JsonObject -> kotlinx.serialization.json.JsonObject(el.filterKeys { it !in keys }.mapValues { clean(it.value) })
+                is kotlinx.serialization.json.JsonArray -> kotlinx.serialization.json.JsonArray(el.map { clean(it) })
+                else -> el
+            }
+            f.writeText(clean(kotlinx.serialization.json.Json.parseToJsonElement(f.readText())).toString())
+        }
+        strip("current_life.json", "look", "playerLook", "chapterShown", "lastSceneAge", "outcomeIndex", "outcomeText")
+        strip("life_records.json", "look")
+        strip("progress.json", "viewedScenes")
+        strip("settings.json", "voiceEnabled", "voiceVolume", "musicVolume", "sfxVolume", "subtitles", "cinematic")
+
+        val fresh = FileSaveRepository(dir)
+        val loaded = fresh.loadGame()
+        assertNotNull(loaded)
+        assertEquals(e.state.playerName, loaded!!.playerName)
+        assertEquals(1, fresh.loadRecords().size)
+        assertNull(fresh.loadRecords().first().look)
+        assertTrue(fresh.loadProgress().viewedScenes.isEmpty())
+        val s = fresh.loadSettings()
+        assertTrue(s.subtitles && s.voiceEnabled && s.cinematic)
+        // and the old life can be played on
+        val resumed = GameEngine(loaded, TestSupport.library)
+        while (!resumed.isFinished) step(resumed)
+        assertTrue(resumed.isFinished)
+    }
 }
