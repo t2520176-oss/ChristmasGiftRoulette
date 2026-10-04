@@ -142,3 +142,11 @@ def test_insufficient_disk_space_is_reported(monkeypatch):
         _run()
     assert e.value.code == "disk_space"
     assert "디스크" in e.value.user_message("ko") and "disk" in e.value.user_message("en").lower()
+
+
+def test_generate_button_click_cannot_pass_checked_as_project():
+    """Regression: QPushButton.clicked(checked=False) used to arrive as `project` and crashed with
+    "'bool' object has no attribute 'meta'" (found by a user clicking the real button)."""
+    from pathlib import Path
+    ui = (Path(__file__).resolve().parents[1] / "figurecraft" / "ui" / "generate_page.py").read_text(encoding="utf-8")
+    assert "clicked.connect(self._on_generate_clicked)" in ui and "isinstance(project, Project)" in ui

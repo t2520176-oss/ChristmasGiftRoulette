@@ -118,7 +118,8 @@ def s_start():
 
 def s_generate():
     g._insert_example()
-    g.start_generation()
+    assert g.btn_generate.isVisible() and g.btn_generate.isEnabled()
+    g.btn_generate.click()                       # the real button (clicked() passes checked=False!)
     wait(lambda: g._generating, 10)
     wait(lambda: not g._generating, 180, "generation")
     assert g.ws is not None and g.ws.is_demo and not shown_errors

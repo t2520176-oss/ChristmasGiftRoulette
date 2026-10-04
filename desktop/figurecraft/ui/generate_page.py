@@ -74,7 +74,7 @@ class GeneratePage(QWidget):
         root.setContentsMargins(8, 8, 8, 8)
         split = QSplitter(Qt.Orientation.Horizontal)
         root.addWidget(split)
-        split.addWidget(self._scroll(self._build_left(), 350))
+        split.addWidget(self._left_column())
         split.addWidget(self._build_center())
         split.addWidget(self._scroll(self._build_right(), 380))
         split.setStretchFactor(0, 0)
@@ -87,8 +87,24 @@ class GeneratePage(QWidget):
         sa.setWidgetResizable(True)
         sa.setWidget(w)
         sa.setMinimumWidth(width - 20)
-        sa.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        sa.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)   # never clip controls in a small window
         return sa
+
+    def _left_column(self) -> QWidget:
+        """Scrollable options + the Generate/Stop buttons pinned below (always visible, even in a small window)."""
+        col = QWidget()
+        v = QVBoxLayout(col)
+        v.setContentsMargins(0, 0, 0, 0)
+        v.setSpacing(8)
+        scroll = self._scroll(self._build_left(), 350)
+        v.addWidget(scroll, 1)
+        bar = QVBoxLayout()
+        bar.setContentsMargins(0, 0, 6, 0)
+        bar.addWidget(self.btn_generate)
+        bar.addWidget(self.btn_stop)
+        v.addLayout(bar)
+        col.setMinimumWidth(330)
+        return col
 
     # ------------------------------------------------------------- left
     def _build_left(self) -> QWidget:
@@ -251,11 +267,9 @@ class GeneratePage(QWidget):
         lay.addWidget(card)
 
         self.btn_generate = QPushButton(tr("gen.generate")); self.btn_generate.setObjectName("primary")
-        self.btn_generate.clicked.connect(self.start_generation)
+        self.btn_generate.clicked.connect(self._on_generate_clicked)
         self.btn_stop = QPushButton(tr("gen.stop")); self.btn_stop.setObjectName("danger"); self.btn_stop.setVisible(False)
         self.btn_stop.clicked.connect(self.stop_generation)
-        lay.addWidget(self.btn_generate)
-        lay.addWidget(self.btn_stop)
         lay.addStretch()
         return w
 
@@ -536,7 +550,13 @@ class GeneratePage(QWidget):
             custom_palette=[s.hex() for s in self.custom_sw][: self.color_group.checkedId()])
 
     # ============================================================ generation
+    def _on_generate_clicked(self, _checked: bool = False):
+        # QPushButton.clicked passes `checked` - never let it land in start_generation's `project` argument
+        self.start_generation()
+
     def start_generation(self, project: Project | None = None, request: GenerationRequest | None = None):
+        if not isinstance(project, Project):
+            project = None
         if self._generating or self._busy:
             return
         request = request or self.collect_request()
