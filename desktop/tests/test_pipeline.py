@@ -130,3 +130,15 @@ def test_auto_stop_off_warns_instead_of_stopping(worker):
     warnings = []
     res, *_ = _run("cat", provider=GenericHttpProvider(s), settings=s, gpu_warning=warnings.append)
     assert res.gpu_stop == "manual" and warnings
+
+
+def test_insufficient_disk_space_is_reported(monkeypatch):
+    import collections
+    from figurecraft.core import export
+    Usage = collections.namedtuple("Usage", "total used free")
+    monkeypatch.setattr(export.shutil, "disk_usage", lambda p: Usage(10**12, 10**12 - 5 * 10**6, 5 * 10**6))
+    from figurecraft.errors import ExportError
+    with pytest.raises(ExportError) as e:
+        _run()
+    assert e.value.code == "disk_space"
+    assert "디스크" in e.value.user_message("ko") and "disk" in e.value.user_message("en").lower()

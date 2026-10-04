@@ -134,6 +134,8 @@ def run_generation(request: GenerationRequest, provider: GenerationProvider, set
 
         # ------------------------------------------------ 4 download
         begin(Stage.DOWNLOAD)
+        from . import export as _export
+        _export.check_disk_space(project.root, min(settings.max_download_mb, 500) * 1.5)   # fail early, in Korean/English
         mesh_dir_tmp = paths.temp_dir() / f"dl_{project.meta.id}.glb"
         glb = provider.download(job_id, mesh_dir_tmp, lambda a, b: hooks.info(f"{a / 1e6:.1f} MB"))
         shutil.move(str(glb), project.file("original.glb"))

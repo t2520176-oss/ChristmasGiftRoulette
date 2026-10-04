@@ -8,7 +8,9 @@ import sys
 def _configure_webengine() -> None:
     """Chromium flags must be set before QApplication exists."""
     flags = os.environ.get("QTWEBENGINE_CHROMIUM_FLAGS", "")
-    extra = os.environ.get("FIGURECRAFT_WEB_FLAGS", "")
+    # The 3D viewer needs WebGL: don't let a conservative GPU blocklist (old/odd drivers, iGPUs, VMs) switch it off,
+    # and allow Chromium's software rasteriser (SwiftShader) as a last resort so a preview always works.
+    extra = "--ignore-gpu-blocklist --enable-unsafe-swiftshader " + os.environ.get("FIGURECRAFT_WEB_FLAGS", "")
     if sys.platform != "win32":
         if hasattr(os, "geteuid") and os.geteuid() == 0:
             extra += " --no-sandbox"
