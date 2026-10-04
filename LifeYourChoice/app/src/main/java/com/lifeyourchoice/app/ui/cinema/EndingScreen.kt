@@ -124,7 +124,7 @@ private fun RunFrame(state: GameState, frame: MontageFrame, pushScale: Float, mo
             }
         }
     }
-    StageView(rt, modifier)
+    StageView(rt, modifier, align = Alignment.Center)
 }
 
 @Composable

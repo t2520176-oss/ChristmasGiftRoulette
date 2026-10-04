@@ -3,7 +3,11 @@ package com.lifeyourchoice.app.ui.cinema
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
@@ -23,14 +27,27 @@ import com.lifeyourchoice.app.ui.art.paintTimeOfDay
 private const val FIGURE_UNITS = 222f
 private const val FLOOR_Y = 0.92f
 private const val FIGURE_HEIGHT = 0.60f
+private const val MAX_STAGE_ASPECT = 1.25f
 
 /**
  * The movie screen: environment and actors drawn together, then moved by the camera
  * (zoom + pan) with a graphics layer, so cuts, push-ins and follows are cheap and crisp.
  */
 @Composable
-fun StageView(rt: StageRuntime, modifier: Modifier = Modifier) {
-    Box(modifier.clipToBounds().background(Color.Black)) {
+fun StageView(rt: StageRuntime, modifier: Modifier = Modifier, align: Alignment = Alignment.TopCenter) {
+    // Tall phone screens get cinematic black bars instead of a stretched picture: the figures and the
+    // camera framing are designed for a stage that is at most about 4:5, and two-shots overlap on a taller one.
+    BoxWithConstraints(modifier.background(Color.Black)) {
+        val stageHeight = minOf(maxHeight, maxWidth * MAX_STAGE_ASPECT)
+        Box(Modifier.align(align).fillMaxWidth().height(stageHeight).clipToBounds().background(Color.Black)) {
+            StageLayers(rt)
+        }
+    }
+}
+
+@Composable
+private fun StageLayers(rt: StageRuntime) {
+    Box(Modifier.fillMaxSize()) {
         Box(
             Modifier.fillMaxSize().graphicsLayer {
                 val z = rt.camZoom
@@ -50,7 +67,7 @@ fun StageView(rt: StageRuntime, modifier: Modifier = Modifier) {
         Canvas(Modifier.fillMaxSize()) {
             val a = maxOf(rt.blackout, rt.cutFlash)
             if (a > 0.001f) drawRect(Color.Black.copy(alpha = a.coerceIn(0f, 1f)))
-            // letterbox-style vignette keeps focus on the action
+            // vignette keeps focus on the action
             drawRect(Brush.radialGradient(listOf(Color.Transparent, Color(0x55000000)),
                 center = Offset(size.width / 2f, size.height * 0.5f), radius = size.maxDimension * 0.75f))
         }
