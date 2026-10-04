@@ -1,0 +1,84 @@
+<resources>
+    <string name="app_name">Christmas Gift Finder</string>
+
+    <!-- Welcome -->
+    <string name="welcome_title">Christmas\nGift Finder</string>
+    <string name="welcome_subtitle">Find the perfect Christmas exchange gift within your budget.</string>
+    <string name="get_started">GET STARTED</string>
+
+    <!-- Finder -->
+    <string name="finder_title">Find Gift Ideas</string>
+    <string name="label_country">Country</string>
+    <string name="label_currency">Currency: %1$s (%2$s)</string>
+    <string name="label_budget">Gift Budget</string>
+    <string name="label_budget_in">Gift Budget (%1$s)</string>
+    <string name="label_recipient">Recipient</string>
+    <string name="label_style">Gift Style</string>
+    <string name="select_country_prompt">Select a country</string>
+    <string name="find_gift_ideas">FIND GIFT IDEAS</string>
+    <string name="country_required">Please select a country first.</string>
+    <string name="budget_hint_example">e.g. %1$s</string>
+
+    <!-- Selection screens -->
+    <string name="select_country_title">Select Country</string>
+    <string name="select_recipient_title">Select Recipient</string>
+    <string name="select_style_title">Select Gift Style</string>
+    <string name="search_country">Search country</string>
+    <string name="no_country_found">No matching country.</string>
+
+    <!-- Recipients -->
+    <string name="recipient_anyone">Anyone</string>
+    <string name="recipient_man">Man</string>
+    <string name="recipient_woman">Woman</string>
+    <string name="recipient_child">Child</string>
+    <string name="recipient_coworker">Coworker</string>
+    <string name="recipient_friend">Friend</string>
+    <string name="recipient_family">Family</string>
+
+    <!-- Styles -->
+    <string name="style_any">Any</string>
+    <string name="style_useful">Useful</string>
+    <string name="style_cute">Cute</string>
+    <string name="style_funny">Funny</string>
+    <string name="style_food">Food</string>
+    <string name="style_office">Office</string>
+    <string name="style_tech">Tech</string>
+    <string name="style_christmas">Christmas</string>
+
+    <!-- Budget validation -->
+    <string name="error_budget_empty">Please enter your gift budget.</string>
+    <string name="error_budget_invalid">Please enter a valid number, for example 200.</string>
+    <string name="error_budget_negative">The budget cannot be negative.</string>
+    <string name="error_budget_zero">The budget must be greater than zero.</string>
+    <string name="error_budget_too_large">That amount is too large. Please enter a smaller budget.</string>
+
+    <!-- Results -->
+    <string name="results_title">Gift Ideas for You</string>
+    <string name="summary_budget">Budget: %1$s</string>
+    <string name="summary_recipient">Recipient: %1$s</string>
+    <string name="summary_style">Style: %1$s</string>
+    <string name="good_for">Good for: %1$s</string>
+    <string name="may_exceed_budget">May exceed your budget depending on the store.</string>
+    <string name="stretch_section_title">Slightly above budget</string>
+    <string name="surprise_me">SURPRISE ME</string>
+    <string name="price_disclaimer">Prices are estimates for gift-planning purposes and may vary by store, location, and time.</string>
+    <string name="add_favorite">Save to favorites</string>
+    <string name="remove_favorite">Remove from favorites</string>
+    <string name="open_favorites">Favorites</string>
+
+    <!-- No results -->
+    <string name="no_results_title">No gift ideas found for this budget.</string>
+    <string name="no_results_hint">Try increasing your budget or selecting Any gift style.</string>
+    <string name="change_budget">CHANGE BUDGET</string>
+
+    <!-- Surprise -->
+    <string name="surprise_title">Surprise Gift</string>
+    <string name="surprise_heading">SURPRISE GIFT</string>
+    <string name="try_again">TRY AGAIN</string>
+    <string name="back_to_results">BACK TO RESULTS</string>
+    <string name="back">Back</string>
+
+    <!-- Favorites -->
+    <string name="favorites_title">My Favorites</string>
+    <string name="favorites_empty">No favorites yet. Tap the heart on a gift idea to save it here.</string>
+</resources>

@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "ChristmasGiftRoulette"
 include(":app")
+include(":finder")

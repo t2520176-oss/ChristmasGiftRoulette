@@ -1,0 +1,10060 @@
+[
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Mug",
+  "minPrice": 90,
+  "maxPrice": 190,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful",
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A practical and popular exchange gift.",
+  "icon": "\ud83e\udd5b"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Mini Scented Candle",
+  "minPrice": 90,
+  "maxPrice": 200,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A relaxing and affordable Christmas exchange gift.",
+  "icon": "\ud83d\udd6f\ufe0f"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Christmas Socks",
+  "minPrice": 70,
+  "maxPrice": 180,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Funny"
+  ],
+  "description": "Warm, festive and fun to unwrap.",
+  "icon": "\ud83e\udde6"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Chocolate Gift Pack",
+  "minPrice": 110,
+  "maxPrice": 270,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "A sweet treat almost everyone enjoys.",
+  "icon": "\ud83c\udf6b"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Keychain Set",
+  "minPrice": 50,
+  "maxPrice": 120,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Notebook Set",
+  "minPrice": 70,
+  "maxPrice": 190,
+  "recipients": [
+   "Coworker",
+   "Friend",
+   "Woman",
+   "Child"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Cute"
+  ],
+  "description": "Handy for notes, plans and doodles.",
+  "icon": "\ud83d\udcd3"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Towel Gift Set",
+  "minPrice": 100,
+  "maxPrice": 270,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Soft towels, neatly gift-wrapped.",
+  "icon": "\ud83e\uddfa"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Hand Cream Set",
+  "minPrice": 90,
+  "maxPrice": 280,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Small Tumbler",
+  "minPrice": 130,
+  "maxPrice": 330,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Cable Organizer",
+  "minPrice": 40,
+  "maxPrice": 130,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Ends the cable tangle for good.",
+  "icon": "\ud83d\udd0c"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Tea Gift Set",
+  "minPrice": 100,
+  "maxPrice": 330,
+  "recipients": [
+   "Family",
+   "Friend",
+   "Woman",
+   "Man"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "A calm break in a box.",
+  "icon": "\ud83c\udf75"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Coffee Pack",
+  "minPrice": 100,
+  "maxPrice": 280,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Snack Box",
+  "minPrice": 90,
+  "maxPrice": 270,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Friend",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Funny"
+  ],
+  "description": "An assortment of tasty snacks to share.",
+  "icon": "\ud83c\udf7f"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Small Plush Toy",
+  "minPrice": 90,
+  "maxPrice": 280,
+  "recipients": [
+   "Child",
+   "Woman",
+   "Friend"
+  ],
+  "categories": [
+   "Cute",
+   "Funny"
+  ],
+  "description": "Soft, huggable and always welcome.",
+  "icon": "\ud83e\uddf8"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Christmas Ornament",
+  "minPrice": 40,
+  "maxPrice": 160,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Mini Desk Calendar",
+  "minPrice": 60,
+  "maxPrice": 170,
+  "recipients": [
+   "Coworker",
+   "Anyone"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Christmas"
+  ],
+  "description": "A cheerful way to plan the new year.",
+  "icon": "\ud83d\udcc5"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Funny Novelty Mug",
+  "minPrice": 80,
+  "maxPrice": 200,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Funny",
+   "Useful"
+  ],
+  "description": "Guaranteed to get a laugh at the exchange.",
+  "icon": "\ud83d\ude02"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Santa Hat",
+  "minPrice": 40,
+  "maxPrice": 130,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Wireless Earbuds (Basic)",
+  "minPrice": 230,
+  "maxPrice": 520,
+  "recipients": [
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech"
+  ],
+  "description": "Entry-level earbuds for music and calls.",
+  "icon": "\ud83c\udfa7"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Mini Power Bank",
+  "minPrice": 180,
+  "maxPrice": 380,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful"
+  ],
+  "description": "Emergency phone charge in a pocket.",
+  "icon": "\ud83d\udd0b"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "USB Flash Drive",
+  "minPrice": 120,
+  "maxPrice": 230,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "Handy storage for documents and photos.",
+  "icon": "\ud83d\udcbe"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Gingerbread Cookie Tin",
+  "minPrice": 80,
+  "maxPrice": 240,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Festive cookies in a reusable tin.",
+  "icon": "\ud83c\udf6a"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 110,
+  "maxPrice": 260,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Card Game",
+  "minPrice": 100,
+  "maxPrice": 260,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Fairy Lights",
+  "minPrice": 90,
+  "maxPrice": 210,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Warm string lights for a cosy corner.",
+  "icon": "\u2728"
+ },
+ {
+  "country": "Philippines",
+  "currencyCode": "PHP",
+  "currencySymbol": "\u20b1",
+  "giftName": "Mouse Pad",
+  "minPrice": 60,
+  "maxPrice": 190,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "A smooth, tidy surface for the mouse.",
+  "icon": "\ud83d\uddb1\ufe0f"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Mug",
+  "minPrice": 4,
+  "maxPrice": 9,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful",
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A practical and popular exchange gift.",
+  "icon": "\ud83e\udd5b"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Christmas Socks",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Funny"
+  ],
+  "description": "Warm, festive and fun to unwrap.",
+  "icon": "\ud83e\udde6"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Chocolate Gift Pack",
+  "minPrice": 5,
+  "maxPrice": 12,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "A sweet treat almost everyone enjoys.",
+  "icon": "\ud83c\udf6b"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Notebook Set",
+  "minPrice": 3,
+  "maxPrice": 10,
+  "recipients": [
+   "Coworker",
+   "Friend",
+   "Woman",
+   "Child"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Cute"
+  ],
+  "description": "Handy for notes, plans and doodles.",
+  "icon": "\ud83d\udcd3"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Towel Gift Set",
+  "minPrice": 5,
+  "maxPrice": 13,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Soft towels, neatly gift-wrapped.",
+  "icon": "\ud83e\uddfa"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Hand Cream Set",
+  "minPrice": 4,
+  "maxPrice": 13,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Small Tumbler",
+  "minPrice": 6,
+  "maxPrice": 15,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Phone Stand",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Keeps a phone upright on any desk.",
+  "icon": "\ud83d\udcf1"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Cable Organizer",
+  "minPrice": 2,
+  "maxPrice": 6,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Ends the cable tangle for good.",
+  "icon": "\ud83d\udd0c"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Desk Organizer",
+  "minPrice": 5,
+  "maxPrice": 14,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "Keeps pens and small items in order.",
+  "icon": "\ud83d\uddc4\ufe0f"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Reusable Shopping Bag",
+  "minPrice": 2,
+  "maxPrice": 6,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Light, foldable and eco-friendly.",
+  "icon": "\ud83d\udecd\ufe0f"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Tea Gift Set",
+  "minPrice": 5,
+  "maxPrice": 14,
+  "recipients": [
+   "Family",
+   "Friend",
+   "Woman",
+   "Man"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "A calm break in a box.",
+  "icon": "\ud83c\udf75"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Snack Box",
+  "minPrice": 4,
+  "maxPrice": 13,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Friend",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Funny"
+  ],
+  "description": "An assortment of tasty snacks to share.",
+  "icon": "\ud83c\udf7f"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Small Plush Toy",
+  "minPrice": 4,
+  "maxPrice": 12,
+  "recipients": [
+   "Child",
+   "Woman",
+   "Friend"
+  ],
+  "categories": [
+   "Cute",
+   "Funny"
+  ],
+  "description": "Soft, huggable and always welcome.",
+  "icon": "\ud83e\uddf8"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Christmas Ornament",
+  "minPrice": 2,
+  "maxPrice": 7,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Coaster Set",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Family"
+  ],
+  "categories": [
+   "Useful",
+   "Office"
+  ],
+  "description": "Protects tables from mug rings.",
+  "icon": "\ud83c\udf7d\ufe0f"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Reusable Bottle",
+  "minPrice": 5,
+  "maxPrice": 13,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Stay hydrated all year long.",
+  "icon": "\ud83d\udca7"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Stationery Set",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Child",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Office",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Pencils, erasers and notes in one pack.",
+  "icon": "\u270f\ufe0f"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Mini Desk Calendar",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Coworker",
+   "Anyone"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Christmas"
+  ],
+  "description": "A cheerful way to plan the new year.",
+  "icon": "\ud83d\udcc5"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Small Storage Box",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Neat storage for small treasures.",
+  "icon": "\ud83d\udce6"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Santa Hat",
+  "minPrice": 2,
+  "maxPrice": 6,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Mini Power Bank",
+  "minPrice": 9,
+  "maxPrice": 18,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful"
+  ],
+  "description": "Emergency phone charge in a pocket.",
+  "icon": "\ud83d\udd0b"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "USB Flash Drive",
+  "minPrice": 5,
+  "maxPrice": 9,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "Handy storage for documents and photos.",
+  "icon": "\ud83d\udcbe"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 5,
+  "maxPrice": 11,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Card Game",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "United States",
+  "currencyCode": "USD",
+  "currencySymbol": "$",
+  "giftName": "Fairy Lights",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Warm string lights for a cosy corner.",
+  "icon": "\u2728"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Mug",
+  "minPrice": 4500,
+  "maxPrice": 9000,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful",
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A practical and popular exchange gift.",
+  "icon": "\ud83e\udd5b"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Mini Scented Candle",
+  "minPrice": 3500,
+  "maxPrice": 9000,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A relaxing and affordable Christmas exchange gift.",
+  "icon": "\ud83d\udd6f\ufe0f"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Christmas Socks",
+  "minPrice": 3000,
+  "maxPrice": 8500,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Funny"
+  ],
+  "description": "Warm, festive and fun to unwrap.",
+  "icon": "\ud83e\udde6"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Keychain Set",
+  "minPrice": 2000,
+  "maxPrice": 6000,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Notebook Set",
+  "minPrice": 3000,
+  "maxPrice": 8500,
+  "recipients": [
+   "Coworker",
+   "Friend",
+   "Woman",
+   "Child"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Cute"
+  ],
+  "description": "Handy for notes, plans and doodles.",
+  "icon": "\ud83d\udcd3"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Hand Cream Set",
+  "minPrice": 4000,
+  "maxPrice": 12000,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Small Tumbler",
+  "minPrice": 6000,
+  "maxPrice": 15500,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Phone Stand",
+  "minPrice": 3000,
+  "maxPrice": 7500,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Keeps a phone upright on any desk.",
+  "icon": "\ud83d\udcf1"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Desk Organizer",
+  "minPrice": 4500,
+  "maxPrice": 13000,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "Keeps pens and small items in order.",
+  "icon": "\ud83d\uddc4\ufe0f"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Reusable Shopping Bag",
+  "minPrice": 2000,
+  "maxPrice": 6000,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Light, foldable and eco-friendly.",
+  "icon": "\ud83d\udecd\ufe0f"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Tea Gift Set",
+  "minPrice": 5500,
+  "maxPrice": 15000,
+  "recipients": [
+   "Family",
+   "Friend",
+   "Woman",
+   "Man"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "A calm break in a box.",
+  "icon": "\ud83c\udf75"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Snack Box",
+  "minPrice": 4000,
+  "maxPrice": 12000,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Friend",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Funny"
+  ],
+  "description": "An assortment of tasty snacks to share.",
+  "icon": "\ud83c\udf7f"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Coaster Set",
+  "minPrice": 3000,
+  "maxPrice": 8500,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Family"
+  ],
+  "categories": [
+   "Useful",
+   "Office"
+  ],
+  "description": "Protects tables from mug rings.",
+  "icon": "\ud83c\udf7d\ufe0f"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Reusable Bottle",
+  "minPrice": 5000,
+  "maxPrice": 13000,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Stay hydrated all year long.",
+  "icon": "\ud83d\udca7"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Stationery Set",
+  "minPrice": 3000,
+  "maxPrice": 9500,
+  "recipients": [
+   "Child",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Office",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Pencils, erasers and notes in one pack.",
+  "icon": "\u270f\ufe0f"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Mini Desk Calendar",
+  "minPrice": 3500,
+  "maxPrice": 7500,
+  "recipients": [
+   "Coworker",
+   "Anyone"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Christmas"
+  ],
+  "description": "A cheerful way to plan the new year.",
+  "icon": "\ud83d\udcc5"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Small Storage Box",
+  "minPrice": 3500,
+  "maxPrice": 9500,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Neat storage for small treasures.",
+  "icon": "\ud83d\udce6"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Santa Hat",
+  "minPrice": 2000,
+  "maxPrice": 6500,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Wireless Earbuds (Basic)",
+  "minPrice": 10500,
+  "maxPrice": 26000,
+  "recipients": [
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech"
+  ],
+  "description": "Entry-level earbuds for music and calls.",
+  "icon": "\ud83c\udfa7"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Mini Power Bank",
+  "minPrice": 8000,
+  "maxPrice": 17000,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful"
+  ],
+  "description": "Emergency phone charge in a pocket.",
+  "icon": "\ud83d\udd0b"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "USB Flash Drive",
+  "minPrice": 4500,
+  "maxPrice": 10000,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "Handy storage for documents and photos.",
+  "icon": "\ud83d\udcbe"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Gingerbread Cookie Tin",
+  "minPrice": 4000,
+  "maxPrice": 10500,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Festive cookies in a reusable tin.",
+  "icon": "\ud83c\udf6a"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 5000,
+  "maxPrice": 12500,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Card Game",
+  "minPrice": 4000,
+  "maxPrice": 11500,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Fairy Lights",
+  "minPrice": 4000,
+  "maxPrice": 10500,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Warm string lights for a cosy corner.",
+  "icon": "\u2728"
+ },
+ {
+  "country": "South Korea",
+  "currencyCode": "KRW",
+  "currencySymbol": "\u20a9",
+  "giftName": "Mouse Pad",
+  "minPrice": 2500,
+  "maxPrice": 8500,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "A smooth, tidy surface for the mouse.",
+  "icon": "\ud83d\uddb1\ufe0f"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Christmas Socks",
+  "minPrice": 350,
+  "maxPrice": 850,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Funny"
+  ],
+  "description": "Warm, festive and fun to unwrap.",
+  "icon": "\ud83e\udde6"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Chocolate Gift Pack",
+  "minPrice": 550,
+  "maxPrice": 1300,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "A sweet treat almost everyone enjoys.",
+  "icon": "\ud83c\udf6b"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Keychain Set",
+  "minPrice": 200,
+  "maxPrice": 650,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Towel Gift Set",
+  "minPrice": 550,
+  "maxPrice": 1400,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Soft towels, neatly gift-wrapped.",
+  "icon": "\ud83e\uddfa"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Hand Cream Set",
+  "minPrice": 450,
+  "maxPrice": 1300,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Phone Stand",
+  "minPrice": 350,
+  "maxPrice": 850,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Keeps a phone upright on any desk.",
+  "icon": "\ud83d\udcf1"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Cable Organizer",
+  "minPrice": 250,
+  "maxPrice": 700,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Ends the cable tangle for good.",
+  "icon": "\ud83d\udd0c"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Mini Artificial Plant",
+  "minPrice": 450,
+  "maxPrice": 1100,
+  "recipients": [
+   "Anyone",
+   "Coworker"
+  ],
+  "categories": [
+   "Cute",
+   "Office"
+  ],
+  "description": "Greenery that never needs watering.",
+  "icon": "\ud83e\udeb4"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Desk Organizer",
+  "minPrice": 550,
+  "maxPrice": 1600,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "Keeps pens and small items in order.",
+  "icon": "\ud83d\uddc4\ufe0f"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Tea Gift Set",
+  "minPrice": 600,
+  "maxPrice": 1600,
+  "recipients": [
+   "Family",
+   "Friend",
+   "Woman",
+   "Man"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "A calm break in a box.",
+  "icon": "\ud83c\udf75"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Coffee Pack",
+  "minPrice": 550,
+  "maxPrice": 1500,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Snack Box",
+  "minPrice": 400,
+  "maxPrice": 1400,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Friend",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Funny"
+  ],
+  "description": "An assortment of tasty snacks to share.",
+  "icon": "\ud83c\udf7f"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Small Plush Toy",
+  "minPrice": 400,
+  "maxPrice": 1300,
+  "recipients": [
+   "Child",
+   "Woman",
+   "Friend"
+  ],
+  "categories": [
+   "Cute",
+   "Funny"
+  ],
+  "description": "Soft, huggable and always welcome.",
+  "icon": "\ud83e\uddf8"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Christmas Ornament",
+  "minPrice": 200,
+  "maxPrice": 800,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Coaster Set",
+  "minPrice": 350,
+  "maxPrice": 900,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Family"
+  ],
+  "categories": [
+   "Useful",
+   "Office"
+  ],
+  "description": "Protects tables from mug rings.",
+  "icon": "\ud83c\udf7d\ufe0f"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Reusable Bottle",
+  "minPrice": 550,
+  "maxPrice": 1400,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Stay hydrated all year long.",
+  "icon": "\ud83d\udca7"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Stationery Set",
+  "minPrice": 350,
+  "maxPrice": 1000,
+  "recipients": [
+   "Child",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Office",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Pencils, erasers and notes in one pack.",
+  "icon": "\u270f\ufe0f"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Funny Novelty Mug",
+  "minPrice": 400,
+  "maxPrice": 950,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Funny",
+   "Useful"
+  ],
+  "description": "Guaranteed to get a laugh at the exchange.",
+  "icon": "\ud83d\ude02"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Santa Hat",
+  "minPrice": 250,
+  "maxPrice": 700,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Wireless Earbuds (Basic)",
+  "minPrice": 1100,
+  "maxPrice": 2900,
+  "recipients": [
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech"
+  ],
+  "description": "Entry-level earbuds for music and calls.",
+  "icon": "\ud83c\udfa7"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Mini Power Bank",
+  "minPrice": 850,
+  "maxPrice": 2000,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful"
+  ],
+  "description": "Emergency phone charge in a pocket.",
+  "icon": "\ud83d\udd0b"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Gingerbread Cookie Tin",
+  "minPrice": 400,
+  "maxPrice": 1200,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Festive cookies in a reusable tin.",
+  "icon": "\ud83c\udf6a"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 550,
+  "maxPrice": 1300,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Card Game",
+  "minPrice": 450,
+  "maxPrice": 1300,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Fairy Lights",
+  "minPrice": 400,
+  "maxPrice": 1100,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Warm string lights for a cosy corner.",
+  "icon": "\u2728"
+ },
+ {
+  "country": "Japan",
+  "currencyCode": "JPY",
+  "currencySymbol": "\u00a5",
+  "giftName": "Mouse Pad",
+  "minPrice": 350,
+  "maxPrice": 900,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "A smooth, tidy surface for the mouse.",
+  "icon": "\ud83d\uddb1\ufe0f"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Keychain Set",
+  "minPrice": 2,
+  "maxPrice": 5,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Pen Set",
+  "minPrice": 2,
+  "maxPrice": 6,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "A tidy set of smooth-writing pens.",
+  "icon": "\ud83d\udd8a\ufe0f"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Towel Gift Set",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Soft towels, neatly gift-wrapped.",
+  "icon": "\ud83e\uddfa"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Hand Cream Set",
+  "minPrice": 3,
+  "maxPrice": 9,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Small Tumbler",
+  "minPrice": 5,
+  "maxPrice": 11,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Phone Stand",
+  "minPrice": 2,
+  "maxPrice": 6,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Keeps a phone upright on any desk.",
+  "icon": "\ud83d\udcf1"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Cable Organizer",
+  "minPrice": 2,
+  "maxPrice": 5,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Ends the cable tangle for good.",
+  "icon": "\ud83d\udd0c"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Mini Artificial Plant",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Anyone",
+   "Coworker"
+  ],
+  "categories": [
+   "Cute",
+   "Office"
+  ],
+  "description": "Greenery that never needs watering.",
+  "icon": "\ud83e\udeb4"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Desk Organizer",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "Keeps pens and small items in order.",
+  "icon": "\ud83d\uddc4\ufe0f"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Reusable Shopping Bag",
+  "minPrice": 2,
+  "maxPrice": 5,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Light, foldable and eco-friendly.",
+  "icon": "\ud83d\udecd\ufe0f"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Coffee Pack",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Snack Box",
+  "minPrice": 3,
+  "maxPrice": 9,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Friend",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Funny"
+  ],
+  "description": "An assortment of tasty snacks to share.",
+  "icon": "\ud83c\udf7f"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Small Plush Toy",
+  "minPrice": 3,
+  "maxPrice": 10,
+  "recipients": [
+   "Child",
+   "Woman",
+   "Friend"
+  ],
+  "categories": [
+   "Cute",
+   "Funny"
+  ],
+  "description": "Soft, huggable and always welcome.",
+  "icon": "\ud83e\uddf8"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Christmas Ornament",
+  "minPrice": 2,
+  "maxPrice": 6,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Coaster Set",
+  "minPrice": 2,
+  "maxPrice": 6,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Family"
+  ],
+  "categories": [
+   "Useful",
+   "Office"
+  ],
+  "description": "Protects tables from mug rings.",
+  "icon": "\ud83c\udf7d\ufe0f"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Reusable Bottle",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Stay hydrated all year long.",
+  "icon": "\ud83d\udca7"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Mini Desk Calendar",
+  "minPrice": 3,
+  "maxPrice": 6,
+  "recipients": [
+   "Coworker",
+   "Anyone"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Christmas"
+  ],
+  "description": "A cheerful way to plan the new year.",
+  "icon": "\ud83d\udcc5"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Small Storage Box",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Neat storage for small treasures.",
+  "icon": "\ud83d\udce6"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Funny Novelty Mug",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Funny",
+   "Useful"
+  ],
+  "description": "Guaranteed to get a laugh at the exchange.",
+  "icon": "\ud83d\ude02"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Santa Hat",
+  "minPrice": 2,
+  "maxPrice": 5,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Wireless Earbuds (Basic)",
+  "minPrice": 8,
+  "maxPrice": 20,
+  "recipients": [
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech"
+  ],
+  "description": "Entry-level earbuds for music and calls.",
+  "icon": "\ud83c\udfa7"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Mini Power Bank",
+  "minPrice": 6,
+  "maxPrice": 15,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful"
+  ],
+  "description": "Emergency phone charge in a pocket.",
+  "icon": "\ud83d\udd0b"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "USB Flash Drive",
+  "minPrice": 4,
+  "maxPrice": 7,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "Handy storage for documents and photos.",
+  "icon": "\ud83d\udcbe"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Gingerbread Cookie Tin",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Festive cookies in a reusable tin.",
+  "icon": "\ud83c\udf6a"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "United Kingdom",
+  "currencyCode": "GBP",
+  "currencySymbol": "\u00a3",
+  "giftName": "Card Game",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Mug",
+  "minPrice": 5,
+  "maxPrice": 11,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful",
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A practical and popular exchange gift.",
+  "icon": "\ud83e\udd5b"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Mini Scented Candle",
+  "minPrice": 5,
+  "maxPrice": 12,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A relaxing and affordable Christmas exchange gift.",
+  "icon": "\ud83d\udd6f\ufe0f"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Christmas Socks",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Funny"
+  ],
+  "description": "Warm, festive and fun to unwrap.",
+  "icon": "\ud83e\udde6"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Chocolate Gift Pack",
+  "minPrice": 6,
+  "maxPrice": 15,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "A sweet treat almost everyone enjoys.",
+  "icon": "\ud83c\udf6b"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Keychain Set",
+  "minPrice": 3,
+  "maxPrice": 7,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Hand Cream Set",
+  "minPrice": 5,
+  "maxPrice": 16,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Small Tumbler",
+  "minPrice": 7,
+  "maxPrice": 19,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Phone Stand",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Keeps a phone upright on any desk.",
+  "icon": "\ud83d\udcf1"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Mini Artificial Plant",
+  "minPrice": 6,
+  "maxPrice": 13,
+  "recipients": [
+   "Anyone",
+   "Coworker"
+  ],
+  "categories": [
+   "Cute",
+   "Office"
+  ],
+  "description": "Greenery that never needs watering.",
+  "icon": "\ud83e\udeb4"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Desk Organizer",
+  "minPrice": 7,
+  "maxPrice": 18,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "Keeps pens and small items in order.",
+  "icon": "\ud83d\uddc4\ufe0f"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Reusable Shopping Bag",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Light, foldable and eco-friendly.",
+  "icon": "\ud83d\udecd\ufe0f"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Tea Gift Set",
+  "minPrice": 7,
+  "maxPrice": 18,
+  "recipients": [
+   "Family",
+   "Friend",
+   "Woman",
+   "Man"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "A calm break in a box.",
+  "icon": "\ud83c\udf75"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Snack Box",
+  "minPrice": 6,
+  "maxPrice": 15,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Friend",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Funny"
+  ],
+  "description": "An assortment of tasty snacks to share.",
+  "icon": "\ud83c\udf7f"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Small Plush Toy",
+  "minPrice": 5,
+  "maxPrice": 16,
+  "recipients": [
+   "Child",
+   "Woman",
+   "Friend"
+  ],
+  "categories": [
+   "Cute",
+   "Funny"
+  ],
+  "description": "Soft, huggable and always welcome.",
+  "icon": "\ud83e\uddf8"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Christmas Ornament",
+  "minPrice": 2,
+  "maxPrice": 9,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Coaster Set",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Family"
+  ],
+  "categories": [
+   "Useful",
+   "Office"
+  ],
+  "description": "Protects tables from mug rings.",
+  "icon": "\ud83c\udf7d\ufe0f"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Stationery Set",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Child",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Office",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Pencils, erasers and notes in one pack.",
+  "icon": "\u270f\ufe0f"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Mini Desk Calendar",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Coworker",
+   "Anyone"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Christmas"
+  ],
+  "description": "A cheerful way to plan the new year.",
+  "icon": "\ud83d\udcc5"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Small Storage Box",
+  "minPrice": 5,
+  "maxPrice": 14,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Neat storage for small treasures.",
+  "icon": "\ud83d\udce6"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Funny Novelty Mug",
+  "minPrice": 6,
+  "maxPrice": 11,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Funny",
+   "Useful"
+  ],
+  "description": "Guaranteed to get a laugh at the exchange.",
+  "icon": "\ud83d\ude02"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Santa Hat",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Wireless Earbuds (Basic)",
+  "minPrice": 12,
+  "maxPrice": 33,
+  "recipients": [
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech"
+  ],
+  "description": "Entry-level earbuds for music and calls.",
+  "icon": "\ud83c\udfa7"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 7,
+  "maxPrice": 16,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Card Game",
+  "minPrice": 5,
+  "maxPrice": 15,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Fairy Lights",
+  "minPrice": 5,
+  "maxPrice": 14,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Warm string lights for a cosy corner.",
+  "icon": "\u2728"
+ },
+ {
+  "country": "Canada",
+  "currencyCode": "CAD",
+  "currencySymbol": "$",
+  "giftName": "Mouse Pad",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "A smooth, tidy surface for the mouse.",
+  "icon": "\ud83d\uddb1\ufe0f"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Mini Scented Candle",
+  "minPrice": 5,
+  "maxPrice": 12,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A relaxing and affordable Christmas exchange gift.",
+  "icon": "\ud83d\udd6f\ufe0f"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Keychain Set",
+  "minPrice": 3,
+  "maxPrice": 9,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Notebook Set",
+  "minPrice": 4,
+  "maxPrice": 13,
+  "recipients": [
+   "Coworker",
+   "Friend",
+   "Woman",
+   "Child"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Cute"
+  ],
+  "description": "Handy for notes, plans and doodles.",
+  "icon": "\ud83d\udcd3"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Towel Gift Set",
+  "minPrice": 7,
+  "maxPrice": 16,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Soft towels, neatly gift-wrapped.",
+  "icon": "\ud83e\uddfa"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Hand Cream Set",
+  "minPrice": 6,
+  "maxPrice": 18,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Small Tumbler",
+  "minPrice": 8,
+  "maxPrice": 22,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Phone Stand",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Keeps a phone upright on any desk.",
+  "icon": "\ud83d\udcf1"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Cable Organizer",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Ends the cable tangle for good.",
+  "icon": "\ud83d\udd0c"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Desk Organizer",
+  "minPrice": 7,
+  "maxPrice": 19,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "Keeps pens and small items in order.",
+  "icon": "\ud83d\uddc4\ufe0f"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Reusable Shopping Bag",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Light, foldable and eco-friendly.",
+  "icon": "\ud83d\udecd\ufe0f"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Coffee Pack",
+  "minPrice": 7,
+  "maxPrice": 19,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Snack Box",
+  "minPrice": 5,
+  "maxPrice": 15,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Friend",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Funny"
+  ],
+  "description": "An assortment of tasty snacks to share.",
+  "icon": "\ud83c\udf7f"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Christmas Ornament",
+  "minPrice": 3,
+  "maxPrice": 10,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Coaster Set",
+  "minPrice": 5,
+  "maxPrice": 12,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Family"
+  ],
+  "categories": [
+   "Useful",
+   "Office"
+  ],
+  "description": "Protects tables from mug rings.",
+  "icon": "\ud83c\udf7d\ufe0f"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Reusable Bottle",
+  "minPrice": 7,
+  "maxPrice": 18,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Stay hydrated all year long.",
+  "icon": "\ud83d\udca7"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Stationery Set",
+  "minPrice": 4,
+  "maxPrice": 12,
+  "recipients": [
+   "Child",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Office",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Pencils, erasers and notes in one pack.",
+  "icon": "\u270f\ufe0f"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Mini Desk Calendar",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Coworker",
+   "Anyone"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Christmas"
+  ],
+  "description": "A cheerful way to plan the new year.",
+  "icon": "\ud83d\udcc5"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Small Storage Box",
+  "minPrice": 5,
+  "maxPrice": 14,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Neat storage for small treasures.",
+  "icon": "\ud83d\udce6"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Funny Novelty Mug",
+  "minPrice": 6,
+  "maxPrice": 13,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Funny",
+   "Useful"
+  ],
+  "description": "Guaranteed to get a laugh at the exchange.",
+  "icon": "\ud83d\ude02"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Santa Hat",
+  "minPrice": 3,
+  "maxPrice": 9,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Mini Power Bank",
+  "minPrice": 11,
+  "maxPrice": 26,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful"
+  ],
+  "description": "Emergency phone charge in a pocket.",
+  "icon": "\ud83d\udd0b"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "USB Flash Drive",
+  "minPrice": 7,
+  "maxPrice": 14,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "Handy storage for documents and photos.",
+  "icon": "\ud83d\udcbe"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 7,
+  "maxPrice": 16,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Card Game",
+  "minPrice": 6,
+  "maxPrice": 16,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Fairy Lights",
+  "minPrice": 6,
+  "maxPrice": 13,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Warm string lights for a cosy corner.",
+  "icon": "\u2728"
+ },
+ {
+  "country": "Australia",
+  "currencyCode": "AUD",
+  "currencySymbol": "$",
+  "giftName": "Mouse Pad",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "A smooth, tidy surface for the mouse.",
+  "icon": "\ud83d\uddb1\ufe0f"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Mug",
+  "minPrice": 6,
+  "maxPrice": 12,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful",
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A practical and popular exchange gift.",
+  "icon": "\ud83e\udd5b"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Mini Scented Candle",
+  "minPrice": 5,
+  "maxPrice": 11,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A relaxing and affordable Christmas exchange gift.",
+  "icon": "\ud83d\udd6f\ufe0f"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Christmas Socks",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Funny"
+  ],
+  "description": "Warm, festive and fun to unwrap.",
+  "icon": "\ud83e\udde6"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Towel Gift Set",
+  "minPrice": 7,
+  "maxPrice": 15,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Soft towels, neatly gift-wrapped.",
+  "icon": "\ud83e\uddfa"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Hand Cream Set",
+  "minPrice": 5,
+  "maxPrice": 17,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Small Tumbler",
+  "minPrice": 8,
+  "maxPrice": 21,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Phone Stand",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Keeps a phone upright on any desk.",
+  "icon": "\ud83d\udcf1"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Reusable Shopping Bag",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Light, foldable and eco-friendly.",
+  "icon": "\ud83d\udecd\ufe0f"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Coffee Pack",
+  "minPrice": 7,
+  "maxPrice": 18,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Snack Box",
+  "minPrice": 6,
+  "maxPrice": 15,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Friend",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Funny"
+  ],
+  "description": "An assortment of tasty snacks to share.",
+  "icon": "\ud83c\udf7f"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Small Plush Toy",
+  "minPrice": 5,
+  "maxPrice": 16,
+  "recipients": [
+   "Child",
+   "Woman",
+   "Friend"
+  ],
+  "categories": [
+   "Cute",
+   "Funny"
+  ],
+  "description": "Soft, huggable and always welcome.",
+  "icon": "\ud83e\uddf8"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Christmas Ornament",
+  "minPrice": 3,
+  "maxPrice": 9,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Coaster Set",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Family"
+  ],
+  "categories": [
+   "Useful",
+   "Office"
+  ],
+  "description": "Protects tables from mug rings.",
+  "icon": "\ud83c\udf7d\ufe0f"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Reusable Bottle",
+  "minPrice": 6,
+  "maxPrice": 18,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Stay hydrated all year long.",
+  "icon": "\ud83d\udca7"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Stationery Set",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Child",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Office",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Pencils, erasers and notes in one pack.",
+  "icon": "\u270f\ufe0f"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Mini Desk Calendar",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Coworker",
+   "Anyone"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Christmas"
+  ],
+  "description": "A cheerful way to plan the new year.",
+  "icon": "\ud83d\udcc5"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Small Storage Box",
+  "minPrice": 5,
+  "maxPrice": 13,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Neat storage for small treasures.",
+  "icon": "\ud83d\udce6"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Funny Novelty Mug",
+  "minPrice": 6,
+  "maxPrice": 12,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Funny",
+   "Useful"
+  ],
+  "description": "Guaranteed to get a laugh at the exchange.",
+  "icon": "\ud83d\ude02"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Santa Hat",
+  "minPrice": 3,
+  "maxPrice": 7,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Wireless Earbuds (Basic)",
+  "minPrice": 13,
+  "maxPrice": 33,
+  "recipients": [
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech"
+  ],
+  "description": "Entry-level earbuds for music and calls.",
+  "icon": "\ud83c\udfa7"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Mini Power Bank",
+  "minPrice": 10,
+  "maxPrice": 23,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful"
+  ],
+  "description": "Emergency phone charge in a pocket.",
+  "icon": "\ud83d\udd0b"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "USB Flash Drive",
+  "minPrice": 6,
+  "maxPrice": 12,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "Handy storage for documents and photos.",
+  "icon": "\ud83d\udcbe"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Gingerbread Cookie Tin",
+  "minPrice": 5,
+  "maxPrice": 13,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Festive cookies in a reusable tin.",
+  "icon": "\ud83c\udf6a"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Card Game",
+  "minPrice": 5,
+  "maxPrice": 17,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Fairy Lights",
+  "minPrice": 5,
+  "maxPrice": 13,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Warm string lights for a cosy corner.",
+  "icon": "\u2728"
+ },
+ {
+  "country": "Singapore",
+  "currencyCode": "SGD",
+  "currencySymbol": "$",
+  "giftName": "Mouse Pad",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "A smooth, tidy surface for the mouse.",
+  "icon": "\ud83d\uddb1\ufe0f"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Mug",
+  "minPrice": 110,
+  "maxPrice": 260,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful",
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A practical and popular exchange gift.",
+  "icon": "\ud83e\udd5b"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Mini Scented Candle",
+  "minPrice": 120,
+  "maxPrice": 260,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A relaxing and affordable Christmas exchange gift.",
+  "icon": "\ud83d\udd6f\ufe0f"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Christmas Socks",
+  "minPrice": 90,
+  "maxPrice": 240,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Funny"
+  ],
+  "description": "Warm, festive and fun to unwrap.",
+  "icon": "\ud83e\udde6"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Chocolate Gift Pack",
+  "minPrice": 130,
+  "maxPrice": 330,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "A sweet treat almost everyone enjoys.",
+  "icon": "\ud83c\udf6b"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Keychain Set",
+  "minPrice": 50,
+  "maxPrice": 160,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Pen Set",
+  "minPrice": 80,
+  "maxPrice": 230,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "A tidy set of smooth-writing pens.",
+  "icon": "\ud83d\udd8a\ufe0f"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Hand Cream Set",
+  "minPrice": 120,
+  "maxPrice": 360,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Small Tumbler",
+  "minPrice": 150,
+  "maxPrice": 400,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Cable Organizer",
+  "minPrice": 60,
+  "maxPrice": 160,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Ends the cable tangle for good.",
+  "icon": "\ud83d\udd0c"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Mini Artificial Plant",
+  "minPrice": 110,
+  "maxPrice": 300,
+  "recipients": [
+   "Anyone",
+   "Coworker"
+  ],
+  "categories": [
+   "Cute",
+   "Office"
+  ],
+  "description": "Greenery that never needs watering.",
+  "icon": "\ud83e\udeb4"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Desk Organizer",
+  "minPrice": 140,
+  "maxPrice": 410,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "Keeps pens and small items in order.",
+  "icon": "\ud83d\uddc4\ufe0f"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Reusable Shopping Bag",
+  "minPrice": 60,
+  "maxPrice": 180,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Light, foldable and eco-friendly.",
+  "icon": "\ud83d\udecd\ufe0f"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Coffee Pack",
+  "minPrice": 150,
+  "maxPrice": 380,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Snack Box",
+  "minPrice": 100,
+  "maxPrice": 350,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Friend",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Funny"
+  ],
+  "description": "An assortment of tasty snacks to share.",
+  "icon": "\ud83c\udf7f"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Christmas Ornament",
+  "minPrice": 60,
+  "maxPrice": 190,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Coaster Set",
+  "minPrice": 90,
+  "maxPrice": 210,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Family"
+  ],
+  "categories": [
+   "Useful",
+   "Office"
+  ],
+  "description": "Protects tables from mug rings.",
+  "icon": "\ud83c\udf7d\ufe0f"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Reusable Bottle",
+  "minPrice": 130,
+  "maxPrice": 420,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Stay hydrated all year long.",
+  "icon": "\ud83d\udca7"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Small Storage Box",
+  "minPrice": 110,
+  "maxPrice": 280,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Neat storage for small treasures.",
+  "icon": "\ud83d\udce6"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Funny Novelty Mug",
+  "minPrice": 100,
+  "maxPrice": 260,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Funny",
+   "Useful"
+  ],
+  "description": "Guaranteed to get a laugh at the exchange.",
+  "icon": "\ud83d\ude02"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Santa Hat",
+  "minPrice": 50,
+  "maxPrice": 170,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Wireless Earbuds (Basic)",
+  "minPrice": 260,
+  "maxPrice": 680,
+  "recipients": [
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech"
+  ],
+  "description": "Entry-level earbuds for music and calls.",
+  "icon": "\ud83c\udfa7"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "USB Flash Drive",
+  "minPrice": 140,
+  "maxPrice": 300,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "Handy storage for documents and photos.",
+  "icon": "\ud83d\udcbe"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Gingerbread Cookie Tin",
+  "minPrice": 110,
+  "maxPrice": 280,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Festive cookies in a reusable tin.",
+  "icon": "\ud83c\udf6a"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 150,
+  "maxPrice": 320,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Fairy Lights",
+  "minPrice": 110,
+  "maxPrice": 290,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Warm string lights for a cosy corner.",
+  "icon": "\u2728"
+ },
+ {
+  "country": "Thailand",
+  "currencyCode": "THB",
+  "currencySymbol": "\u0e3f",
+  "giftName": "Mouse Pad",
+  "minPrice": 90,
+  "maxPrice": 230,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "A smooth, tidy surface for the mouse.",
+  "icon": "\ud83d\uddb1\ufe0f"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Mug",
+  "minPrice": 50000,
+  "maxPrice": 95000,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful",
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A practical and popular exchange gift.",
+  "icon": "\ud83e\udd5b"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Mini Scented Candle",
+  "minPrice": 45000,
+  "maxPrice": 105000,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A relaxing and affordable Christmas exchange gift.",
+  "icon": "\ud83d\udd6f\ufe0f"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Christmas Socks",
+  "minPrice": 35000,
+  "maxPrice": 90000,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Funny"
+  ],
+  "description": "Warm, festive and fun to unwrap.",
+  "icon": "\ud83e\udde6"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Chocolate Gift Pack",
+  "minPrice": 50000,
+  "maxPrice": 135000,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "A sweet treat almost everyone enjoys.",
+  "icon": "\ud83c\udf6b"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Keychain Set",
+  "minPrice": 25000,
+  "maxPrice": 65000,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Pen Set",
+  "minPrice": 35000,
+  "maxPrice": 85000,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "A tidy set of smooth-writing pens.",
+  "icon": "\ud83d\udd8a\ufe0f"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Towel Gift Set",
+  "minPrice": 55000,
+  "maxPrice": 125000,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Soft towels, neatly gift-wrapped.",
+  "icon": "\ud83e\uddfa"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Hand Cream Set",
+  "minPrice": 45000,
+  "maxPrice": 130000,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Small Tumbler",
+  "minPrice": 60000,
+  "maxPrice": 155000,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Phone Stand",
+  "minPrice": 35000,
+  "maxPrice": 90000,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Keeps a phone upright on any desk.",
+  "icon": "\ud83d\udcf1"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Cable Organizer",
+  "minPrice": 20000,
+  "maxPrice": 65000,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Ends the cable tangle for good.",
+  "icon": "\ud83d\udd0c"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Tea Gift Set",
+  "minPrice": 50000,
+  "maxPrice": 150000,
+  "recipients": [
+   "Family",
+   "Friend",
+   "Woman",
+   "Man"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "A calm break in a box.",
+  "icon": "\ud83c\udf75"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Coffee Pack",
+  "minPrice": 55000,
+  "maxPrice": 155000,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Snack Box",
+  "minPrice": 50000,
+  "maxPrice": 140000,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Friend",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Funny"
+  ],
+  "description": "An assortment of tasty snacks to share.",
+  "icon": "\ud83c\udf7f"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Christmas Ornament",
+  "minPrice": 20000,
+  "maxPrice": 75000,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Reusable Bottle",
+  "minPrice": 60000,
+  "maxPrice": 160000,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Stay hydrated all year long.",
+  "icon": "\ud83d\udca7"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Mini Desk Calendar",
+  "minPrice": 30000,
+  "maxPrice": 85000,
+  "recipients": [
+   "Coworker",
+   "Anyone"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Christmas"
+  ],
+  "description": "A cheerful way to plan the new year.",
+  "icon": "\ud83d\udcc5"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Small Storage Box",
+  "minPrice": 45000,
+  "maxPrice": 115000,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Neat storage for small treasures.",
+  "icon": "\ud83d\udce6"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Funny Novelty Mug",
+  "minPrice": 45000,
+  "maxPrice": 105000,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Funny",
+   "Useful"
+  ],
+  "description": "Guaranteed to get a laugh at the exchange.",
+  "icon": "\ud83d\ude02"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Santa Hat",
+  "minPrice": 20000,
+  "maxPrice": 65000,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Wireless Earbuds (Basic)",
+  "minPrice": 115000,
+  "maxPrice": 265000,
+  "recipients": [
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech"
+  ],
+  "description": "Entry-level earbuds for music and calls.",
+  "icon": "\ud83c\udfa7"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Mini Power Bank",
+  "minPrice": 95000,
+  "maxPrice": 185000,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful"
+  ],
+  "description": "Emergency phone charge in a pocket.",
+  "icon": "\ud83d\udd0b"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Gingerbread Cookie Tin",
+  "minPrice": 40000,
+  "maxPrice": 105000,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Festive cookies in a reusable tin.",
+  "icon": "\ud83c\udf6a"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 50000,
+  "maxPrice": 140000,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Fairy Lights",
+  "minPrice": 40000,
+  "maxPrice": 105000,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Warm string lights for a cosy corner.",
+  "icon": "\u2728"
+ },
+ {
+  "country": "Indonesia",
+  "currencyCode": "IDR",
+  "currencySymbol": "Rp",
+  "giftName": "Mouse Pad",
+  "minPrice": 35000,
+  "maxPrice": 95000,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "A smooth, tidy surface for the mouse.",
+  "icon": "\ud83d\uddb1\ufe0f"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Mini Scented Candle",
+  "minPrice": 15,
+  "maxPrice": 30,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A relaxing and affordable Christmas exchange gift.",
+  "icon": "\ud83d\udd6f\ufe0f"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Christmas Socks",
+  "minPrice": 10,
+  "maxPrice": 28,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Funny"
+  ],
+  "description": "Warm, festive and fun to unwrap.",
+  "icon": "\ud83e\udde6"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Chocolate Gift Pack",
+  "minPrice": 16,
+  "maxPrice": 43,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "A sweet treat almost everyone enjoys.",
+  "icon": "\ud83c\udf6b"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Keychain Set",
+  "minPrice": 7,
+  "maxPrice": 21,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Pen Set",
+  "minPrice": 11,
+  "maxPrice": 26,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "A tidy set of smooth-writing pens.",
+  "icon": "\ud83d\udd8a\ufe0f"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Towel Gift Set",
+  "minPrice": 18,
+  "maxPrice": 42,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Soft towels, neatly gift-wrapped.",
+  "icon": "\ud83e\uddfa"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Phone Stand",
+  "minPrice": 11,
+  "maxPrice": 27,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Keeps a phone upright on any desk.",
+  "icon": "\ud83d\udcf1"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Cable Organizer",
+  "minPrice": 7,
+  "maxPrice": 21,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Ends the cable tangle for good.",
+  "icon": "\ud83d\udd0c"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Mini Artificial Plant",
+  "minPrice": 14,
+  "maxPrice": 32,
+  "recipients": [
+   "Anyone",
+   "Coworker"
+  ],
+  "categories": [
+   "Cute",
+   "Office"
+  ],
+  "description": "Greenery that never needs watering.",
+  "icon": "\ud83e\udeb4"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Desk Organizer",
+  "minPrice": 16,
+  "maxPrice": 47,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "Keeps pens and small items in order.",
+  "icon": "\ud83d\uddc4\ufe0f"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Reusable Shopping Bag",
+  "minPrice": 7,
+  "maxPrice": 22,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Light, foldable and eco-friendly.",
+  "icon": "\ud83d\udecd\ufe0f"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Coffee Pack",
+  "minPrice": 19,
+  "maxPrice": 43,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Christmas Ornament",
+  "minPrice": 7,
+  "maxPrice": 24,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Reusable Bottle",
+  "minPrice": 16,
+  "maxPrice": 50,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Stay hydrated all year long.",
+  "icon": "\ud83d\udca7"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Stationery Set",
+  "minPrice": 11,
+  "maxPrice": 32,
+  "recipients": [
+   "Child",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Office",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Pencils, erasers and notes in one pack.",
+  "icon": "\u270f\ufe0f"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Mini Desk Calendar",
+  "minPrice": 11,
+  "maxPrice": 29,
+  "recipients": [
+   "Coworker",
+   "Anyone"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Christmas"
+  ],
+  "description": "A cheerful way to plan the new year.",
+  "icon": "\ud83d\udcc5"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Small Storage Box",
+  "minPrice": 14,
+  "maxPrice": 36,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Neat storage for small treasures.",
+  "icon": "\ud83d\udce6"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Funny Novelty Mug",
+  "minPrice": 14,
+  "maxPrice": 30,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Funny",
+   "Useful"
+  ],
+  "description": "Guaranteed to get a laugh at the exchange.",
+  "icon": "\ud83d\ude02"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Santa Hat",
+  "minPrice": 6,
+  "maxPrice": 21,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Wireless Earbuds (Basic)",
+  "minPrice": 35,
+  "maxPrice": 82,
+  "recipients": [
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech"
+  ],
+  "description": "Entry-level earbuds for music and calls.",
+  "icon": "\ud83c\udfa7"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Mini Power Bank",
+  "minPrice": 26,
+  "maxPrice": 67,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful"
+  ],
+  "description": "Emergency phone charge in a pocket.",
+  "icon": "\ud83d\udd0b"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "USB Flash Drive",
+  "minPrice": 16,
+  "maxPrice": 35,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "Handy storage for documents and photos.",
+  "icon": "\ud83d\udcbe"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Gingerbread Cookie Tin",
+  "minPrice": 13,
+  "maxPrice": 37,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Festive cookies in a reusable tin.",
+  "icon": "\ud83c\udf6a"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 19,
+  "maxPrice": 41,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Card Game",
+  "minPrice": 13,
+  "maxPrice": 39,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "Malaysia",
+  "currencyCode": "MYR",
+  "currencySymbol": "RM",
+  "giftName": "Fairy Lights",
+  "minPrice": 15,
+  "maxPrice": 35,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Warm string lights for a cosy corner.",
+  "icon": "\u2728"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Mug",
+  "minPrice": 200,
+  "maxPrice": 520,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful",
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A practical and popular exchange gift.",
+  "icon": "\ud83e\udd5b"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Christmas Socks",
+  "minPrice": 160,
+  "maxPrice": 420,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Funny"
+  ],
+  "description": "Warm, festive and fun to unwrap.",
+  "icon": "\ud83e\udde6"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Keychain Set",
+  "minPrice": 120,
+  "maxPrice": 320,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Notebook Set",
+  "minPrice": 160,
+  "maxPrice": 520,
+  "recipients": [
+   "Coworker",
+   "Friend",
+   "Woman",
+   "Child"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Cute"
+  ],
+  "description": "Handy for notes, plans and doodles.",
+  "icon": "\ud83d\udcd3"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Pen Set",
+  "minPrice": 150,
+  "maxPrice": 440,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "A tidy set of smooth-writing pens.",
+  "icon": "\ud83d\udd8a\ufe0f"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Towel Gift Set",
+  "minPrice": 280,
+  "maxPrice": 610,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Soft towels, neatly gift-wrapped.",
+  "icon": "\ud83e\uddfa"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Hand Cream Set",
+  "minPrice": 200,
+  "maxPrice": 680,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Small Tumbler",
+  "minPrice": 300,
+  "maxPrice": 790,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Phone Stand",
+  "minPrice": 170,
+  "maxPrice": 410,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Keeps a phone upright on any desk.",
+  "icon": "\ud83d\udcf1"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Cable Organizer",
+  "minPrice": 110,
+  "maxPrice": 320,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Ends the cable tangle for good.",
+  "icon": "\ud83d\udd0c"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Mini Artificial Plant",
+  "minPrice": 230,
+  "maxPrice": 590,
+  "recipients": [
+   "Anyone",
+   "Coworker"
+  ],
+  "categories": [
+   "Cute",
+   "Office"
+  ],
+  "description": "Greenery that never needs watering.",
+  "icon": "\ud83e\udeb4"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Desk Organizer",
+  "minPrice": 250,
+  "maxPrice": 790,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "Keeps pens and small items in order.",
+  "icon": "\ud83d\uddc4\ufe0f"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Reusable Shopping Bag",
+  "minPrice": 110,
+  "maxPrice": 350,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Light, foldable and eco-friendly.",
+  "icon": "\ud83d\udecd\ufe0f"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Coffee Pack",
+  "minPrice": 270,
+  "maxPrice": 760,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Small Plush Toy",
+  "minPrice": 230,
+  "maxPrice": 680,
+  "recipients": [
+   "Child",
+   "Woman",
+   "Friend"
+  ],
+  "categories": [
+   "Cute",
+   "Funny"
+  ],
+  "description": "Soft, huggable and always welcome.",
+  "icon": "\ud83e\uddf8"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Christmas Ornament",
+  "minPrice": 100,
+  "maxPrice": 400,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Reusable Bottle",
+  "minPrice": 300,
+  "maxPrice": 750,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Stay hydrated all year long.",
+  "icon": "\ud83d\udca7"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Stationery Set",
+  "minPrice": 180,
+  "maxPrice": 520,
+  "recipients": [
+   "Child",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Office",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Pencils, erasers and notes in one pack.",
+  "icon": "\u270f\ufe0f"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Mini Desk Calendar",
+  "minPrice": 150,
+  "maxPrice": 470,
+  "recipients": [
+   "Coworker",
+   "Anyone"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Christmas"
+  ],
+  "description": "A cheerful way to plan the new year.",
+  "icon": "\ud83d\udcc5"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Funny Novelty Mug",
+  "minPrice": 240,
+  "maxPrice": 500,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Funny",
+   "Useful"
+  ],
+  "description": "Guaranteed to get a laugh at the exchange.",
+  "icon": "\ud83d\ude02"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Wireless Earbuds (Basic)",
+  "minPrice": 580,
+  "maxPrice": 1440,
+  "recipients": [
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech"
+  ],
+  "description": "Entry-level earbuds for music and calls.",
+  "icon": "\ud83c\udfa7"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "USB Flash Drive",
+  "minPrice": 290,
+  "maxPrice": 520,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "Handy storage for documents and photos.",
+  "icon": "\ud83d\udcbe"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 270,
+  "maxPrice": 700,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Card Game",
+  "minPrice": 220,
+  "maxPrice": 690,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Fairy Lights",
+  "minPrice": 220,
+  "maxPrice": 540,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Warm string lights for a cosy corner.",
+  "icon": "\u2728"
+ },
+ {
+  "country": "India",
+  "currencyCode": "INR",
+  "currencySymbol": "\u20b9",
+  "giftName": "Mouse Pad",
+  "minPrice": 170,
+  "maxPrice": 410,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "A smooth, tidy surface for the mouse.",
+  "icon": "\ud83d\uddb1\ufe0f"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mug",
+  "minPrice": 4,
+  "maxPrice": 9,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful",
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A practical and popular exchange gift.",
+  "icon": "\ud83e\udd5b"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Keychain Set",
+  "minPrice": 2,
+  "maxPrice": 5,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Notebook Set",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Coworker",
+   "Friend",
+   "Woman",
+   "Child"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Cute"
+  ],
+  "description": "Handy for notes, plans and doodles.",
+  "icon": "\ud83d\udcd3"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Towel Gift Set",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Soft towels, neatly gift-wrapped.",
+  "icon": "\ud83e\uddfa"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Hand Cream Set",
+  "minPrice": 3,
+  "maxPrice": 12,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Small Tumbler",
+  "minPrice": 5,
+  "maxPrice": 13,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Phone Stand",
+  "minPrice": 2,
+  "maxPrice": 7,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Keeps a phone upright on any desk.",
+  "icon": "\ud83d\udcf1"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mini Artificial Plant",
+  "minPrice": 3,
+  "maxPrice": 9,
+  "recipients": [
+   "Anyone",
+   "Coworker"
+  ],
+  "categories": [
+   "Cute",
+   "Office"
+  ],
+  "description": "Greenery that never needs watering.",
+  "icon": "\ud83e\udeb4"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Desk Organizer",
+  "minPrice": 4,
+  "maxPrice": 12,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "Keeps pens and small items in order.",
+  "icon": "\ud83d\uddc4\ufe0f"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Tea Gift Set",
+  "minPrice": 5,
+  "maxPrice": 14,
+  "recipients": [
+   "Family",
+   "Friend",
+   "Woman",
+   "Man"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "A calm break in a box.",
+  "icon": "\ud83c\udf75"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Coffee Pack",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Small Plush Toy",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Child",
+   "Woman",
+   "Friend"
+  ],
+  "categories": [
+   "Cute",
+   "Funny"
+  ],
+  "description": "Soft, huggable and always welcome.",
+  "icon": "\ud83e\uddf8"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Christmas Ornament",
+  "minPrice": 2,
+  "maxPrice": 7,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Coaster Set",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Family"
+  ],
+  "categories": [
+   "Useful",
+   "Office"
+  ],
+  "description": "Protects tables from mug rings.",
+  "icon": "\ud83c\udf7d\ufe0f"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Reusable Bottle",
+  "minPrice": 4,
+  "maxPrice": 12,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Stay hydrated all year long.",
+  "icon": "\ud83d\udca7"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Stationery Set",
+  "minPrice": 2,
+  "maxPrice": 8,
+  "recipients": [
+   "Child",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Office",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Pencils, erasers and notes in one pack.",
+  "icon": "\u270f\ufe0f"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mini Desk Calendar",
+  "minPrice": 3,
+  "maxPrice": 7,
+  "recipients": [
+   "Coworker",
+   "Anyone"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Christmas"
+  ],
+  "description": "A cheerful way to plan the new year.",
+  "icon": "\ud83d\udcc5"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Small Storage Box",
+  "minPrice": 3,
+  "maxPrice": 9,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Neat storage for small treasures.",
+  "icon": "\ud83d\udce6"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Funny Novelty Mug",
+  "minPrice": 4,
+  "maxPrice": 8,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Funny",
+   "Useful"
+  ],
+  "description": "Guaranteed to get a laugh at the exchange.",
+  "icon": "\ud83d\ude02"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Santa Hat",
+  "minPrice": 2,
+  "maxPrice": 6,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Wireless Earbuds (Basic)",
+  "minPrice": 9,
+  "maxPrice": 22,
+  "recipients": [
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech"
+  ],
+  "description": "Entry-level earbuds for music and calls.",
+  "icon": "\ud83c\udfa7"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "USB Flash Drive",
+  "minPrice": 5,
+  "maxPrice": 9,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "Handy storage for documents and photos.",
+  "icon": "\ud83d\udcbe"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Gingerbread Cookie Tin",
+  "minPrice": 4,
+  "maxPrice": 9,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Festive cookies in a reusable tin.",
+  "icon": "\ud83c\udf6a"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Card Game",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "Germany",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mouse Pad",
+  "minPrice": 3,
+  "maxPrice": 7,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "A smooth, tidy surface for the mouse.",
+  "icon": "\ud83d\uddb1\ufe0f"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mug",
+  "minPrice": 4,
+  "maxPrice": 9,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful",
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A practical and popular exchange gift.",
+  "icon": "\ud83e\udd5b"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mini Scented Candle",
+  "minPrice": 4,
+  "maxPrice": 8,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A relaxing and affordable Christmas exchange gift.",
+  "icon": "\ud83d\udd6f\ufe0f"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Chocolate Gift Pack",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "A sweet treat almost everyone enjoys.",
+  "icon": "\ud83c\udf6b"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Keychain Set",
+  "minPrice": 2,
+  "maxPrice": 5,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Pen Set",
+  "minPrice": 2,
+  "maxPrice": 7,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "A tidy set of smooth-writing pens.",
+  "icon": "\ud83d\udd8a\ufe0f"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Towel Gift Set",
+  "minPrice": 5,
+  "maxPrice": 11,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Soft towels, neatly gift-wrapped.",
+  "icon": "\ud83e\uddfa"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Hand Cream Set",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Small Tumbler",
+  "minPrice": 6,
+  "maxPrice": 14,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Cable Organizer",
+  "minPrice": 2,
+  "maxPrice": 5,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Ends the cable tangle for good.",
+  "icon": "\ud83d\udd0c"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Desk Organizer",
+  "minPrice": 5,
+  "maxPrice": 12,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "Keeps pens and small items in order.",
+  "icon": "\ud83d\uddc4\ufe0f"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Reusable Shopping Bag",
+  "minPrice": 2,
+  "maxPrice": 6,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Light, foldable and eco-friendly.",
+  "icon": "\ud83d\udecd\ufe0f"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Tea Gift Set",
+  "minPrice": 4,
+  "maxPrice": 12,
+  "recipients": [
+   "Family",
+   "Friend",
+   "Woman",
+   "Man"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "A calm break in a box.",
+  "icon": "\ud83c\udf75"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Coffee Pack",
+  "minPrice": 5,
+  "maxPrice": 11,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Snack Box",
+  "minPrice": 3,
+  "maxPrice": 11,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Friend",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Funny"
+  ],
+  "description": "An assortment of tasty snacks to share.",
+  "icon": "\ud83c\udf7f"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Small Plush Toy",
+  "minPrice": 3,
+  "maxPrice": 11,
+  "recipients": [
+   "Child",
+   "Woman",
+   "Friend"
+  ],
+  "categories": [
+   "Cute",
+   "Funny"
+  ],
+  "description": "Soft, huggable and always welcome.",
+  "icon": "\ud83e\uddf8"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Coaster Set",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Family"
+  ],
+  "categories": [
+   "Useful",
+   "Office"
+  ],
+  "description": "Protects tables from mug rings.",
+  "icon": "\ud83c\udf7d\ufe0f"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mini Desk Calendar",
+  "minPrice": 3,
+  "maxPrice": 7,
+  "recipients": [
+   "Coworker",
+   "Anyone"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Christmas"
+  ],
+  "description": "A cheerful way to plan the new year.",
+  "icon": "\ud83d\udcc5"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Small Storage Box",
+  "minPrice": 3,
+  "maxPrice": 10,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Neat storage for small treasures.",
+  "icon": "\ud83d\udce6"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Funny Novelty Mug",
+  "minPrice": 3,
+  "maxPrice": 9,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Funny",
+   "Useful"
+  ],
+  "description": "Guaranteed to get a laugh at the exchange.",
+  "icon": "\ud83d\ude02"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Wireless Earbuds (Basic)",
+  "minPrice": 9,
+  "maxPrice": 23,
+  "recipients": [
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech"
+  ],
+  "description": "Entry-level earbuds for music and calls.",
+  "icon": "\ud83c\udfa7"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mini Power Bank",
+  "minPrice": 7,
+  "maxPrice": 17,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful"
+  ],
+  "description": "Emergency phone charge in a pocket.",
+  "icon": "\ud83d\udd0b"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "USB Flash Drive",
+  "minPrice": 5,
+  "maxPrice": 9,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "Handy storage for documents and photos.",
+  "icon": "\ud83d\udcbe"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Gingerbread Cookie Tin",
+  "minPrice": 4,
+  "maxPrice": 9,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Festive cookies in a reusable tin.",
+  "icon": "\ud83c\udf6a"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Card Game",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "France",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Fairy Lights",
+  "minPrice": 4,
+  "maxPrice": 9,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Warm string lights for a cosy corner.",
+  "icon": "\u2728"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Christmas Socks",
+  "minPrice": 3,
+  "maxPrice": 7,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Funny"
+  ],
+  "description": "Warm, festive and fun to unwrap.",
+  "icon": "\ud83e\udde6"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Chocolate Gift Pack",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "A sweet treat almost everyone enjoys.",
+  "icon": "\ud83c\udf6b"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Notebook Set",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Coworker",
+   "Friend",
+   "Woman",
+   "Child"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Cute"
+  ],
+  "description": "Handy for notes, plans and doodles.",
+  "icon": "\ud83d\udcd3"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Pen Set",
+  "minPrice": 3,
+  "maxPrice": 7,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "A tidy set of smooth-writing pens.",
+  "icon": "\ud83d\udd8a\ufe0f"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Towel Gift Set",
+  "minPrice": 5,
+  "maxPrice": 11,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Soft towels, neatly gift-wrapped.",
+  "icon": "\ud83e\uddfa"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Hand Cream Set",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Small Tumbler",
+  "minPrice": 5,
+  "maxPrice": 14,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Phone Stand",
+  "minPrice": 2,
+  "maxPrice": 7,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Keeps a phone upright on any desk.",
+  "icon": "\ud83d\udcf1"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Cable Organizer",
+  "minPrice": 2,
+  "maxPrice": 5,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Ends the cable tangle for good.",
+  "icon": "\ud83d\udd0c"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Desk Organizer",
+  "minPrice": 4,
+  "maxPrice": 14,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "Keeps pens and small items in order.",
+  "icon": "\ud83d\uddc4\ufe0f"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Reusable Shopping Bag",
+  "minPrice": 2,
+  "maxPrice": 6,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Light, foldable and eco-friendly.",
+  "icon": "\ud83d\udecd\ufe0f"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Tea Gift Set",
+  "minPrice": 5,
+  "maxPrice": 14,
+  "recipients": [
+   "Family",
+   "Friend",
+   "Woman",
+   "Man"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "A calm break in a box.",
+  "icon": "\ud83c\udf75"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Coffee Pack",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Snack Box",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Friend",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Funny"
+  ],
+  "description": "An assortment of tasty snacks to share.",
+  "icon": "\ud83c\udf7f"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Christmas Ornament",
+  "minPrice": 2,
+  "maxPrice": 6,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Reusable Bottle",
+  "minPrice": 4,
+  "maxPrice": 13,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Stay hydrated all year long.",
+  "icon": "\ud83d\udca7"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Stationery Set",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Child",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Office",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Pencils, erasers and notes in one pack.",
+  "icon": "\u270f\ufe0f"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Small Storage Box",
+  "minPrice": 4,
+  "maxPrice": 9,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Neat storage for small treasures.",
+  "icon": "\ud83d\udce6"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Funny Novelty Mug",
+  "minPrice": 4,
+  "maxPrice": 8,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Funny",
+   "Useful"
+  ],
+  "description": "Guaranteed to get a laugh at the exchange.",
+  "icon": "\ud83d\ude02"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Santa Hat",
+  "minPrice": 2,
+  "maxPrice": 5,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Wireless Earbuds (Basic)",
+  "minPrice": 9,
+  "maxPrice": 23,
+  "recipients": [
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech"
+  ],
+  "description": "Entry-level earbuds for music and calls.",
+  "icon": "\ud83c\udfa7"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mini Power Bank",
+  "minPrice": 8,
+  "maxPrice": 16,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful"
+  ],
+  "description": "Emergency phone charge in a pocket.",
+  "icon": "\ud83d\udd0b"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Card Game",
+  "minPrice": 3,
+  "maxPrice": 11,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Fairy Lights",
+  "minPrice": 4,
+  "maxPrice": 9,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Warm string lights for a cosy corner.",
+  "icon": "\u2728"
+ },
+ {
+  "country": "Italy",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mouse Pad",
+  "minPrice": 2,
+  "maxPrice": 8,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "A smooth, tidy surface for the mouse.",
+  "icon": "\ud83d\uddb1\ufe0f"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mug",
+  "minPrice": 3,
+  "maxPrice": 7,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful",
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A practical and popular exchange gift.",
+  "icon": "\ud83e\udd5b"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mini Scented Candle",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A relaxing and affordable Christmas exchange gift.",
+  "icon": "\ud83d\udd6f\ufe0f"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Christmas Socks",
+  "minPrice": 3,
+  "maxPrice": 7,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Funny"
+  ],
+  "description": "Warm, festive and fun to unwrap.",
+  "icon": "\ud83e\udde6"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Keychain Set",
+  "minPrice": 2,
+  "maxPrice": 5,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Notebook Set",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Coworker",
+   "Friend",
+   "Woman",
+   "Child"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Cute"
+  ],
+  "description": "Handy for notes, plans and doodles.",
+  "icon": "\ud83d\udcd3"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Pen Set",
+  "minPrice": 3,
+  "maxPrice": 7,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "A tidy set of smooth-writing pens.",
+  "icon": "\ud83d\udd8a\ufe0f"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Towel Gift Set",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Soft towels, neatly gift-wrapped.",
+  "icon": "\ud83e\uddfa"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Hand Cream Set",
+  "minPrice": 4,
+  "maxPrice": 9,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Small Tumbler",
+  "minPrice": 5,
+  "maxPrice": 14,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Phone Stand",
+  "minPrice": 2,
+  "maxPrice": 6,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Keeps a phone upright on any desk.",
+  "icon": "\ud83d\udcf1"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Cable Organizer",
+  "minPrice": 2,
+  "maxPrice": 5,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Ends the cable tangle for good.",
+  "icon": "\ud83d\udd0c"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Desk Organizer",
+  "minPrice": 5,
+  "maxPrice": 12,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "Keeps pens and small items in order.",
+  "icon": "\ud83d\uddc4\ufe0f"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Reusable Shopping Bag",
+  "minPrice": 2,
+  "maxPrice": 5,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Light, foldable and eco-friendly.",
+  "icon": "\ud83d\udecd\ufe0f"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Tea Gift Set",
+  "minPrice": 4,
+  "maxPrice": 12,
+  "recipients": [
+   "Family",
+   "Friend",
+   "Woman",
+   "Man"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "A calm break in a box.",
+  "icon": "\ud83c\udf75"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Coffee Pack",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Small Plush Toy",
+  "minPrice": 3,
+  "maxPrice": 11,
+  "recipients": [
+   "Child",
+   "Woman",
+   "Friend"
+  ],
+  "categories": [
+   "Cute",
+   "Funny"
+  ],
+  "description": "Soft, huggable and always welcome.",
+  "icon": "\ud83e\uddf8"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Christmas Ornament",
+  "minPrice": 2,
+  "maxPrice": 6,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Coaster Set",
+  "minPrice": 2,
+  "maxPrice": 7,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Family"
+  ],
+  "categories": [
+   "Useful",
+   "Office"
+  ],
+  "description": "Protects tables from mug rings.",
+  "icon": "\ud83c\udf7d\ufe0f"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mini Desk Calendar",
+  "minPrice": 2,
+  "maxPrice": 7,
+  "recipients": [
+   "Coworker",
+   "Anyone"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Christmas"
+  ],
+  "description": "A cheerful way to plan the new year.",
+  "icon": "\ud83d\udcc5"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Funny Novelty Mug",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Funny",
+   "Useful"
+  ],
+  "description": "Guaranteed to get a laugh at the exchange.",
+  "icon": "\ud83d\ude02"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Santa Hat",
+  "minPrice": 2,
+  "maxPrice": 5,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mini Power Bank",
+  "minPrice": 7,
+  "maxPrice": 15,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful"
+  ],
+  "description": "Emergency phone charge in a pocket.",
+  "icon": "\ud83d\udd0b"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "USB Flash Drive",
+  "minPrice": 5,
+  "maxPrice": 8,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "Handy storage for documents and photos.",
+  "icon": "\ud83d\udcbe"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Card Game",
+  "minPrice": 3,
+  "maxPrice": 10,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "Spain",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mouse Pad",
+  "minPrice": 3,
+  "maxPrice": 7,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "A smooth, tidy surface for the mouse.",
+  "icon": "\ud83d\uddb1\ufe0f"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mini Scented Candle",
+  "minPrice": 3,
+  "maxPrice": 9,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A relaxing and affordable Christmas exchange gift.",
+  "icon": "\ud83d\udd6f\ufe0f"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Christmas Socks",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Funny"
+  ],
+  "description": "Warm, festive and fun to unwrap.",
+  "icon": "\ud83e\udde6"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Chocolate Gift Pack",
+  "minPrice": 5,
+  "maxPrice": 12,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "A sweet treat almost everyone enjoys.",
+  "icon": "\ud83c\udf6b"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Keychain Set",
+  "minPrice": 2,
+  "maxPrice": 6,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Notebook Set",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Coworker",
+   "Friend",
+   "Woman",
+   "Child"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Cute"
+  ],
+  "description": "Handy for notes, plans and doodles.",
+  "icon": "\ud83d\udcd3"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Pen Set",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "A tidy set of smooth-writing pens.",
+  "icon": "\ud83d\udd8a\ufe0f"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Hand Cream Set",
+  "minPrice": 3,
+  "maxPrice": 11,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Small Tumbler",
+  "minPrice": 6,
+  "maxPrice": 14,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Cable Organizer",
+  "minPrice": 2,
+  "maxPrice": 6,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Ends the cable tangle for good.",
+  "icon": "\ud83d\udd0c"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mini Artificial Plant",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Anyone",
+   "Coworker"
+  ],
+  "categories": [
+   "Cute",
+   "Office"
+  ],
+  "description": "Greenery that never needs watering.",
+  "icon": "\ud83e\udeb4"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Desk Organizer",
+  "minPrice": 5,
+  "maxPrice": 13,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "Keeps pens and small items in order.",
+  "icon": "\ud83d\uddc4\ufe0f"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Reusable Shopping Bag",
+  "minPrice": 2,
+  "maxPrice": 6,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Light, foldable and eco-friendly.",
+  "icon": "\ud83d\udecd\ufe0f"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Tea Gift Set",
+  "minPrice": 5,
+  "maxPrice": 13,
+  "recipients": [
+   "Family",
+   "Friend",
+   "Woman",
+   "Man"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "A calm break in a box.",
+  "icon": "\ud83c\udf75"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Coffee Pack",
+  "minPrice": 5,
+  "maxPrice": 13,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Small Plush Toy",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Child",
+   "Woman",
+   "Friend"
+  ],
+  "categories": [
+   "Cute",
+   "Funny"
+  ],
+  "description": "Soft, huggable and always welcome.",
+  "icon": "\ud83e\uddf8"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Christmas Ornament",
+  "minPrice": 2,
+  "maxPrice": 7,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Coaster Set",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Family"
+  ],
+  "categories": [
+   "Useful",
+   "Office"
+  ],
+  "description": "Protects tables from mug rings.",
+  "icon": "\ud83c\udf7d\ufe0f"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Small Storage Box",
+  "minPrice": 4,
+  "maxPrice": 9,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Neat storage for small treasures.",
+  "icon": "\ud83d\udce6"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Santa Hat",
+  "minPrice": 2,
+  "maxPrice": 6,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mini Power Bank",
+  "minPrice": 8,
+  "maxPrice": 16,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful"
+  ],
+  "description": "Emergency phone charge in a pocket.",
+  "icon": "\ud83d\udd0b"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "USB Flash Drive",
+  "minPrice": 4,
+  "maxPrice": 9,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "Handy storage for documents and photos.",
+  "icon": "\ud83d\udcbe"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Gingerbread Cookie Tin",
+  "minPrice": 4,
+  "maxPrice": 10,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Festive cookies in a reusable tin.",
+  "icon": "\ud83c\udf6a"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 5,
+  "maxPrice": 12,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Card Game",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Fairy Lights",
+  "minPrice": 3,
+  "maxPrice": 10,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Warm string lights for a cosy corner.",
+  "icon": "\u2728"
+ },
+ {
+  "country": "Netherlands",
+  "currencyCode": "EUR",
+  "currencySymbol": "\u20ac",
+  "giftName": "Mouse Pad",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "A smooth, tidy surface for the mouse.",
+  "icon": "\ud83d\uddb1\ufe0f"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Mug",
+  "minPrice": 19,
+  "maxPrice": 42,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful",
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A practical and popular exchange gift.",
+  "icon": "\ud83e\udd5b"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Mini Scented Candle",
+  "minPrice": 16,
+  "maxPrice": 37,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A relaxing and affordable Christmas exchange gift.",
+  "icon": "\ud83d\udd6f\ufe0f"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Chocolate Gift Pack",
+  "minPrice": 21,
+  "maxPrice": 51,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "A sweet treat almost everyone enjoys.",
+  "icon": "\ud83c\udf6b"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Keychain Set",
+  "minPrice": 10,
+  "maxPrice": 29,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Notebook Set",
+  "minPrice": 13,
+  "maxPrice": 41,
+  "recipients": [
+   "Coworker",
+   "Friend",
+   "Woman",
+   "Child"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Cute"
+  ],
+  "description": "Handy for notes, plans and doodles.",
+  "icon": "\ud83d\udcd3"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Towel Gift Set",
+  "minPrice": 21,
+  "maxPrice": 53,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Soft towels, neatly gift-wrapped.",
+  "icon": "\ud83e\uddfa"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Hand Cream Set",
+  "minPrice": 18,
+  "maxPrice": 57,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Phone Stand",
+  "minPrice": 13,
+  "maxPrice": 33,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Keeps a phone upright on any desk.",
+  "icon": "\ud83d\udcf1"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Cable Organizer",
+  "minPrice": 9,
+  "maxPrice": 27,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Ends the cable tangle for good.",
+  "icon": "\ud83d\udd0c"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Mini Artificial Plant",
+  "minPrice": 17,
+  "maxPrice": 46,
+  "recipients": [
+   "Anyone",
+   "Coworker"
+  ],
+  "categories": [
+   "Cute",
+   "Office"
+  ],
+  "description": "Greenery that never needs watering.",
+  "icon": "\ud83e\udeb4"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Desk Organizer",
+  "minPrice": 20,
+  "maxPrice": 62,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "Keeps pens and small items in order.",
+  "icon": "\ud83d\uddc4\ufe0f"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Reusable Shopping Bag",
+  "minPrice": 9,
+  "maxPrice": 29,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Light, foldable and eco-friendly.",
+  "icon": "\ud83d\udecd\ufe0f"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Coffee Pack",
+  "minPrice": 21,
+  "maxPrice": 54,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Snack Box",
+  "minPrice": 17,
+  "maxPrice": 52,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Friend",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Funny"
+  ],
+  "description": "An assortment of tasty snacks to share.",
+  "icon": "\ud83c\udf7f"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Small Plush Toy",
+  "minPrice": 18,
+  "maxPrice": 50,
+  "recipients": [
+   "Child",
+   "Woman",
+   "Friend"
+  ],
+  "categories": [
+   "Cute",
+   "Funny"
+  ],
+  "description": "Soft, huggable and always welcome.",
+  "icon": "\ud83e\uddf8"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Christmas Ornament",
+  "minPrice": 8,
+  "maxPrice": 34,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Reusable Bottle",
+  "minPrice": 22,
+  "maxPrice": 62,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Stay hydrated all year long.",
+  "icon": "\ud83d\udca7"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Stationery Set",
+  "minPrice": 14,
+  "maxPrice": 42,
+  "recipients": [
+   "Child",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Office",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Pencils, erasers and notes in one pack.",
+  "icon": "\u270f\ufe0f"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Mini Desk Calendar",
+  "minPrice": 13,
+  "maxPrice": 35,
+  "recipients": [
+   "Coworker",
+   "Anyone"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Christmas"
+  ],
+  "description": "A cheerful way to plan the new year.",
+  "icon": "\ud83d\udcc5"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Small Storage Box",
+  "minPrice": 17,
+  "maxPrice": 43,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Neat storage for small treasures.",
+  "icon": "\ud83d\udce6"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Santa Hat",
+  "minPrice": 10,
+  "maxPrice": 27,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Wireless Earbuds (Basic)",
+  "minPrice": 45,
+  "maxPrice": 113,
+  "recipients": [
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech"
+  ],
+  "description": "Entry-level earbuds for music and calls.",
+  "icon": "\ud83c\udfa7"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Mini Power Bank",
+  "minPrice": 36,
+  "maxPrice": 82,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful"
+  ],
+  "description": "Emergency phone charge in a pocket.",
+  "icon": "\ud83d\udd0b"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Gingerbread Cookie Tin",
+  "minPrice": 19,
+  "maxPrice": 45,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Festive cookies in a reusable tin.",
+  "icon": "\ud83c\udf6a"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Card Game",
+  "minPrice": 19,
+  "maxPrice": 52,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "Brazil",
+  "currencyCode": "BRL",
+  "currencySymbol": "R$",
+  "giftName": "Fairy Lights",
+  "minPrice": 18,
+  "maxPrice": 48,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Warm string lights for a cosy corner.",
+  "icon": "\u2728"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Mug",
+  "minPrice": 60,
+  "maxPrice": 125,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful",
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A practical and popular exchange gift.",
+  "icon": "\ud83e\udd5b"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Mini Scented Candle",
+  "minPrice": 65,
+  "maxPrice": 135,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A relaxing and affordable Christmas exchange gift.",
+  "icon": "\ud83d\udd6f\ufe0f"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Christmas Socks",
+  "minPrice": 50,
+  "maxPrice": 110,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Funny"
+  ],
+  "description": "Warm, festive and fun to unwrap.",
+  "icon": "\ud83e\udde6"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Chocolate Gift Pack",
+  "minPrice": 75,
+  "maxPrice": 165,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "A sweet treat almost everyone enjoys.",
+  "icon": "\ud83c\udf6b"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Keychain Set",
+  "minPrice": 30,
+  "maxPrice": 85,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Pen Set",
+  "minPrice": 45,
+  "maxPrice": 125,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "A tidy set of smooth-writing pens.",
+  "icon": "\ud83d\udd8a\ufe0f"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Towel Gift Set",
+  "minPrice": 80,
+  "maxPrice": 175,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Soft towels, neatly gift-wrapped.",
+  "icon": "\ud83e\uddfa"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Hand Cream Set",
+  "minPrice": 60,
+  "maxPrice": 170,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Small Tumbler",
+  "minPrice": 95,
+  "maxPrice": 225,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Desk Organizer",
+  "minPrice": 70,
+  "maxPrice": 215,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "Keeps pens and small items in order.",
+  "icon": "\ud83d\uddc4\ufe0f"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Reusable Shopping Bag",
+  "minPrice": 30,
+  "maxPrice": 95,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Light, foldable and eco-friendly.",
+  "icon": "\ud83d\udecd\ufe0f"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Coffee Pack",
+  "minPrice": 70,
+  "maxPrice": 200,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Snack Box",
+  "minPrice": 65,
+  "maxPrice": 190,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Friend",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Funny"
+  ],
+  "description": "An assortment of tasty snacks to share.",
+  "icon": "\ud83c\udf7f"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Small Plush Toy",
+  "minPrice": 60,
+  "maxPrice": 180,
+  "recipients": [
+   "Child",
+   "Woman",
+   "Friend"
+  ],
+  "categories": [
+   "Cute",
+   "Funny"
+  ],
+  "description": "Soft, huggable and always welcome.",
+  "icon": "\ud83e\uddf8"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Christmas Ornament",
+  "minPrice": 30,
+  "maxPrice": 100,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Coaster Set",
+  "minPrice": 45,
+  "maxPrice": 125,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Family"
+  ],
+  "categories": [
+   "Useful",
+   "Office"
+  ],
+  "description": "Protects tables from mug rings.",
+  "icon": "\ud83c\udf7d\ufe0f"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Reusable Bottle",
+  "minPrice": 70,
+  "maxPrice": 200,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Stay hydrated all year long.",
+  "icon": "\ud83d\udca7"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Stationery Set",
+  "minPrice": 45,
+  "maxPrice": 125,
+  "recipients": [
+   "Child",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Office",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Pencils, erasers and notes in one pack.",
+  "icon": "\u270f\ufe0f"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Mini Desk Calendar",
+  "minPrice": 45,
+  "maxPrice": 125,
+  "recipients": [
+   "Coworker",
+   "Anyone"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Christmas"
+  ],
+  "description": "A cheerful way to plan the new year.",
+  "icon": "\ud83d\udcc5"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Funny Novelty Mug",
+  "minPrice": 65,
+  "maxPrice": 140,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Funny",
+   "Useful"
+  ],
+  "description": "Guaranteed to get a laugh at the exchange.",
+  "icon": "\ud83d\ude02"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Santa Hat",
+  "minPrice": 30,
+  "maxPrice": 95,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Wireless Earbuds (Basic)",
+  "minPrice": 145,
+  "maxPrice": 360,
+  "recipients": [
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech"
+  ],
+  "description": "Entry-level earbuds for music and calls.",
+  "icon": "\ud83c\udfa7"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Mini Power Bank",
+  "minPrice": 130,
+  "maxPrice": 260,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful"
+  ],
+  "description": "Emergency phone charge in a pocket.",
+  "icon": "\ud83d\udd0b"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 80,
+  "maxPrice": 170,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Card Game",
+  "minPrice": 60,
+  "maxPrice": 180,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "Mexico",
+  "currencyCode": "MXN",
+  "currencySymbol": "$",
+  "giftName": "Fairy Lights",
+  "minPrice": 65,
+  "maxPrice": 140,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Warm string lights for a cosy corner.",
+  "icon": "\u2728"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Mug",
+  "minPrice": 6,
+  "maxPrice": 13,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful",
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A practical and popular exchange gift.",
+  "icon": "\ud83e\udd5b"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Christmas Socks",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Funny"
+  ],
+  "description": "Warm, festive and fun to unwrap.",
+  "icon": "\ud83e\udde6"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Chocolate Gift Pack",
+  "minPrice": 7,
+  "maxPrice": 17,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "A sweet treat almost everyone enjoys.",
+  "icon": "\ud83c\udf6b"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Keychain Set",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Pen Set",
+  "minPrice": 4,
+  "maxPrice": 13,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "A tidy set of smooth-writing pens.",
+  "icon": "\ud83d\udd8a\ufe0f"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Hand Cream Set",
+  "minPrice": 6,
+  "maxPrice": 19,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Small Tumbler",
+  "minPrice": 9,
+  "maxPrice": 23,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Phone Stand",
+  "minPrice": 4,
+  "maxPrice": 11,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Keeps a phone upright on any desk.",
+  "icon": "\ud83d\udcf1"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Desk Organizer",
+  "minPrice": 8,
+  "maxPrice": 22,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "Keeps pens and small items in order.",
+  "icon": "\ud83d\uddc4\ufe0f"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Reusable Shopping Bag",
+  "minPrice": 3,
+  "maxPrice": 8,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Light, foldable and eco-friendly.",
+  "icon": "\ud83d\udecd\ufe0f"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Tea Gift Set",
+  "minPrice": 8,
+  "maxPrice": 21,
+  "recipients": [
+   "Family",
+   "Friend",
+   "Woman",
+   "Man"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "A calm break in a box.",
+  "icon": "\ud83c\udf75"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Coffee Pack",
+  "minPrice": 8,
+  "maxPrice": 18,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Snack Box",
+  "minPrice": 6,
+  "maxPrice": 18,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Friend",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Funny"
+  ],
+  "description": "An assortment of tasty snacks to share.",
+  "icon": "\ud83c\udf7f"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Christmas Ornament",
+  "minPrice": 3,
+  "maxPrice": 10,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Coaster Set",
+  "minPrice": 5,
+  "maxPrice": 13,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Family"
+  ],
+  "categories": [
+   "Useful",
+   "Office"
+  ],
+  "description": "Protects tables from mug rings.",
+  "icon": "\ud83c\udf7d\ufe0f"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Reusable Bottle",
+  "minPrice": 7,
+  "maxPrice": 20,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Stay hydrated all year long.",
+  "icon": "\ud83d\udca7"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Stationery Set",
+  "minPrice": 5,
+  "maxPrice": 12,
+  "recipients": [
+   "Child",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Office",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Pencils, erasers and notes in one pack.",
+  "icon": "\u270f\ufe0f"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Mini Desk Calendar",
+  "minPrice": 5,
+  "maxPrice": 13,
+  "recipients": [
+   "Coworker",
+   "Anyone"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Christmas"
+  ],
+  "description": "A cheerful way to plan the new year.",
+  "icon": "\ud83d\udcc5"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Small Storage Box",
+  "minPrice": 6,
+  "maxPrice": 15,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Neat storage for small treasures.",
+  "icon": "\ud83d\udce6"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Funny Novelty Mug",
+  "minPrice": 6,
+  "maxPrice": 14,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Funny",
+   "Useful"
+  ],
+  "description": "Guaranteed to get a laugh at the exchange.",
+  "icon": "\ud83d\ude02"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Wireless Earbuds (Basic)",
+  "minPrice": 16,
+  "maxPrice": 36,
+  "recipients": [
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech"
+  ],
+  "description": "Entry-level earbuds for music and calls.",
+  "icon": "\ud83c\udfa7"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Mini Power Bank",
+  "minPrice": 13,
+  "maxPrice": 28,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful"
+  ],
+  "description": "Emergency phone charge in a pocket.",
+  "icon": "\ud83d\udd0b"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "USB Flash Drive",
+  "minPrice": 8,
+  "maxPrice": 14,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "Handy storage for documents and photos.",
+  "icon": "\ud83d\udcbe"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Hot Cocoa Mix Set",
+  "minPrice": 8,
+  "maxPrice": 19,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Everything for a cosy cup of cocoa.",
+  "icon": "\ud83c\udf81"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Card Game",
+  "minPrice": 6,
+  "maxPrice": 19,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ },
+ {
+  "country": "New Zealand",
+  "currencyCode": "NZD",
+  "currencySymbol": "$",
+  "giftName": "Fairy Lights",
+  "minPrice": 6,
+  "maxPrice": 15,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Warm string lights for a cosy corner.",
+  "icon": "\u2728"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Mug",
+  "minPrice": 14,
+  "maxPrice": 32,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful",
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A practical and popular exchange gift.",
+  "icon": "\ud83e\udd5b"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Mini Scented Candle",
+  "minPrice": 14,
+  "maxPrice": 32,
+  "recipients": [
+   "Friend",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Cute",
+   "Christmas"
+  ],
+  "description": "A relaxing and affordable Christmas exchange gift.",
+  "icon": "\ud83d\udd6f\ufe0f"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Christmas Socks",
+  "minPrice": 10,
+  "maxPrice": 29,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute",
+   "Funny"
+  ],
+  "description": "Warm, festive and fun to unwrap.",
+  "icon": "\ud83e\udde6"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Chocolate Gift Pack",
+  "minPrice": 17,
+  "maxPrice": 40,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "A sweet treat almost everyone enjoys.",
+  "icon": "\ud83c\udf6b"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Keychain Set",
+  "minPrice": 7,
+  "maxPrice": 21,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Cute",
+   "Useful"
+  ],
+  "description": "Small, cheerful and easy to carry.",
+  "icon": "\ud83d\udd11"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Notebook Set",
+  "minPrice": 11,
+  "maxPrice": 35,
+  "recipients": [
+   "Coworker",
+   "Friend",
+   "Woman",
+   "Child"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Cute"
+  ],
+  "description": "Handy for notes, plans and doodles.",
+  "icon": "\ud83d\udcd3"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Pen Set",
+  "minPrice": 11,
+  "maxPrice": 28,
+  "recipients": [
+   "Coworker",
+   "Man"
+  ],
+  "categories": [
+   "Office",
+   "Useful"
+  ],
+  "description": "A tidy set of smooth-writing pens.",
+  "icon": "\ud83d\udd8a\ufe0f"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Towel Gift Set",
+  "minPrice": 18,
+  "maxPrice": 44,
+  "recipients": [
+   "Family",
+   "Woman",
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Soft towels, neatly gift-wrapped.",
+  "icon": "\ud83e\uddfa"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Hand Cream Set",
+  "minPrice": 15,
+  "maxPrice": 44,
+  "recipients": [
+   "Woman",
+   "Friend",
+   "Coworker"
+  ],
+  "categories": [
+   "Useful",
+   "Cute"
+  ],
+  "description": "A cosy little set for dry winter hands.",
+  "icon": "\ud83e\uddf4"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Small Tumbler",
+  "minPrice": 20,
+  "maxPrice": 58,
+  "recipients": [
+   "Anyone"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "A reusable cup for coffee, tea or water.",
+  "icon": "\ud83e\udd64"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Phone Stand",
+  "minPrice": 11,
+  "maxPrice": 30,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful",
+   "Office"
+  ],
+  "description": "Keeps a phone upright on any desk.",
+  "icon": "\ud83d\udcf1"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Reusable Shopping Bag",
+  "minPrice": 7,
+  "maxPrice": 22,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Useful"
+  ],
+  "description": "Light, foldable and eco-friendly.",
+  "icon": "\ud83d\udecd\ufe0f"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Tea Gift Set",
+  "minPrice": 17,
+  "maxPrice": 52,
+  "recipients": [
+   "Family",
+   "Friend",
+   "Woman",
+   "Man"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "A calm break in a box.",
+  "icon": "\ud83c\udf75"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Coffee Pack",
+  "minPrice": 17,
+  "maxPrice": 48,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Food",
+   "Useful"
+  ],
+  "description": "Handy drip bags or instant sticks for coffee lovers.",
+  "icon": "\u2615"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Snack Box",
+  "minPrice": 16,
+  "maxPrice": 46,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Friend",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Funny"
+  ],
+  "description": "An assortment of tasty snacks to share.",
+  "icon": "\ud83c\udf7f"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Small Plush Toy",
+  "minPrice": 14,
+  "maxPrice": 40,
+  "recipients": [
+   "Child",
+   "Woman",
+   "Friend"
+  ],
+  "categories": [
+   "Cute",
+   "Funny"
+  ],
+  "description": "Soft, huggable and always welcome.",
+  "icon": "\ud83e\uddf8"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Christmas Ornament",
+  "minPrice": 7,
+  "maxPrice": 24,
+  "recipients": [
+   "Anyone",
+   "Family"
+  ],
+  "categories": [
+   "Christmas",
+   "Cute"
+  ],
+  "description": "A keepsake for the Christmas tree.",
+  "icon": "\ud83c\udf84"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Coaster Set",
+  "minPrice": 10,
+  "maxPrice": 31,
+  "recipients": [
+   "Anyone",
+   "Coworker",
+   "Family"
+  ],
+  "categories": [
+   "Useful",
+   "Office"
+  ],
+  "description": "Protects tables from mug rings.",
+  "icon": "\ud83c\udf7d\ufe0f"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Stationery Set",
+  "minPrice": 11,
+  "maxPrice": 34,
+  "recipients": [
+   "Child",
+   "Coworker",
+   "Woman"
+  ],
+  "categories": [
+   "Office",
+   "Cute",
+   "Useful"
+  ],
+  "description": "Pencils, erasers and notes in one pack.",
+  "icon": "\u270f\ufe0f"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Mini Desk Calendar",
+  "minPrice": 11,
+  "maxPrice": 29,
+  "recipients": [
+   "Coworker",
+   "Anyone"
+  ],
+  "categories": [
+   "Office",
+   "Useful",
+   "Christmas"
+  ],
+  "description": "A cheerful way to plan the new year.",
+  "icon": "\ud83d\udcc5"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Santa Hat",
+  "minPrice": 7,
+  "maxPrice": 22,
+  "recipients": [
+   "Anyone",
+   "Child"
+  ],
+  "categories": [
+   "Christmas",
+   "Funny",
+   "Cute"
+  ],
+  "description": "Instant holiday spirit for the party.",
+  "icon": "\ud83c\udf85"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Wireless Earbuds (Basic)",
+  "minPrice": 34,
+  "maxPrice": 93,
+  "recipients": [
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech"
+  ],
+  "description": "Entry-level earbuds for music and calls.",
+  "icon": "\ud83c\udfa7"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Mini Power Bank",
+  "minPrice": 28,
+  "maxPrice": 69,
+  "recipients": [
+   "Coworker",
+   "Man",
+   "Friend"
+  ],
+  "categories": [
+   "Tech",
+   "Useful"
+  ],
+  "description": "Emergency phone charge in a pocket.",
+  "icon": "\ud83d\udd0b"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "USB Flash Drive",
+  "minPrice": 19,
+  "maxPrice": 34,
+  "recipients": [
+   "Coworker"
+  ],
+  "categories": [
+   "Tech",
+   "Office"
+  ],
+  "description": "Handy storage for documents and photos.",
+  "icon": "\ud83d\udcbe"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Gingerbread Cookie Tin",
+  "minPrice": 14,
+  "maxPrice": 34,
+  "recipients": [
+   "Anyone",
+   "Child",
+   "Family"
+  ],
+  "categories": [
+   "Food",
+   "Christmas"
+  ],
+  "description": "Festive cookies in a reusable tin.",
+  "icon": "\ud83c\udf6a"
+ },
+ {
+  "country": "United Arab Emirates",
+  "currencyCode": "AED",
+  "currencySymbol": "\u062f.\u0625",
+  "giftName": "Card Game",
+  "minPrice": 16,
+  "maxPrice": 47,
+  "recipients": [
+   "Friend",
+   "Family",
+   "Child"
+  ],
+  "categories": [
+   "Funny",
+   "Cute"
+  ],
+  "description": "Quick, silly fun for any gathering.",
+  "icon": "\ud83c\udccf"
+ }
+]

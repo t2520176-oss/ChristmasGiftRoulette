@@ -1,0 +1,31 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group android:scaleX="0.72" android:scaleY="0.72" android:pivotX="54" android:pivotY="54">
+    <!-- soft white snow hill -->
+    <path android:fillColor="#FFFFFF" android:pathData="M30,80 Q54,70 78,80 L78,84 L30,84 Z" />
+    <!-- tree trunk -->
+    <path android:fillColor="#6D4C41" android:pathData="M50,66 L58,66 L58,74 L50,74 Z" />
+    <!-- tree tiers -->
+    <path android:fillColor="#1B5E20" android:pathData="M54,22 L68,42 L40,42 Z" />
+    <path android:fillColor="#2E7D32" android:pathData="M54,32 L72,56 L36,56 Z" />
+    <path android:fillColor="#388E3C" android:pathData="M54,44 L76,70 L32,70 Z" />
+    <!-- star -->
+    <path android:fillColor="#FFC107" android:pathData="M54,14 L56.3,19.6 L62.4,20 L57.7,23.9 L59.2,29.8 L54,26.6 L48.8,29.8 L50.3,23.9 L45.6,20 L51.7,19.6 Z" />
+    <!-- ornaments -->
+    <path android:fillColor="#FFC107" android:pathData="M48,52 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0" />
+    <path android:fillColor="#FFFFFF" android:pathData="M60,48 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <path android:fillColor="#E53935" android:pathData="M54,62 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0" />
+    <!-- gift box (front left) -->
+    <path android:fillColor="#FFFFFF" android:pathData="M22,70 L44,70 L44,88 L22,88 Z" />
+    <path android:fillColor="#E53935" android:pathData="M30,70 L36,70 L36,88 L30,88 Z" />
+    <path android:fillColor="#E53935" android:pathData="M22,76 L44,76 L44,80 L22,80 Z" />
+    <path android:fillColor="#FFC107" android:pathData="M33,70 m-4,0 a4,3 0 1,0 8,0 a4,3 0 1,0 -8,0" />
+    <!-- gift box (front right) -->
+    <path android:fillColor="#FFC107" android:pathData="M66,74 L86,74 L86,88 L66,88 Z" />
+    <path android:fillColor="#C62828" android:pathData="M74,74 L78,74 L78,88 L74,88 Z" />
+    <path android:fillColor="#C62828" android:pathData="M66,79 L86,79 L86,82 L66,82 Z" />
+    </group>
+</vector>

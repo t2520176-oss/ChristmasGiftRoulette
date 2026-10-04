@@ -1,3 +1,34 @@
+# Repository contents
+
+| Module | App | Debug APK |
+|---|---|---|
+| `app/` | Christmas Gift Roulette (below) | `app/build/outputs/apk/debug/ChristmasGiftRoulette-debug.apk` |
+| `finder/` | **Christmas Gift Finder** – offline gift ideas by country, currency and budget | `finder/build/outputs/apk/debug/ChristmasGiftFinder-debug.apk` |
+
+`./gradlew assembleDebug` builds both; CI uploads both APKs as separate artifacts.
+
+## Christmas Gift Finder (`finder/`)
+
+Offline demo (no INTERNET permission): pick a country (currency follows automatically), type a budget in
+that currency, choose recipient and gift style, and get gift ideas whose *estimated* price range fits.
+Kotlin · Jetpack Compose · Material 3, plain state-based navigation, no third-party libraries.
+
+* `data/` – `Countries` (21 markets), `GiftRepository` (parses `assets/gifts.json`), `FavoritesStore`
+* `logic/` – `GiftFilter`, `BudgetParser`, `PriceFormatter`, `SurprisePicker` (pure Kotlin, unit-tested)
+* `ui/` – theme, Canvas decorations, components and one file per screen; `navigation/` – back stack
+* Prices are **approximate demo ranges, not store prices**. `python3 tools/generate_gifts.py`
+  regenerates `finder/src/main/assets/gifts.json` (26 ideas per country, scaled to each currency).
+* Filtering: gifts with `maxPrice <= budget` are shown; if fewer than 3 qualify, gifts whose `minPrice`
+  fits are added and marked "May exceed your budget depending on the store."
+* All UI text is in `res/values/strings.xml`, so translations are just extra `values-xx` folders.
+* Favorites (heart) are stored locally in SharedPreferences.
+
+```bash
+./gradlew :finder:testDebugUnitTest :finder:assembleDebug
+```
+
+---
+
 # Christmas Gift Roulette 🎄🎁
 
 An offline Android party app. Enter 2–50 gifts (name, optional amount, currency), spin a festive
