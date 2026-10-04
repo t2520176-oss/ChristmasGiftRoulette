@@ -1,0 +1,61 @@
+name: FigureCraft Windows build
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "desktop/**"
+      - "cloud-worker/**"
+      - "build_windows.bat"
+      - ".github/workflows/build-figurecraft-windows.yml"
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: desktop/requirements-dev.txt
+
+      - name: Install dependencies
+        shell: cmd
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r desktop\requirements-dev.txt
+
+      - name: Unit tests (cloud worker + desktop core)
+        shell: cmd
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python -m pytest desktop\tests -q -x
+
+      - name: Build (build_windows.bat)
+        shell: cmd
+        run: build_windows.bat
+
+      - name: Show build info
+        shell: pwsh
+        run: Get-Content output\BUILD_INFO.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FigureCraft-windows-portable
+          path: |
+            output/FigureCraft-portable.zip
+            output/BUILD_INFO.txt
+            output/selftest.log
+          if-no-files-found: error
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: FigureCraft-build-logs
+          path: |
+            build/pyinstaller/**/warn-*.txt
+            output/selftest.log
+          if-no-files-found: ignore

@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #14161b; }
+  #c { width: 100%; height: 100%; display: block; outline: none; }
+  #msg { position: absolute; left: 0; right: 0; top: 45%; text-align: center; color: #8b93a7;
+         font: 14px "Segoe UI", "Malgun Gothic", sans-serif; pointer-events: none; white-space: pre-line; }
+</style>
+</head>
+<body>
+<canvas id="c" tabindex="0"></canvas>
+<div id="msg"></div>
+<script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+<script src="three-bundle.js"></script>
+<script src="viewer.js"></script>
+</body>
+</html>

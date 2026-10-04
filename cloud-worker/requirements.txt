@@ -1,0 +1,18 @@
+# --- server (always needed) ---
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9
+pillow>=10.0
+numpy>=1.26
+trimesh>=4.0
+requests>=2.31
+# --- RunPod serverless (only for runpod_handler.py) ---
+runpod>=1.6
+boto3>=1.34            # optional: S3-compatible upload of large results
+# --- text -> image stage (only for the trellis / hunyuan3d engines on a GPU) ---
+# torch / torchvision are provided by the CUDA base image in the Dockerfile
+diffusers>=0.30
+transformers>=4.40
+accelerate>=0.30
+safetensors>=0.4
+rembg>=2.0

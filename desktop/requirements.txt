@@ -1,0 +1,15 @@
+# FigureCraft desktop app - runtime dependencies (Python 3.11+)
+PySide6>=6.6,<6.12        # includes QtWebEngine (used for the Three.js 3D viewer)
+numpy>=1.26
+scipy>=1.11
+Pillow>=10.0
+trimesh>=4.0
+networkx>=3.0
+shapely>=2.0              # section/polygon helpers used by trimesh in some code paths
+mapbox-earcut>=1.0        # polygon triangulation for caps
+manifold3d>=2.5           # robust mesh booleans (flat bottom, base, colour parts)
+fast-simplification>=0.1.7  # preview decimation of very dense meshes
+scikit-image>=0.22        # marching cubes for colour-zone meshes
+lib3mf>=2.3               # reference 3MF implementation (a built-in writer is the fallback)
+requests>=2.31
+cryptography>=42          # encrypted settings on non-Windows (Windows uses DPAPI)

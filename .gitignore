@@ -10,3 +10,14 @@ captures/
 *.hprof
 # Exported APKs are build outputs (a copy is produced in /output by ./gradlew assembleDebug)
 output/
+
+# --- FigureCraft (desktop / cloud-worker) ---
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.venv-build/
+.env
+*.spec.bak
+cloud-worker/.env
+dist/

@@ -1,0 +1,6 @@
+-r requirements.txt
+pytest>=8
+pyinstaller>=6.6
+fastapi>=0.110            # only for tests that start the cloud worker (cloud-worker/)
+uvicorn>=0.29
+python-multipart>=0.0.9
