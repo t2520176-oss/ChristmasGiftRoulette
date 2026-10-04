@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- City skyline silhouette -->
+    <path
+        android:fillColor="#FF18305F"
+        android:pathData="M18,78 L18,58 L26,58 L26,50 L34,50 L34,64 L42,64 L42,44 L50,44 L50,70 L58,70 L58,54 L68,54 L68,62 L76,62 L76,48 L84,48 L84,78 Z" />
+    <!-- Road leading to the horizon -->
+    <path
+        android:fillColor="#FF2F7BFF"
+        android:pathData="M46,78 L62,78 L56,60 L52,60 Z" />
+    <!-- Sun -->
+    <path
+        android:fillColor="#FFFFC83D"
+        android:pathData="M54,30 m-9,0 a9,9 0 1,0 18,0 a9,9 0 1,0 -18,0" />
+    <!-- Letter L -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M30,22 L38,22 L38,42 L50,42 L50,48 L30,48 Z" />
+</vector>

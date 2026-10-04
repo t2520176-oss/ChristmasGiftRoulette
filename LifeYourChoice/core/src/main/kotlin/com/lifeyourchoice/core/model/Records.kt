@@ -58,3 +58,24 @@ class Settings(
     val music: Boolean = true,
     val volume: Float = 0.8f
 )
+
+/**
+ * Everything the shareable LIFE CARD shows: deliberately no statistics. A later version can render
+ * this model to an image and share it; Version 1 only draws it on screen.
+ */
+class LifeCardModel(
+    val playerName: String,
+    val gender: Gender,
+    val appearance: Int,
+    val ageReached: Int,
+    val careerTitle: String,
+    val endingTitle: String,
+    val motto: String
+) {
+    val byline: String get() = "— Your Life, Age $ageReached"
+
+    companion object {
+        fun from(r: LifeRecord) =
+            LifeCardModel(r.playerName, r.gender, r.appearance, r.ageReached, r.careerTitle, r.endingTitle, r.mottoText)
+    }
+}
