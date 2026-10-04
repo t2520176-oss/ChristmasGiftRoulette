@@ -55,6 +55,7 @@ class CineLibrary(val packs: List<CinePack>) {
             is Turn -> need(b.actor, "turns")
             is Seat -> need(b.actor, "sits/stands")
             is Look -> need(b.actor, "looks")
+            is Mood -> need(b.actor, "changes mood")
             is Act -> need(b.actor, "acts")
             is Say -> {
                 if (!b.offscreen) need(b.speaker, "speaks")

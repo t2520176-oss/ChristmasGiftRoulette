@@ -27,6 +27,9 @@ class Turn(val actor: ActorId, val facing: Facing? = null, val toward: ActorId? 
 
 class Seat(val actor: ActorId, val sit: Boolean) : Beat()
 
+/** Sets an actor's emotion and gesture instantly and leaves them (used to pose memory frames). */
+class Mood(val actor: ActorId, val emotion: Emotion, val gesture: Gesture = Gesture.NONE) : Beat()
+
 /** Gaze direction: toward another actor, or null to look away / straight ahead. */
 class Look(val actor: ActorId, val toward: ActorId?) : Beat()
 

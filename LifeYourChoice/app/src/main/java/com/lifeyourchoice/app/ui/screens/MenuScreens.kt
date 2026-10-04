@@ -54,7 +54,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.lifeyourchoice.app.ui.art.CharacterPortrait
-import com.lifeyourchoice.app.ui.art.Looks
+import com.lifeyourchoice.app.ui.art.Palettes
 import com.lifeyourchoice.app.ui.art.SceneCanvas
 import com.lifeyourchoice.app.ui.components.ButtonKind
 import com.lifeyourchoice.app.ui.components.GameLogo
@@ -62,6 +62,11 @@ import com.lifeyourchoice.app.ui.components.LyButton
 import com.lifeyourchoice.app.ui.components.appear
 import com.lifeyourchoice.app.ui.components.rememberAppear
 import com.lifeyourchoice.app.ui.state.GameSession
+import com.lifeyourchoice.app.ui.state.VoiceLine
+import com.lifeyourchoice.app.ui.state.VoiceProfiles
+import com.lifeyourchoice.core.cinema.ActorId
+import com.lifeyourchoice.core.cinema.Emotion
+import com.lifeyourchoice.core.model.PlayerLook
 import com.lifeyourchoice.app.ui.theme.Ly
 import com.lifeyourchoice.core.model.Gender
 import com.lifeyourchoice.core.model.SceneArt
@@ -99,6 +104,8 @@ fun MainMenuScreen(session: GameSession) {
                 Spacer(Modifier.height(if (wide) 28.dp else 12.dp))
                 GameLogo()
                 Spacer(Modifier.height(8.dp))
+                Text("Version 2A  ·  The Cinematic Life", color = Ly.Gold, fontSize = 12.sp, letterSpacing = 1.sp, fontWeight = FontWeight.Bold)
+                Spacer(Modifier.height(4.dp))
                 Text("SAME WORLD. DIFFERENT STORY.", color = Ly.Text, fontSize = 12.sp, letterSpacing = 3.sp, fontWeight = FontWeight.SemiBold)
                 Spacer(Modifier.height(if (wide) 40.dp else 28.dp))
                 // Leave room for the silhouette on narrow screens.
@@ -158,12 +165,20 @@ private fun BackSilhouette(modifier: Modifier = Modifier) {
 private val boyNames = listOf("Alex", "Ryan", "Leo", "Ethan", "Noah", "Caleb", "Jake", "Daniel", "Marcus", "Kai", "Owen", "Theo")
 private val girlNames = listOf("Mia", "Sofia", "Chloe", "Ava", "Grace", "Zoe", "Hannah", "Naomi", "Elena", "Maya", "Nora", "Ivy")
 
+private enum class CreateTab(val label: String) { FACE("Face"), HAIR("Hair"), OUTFIT("Outfit"), VOICE("Voice") }
+
 @Composable
 fun CharacterCreationScreen(session: GameSession) {
     var gender by remember { mutableStateOf(Gender.BOY) }
-    var appearance by remember { mutableStateOf(0) }
+    var look by remember { mutableStateOf(PlayerLook.fromPreset(Gender.BOY, 0)) }
+    var tab by remember { mutableStateOf(CreateTab.FACE) }
     var name by remember { mutableStateOf("") }
-    val looks = if (gender == Gender.BOY) Looks.boys else Looks.girls
+
+    fun pickGender(g: Gender) {
+        gender = g
+        look = PlayerLook.fromPreset(g, 0).copy(voice = look.voice)
+        session.audio.sfx(com.lifeyourchoice.app.ui.state.Sfx.TAP)
+    }
 
     Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Ly.Navy900, Ly.Navy950)))) {
         SceneCanvas(SceneArt.NIGHT_CITY, Modifier.fillMaxSize().appear(0.28f, 0f))
@@ -172,34 +187,38 @@ fun CharacterCreationScreen(session: GameSession) {
                 .verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("CHOOSE YOUR CHARACTER", color = Ly.Text, fontSize = 22.sp, fontWeight = FontWeight.Black, letterSpacing = 1.sp, textAlign = TextAlign.Center)
-            Text("Who will you be?", color = Ly.TextDim, fontSize = 14.sp, modifier = Modifier.padding(top = 4.dp, bottom = 16.dp))
+            Text("CREATE YOUR CHARACTER", color = Ly.Gold, fontSize = 21.sp, fontWeight = FontWeight.Black, letterSpacing = 1.sp, textAlign = TextAlign.Center)
+            Text("Who will you be?", color = Ly.TextDim, fontSize = 14.sp, modifier = Modifier.padding(top = 4.dp, bottom = 14.dp))
 
             Row(Modifier.widthIn(max = 520.dp).fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-                GenderCard("BOY", Gender.BOY, gender == Gender.BOY, appearance, Modifier.weight(1f)) { gender = Gender.BOY; appearance = 0; session.audio.sfx(com.lifeyourchoice.app.ui.state.Sfx.TAP) }
-                GenderCard("GIRL", Gender.GIRL, gender == Gender.GIRL, appearance, Modifier.weight(1f)) { gender = Gender.GIRL; appearance = 0; session.audio.sfx(com.lifeyourchoice.app.ui.state.Sfx.TAP) }
+                GenderCard("BOY", Gender.BOY, gender == Gender.BOY, look, Modifier.weight(1f)) { pickGender(Gender.BOY) }
+                GenderCard("GIRL", Gender.GIRL, gender == Gender.GIRL, look, Modifier.weight(1f)) { pickGender(Gender.GIRL) }
             }
 
-            Text("CUSTOMIZE YOUR LOOK", color = Ly.Text, fontSize = 12.sp, letterSpacing = 2.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 22.dp, bottom = 10.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-                looks.forEachIndexed { i, look ->
-                    val selected = i == appearance
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Box(
-                            Modifier.size(64.dp).clip(RoundedCornerShape(12.dp)).background(Ly.Navy700)
-                                .border(BorderStroke(if (selected) 2.5.dp else 1.dp, if (selected) Ly.Gold else Ly.BlueLine), RoundedCornerShape(12.dp))
-                                .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) {
-                                    appearance = i; session.audio.sfx(com.lifeyourchoice.app.ui.state.Sfx.TAP)
-                                }
-                        ) {
-                            CharacterPortrait(gender, i, 17, Modifier.fillMaxSize().padding(top = 6.dp))
-                        }
-                        Text(look.name, color = if (selected) Ly.Gold else Ly.TextDim, fontSize = 11.sp, modifier = Modifier.padding(top = 4.dp))
-                    }
+            // Tabs
+            Row(Modifier.widthIn(max = 520.dp).fillMaxWidth().padding(top = 18.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                CreateTab.values().forEach { t ->
+                    val sel = t == tab
+                    Box(
+                        Modifier.weight(1f).clip(RoundedCornerShape(10.dp))
+                            .background(if (sel) Ly.Blue.copy(alpha = 0.3f) else Ly.Navy800)
+                            .border(BorderStroke(1.2.dp, if (sel) Ly.Blue else Ly.BlueLine.copy(alpha = 0.5f)), RoundedCornerShape(10.dp))
+                            .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) {
+                                tab = t; session.audio.sfx(com.lifeyourchoice.app.ui.state.Sfx.TAP)
+                            }
+                            .padding(vertical = 9.dp),
+                        contentAlignment = Alignment.Center
+                    ) { Text(t.label, color = if (sel) Color.White else Ly.TextDim, fontSize = 13.sp, fontWeight = FontWeight.Bold) }
                 }
             }
 
-            Row(Modifier.widthIn(max = 420.dp).fillMaxWidth().padding(top = 22.dp), verticalAlignment = Alignment.CenterVertically) {
+            Spacer(Modifier.height(12.dp))
+            when (tab) {
+                CreateTab.VOICE -> VoicePicker(session, gender, look, name) { look = look.copy(voice = it) }
+                else -> OptionRow(tab, gender, look) { look = it; session.audio.sfx(com.lifeyourchoice.app.ui.state.Sfx.TAP) }
+            }
+
+            Row(Modifier.widthIn(max = 420.dp).fillMaxWidth().padding(top = 20.dp), verticalAlignment = Alignment.CenterVertically) {
                 Box(
                     Modifier.weight(1f).height(52.dp).clip(RoundedCornerShape(12.dp)).background(Ly.Navy800)
                         .border(BorderStroke(1.2.dp, Ly.BlueLine), RoundedCornerShape(12.dp)).padding(horizontal = 14.dp),
@@ -213,7 +232,7 @@ fun CharacterCreationScreen(session: GameSession) {
                         cursorBrush = SolidColor(Ly.Gold),
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                         decorationBox = { inner ->
-                            if (name.isEmpty()) Text("Enter your name…", color = Ly.TextDim, fontSize = 16.sp)
+                            if (name.isEmpty()) Text("Name:  Alex", color = Ly.TextDim, fontSize = 16.sp)
                             inner()
                         },
                         modifier = Modifier.fillMaxWidth()
@@ -233,16 +252,65 @@ fun CharacterCreationScreen(session: GameSession) {
             }
 
             LyButton(
-                "CONFIRM", { session.startNewLife(name, gender, appearance) },
-                Modifier.padding(top = 22.dp).widthIn(max = 320.dp).fillMaxWidth(), ButtonKind.PRIMARY, fontSize = 18
+                "CONTINUE", { session.startNewLife(name, gender, 0, look) },
+                Modifier.padding(top = 20.dp).widthIn(max = 320.dp).fillMaxWidth(), ButtonKind.PRIMARY, fontSize = 18
             )
             LyButton("BACK", { session.goMenu() }, Modifier.padding(top = 10.dp).widthIn(max = 320.dp).fillMaxWidth(), ButtonKind.GHOST, fontSize = 14)
         }
     }
 }
 
+/** Six preview thumbnails for the Face / Hair / Outfit tabs; each shows the current look with that one change. */
 @Composable
-private fun GenderCard(label: String, gender: Gender, selected: Boolean, appearance: Int, modifier: Modifier, onClick: () -> Unit) {
+private fun OptionRow(tab: CreateTab, gender: Gender, look: PlayerLook, onPick: (PlayerLook) -> Unit) {
+    val options: List<PlayerLook> = when (tab) {
+        CreateTab.FACE -> Palettes.skins.indices.map { look.copy(skin = it) }
+        CreateTab.HAIR -> Palettes.hairOptions.map { (style, color) -> look.copy(hairStyle = style, hairColor = color) }
+        CreateTab.OUTFIT -> Palettes.outfits.indices.map { look.copy(outfit = it) }
+        CreateTab.VOICE -> emptyList()
+    }
+    Row(Modifier.widthIn(max = 520.dp).fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        options.forEach { opt ->
+            val selected = opt == look
+            Box(
+                Modifier.weight(1f).aspectRatio(0.85f).clip(RoundedCornerShape(12.dp)).background(Ly.Navy700)
+                    .border(BorderStroke(if (selected) 2.5.dp else 1.dp, if (selected) Ly.Gold else Ly.BlueLine), RoundedCornerShape(12.dp))
+                    .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) { onPick(opt) }
+            ) { CharacterPortrait(gender, 0, 17, Modifier.fillMaxSize().padding(top = 4.dp), look = opt) }
+        }
+    }
+}
+
+@Composable
+private fun VoicePicker(session: GameSession, gender: Gender, look: PlayerLook, name: String, onPick: (Int) -> Unit) {
+    Column(Modifier.widthIn(max = 520.dp).fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Palettes.voiceNames.forEachIndexed { i, label ->
+                val sel = look.voice == i
+                Box(
+                    Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).background(if (sel) Ly.Gold.copy(alpha = 0.18f) else Ly.Navy700)
+                        .border(BorderStroke(if (sel) 2.dp else 1.dp, if (sel) Ly.Gold else Ly.BlueLine), RoundedCornerShape(12.dp))
+                        .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) {
+                            onPick(i)
+                            val who = name.ifBlank { "Alex" }
+                            val (pitch, rate) = VoiceProfiles.forLine(ActorId.PLAYER, gender, 17, i, Emotion.HAPPY)
+                            session.speak(VoiceLine("Hi, I’m $who. This is how I sound.", null, ActorId.PLAYER, pitch, rate)) {}
+                        }
+                        .padding(vertical = 14.dp),
+                    contentAlignment = Alignment.Center
+                ) { Text(label, color = if (sel) Ly.Gold else Ly.Text, fontWeight = FontWeight.Bold, fontSize = 14.sp) }
+            }
+        }
+        Text(
+            if (session.voice.available && session.settings.voiceEnabled) "Tap a voice to hear it. It uses your device’s offline voice."
+            else "No offline voice is available on this device, so dialogue will be shown as subtitles. That’s fine!",
+            color = Ly.TextDim, fontSize = 12.sp, lineHeight = 17.sp
+        )
+    }
+}
+
+@Composable
+private fun GenderCard(label: String, gender: Gender, selected: Boolean, look: PlayerLook, modifier: Modifier, onClick: () -> Unit) {
     val glow by animateFloatAsState(if (selected) 1f else 0f, tween(250), label = "sel")
     val accent = if (gender == Gender.BOY) Ly.Blue else Color(0xFFD65C9A)
     Column(
@@ -252,7 +320,11 @@ private fun GenderCard(label: String, gender: Gender, selected: Boolean, appeara
             .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null, onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CharacterPortrait(gender, if (selected) appearance else 0, 17, Modifier.fillMaxWidth().aspectRatio(0.9f).padding(top = 10.dp, start = 10.dp, end = 10.dp))
+        CharacterPortrait(
+            gender, 0, 17, Modifier.fillMaxWidth().aspectRatio(0.95f).padding(top = 10.dp, start = 10.dp, end = 10.dp),
+            look = if (selected) look else PlayerLook.fromPreset(gender, 0),
+            emotion = if (selected) Emotion.HAPPY else Emotion.NEUTRAL
+        )
         Box(
             Modifier.fillMaxWidth().background(if (selected) accent else Ly.Navy700).padding(vertical = 10.dp),
             contentAlignment = Alignment.Center
@@ -279,7 +351,7 @@ fun IntroScreen(session: GameSession) {
         SceneCanvas(SceneArt.SKYLINE, Modifier.fillMaxSize().appear(0.35f * a, 0f))
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.appear(a, 16f).padding(24.dp)) {
             if (hud != null) {
-                CharacterPortrait(hud.gender, hud.appearance, hud.ageYears, Modifier.size(150.dp, 180.dp))
+                CharacterPortrait(hud.gender, hud.appearance, hud.ageYears, Modifier.size(150.dp, 180.dp), look = hud.look, emotion = Emotion.CONFIDENT)
                 Spacer(Modifier.height(10.dp))
                 Text(hud.playerName.uppercase(), color = Ly.Gold, fontWeight = FontWeight.Black, fontSize = 18.sp, letterSpacing = 3.sp)
             }

@@ -47,6 +47,9 @@ open class BeatBuilder {
 
     fun stand(actor: ActorId, requires: Condition? = null) = add(Seat(actor, false), requires)
 
+    fun mood(actor: ActorId, emotion: Emotion, gesture: Gesture = Gesture.NONE, requires: Condition? = null) =
+        add(Mood(actor, emotion, gesture), requires)
+
     fun look(actor: ActorId, toward: ActorId?, requires: Condition? = null) = add(Look(actor, toward), requires)
 
     fun act(actor: ActorId, gesture: Gesture, emotion: Emotion? = null, ms: Int = 1200, requires: Condition? = null) =

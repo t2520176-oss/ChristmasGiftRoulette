@@ -69,6 +69,21 @@ fun DrawScope.paintScene(scene: SceneArt, phase: Float) {
         SceneArt.PARK -> park(phase)
         SceneArt.STREET -> street(phase)
         SceneArt.KITCHEN -> kitchen(phase)
+        SceneArt.BEDROOM -> bedroom(phase)
+        SceneArt.SCHOOL_YARD -> schoolYard(phase)
+        SceneArt.RESTAURANT -> restaurant(phase)
+        SceneArt.INTERVIEW_ROOM -> interviewRoom(phase)
+        SceneArt.FACTORY -> factory(phase)
+    }
+}
+
+/** Light of the moment: the same place feels different at dawn, in the evening, or at night. */
+fun DrawScope.paintTimeOfDay(time: com.lifeyourchoice.core.cinema.TimeOfDay) {
+    when (time) {
+        com.lifeyourchoice.core.cinema.TimeOfDay.DAY -> {}
+        com.lifeyourchoice.core.cinema.TimeOfDay.MORNING -> drawRect(Brush.verticalGradient(listOf(Color(0x33FFE2A8), Color(0x11FFE2A8))))
+        com.lifeyourchoice.core.cinema.TimeOfDay.EVENING -> drawRect(Brush.verticalGradient(listOf(Color(0x44FF8A3D), Color(0x22C05A8A))))
+        com.lifeyourchoice.core.cinema.TimeOfDay.NIGHT -> drawRect(Brush.verticalGradient(listOf(Color(0x880A1440), Color(0x990A1030))))
     }
 }
 
@@ -778,4 +793,122 @@ private fun DrawScope.kitchen(phase: Float) {
     poly(Color(0xFFE5A24A), 1f, 0.26f to 0.25f, 0.34f to 0.25f, 0.32f to 0.2f, 0.28f to 0.2f)
     glow(0.3f, 0.28f, 0.3f, Color(0x88FFC46B).copy(alpha = 0.3f + 0.08f * tw(2, phase)))
     vignette(0.4f)
+}
+
+
+private fun DrawScope.bedroom(phase: Float) {
+    fillV(Color(0xFF1A2040), Color(0xFF2A2E58))
+    // window with moon
+    box(0.60f, 0.10f, 0.30f, 0.38f, Color(0xFF2A3560))
+    boxV(0.615f, 0.12f, 0.27f, 0.34f, Color(0xFF0B1642), Color(0xFF2B4C9E))
+    stars(14, phase, 0.3f, seed = 3)
+    dot(0.80f, 0.2f, 0.035f, Color(0xFFEAF2FF)); glow(0.80f, 0.2f, 0.12f, Color(0x55BFD8FF))
+    box(0.748f, 0.12f, 0.006f, 0.34f, Color(0xFF2A3560))
+    // posters and shelf
+    box(0.08f, 0.16f, 0.14f, 0.2f, Color(0xFF304B8C)); box(0.10f, 0.19f, 0.10f, 0.06f, Color(0xFFFFC83D), 0.8f)
+    box(0.28f, 0.28f, 0.22f, 0.012f, Color(0xFF3A2D26))
+    for (i in 0 until 4) round(0.30f + i * 0.05f, 0.21f, 0.035f, 0.07f, 4f, listOf(Color(0xFFE5A24A), Color(0xFF3FA6A6), Color(0xFFD9442E), Color(0xFF8CCF5A))[i], 0.9f)
+    // floor and bed
+    boxV(0f, 0.72f, 1f, 0.28f, Color(0xFF2A2440), Color(0xFF10101E))
+    round(0.04f, 0.58f, 0.46f, 0.14f, 14f, Color(0xFF2F4E8F))
+    round(0.04f, 0.52f, 0.14f, 0.1f, 20f, Color(0xFFE8EEFF), 0.9f)
+    box(0.04f, 0.72f, 0.46f, 0.05f, Color(0xFF1A2347))
+    // desk lamp glow
+    glow(0.80f, 0.60f, 0.35f, Color(0x66FFC46B).copy(alpha = 0.3f + 0.08f * tw(1, phase)))
+    round(0.66f, 0.62f, 0.30f, 0.035f, 4f, Color(0xFF3A2D26))
+    box(0.70f, 0.655f, 0.012f, 0.2f, Color(0xFF2A201B)); box(0.92f, 0.655f, 0.012f, 0.2f, Color(0xFF2A201B))
+    vignette(0.5f)
+}
+
+private fun DrawScope.schoolYard(phase: Float) {
+    fillV(Color(0xFF4A82D0), Color(0xFFCDE4FF))
+    for (i in 0 until 3) {
+        val x = ((i * 0.38f + phase * 0.08f) % 1.3f) - 0.15f
+        round(x, 0.08f + i * 0.07f, 0.2f, 0.04f, 20f, Color.White, 0.7f)
+    }
+    // school building behind
+    box(0.05f, 0.30f, 0.9f, 0.30f, Color(0xFFB9724E))
+    for (r in 0 until 2) for (c in 0 until 9) box(0.08f + c * 0.098f, 0.35f + r * 0.12f, 0.06f, 0.07f, Color(0xFFBFE0FF), 0.85f)
+    poly(Color(0xFF7A3F3F), 1f, 0.03f to 0.31f, 0.5f to 0.18f, 0.97f to 0.31f)
+    box(0.46f, 0.50f, 0.08f, 0.10f, Color(0xFF3A2A5C))
+    // fence, yard
+    for (i in 0..30) line(i / 30f, 0.60f, i / 30f, 0.68f, Color(0xFFE8E8EE), 2f, 0.7f)
+    line(0f, 0.63f, 1f, 0.63f, Color(0xFFE8E8EE), 2f, 0.7f)
+    boxV(0f, 0.66f, 1f, 0.34f, Color(0xFF5CA866), Color(0xFF22582F))
+    poly(Color(0xFFD9C9A5), 0.9f, 0.40f to 0.66f, 0.60f to 0.66f, 0.80f to 1f, 0.20f to 1f)
+    treeBlob(0.06f, 0.80f, 0.15f, Color(0xFF4A3322), Color(0xFF2F8049), Color(0xFF3EA25F))
+    treeBlob(0.94f, 0.82f, 0.13f, Color(0xFF4A3322), Color(0xFF2F8049), Color(0xFF3EA25F))
+    vignette(0.25f)
+}
+
+private fun DrawScope.restaurant(phase: Float) {
+    fillV(Color(0xFF2B1A22), Color(0xFF4A2A30))
+    // window with evening street
+    box(0.05f, 0.10f, 0.40f, 0.40f, Color(0xFF1A1018))
+    boxV(0.065f, 0.12f, 0.37f, 0.36f, Color(0xFF1D2B5C), Color(0xFFEE8B5A))
+    buildings(15, 0.48f, 0.05f, 0.2f, Color(0xFF12194A), Color(0xFFFFC27A), phase, 0.5f, 0.05f, 0.1f)
+    // wall lamps and bottles
+    for (i in 0 until 3) {
+        val x = 0.58f + i * 0.14f
+        poly(Color(0xFFE5A24A), 1f, (x - 0.03f) to 0.2f, (x + 0.03f) to 0.2f, (x + 0.018f) to 0.15f, (x - 0.018f) to 0.15f)
+        glow(x, 0.22f, 0.2f, Color(0x88FFC46B).copy(alpha = 0.3f + 0.1f * tw(i, phase)))
+        line(x, 0f, x, 0.15f, Color(0xFF0D0805), 2f)
+    }
+    for (i in 0 until 6) round(0.56f + i * 0.07f, 0.34f, 0.025f, 0.09f, 6f, listOf(Color(0xFF3FA6A6), Color(0xFF8A2F2F), Color(0xFFE5A24A))[i % 3], 0.8f)
+    box(0.55f, 0.43f, 0.43f, 0.012f, Color(0xFF6A4630))
+    boxV(0f, 0.7f, 1f, 0.3f, Color(0xFF2B1D15), Color(0xFF120B07))
+    // tables with candles
+    for (i in 0 until 2) {
+        val x = 0.12f + i * 0.5f
+        round(x, 0.68f, 0.3f, 0.03f, 6f, Color(0xFFEFE6D8))
+        box(x + 0.14f, 0.71f, 0.012f, 0.22f, Color(0xFF2B1D15))
+        box(x + 0.145f, 0.64f, 0.008f, 0.04f, Color(0xFFF5E9D6))
+        glow(x + 0.15f, 0.63f, 0.1f, Color(0xAAFFC46B).copy(alpha = 0.5f + 0.3f * tw(i, phase, 3f)))
+    }
+    vignette(0.55f)
+}
+
+private fun DrawScope.interviewRoom(phase: Float) {
+    fillV(Color(0xFF3A4668), Color(0xFF232C48))
+    // frosted glass partition and skyline behind
+    boxV(0.04f, 0.08f, 0.92f, 0.46f, Color(0xFF9FC4F2), Color(0xFFDCEBFF))
+    buildings(25, 0.54f, 0.05f, 0.22f, Color(0xFF7A98C8), Color(0xFFEAF5FF), phase, 0.25f, 0.05f, 0.1f)
+    for (i in 1..4) box(0.04f + i * 0.184f, 0.08f, 0.006f, 0.46f, Color(0xFF232C48))
+    // wall clock and plant
+    dot(0.15f, 0.62f, 0.0f, Color.White)
+    dot(0.88f, 0.22f, 0.045f, Color(0xFFF2F4FA)); line(0.88f, 0.22f, 0.88f, 0.19f, Color(0xFF14183A), 2f); line(0.88f, 0.22f, 0.905f, 0.23f, Color(0xFF14183A), 2f)
+    boxV(0f, 0.7f, 1f, 0.3f, Color(0xFF2A3350), Color(0xFF10152A))
+    // table between two chairs
+    round(0.26f, 0.68f, 0.5f, 0.04f, 6f, Color(0xFF6A4630))
+    box(0.30f, 0.72f, 0.012f, 0.2f, Color(0xFF2A1D14)); box(0.72f, 0.72f, 0.012f, 0.2f, Color(0xFF2A1D14))
+    box(0.46f, 0.65f, 0.1f, 0.03f, Color(0xFFF2F4FA), 0.9f)
+    dot(0.06f, 0.66f, 0.03f, Color(0xFF2E8B57)); dot(0.09f, 0.69f, 0.025f, Color(0xFF3AA66A)); box(0.065f, 0.70f, 0.02f, 0.06f, Color(0xFF4B3A2C))
+    for (i in 0 until 3) box(0.12f + i * 0.3f, 0.01f, 0.2f, 0.02f, Color.White, 0.8f)
+    vignette(0.4f)
+}
+
+private fun DrawScope.factory(phase: Float) {
+    fillV(Color(0xFF1B1F2A), Color(0xFF2D3140))
+    // high windows
+    for (i in 0 until 5) boxV(0.06f + i * 0.19f, 0.06f, 0.12f, 0.16f, Color(0xFF7FA6D8), Color(0xFFC9DCF2))
+    // ceiling beams and crane
+    box(0f, 0.26f, 1f, 0.025f, Color(0xFF3B4254)); box(0.2f, 0.22f, 0.02f, 0.06f, Color(0xFF3B4254)); box(0.7f, 0.22f, 0.02f, 0.06f, Color(0xFF3B4254))
+    val cx = 0.3f + 0.3f * (0.5f + 0.5f * sin(phase * TWO_PI))
+    line(cx, 0.28f, cx, 0.42f, Color(0xFF9AA4B8), 2f); box(cx - 0.02f, 0.42f, 0.04f, 0.03f, Color(0xFFFFC83D))
+    // machines
+    round(0.06f, 0.46f, 0.28f, 0.20f, 6f, Color(0xFF3F5A9A)); box(0.10f, 0.40f, 0.08f, 0.06f, Color(0xFF2F4A8A))
+    for (i in 0 until 4) dot(0.10f + i * 0.06f, 0.56f, 0.012f, if (i % 2 == 0) Color(0xFF3FD18A) else Color(0xFFFFC83D), 0.6f + 0.4f * tw(i, phase, 2f))
+    round(0.62f, 0.42f, 0.32f, 0.24f, 6f, Color(0xFF8A5A2B)); box(0.66f, 0.36f, 0.10f, 0.06f, Color(0xFF6A4420))
+    // conveyor
+    box(0.0f, 0.66f, 1f, 0.04f, Color(0xFF2A2F3C))
+    for (i in 0 until 12) box(((i * 0.09f + phase * 0.09f) % 1.0f), 0.675f, 0.03f, 0.012f, Color(0xFF6A7390))
+    boxV(0f, 0.7f, 1f, 0.3f, Color(0xFF3A3F50), Color(0xFF14161F))
+    for (i in 0 until 5) box(0.05f + i * 0.2f, 0.71f, 0.08f, 0.008f, Color(0xFFFFC83D), 0.55f)
+    // sparks
+    for (i in 0 until 10) {
+        val rnd = Random(i + 21)
+        val t = (phase * (0.9f + rnd.nextFloat()) + rnd.nextFloat()) % 1f
+        dot(0.78f + (rnd.nextFloat() - 0.5f) * 0.1f * t, 0.5f - t * 0.2f, 0.004f, Color(0xFFFFA23A), (1f - t) * 0.9f)
+    }
+    vignette(0.5f)
 }

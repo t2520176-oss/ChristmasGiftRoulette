@@ -60,7 +60,7 @@ class CineDirector(
     private var current: Beat? = null
     private var remaining = 0
     private var blockElapsed = 0
-    private var voiceHold = false
+    @Volatile private var voiceHold = false
     private var serial = 0
     private val cues = mutableListOf<String>()
 
@@ -150,7 +150,7 @@ class CineDirector(
         while (current == null && (phase == Phase.PLAYING || phase == Phase.REACTING) && guard++ < 10_000) {
             val next = queue.removeFirstOrNull()
             if (next == null) {
-                phase = if (phase == Phase.PLAYING && script.choices.isNotEmpty()) Phase.CHOOSING else Phase.DONE
+                phase = if (phase == Phase.PLAYING && (script.choices.isNotEmpty() || script.generated)) Phase.CHOOSING else Phase.DONE
                 return
             }
             if (begin(next, instant)) { current = next; blockElapsed = 0 }
@@ -179,6 +179,7 @@ class CineDirector(
             }
             is Seat -> { actor(b.actor).seated = b.sit; remaining = if (instant) 0 else 450; return !instant }
             is Look -> actor(b.actor).lookAt = b.toward
+            is Mood -> actor(b.actor).apply { emotion = b.emotion; gesture = b.gesture }
             is Act -> {
                 val a = actor(b.actor)
                 a.gesture = b.gesture

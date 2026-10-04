@@ -24,6 +24,21 @@ class MontageFrame(
     val shot: Shot = Shot.TWO_SHOT
 )
 
+/** Stages a memory frame with the normal cinematic machinery (placement, mood, camera). */
+fun MontageFrame.toScript(): CineScript {
+    val b = BeatBuilder()
+    with(b) {
+        for (m in actors) {
+            place(m.actor, m.x, m.facing, m.seated)
+            mood(m.actor, m.emotion, m.gesture)
+        }
+        for (m in actors) if (m.actor != ActorId.PLAYER) look(m.actor, ActorId.PLAYER)
+        look(ActorId.PLAYER, actors.firstOrNull { it.actor != ActorId.PLAYER }?.actor)
+        cam(shot, ActorId.PLAYER, actors.firstOrNull { it.actor != ActorId.PLAYER }?.actor)
+    }
+    return CineScript("montage:$id", env, time, b.beats.toList(), emptyMap())
+}
+
 /** The cinematic that closes a life: memories, then the older player in a meaningful place. */
 class EndingPlan(val memories: List<MontageFrame>, val finale: MontageFrame, val finaleCaption: String)
 

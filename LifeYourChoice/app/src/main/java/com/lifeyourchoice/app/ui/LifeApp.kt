@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.lifeyourchoice.app.ui.cinema.CinemaScreen
+import com.lifeyourchoice.app.ui.cinema.EndingScreen
 import com.lifeyourchoice.app.ui.screens.CharacterCreationScreen
 import com.lifeyourchoice.app.ui.screens.GameScreen
 import com.lifeyourchoice.app.ui.screens.IntroScreen
@@ -30,9 +32,10 @@ fun LifeApp(session: GameSession) {
                     Screen.Menu -> MainMenuScreen(session)
                     Screen.Create -> CharacterCreationScreen(session)
                     Screen.Intro -> IntroScreen(session)
-                    Screen.Playing -> GameScreen(session)
+                    Screen.Playing -> if (session.settings.cinematic) CinemaScreen(session) else GameScreen(session)
                     Screen.Records -> RecordsScreen(session)
                     Screen.Settings -> SettingsScreen(session)
+                    is Screen.Ending -> EndingScreen(session, screen.record, screen.plan, screen.state)
                     is Screen.Report -> ReportScreen(session, screen.record, screen.fresh)
                     is Screen.Card -> LifeCardScreen(session, screen.record)
                 }
