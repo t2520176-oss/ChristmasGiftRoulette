@@ -45,7 +45,7 @@
         {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
         {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
         {"ingredient": "granulated_sugar", "amount": 1, "unit": "TBSP", "role": "SUGAR"},
-        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE", "importance": "STRUCTURAL"},
         {"ingredient": "milk", "amount": 0.5, "unit": "CUP"},
         {"ingredient": "water", "amount": 0.5, "unit": "CUP"},
         {"ingredient": "butter", "amount": 2, "unit": "TBSP", "prep": "melted"}
@@ -57,7 +57,7 @@
       "profileSet": "crepe",
       "preheatTiming": "BEFORE_COOK",
       "steps": [
-        {"title": "Make the Batter", "text": "Whisk the flour, salt and sugar. Add the eggs, milk, water and melted butter and whisk until completely smooth and thin like heavy cream."},
+        {"title": "Make the Batter", "text": "Whisk the {L|=flour;=salt;#granulated_sugar|sugar}. Add the {L|#egg|eggs;#milk|milk;=water;@butter|melted butter} and whisk until completely smooth and thin like heavy cream."},
         {"kind": "ADD_INS"},
         {"title": "Rest the Batter", "text": "Let the batter rest for 20-30 minutes if you have time - it makes the crepes more tender. Thin it with a splash of water if it seems thick."},
         {"title": "Serve", "text": "Fill and fold or roll the warm crepes and serve right away.", "kind": "AFTER_COOK"}
@@ -101,7 +101,7 @@
         {"ingredient": "baking_powder", "amount": 1, "unit": "TSP"},
         {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
         {"ingredient": "granulated_sugar", "amount": 1, "unit": "TSP", "role": "SUGAR"},
-        {"ingredient": "plain_yogurt", "amount": 0.75, "unit": "CUP"}
+        {"ingredient": "plain_yogurt", "amount": 0.75, "unit": "CUP", "importance": "STRUCTURAL"}
       ],
       "yield": {"base": 4, "singular": "flatbread", "plural": "flatbreads", "note": "About 15 cm (6 in) across."},
       "sweetness": {
@@ -110,8 +110,8 @@
       "profileSet": "flatbread",
       "preheatTiming": "BEFORE_COOK",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, baking powder, salt and sugar."},
-        {"title": "Add the Yogurt", "text": "Stir in the yogurt until a soft, slightly sticky dough forms. Add a spoonful of flour if it is too sticky to handle."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#baking_powder|baking powder;=salt;#granulated_sugar|sugar}.", "tag": "MIX_DRY"},
+        {"title": "Add the {^plain_yogurt|Yogurt}", "text": "Stir in the {#plain_yogurt|yogurt} until a soft, slightly sticky dough forms. Add a spoonful of flour if it is too sticky to handle."},
         {"title": "Knead and Divide", "text": "Knead on a floured surface for 1-2 minutes until smooth, then divide into equal pieces (about 4 for every cup of flour) and cover with a towel."},
         {"kind": "ADD_INS"}
       ],
@@ -120,9 +120,9 @@
       ],
       "toppingSuggestions": ["savory_butter", "melted_butter", "flaky_salt", "extra_cheese", "honey_butter", "butter_jam"],
       "tips": [
-        "Use thick plain yogurt (Greek-style) for the softest dough.",
-        "Brush the hot flatbreads with garlic butter right away.",
-        "No yeast and no resting time - the baking powder does the work."
+        "@plain_yogurt: Use thick plain yogurt (Greek-style) for the softest dough.",
+        "@butter: Brush the hot flatbreads with garlic butter right away.",
+        "@baking_powder: No yeast and no resting time - the baking powder does the work."
       ]
     }
   ]

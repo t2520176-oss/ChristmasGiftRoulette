@@ -8,6 +8,7 @@ class RecipeCatalog(
     val addIns: Map<String, AddInDef>,
     val toppings: Map<String, ToppingDef>,
     val recipes: List<Recipe>,
+    val library: SubstitutionLibrary = SubstitutionLibrary.EMPTY,
 ) {
     private val byId: Map<String, Recipe> = recipes.associateBy { it.id }
 
@@ -60,7 +61,14 @@ object CatalogLoader {
             val file = json.decodeFromString(RecipeFile.serializer(), readText("data/$path"))
             file.recipes.map { resolveProfiles(it, file.profileSets, path) }
         }
-        return RecipeCatalog(ingredients, addIns, toppings, recipes)
+        val rules = index.substitutions
+            ?.let { json.decodeFromString(SubstitutionFile.serializer(), readText("data/$it")).substitutions }
+            .orEmpty()
+        val aliasFile = index.aliases
+            ?.let { json.decodeFromString(AliasFile.serializer(), readText("data/$it")) }
+            ?: AliasFile()
+        val library = SubstitutionLibrary.build(rules, aliasFile, ingredients)
+        return RecipeCatalog(ingredients, addIns, toppings, recipes, library)
     }
 
     /** Expands `profileSet` + `profileOverrides` + `excludeMethods` into the final profile list. */
@@ -185,6 +193,119 @@ object CatalogValidator {
             if (i.style == MeasureStyle.COUNT && i.gramsPerPiece == null) bad("Ingredient '${i.id}': COUNT needs gramsPerPiece")
             if (i.style == MeasureStyle.COUNT && (i.pieceSingular == null || i.piecePlural == null)) bad("Ingredient '${i.id}': COUNT needs piece names")
         }
+        validateTokens(catalog, ::bad)
+        validateSubstitutions(catalog, ::bad)
         return problems
+    }
+
+    private val TOKEN = Regex("""\{((?:L\||[@#^?])[^{}]*)\}""")
+
+    /** Ingredient tokens in steps, tips and add-in instructions must point at real ingredients. */
+    private fun validateTokens(catalog: RecipeCatalog, bad: (String) -> Unit) {
+        fun check(where: String, text: String, recipe: Recipe?) {
+            for (m in TOKEN.findAll(text)) {
+                val body = m.groupValues[1]
+                val ids = if (body.startsWith("L|")) {
+                    body.removePrefix("L|").split(';').mapNotNull { item ->
+                        when {
+                            item.startsWith("=") -> null
+                            item.isNotEmpty() && item[0] in "@#^" -> item.substring(1).substringBefore('|')
+                            else -> { bad("$where: bad list item '$item'"); null }
+                        }
+                    }
+                } else listOf(body.substring(1).substringBefore('|'))
+                for (id in ids) {
+                    if (catalog.ingredients[id] == null) bad("$where: token for unknown ingredient '$id'")
+                    else if (recipe != null && recipe.ingredients.none { it.ingredient == id }) bad("$where: token for '$id' which is not in the recipe")
+                }
+            }
+        }
+        for (r in catalog.recipes) {
+            r.steps.forEach { check("Recipe '${r.id}' step '${it.title}'", it.title + " " + it.text, r) }
+            for (tip in r.tips) {
+                val m = Regex("""@([a-z_,]+): .*""", RegexOption.DOT_MATCHES_ALL).matchEntire(tip)
+                m?.groupValues?.get(1)?.split(',')?.forEach { if (catalog.ingredients[it] == null) bad("Recipe '${r.id}': tip refers to unknown ingredient '$it'") }
+            }
+        }
+        for (a in catalog.addIns.values) a.instruction?.let { check("Add-in '${a.id}'", it, null) }
+    }
+
+    private fun validateSubstitutions(catalog: RecipeCatalog, bad: (String) -> Unit) {
+        val lib = catalog.library
+        val tags = catalog.recipes.flatMap { r -> r.steps.mapNotNull { it.tag } }.toSet()
+        val seen = HashSet<String>()
+        for (rule in lib.rules) {
+            val p = "Substitution '${rule.id}'"
+            if (!seen.add(rule.id)) bad("$p: duplicate id")
+            if (catalog.ingredients[rule.originalIngredient] == null) bad("$p: unknown original ingredient '${rule.originalIngredient}'")
+            val conv = rule.conversionRule
+            if (rule.confidenceLevel == SubstituteConfidence.NOT_RECOMMENDED) {
+                if (rule.warning.isNullOrBlank()) bad("$p: NOT_RECOMMENDED needs a warning explaining why")
+                if (conv.components.isNotEmpty() || conv.omit) bad("$p: NOT_RECOMMENDED must not define an amount")
+            } else {
+                if (rule.substituteName.isBlank()) bad("$p: blank substituteName")
+                if (conv.omit && conv.components.isNotEmpty()) bad("$p: a leave-out rule has components")
+                if (!conv.omit && conv.components.isEmpty()) bad("$p: needs components or omit")
+                if (rule.effectOnTexture.isNullOrBlank() || rule.effectOnFlavor.isNullOrBlank() || rule.effectOnBrowning.isNullOrBlank()) {
+                    bad("$p: needs effectOnTexture, effectOnFlavor and effectOnBrowning")
+                }
+                if (rule.confidenceLevel == SubstituteConfidence.LIMITED && rule.warning.isNullOrBlank()) {
+                    bad("$p: LIMITED rules need a warning ('Possible, but expect a different result: ...')")
+                }
+            }
+            var fills = 0
+            for (c in conv.components) {
+                val def = catalog.ingredients[c.ingredient]
+                if (def == null) { bad("$p: unknown substitute ingredient '${c.ingredient}'"); continue }
+                if (c.ingredient == rule.originalIngredient) bad("$p: substitutes an ingredient with itself")
+                when (c.mode) {
+                    QuantityMode.VOLUME_RATIO, QuantityMode.WEIGHT_RATIO -> if (c.ratio <= 0) bad("$p: ratio must be positive")
+                    QuantityMode.PER_PIECE -> if ((c.perPieceAmount ?: 0.0) <= 0 || c.perPieceUnit == null) bad("$p: PER_PIECE needs perPieceAmount and perPieceUnit")
+                    QuantityMode.FILL_TO_TOTAL -> fills++
+                }
+                if (def.gramsPerCup == null && def.style != MeasureStyle.COUNT) bad("$p: '${c.ingredient}' has no density")
+            }
+            if (fills > 1) bad("$p: only one FILL_TO_TOTAL component is allowed")
+            if (fills == 1 && conv.components.none { it.mode == QuantityMode.VOLUME_RATIO }) bad("$p: FILL_TO_TOTAL needs a VOLUME_RATIO component")
+            if (conv.components.any { it.mode == QuantityMode.PER_PIECE } && catalog.ingredients[rule.originalIngredient]?.style != MeasureStyle.COUNT) {
+                bad("$p: PER_PIECE only makes sense for counted ingredients such as eggs")
+            }
+            if (rule.wetSubstitute && rule.instructionOverrides.none { it.action == OverrideAction.APPEND_TO_STEP && it.stepTag == "MIX_WET" }) {
+                bad("$p: a wetSubstitute must say where it goes with an APPEND_TO_STEP override on MIX_WET")
+            }
+            conv.liquidReduction?.let { if (it <= 0 || it >= 1) bad("$p: liquidReduction must be between 0 and 1") }
+            for (id in rule.compatibleRecipes + rule.incompatibleRecipes) if (catalog.recipe(id) == null) bad("$p: unknown recipe '$id'")
+            for (id in rule.flavorBoosters) if (catalog.addIns[id] == null) bad("$p: unknown flavor booster '$id'")
+            rule.maxOriginalAmount?.let { if (it <= 0) bad("$p: maxOriginalAmount must be positive") }
+            rule.maxPerFlourCup?.let { if (it <= 0) bad("$p: maxPerFlourCup must be positive") }
+            for (o in rule.instructionOverrides) {
+                when (o.action) {
+                    OverrideAction.PREPEND_STEP -> if (o.title.isNullOrBlank() || o.text.isNullOrBlank()) bad("$p: PREPEND_STEP needs title and text")
+                    OverrideAction.REPLACE_STEP -> if (o.stepTag.isNullOrBlank() || (o.title.isNullOrBlank() && o.text.isNullOrBlank())) bad("$p: REPLACE_STEP needs stepTag and new text")
+                    OverrideAction.APPEND_TO_STEP -> if (o.stepTag.isNullOrBlank() || o.text.isNullOrBlank()) bad("$p: APPEND_TO_STEP needs stepTag and text")
+                    OverrideAction.REMOVE_STEP -> if (o.stepTag.isNullOrBlank()) bad("$p: REMOVE_STEP needs stepTag")
+                }
+                if (!o.stepTag.isNullOrBlank() && o.stepTag !in tags) bad("$p: no recipe step is tagged '${o.stepTag}'")
+                Regex("""\{(amt:)?([A-Za-z_]+)\}""").findAll(o.title.orEmpty() + " " + o.text.orEmpty()).forEach { m ->
+                    val key = m.groupValues[2]
+                    if (m.groupValues[1].isEmpty()) {
+                        if (key !in setOf("sub", "Sub", "subName", "orig", "origName", "origAmt", "amt")) bad("$p: unknown placeholder {$key}")
+                    } else if (conv.components.none { it.ingredient == key }) bad("$p: placeholder {amt:$key} is not a component")
+                }
+            }
+        }
+        // Aliases: one name must not point at two different ingredients (broad group words may).
+        val seenAlias = HashMap<String, String>()
+        for ((id, defs) in catalog.ingredients) {
+            for (match in listOf(id.replace('_', ' '), defs.name)) {
+                val ids = lib.matchIngredients(match)
+                if (id !in ids && ids.isNotEmpty() || ids.isEmpty()) bad("Alias lookup of '$match' does not find '$id' (found $ids)")
+            }
+        }
+        if (lib.rules.isNotEmpty()) {
+            val matches = lib.matchIngredients("butter")
+            if ("butter" !in matches) bad("Alias lookup of 'butter' failed")
+        }
+        seenAlias.clear()
     }
 }

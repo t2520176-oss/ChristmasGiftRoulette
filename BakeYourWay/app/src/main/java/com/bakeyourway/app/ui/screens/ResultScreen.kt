@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
@@ -33,6 +34,7 @@ import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -102,19 +104,41 @@ fun ResultScreen(
 
     LaunchedEffect(recipe.id) { onViewed(recipe.id) }
 
-    val calc: CalculatedRecipe? = remember(recipe, flourCups, sweetness, method, addIns, units) {
+    // Substitutions the user accepted, and the ingredients they are still looking for a substitute for.
+    var choicesText by rememberSaveable { mutableStateOf("") }
+    var missingText by rememberSaveable { mutableStateOf("") }
+    val choices = remember(choicesText) { decodeChoices(choicesText) }
+    val missingIds = remember(missingText) { decodeIds(missingText) }
+
+    val baseline: CalculatedRecipe? = remember(recipe, flourCups, sweetness, method, addIns, units) {
         runCatching {
-            RecipeCalculator.calculate(recipe, catalog, RecipeSelection(flourCups, sweetness, method, addIns, units))
+            RecipeCalculator.calculateBaseline(recipe, catalog, RecipeSelection(flourCups, sweetness, method, addIns, units))
         }.getOrNull()
     }
+    val calc: CalculatedRecipe? = remember(baseline, choices) {
+        if (baseline == null) null
+        else runCatching {
+            RecipeCalculator.calculate(recipe, catalog, RecipeSelection(flourCups, sweetness, method, addIns, units, choices))
+        }.getOrNull() ?: baseline
+    }
 
-    if (calc == null) {
+    if (calc == null || baseline == null) {
         CenteredContent {
             BakeTopBar(title = recipe.name, onBack = onBack)
             Notice("Sorry, this combination could not be calculated. Please go back and pick a different cooking method.", Modifier.padding(16.dp))
         }
         return
     }
+
+    val substitutions = SubstitutionUiState(
+        baseline = baseline,
+        calc = calc,
+        catalog = catalog,
+        choices = choices,
+        missingIds = missingIds,
+        onChoices = { choicesText = encodeChoices(it) },
+        onMissingIds = { missingText = encodeIds(it) },
+    )
 
     CenteredContent(maxWidth = 820.dp) {
         LazyColumn(
@@ -188,7 +212,7 @@ fun ResultScreen(
             // 4: selected tab
             item {
                 when (tab) {
-                    0 -> IngredientsTab(calc, units, onUnits = { unitName = it.name })
+                    0 -> IngredientsTab(calc, units, substitutions, onUnits = { unitName = it.name })
                     1 -> InstructionsTab(calc, onSeeNotes = {
                         tab = 3
                         scope.launch { listState.animateScrollToItem(TABS_ITEM_INDEX) }
@@ -233,7 +257,7 @@ private fun Bullets(items: List<String>, marker: String = "•", markerColor: Co
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
-private fun IngredientsTab(calc: CalculatedRecipe, units: UnitSystem, onUnits: (UnitSystem) -> Unit) {
+private fun IngredientsTab(calc: CalculatedRecipe, units: UnitSystem, substitutions: SubstitutionUiState, onUnits: (UnitSystem) -> Unit) {
     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             UnitSystem.entries.forEach { system ->
@@ -261,6 +285,8 @@ private fun IngredientsTab(calc: CalculatedRecipe, units: UnitSystem, onUnits: (
         }
         calc.batchInfo?.let { Notice(it.note) }
 
+        MissingIngredientCard(substitutions)
+
         SoftCard {
             val groups = calc.ingredients.groupBy { it.group.orEmpty() }
             groups.entries.forEachIndexed { groupIndex, (group, items) ->
@@ -274,7 +300,11 @@ private fun IngredientsTab(calc: CalculatedRecipe, units: UnitSystem, onUnits: (
                     )
                 }
                 items.forEachIndexed { i, ingredient ->
-                    IngredientRow(ingredient, lessSugar = calc.selection.sweetness == SweetnessType.LESS_SUGAR)
+                    IngredientRow(
+                        ingredient,
+                        lessSugar = calc.selection.sweetness == SweetnessType.LESS_SUGAR,
+                        onMissing = { substitutions.markMissing(ingredient.ingredientId) },
+                    )
                     if (i < items.lastIndex) HorizontalDivider(color = MaterialTheme.colorScheme.outline)
                 }
             }
@@ -287,7 +317,12 @@ private fun IngredientsTab(calc: CalculatedRecipe, units: UnitSystem, onUnits: (
                     Pill("OPTIONAL")
                 }
                 calc.addInIngredients.forEachIndexed { i, ingredient ->
-                    IngredientRow(ingredient, lessSugar = false, showAddInLabel = true)
+                    IngredientRow(
+                        ingredient,
+                        lessSugar = false,
+                        showAddInLabel = true,
+                        onMissing = { substitutions.markMissing(ingredient.ingredientId) },
+                    )
                     if (i < calc.addInIngredients.lastIndex) HorizontalDivider(color = MaterialTheme.colorScheme.outline)
                 }
             }
@@ -306,7 +341,12 @@ private fun IngredientsTab(calc: CalculatedRecipe, units: UnitSystem, onUnits: (
 }
 
 @Composable
-private fun IngredientRow(ingredient: CalculatedIngredient, lessSugar: Boolean, showAddInLabel: Boolean = false) {
+private fun IngredientRow(
+    ingredient: CalculatedIngredient,
+    lessSugar: Boolean,
+    showAddInLabel: Boolean = false,
+    onMissing: (() -> Unit)? = null,
+) {
     Row(
         Modifier.fillMaxWidth().padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -319,6 +359,21 @@ private fun IngredientRow(ingredient: CalculatedIngredient, lessSugar: Boolean, 
             }
             if (lessSugar && ingredient.isSugar) {
                 Text("reduced for Less Sugar", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+            }
+            if (ingredient.isSubstitute) {
+                Text("↻ Substituted", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold, color = Sage)
+                Text("Substituted for ${ingredient.substitutedFor}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                ingredient.adjustment?.let {
+                    Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            } else if (onMissing != null) {
+                TextButton(
+                    onClick = onMissing,
+                    contentPadding = PaddingValues(horizontal = 0.dp, vertical = 0.dp),
+                    modifier = Modifier.heightIn(min = 32.dp),
+                ) {
+                    Text("Don't have this?", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.SemiBold)
+                }
             }
         }
         Text(
@@ -468,6 +523,8 @@ private fun NotesTab(calc: CalculatedRecipe) {
     val c = calc.conclusion
     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text("Conclusion & Notes", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+
+        SubstitutionNotes(c)
 
         SoftCard(container = Butter, border = null) {
             Text("💡  ${c.title}", fontWeight = FontWeight.ExtraBold, color = ButterDark, style = MaterialTheme.typography.titleMedium)

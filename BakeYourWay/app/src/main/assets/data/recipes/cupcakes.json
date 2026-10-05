@@ -66,7 +66,7 @@
         {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
         {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "softened"},
         {"ingredient": "granulated_sugar", "amount": 0.75, "unit": "CUP", "role": "SUGAR"},
-        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE", "importance": "STRUCTURAL"},
         {"ingredient": "milk", "amount": 0.5, "unit": "CUP"},
         {"ingredient": "vanilla_extract", "amount": 2, "unit": "TSP"}
       ],
@@ -76,10 +76,10 @@
       },
       "profileSet": "cupcake",
       "steps": [
-        {"title": "Cream Butter and Sugar", "text": "In a large bowl, beat the softened butter and sugar until pale and fluffy, about 3 minutes."},
-        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs one at a time, then the vanilla, scraping down the bowl."},
-        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, baking powder and salt."},
-        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture in two or three additions, alternating with the milk. Mix until just smooth."},
+        {"title": "Cream {L|^butter|Butter;^granulated_sugar|Sugar}", "text": "In a large bowl, beat the {L|@butter|softened butter;#granulated_sugar|sugar} until pale and fluffy, about 3 minutes.", "tag": "CREAM_FAT"},
+        {"title": "Add {L|^egg|Eggs;^vanilla_extract|Vanilla}", "text": "Beat in the {#egg|eggs} one at a time{?vanilla_extract|, then the |vanilla|}, scraping down the bowl."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the {L|=flour;#baking_powder|baking powder;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Combine", "text": "Add the dry ingredients to the {#butter|butter} mixture in two or three additions, alternating with the {#milk|milk}. Mix until just smooth."},
         {"kind": "ADD_INS"},
         {"title": "Cool", "text": "Cool the cupcakes in the tin for 5 minutes, then move them to a wire rack to cool completely before frosting.", "kind": "AFTER_COOK"}
       ],
@@ -108,8 +108,8 @@
         "chocolate_ganache"
       ],
       "tips": [
-        "Room-temperature butter, eggs and milk blend into a smoother batter.",
-        "Use an ice cream scoop for evenly sized cupcakes.",
+        "@butter,milk,egg: Room-temperature butter, eggs and milk blend into a smoother batter.",
+        "@heavy_cream: Use an ice cream scoop for evenly sized cupcakes.",
         "Frost only when the cupcakes are completely cool."
       ]
     },
@@ -129,7 +129,7 @@
         {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
         {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "softened"},
         {"ingredient": "granulated_sugar", "amount": 1, "unit": "CUP", "role": "SUGAR"},
-        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE", "importance": "STRUCTURAL"},
         {"ingredient": "milk", "amount": 0.75, "unit": "CUP"},
         {"ingredient": "vanilla_extract", "amount": 2, "unit": "TSP"}
       ],
@@ -139,10 +139,10 @@
       },
       "profileSet": "cupcake",
       "steps": [
-        {"title": "Cream Butter and Sugar", "text": "In a large bowl, beat the softened butter and sugar until pale and fluffy, about 3 minutes."},
-        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs one at a time, then the vanilla, scraping down the bowl."},
-        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, cocoa powder, baking powder, baking soda and salt."},
-        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture in two or three additions, alternating with the milk. Mix until just smooth."},
+        {"title": "Cream {L|^butter|Butter;^granulated_sugar|Sugar}", "text": "In a large bowl, beat the {L|@butter|softened butter;#granulated_sugar|sugar} until pale and fluffy, about 3 minutes.", "tag": "CREAM_FAT"},
+        {"title": "Add {L|^egg|Eggs;^vanilla_extract|Vanilla}", "text": "Beat in the {#egg|eggs} one at a time{?vanilla_extract|, then the |vanilla|}, scraping down the bowl."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the {L|=flour;#cocoa_powder|cocoa powder;#baking_powder|baking powder;#baking_soda|baking soda;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Combine", "text": "Add the dry ingredients to the {#butter|butter} mixture in two or three additions, alternating with the {#milk|milk}. Mix until just smooth."},
         {"kind": "ADD_INS"},
         {"title": "Cool", "text": "Cool the cupcakes in the tin for 5 minutes, then move them to a wire rack to cool completely before frosting.", "kind": "AFTER_COOK"}
       ],
@@ -170,9 +170,9 @@
         "chocolate_ganache"
       ],
       "tips": [
-        "Sift the cocoa with the flour to avoid dry lumps.",
+        "@cocoa_powder: Sift the cocoa with the flour to avoid dry lumps.",
         "Do not overbake - chocolate cupcakes dry out quickly.",
-        "A teaspoon of instant coffee dissolved in the milk deepens the chocolate flavor."
+        "@milk: A teaspoon of instant coffee dissolved in the milk deepens the chocolate flavor."
       ]
     },
     {
@@ -189,7 +189,7 @@
         {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
         {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "softened"},
         {"ingredient": "granulated_sugar", "amount": 0.75, "unit": "CUP", "role": "SUGAR"},
-        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE", "importance": "STRUCTURAL"},
         {"ingredient": "milk", "amount": 0.5, "unit": "CUP"},
         {"ingredient": "vanilla_extract", "amount": 1.5, "unit": "TSP"}
       ],
@@ -199,10 +199,10 @@
       },
       "profileSet": "cupcake",
       "steps": [
-        {"title": "Cream Butter and Sugar", "text": "In a large bowl, beat the softened butter and sugar until pale and fluffy, about 3 minutes."},
-        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs one at a time, then the vanilla, scraping down the bowl."},
-        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, baking powder and salt."},
-        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture in two or three additions, alternating with the milk. Mix until just smooth."},
+        {"title": "Cream {L|^butter|Butter;^granulated_sugar|Sugar}", "text": "In a large bowl, beat the {L|@butter|softened butter;#granulated_sugar|sugar} until pale and fluffy, about 3 minutes.", "tag": "CREAM_FAT"},
+        {"title": "Add {L|^egg|Eggs;^vanilla_extract|Vanilla}", "text": "Beat in the {#egg|eggs} one at a time{?vanilla_extract|, then the |vanilla|}, scraping down the bowl."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the {L|=flour;#baking_powder|baking powder;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Combine", "text": "Add the dry ingredients to the {#butter|butter} mixture in two or three additions, alternating with the {#milk|milk}. Mix until just smooth."},
         {"kind": "ADD_INS"},
         {"title": "Cool", "text": "Cool the cupcakes in the tin for 5 minutes, then move them to a wire rack to cool completely before frosting.", "kind": "AFTER_COOK"}
       ],
@@ -247,7 +247,7 @@
         {"ingredient": "cinnamon", "amount": 0.5, "unit": "TSP"},
         {"ingredient": "butter", "amount": 0.3333333333, "unit": "CUP", "prep": "softened"},
         {"ingredient": "granulated_sugar", "amount": 0.75, "unit": "CUP", "role": "SUGAR"},
-        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE", "importance": "STRUCTURAL"},
         {"ingredient": "banana", "amount": 0.75, "unit": "CUP", "prep": "mashed"},
         {"ingredient": "milk", "amount": 0.25, "unit": "CUP"},
         {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"}
@@ -258,10 +258,10 @@
       },
       "profileSet": "cupcake",
       "steps": [
-        {"title": "Cream Butter and Sugar", "text": "In a large bowl, beat the softened butter and sugar until pale and fluffy, about 3 minutes."},
-        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs one at a time, then the vanilla, scraping down the bowl."},
-        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, baking powder, baking soda, salt and cinnamon."},
-        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture in two or three additions, alternating with the milk. Mix until just smooth."},
+        {"title": "Cream {L|^butter|Butter;^granulated_sugar|Sugar}", "text": "In a large bowl, beat the {L|@butter|softened butter;#granulated_sugar|sugar} until pale and fluffy, about 3 minutes.", "tag": "CREAM_FAT"},
+        {"title": "Add {L|^egg|Eggs;^vanilla_extract|Vanilla}", "text": "Beat in the {#egg|eggs} one at a time{?vanilla_extract|, then the |vanilla|}, scraping down the bowl."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the {L|=flour;#baking_powder|baking powder;#baking_soda|baking soda;=salt;#cinnamon|cinnamon}.", "tag": "MIX_DRY"},
+        {"title": "Combine", "text": "Add the dry ingredients to the {#butter|butter} mixture in two or three additions, alternating with the {#milk|milk}. Mix until just smooth."},
         {"kind": "ADD_INS"},
         {"title": "Cool", "text": "Cool the cupcakes in the tin for 5 minutes, then move them to a wire rack to cool completely before frosting.", "kind": "AFTER_COOK"}
       ],

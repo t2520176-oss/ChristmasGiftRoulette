@@ -35,7 +35,7 @@
         {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
         {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "melted"},
         {"ingredient": "granulated_sugar", "amount": 1, "unit": "CUP", "role": "SUGAR"},
-        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE", "importance": "STRUCTURAL"},
         {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"}
       ],
       "yield": {"base": 16, "singular": "square", "plural": "squares", "note": "Based on an 8×8 in pan."},
@@ -44,9 +44,9 @@
       },
       "profileSet": "brownie",
       "steps": [
-        {"title": "Mix Butter, Sugar and Cocoa", "text": "In a large bowl, stir the melted butter, sugar and cocoa powder until smooth."},
-        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs one at a time, then the vanilla, and stir for about a minute until glossy."},
-        {"title": "Add Flour", "text": "Stir in the flour, baking powder and salt until just combined. Do not overmix."},
+        {"title": "Mix {L|^butter|Butter;^granulated_sugar|Sugar;^cocoa_powder|Cocoa}", "text": "In a large bowl, stir the {L|@butter|melted butter;#granulated_sugar|sugar;#cocoa_powder|cocoa powder} until smooth."},
+        {"title": "Add {L|^egg|Eggs;^vanilla_extract|Vanilla}", "text": "Beat in the {#egg|eggs} one at a time{?vanilla_extract|, then the |vanilla|}, and stir for about a minute until glossy."},
+        {"title": "Add Flour", "text": "Stir in the {L|=flour;#baking_powder|baking powder;=salt} until just combined. Do not overmix."},
         {"kind": "ADD_INS"},
         {"title": "Cool", "text": "Cool completely in the pan, then lift out and cut into squares.", "kind": "AFTER_COOK"}
       ],
@@ -72,7 +72,7 @@
         "fresh_fruit"
       ],
       "tips": [
-        "For a crackly top, stir the batter well after adding the eggs.",
+        "@egg: For a crackly top, stir the batter well after adding the eggs.",
         "Cool the brownies completely before cutting - a knife dipped in hot water makes clean edges.",
         "Chill them for 30 minutes for neater squares."
       ],
@@ -96,9 +96,9 @@
         {"ingredient": "cocoa_powder", "amount": 0.25, "unit": "CUP"},
         {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
         {"ingredient": "butter", "amount": 0.5, "unit": "CUP"},
-        {"ingredient": "chocolate_chips", "amount": 0.5, "unit": "CUP"},
+        {"ingredient": "chocolate_chips", "amount": 0.5, "unit": "CUP", "importance": "IMPORTANT"},
         {"ingredient": "granulated_sugar", "amount": 0.75, "unit": "CUP", "role": "SUGAR"},
-        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE", "importance": "STRUCTURAL"},
         {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"}
       ],
       "yield": {"base": 16, "singular": "square", "plural": "squares", "note": "Based on an 8×8 in pan."},
@@ -107,9 +107,9 @@
       },
       "profileSet": "brownie",
       "steps": [
-        {"title": "Melt the Chocolate", "text": "Melt the butter and chocolate chips together in a saucepan over low heat (or in the microwave in short bursts), stirring until smooth. Let it cool for 5 minutes."},
-        {"title": "Add Sugar, Eggs and Vanilla", "text": "Whisk the sugar into the chocolate mixture, then beat in the eggs one at a time and the vanilla until glossy."},
-        {"title": "Add Flour and Cocoa", "text": "Stir in the flour, cocoa powder and salt until just combined. Do not overmix."},
+        {"title": "Melt the Chocolate", "text": "Melt the {L|#butter|butter;#chocolate_chips|chocolate chips} together in a saucepan over low heat (or in the microwave in short bursts), stirring until smooth. Let it cool for 5 minutes."},
+        {"title": "Add {L|^granulated_sugar|Sugar;^egg|Eggs;^vanilla_extract|Vanilla}", "text": "Whisk the {#granulated_sugar|sugar} into the chocolate mixture, then beat in the {#egg|eggs} one at a time{?vanilla_extract| and the |vanilla|} until glossy."},
+        {"title": "Add Flour and {^cocoa_powder|Cocoa}", "text": "Stir in the {L|=flour;#cocoa_powder|cocoa powder;=salt} until just combined. Do not overmix."},
         {"kind": "ADD_INS"},
         {"title": "Cool", "text": "Cool completely in the pan, then lift out and cut into squares.", "kind": "AFTER_COOK"}
       ],
@@ -134,7 +134,7 @@
         "fresh_fruit"
       ],
       "tips": [
-        "Let the melted chocolate cool slightly before adding the eggs so they do not scramble.",
+        "@egg: Let the melted chocolate cool slightly before adding the eggs so they do not scramble.",
         "These are fudgy - a few moist crumbs on the toothpick are perfect.",
         "Store in the fridge for an even denser, fudgier texture."
       ],
@@ -160,7 +160,7 @@
         {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
         {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "melted"},
         {"ingredient": "granulated_sugar", "amount": 1, "unit": "CUP", "role": "SUGAR"},
-        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE", "importance": "STRUCTURAL"},
         {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"}
       ],
       "yield": {"base": 16, "singular": "square", "plural": "squares", "note": "Based on an 8×8 in pan."},
@@ -169,9 +169,9 @@
       },
       "profileSet": "brownie",
       "steps": [
-        {"title": "Mix Butter, Sugar and Cocoa", "text": "In a large bowl, stir the melted butter, sugar and cocoa powder until smooth."},
-        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs one at a time, then the vanilla, and stir for about a minute until glossy."},
-        {"title": "Add Flour", "text": "Stir in the flour, baking powder and salt until just combined. Do not overmix."},
+        {"title": "Mix {L|^butter|Butter;^granulated_sugar|Sugar;^cocoa_powder|Cocoa}", "text": "In a large bowl, stir the {L|@butter|melted butter;#granulated_sugar|sugar;#cocoa_powder|cocoa powder} until smooth."},
+        {"title": "Add {L|^egg|Eggs;^vanilla_extract|Vanilla}", "text": "Beat in the {#egg|eggs} one at a time{?vanilla_extract|, then the |vanilla|}, and stir for about a minute until glossy."},
+        {"title": "Add Flour", "text": "Stir in the {L|=flour;#baking_powder|baking powder;=salt} until just combined. Do not overmix."},
         {"kind": "ADD_INS"},
         {"title": "Cool", "text": "Cool completely in the pan, then lift out and cut into squares.", "kind": "AFTER_COOK"}
       ],

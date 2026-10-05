@@ -25,6 +25,12 @@ dependencies {
 tasks.test {
     // The unit tests load the very same JSON files that ship inside the APK.
     systemProperty("bakeyourway.assets", rootProject.file("app/src/main").absolutePath)
+    // The tests read the real recipe data and manifest, so changing them must re-run the tests.
+    inputs.dir(rootProject.file("app/src/main/assets"))
+    inputs.file(rootProject.file("app/src/main/AndroidManifest.xml"))
+    inputs.dir(rootProject.file("app/src/main/java"))
+    // Optional: lets a scratch test write a dump somewhere (used to compare outputs across refactors).
+    System.getProperty("golden.out")?.let { systemProperty("golden.out", it) }
     testLogging {
         events("failed", "passed", "skipped")
         showStandardStreams = false

@@ -30,7 +30,7 @@
         "check": "The rolls should be golden and sound hollow when tapped on the bottom.",
         "notes": [
           "Rolls that touch each other bake up soft with pull-apart sides.",
-          "Brush with melted butter as soon as they come out for a soft, shiny crust."
+          "@butter: Brush with melted butter as soon as they come out for a soft, shiny crust."
         ],
         "batchCapacity": 12
       }
@@ -78,8 +78,8 @@
       "profileSet": "yeastLoaf",
       "preheatTiming": "BEFORE_COOK",
       "steps": [
-        {"title": "Activate the Yeast", "text": "Stir the yeast and sugar into the warm water and leave for 5 minutes, until foamy. If it does not foam, start again with fresh yeast."},
-        {"title": "Make the Dough", "text": "Mix the flour and salt in a large bowl. Add the foamy yeast mixture and melted butter and stir until a shaggy dough forms."},
+        {"title": "Activate the Yeast", "text": "Stir the {L|=yeast;#granulated_sugar|sugar} into the warm water and leave for 5 minutes, until foamy. If it does not foam, start again with fresh yeast."},
+        {"title": "Make the Dough", "text": "Mix the flour and salt in a large bowl. Add the foamy yeast mixture and {@butter|melted butter} and stir until a shaggy dough forms."},
         {"title": "Knead", "text": "Knead on a lightly floured surface for 8-10 minutes (or 5-6 minutes in a stand mixer with a dough hook) until smooth and elastic."},
         {"kind": "ADD_INS"},
         {"title": "First Rise", "text": "Place the dough in a lightly oiled bowl, cover and let it rise in a warm place for about 1 hour, until doubled in size."},
@@ -130,18 +130,18 @@
       },
       "profileSet": "yeastLoaf",
       "profileOverrides": [
-        {"method": "OVEN", "temperatureC": 175, "temperatureF": 350, "timeMin": 30, "timeMax": 35, "preheat": true, "preheatMinutes": 15, "cook": "Bake the loaf at {temp} for {time}. If the top browns quickly, tent loosely with foil after about 20 minutes.", "check": "The loaf should be deep golden, sound hollow when you tap the bottom, and read about 93-99°C / 200-210°F in the center.", "notes": ["The sugar and milk make the crust brown quickly - keep an eye on it.", "Let the loaf cool for at least 30 minutes before slicing."]}
+        {"method": "OVEN", "temperatureC": 175, "temperatureF": 350, "timeMin": 30, "timeMax": 35, "preheat": true, "preheatMinutes": 15, "cook": "Bake the loaf at {temp} for {time}. If the top browns quickly, tent loosely with foil after about 20 minutes.", "check": "The loaf should be deep golden, sound hollow when you tap the bottom, and read about 93-99°C / 200-210°F in the center.", "notes": ["@milk: The sugar and milk make the crust brown quickly - keep an eye on it.", "Let the loaf cool for at least 30 minutes before slicing."]}
       ],
       "preheatTiming": "BEFORE_COOK",
       "steps": [
-        {"title": "Activate the Yeast", "text": "Stir the yeast and a pinch of the sugar into the warm milk and leave for 5 minutes, until foamy."},
-        {"title": "Make the Dough", "text": "Mix the flour, remaining sugar and salt. Add the foamy milk, the egg and the softened butter and stir until a shaggy dough forms."},
+        {"title": "Activate the Yeast", "text": "Stir the yeast and a pinch of the {#granulated_sugar|sugar} into the {@milk|warm milk} and leave for 5 minutes, until foamy."},
+        {"title": "Make the Dough", "text": "Mix the {L|=flour;#granulated_sugar|remaining sugar;=salt}. Add the foamy {#milk|milk}, the {#egg|egg} and the {@butter|softened butter} and stir until a shaggy dough forms."},
         {"title": "Knead", "text": "Knead for about 10 minutes (or 6-8 in a stand mixer) until very smooth, stretchy and slightly tacky."},
         {"kind": "ADD_INS"},
         {"title": "First Rise", "text": "Place the dough in a lightly oiled bowl, cover and let it rise in a warm place for about 1 hour, until doubled in size."},
         {"title": "Shape", "text": "Gently press the dough into a rectangle, roll it up tightly and place it seam-side down in your greased pan ({pan})."},
         {"title": "Second Rise", "text": "Cover and let rise for 30-45 minutes, until the dough crowns above the rim of the pan."},
-        {"title": "Finish", "text": "Brush the top with a little melted butter, then turn the loaf out onto a wire rack and cool for at least 30 minutes before slicing.", "kind": "AFTER_COOK"}
+        {"title": "Finish", "text": "Brush the top with a little {@butter|melted butter}, then turn the loaf out onto a wire rack and cool for at least 30 minutes before slicing.", "kind": "AFTER_COOK"}
       ],
       "addIns": [
         {"id": "raisins"},
@@ -162,7 +162,7 @@
       ],
       "tips": [
         "The dough is soft and a little sticky - resist adding lots of extra flour.",
-        "Use whole milk for the softest crumb.",
+        "@milk: Use whole milk for the softest crumb.",
         "Wrapped well, the loaf stays soft for 2-3 days."
       ],
       "panOptions": [
@@ -197,8 +197,8 @@
       },
       "profileSet": "quickLoaf",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a medium bowl, whisk together the flour, baking soda, salt and cinnamon."},
-        {"title": "Mix Wet Ingredients", "text": "In a large bowl, mash the bananas well, then stir in the sugar, melted butter, egg and vanilla."},
+        {"title": "Mix Dry Ingredients", "text": "In a medium bowl, whisk together the {L|=flour;#baking_soda|baking soda;=salt;#cinnamon|cinnamon}.", "tag": "MIX_DRY"},
+        {"title": "Mix Wet Ingredients", "text": "In a large bowl, mash the bananas well, then stir in the {L|#granulated_sugar|sugar;@butter|melted butter;#egg|egg;#vanilla_extract|vanilla}.", "tag": "MIX_WET"},
         {"title": "Combine", "text": "Add the dry ingredients to the banana mixture and stir until just combined. Do not overmix."},
         {"kind": "ADD_INS"},
         {"title": "Cool", "text": "Cool in the pan for 10 minutes, then lift out onto a wire rack. Cool before slicing.", "kind": "AFTER_COOK"}
@@ -256,7 +256,7 @@
         {"ingredient": "butter", "amount": 0.3333333333, "unit": "CUP", "prep": "melted"},
         {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"},
         {"ingredient": "brown_sugar", "amount": 0.25, "unit": "CUP", "prep": "packed", "role": "SUGAR", "group": "Cinnamon swirl"},
-        {"ingredient": "cinnamon", "amount": 2, "unit": "TSP", "group": "Cinnamon swirl"}
+        {"ingredient": "cinnamon", "amount": 2, "unit": "TSP", "group": "Cinnamon swirl", "importance": "IMPORTANT"}
       ],
       "yield": {"base": 10, "singular": "slice", "plural": "slices", "note": "Based on one 8½×4½ in loaf."},
       "sweetness": {
@@ -267,11 +267,11 @@
         {"method": "OVEN", "temperatureC": 175, "temperatureF": 350, "timeMin": 45, "timeMax": 55, "preheat": true, "preheatMinutes": 10, "prep": "Grease your pan ({pan}) and line it with parchment paper, leaving an overhang to lift the loaf out.", "cook": "Pour the batter into the pan and smooth the top. Bake at {temp} for {time}, until golden and risen.", "check": "A toothpick inserted into the center should come out clean or with a few moist crumbs.", "notes": ["If the top browns too fast, tent loosely with foil.", "Smaller pans bake faster - start checking early."]}
       ],
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, baking powder, salt and the batter sugar."},
-        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the egg, milk, melted butter and vanilla."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#baking_powder|baking powder;=salt;#granulated_sugar|the batter sugar}.", "tag": "MIX_DRY"},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the {L|#egg|egg;#milk|milk;@butter|melted butter;#vanilla_extract|vanilla}.", "tag": "MIX_WET"},
         {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined."},
         {"kind": "ADD_INS"},
-        {"title": "Add the Cinnamon Swirl", "text": "Stir the brown sugar and cinnamon together. Spread half the batter in the pan, sprinkle with half the cinnamon sugar, add the rest of the batter and top with the remaining cinnamon sugar. Swirl once or twice with a knife."},
+        {"title": "Add the Cinnamon Swirl", "text": "Stir the {L|#brown_sugar|brown sugar;#cinnamon|cinnamon} together. Spread half the batter in the pan, sprinkle with half the cinnamon sugar, add the rest of the batter and top with the remaining cinnamon sugar. Swirl once or twice with a knife."},
         {"title": "Cool", "text": "Cool in the pan for 10 minutes, then lift out onto a wire rack. Cool before slicing.", "kind": "AFTER_COOK"}
       ],
       "addIns": [
@@ -327,14 +327,14 @@
       "profileSet": "rolls",
       "preheatTiming": "BEFORE_COOK",
       "steps": [
-        {"title": "Activate the Yeast", "text": "Stir the yeast and a pinch of the sugar into the warm milk and leave for 5 minutes, until foamy."},
-        {"title": "Make the Dough", "text": "Mix the flour, remaining sugar and salt. Add the foamy milk, egg and melted butter and stir until a shaggy dough forms."},
+        {"title": "Activate the Yeast", "text": "Stir the yeast and a pinch of the {#granulated_sugar|sugar} into the {@milk|warm milk} and leave for 5 minutes, until foamy."},
+        {"title": "Make the Dough", "text": "Mix the {L|=flour;#granulated_sugar|remaining sugar;=salt}. Add the foamy {L|#milk|milk;#egg|egg;@butter|melted butter} and stir until a shaggy dough forms."},
         {"title": "Knead", "text": "Knead for 8-10 minutes (or 5-6 in a stand mixer) until smooth and elastic."},
         {"kind": "ADD_INS"},
         {"title": "First Rise", "text": "Place the dough in a lightly oiled bowl, cover and let it rise in a warm place for about 1 hour, until doubled in size."},
         {"title": "Shape the Rolls", "text": "Divide the dough into equal pieces (about 4 rolls for every cup of flour) and roll each into a smooth ball. Arrange them close together, just touching, in your greased pan ({pan})."},
         {"title": "Second Rise", "text": "Cover and let rise for 30 minutes, until puffy."},
-        {"title": "Finish", "text": "Brush the warm rolls with melted butter and serve.", "kind": "AFTER_COOK"}
+        {"title": "Finish", "text": "Brush the warm rolls with {@butter|melted butter} and serve.", "kind": "AFTER_COOK"}
       ],
       "addIns": [
         {"id": "cheese"},

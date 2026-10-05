@@ -13,7 +13,7 @@
         "cook": "Arrange the scones about 5 cm (2 in) apart on the sheet. Bake at {temp} for {time}, until risen and golden brown on top.",
         "check": "The tops should be golden and a toothpick inserted into the thickest part should come out clean.",
         "notes": [
-          "Cold butter and a hot oven give tall, flaky scones.",
+          "@butter: Cold butter and a hot oven give tall, flaky scones.",
           "Scones are best eaten warm on the day they are baked."
         ],
         "batchCapacity": 8
@@ -51,7 +51,7 @@
         {"ingredient": "granulated_sugar", "amount": 0.25, "unit": "CUP", "role": "SUGAR"},
         {"ingredient": "baking_powder", "amount": 3, "unit": "TSP"},
         {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
-        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "cold, cubed"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "cold, cubed", "importance": "STRUCTURAL"},
         {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
         {"ingredient": "heavy_cream", "amount": 0.5, "unit": "CUP"}
       ],
@@ -61,11 +61,11 @@
       },
       "profileSet": "scone",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
-        {"title": "Cut In the Butter", "text": "Rub or cut the cold butter into the dry ingredients with your fingertips or a pastry cutter until the mixture looks like coarse crumbs with some pea-sized pieces."},
-        {"title": "Add the Wet Ingredients", "text": "Whisk the egg and cream together, pour into the dry mixture and stir with a fork until a shaggy dough forms."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#granulated_sugar|sugar;#baking_powder|baking powder;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Cut In the {^butter|Butter}", "text": "Rub or cut the {@butter|cold butter} into the dry ingredients with your fingertips or a pastry cutter until the mixture looks like coarse crumbs with some pea-sized pieces."},
+        {"title": "Add the Wet Ingredients", "text": "Whisk the {L|#egg|egg;#heavy_cream|cream} together, pour into the dry mixture and stir with a fork until a shaggy dough forms."},
         {"kind": "ADD_INS"},
-        {"title": "Shape", "text": "Turn the dough onto a lightly floured surface and gently pat it into a round about 2 cm (3/4 in) thick - knead only 2-3 times. Cut into wedges (about 4 for every cup of flour) and brush the tops with a little cream or milk."},
+        {"title": "Shape", "text": "Turn the dough onto a lightly floured surface and gently pat it into a round about 2 cm (3/4 in) thick - knead only 2-3 times. Cut into wedges (about 4 for every cup of flour) and brush the tops with a little {#heavy_cream|cream} or milk."},
         {"title": "Cool", "text": "Let the scones cool on the sheet for 5-10 minutes before serving.", "kind": "AFTER_COOK"}
       ],
       "addIns": [
@@ -90,7 +90,7 @@
         "coarse_sugar"
       ],
       "tips": [
-        "Keep the butter cold - warm butter melts into the flour and makes flat, tough scones.",
+        "@butter: Keep the butter cold - warm butter melts into the flour and makes flat, tough scones.",
         "Handle the dough as little as possible.",
         "Cut straight down with a knife - do not twist, or the scones will not rise evenly."
       ]
@@ -108,7 +108,7 @@
         {"ingredient": "granulated_sugar", "amount": 0.25, "unit": "CUP", "role": "SUGAR"},
         {"ingredient": "baking_powder", "amount": 3, "unit": "TSP"},
         {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
-        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "cold, cubed"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "cold, cubed", "importance": "STRUCTURAL"},
         {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
         {"ingredient": "heavy_cream", "amount": 0.5, "unit": "CUP"}
       ],
@@ -118,11 +118,11 @@
       },
       "profileSet": "scone",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
-        {"title": "Cut In the Butter", "text": "Rub or cut the cold butter into the dry ingredients with your fingertips or a pastry cutter until the mixture looks like coarse crumbs with some pea-sized pieces."},
-        {"title": "Add the Wet Ingredients", "text": "Whisk the egg and cream together, pour into the dry mixture and stir with a fork until a shaggy dough forms."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#granulated_sugar|sugar;#baking_powder|baking powder;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Cut In the {^butter|Butter}", "text": "Rub or cut the {@butter|cold butter} into the dry ingredients with your fingertips or a pastry cutter until the mixture looks like coarse crumbs with some pea-sized pieces."},
+        {"title": "Add the Wet Ingredients", "text": "Whisk the {L|#egg|egg;#heavy_cream|cream} together, pour into the dry mixture and stir with a fork until a shaggy dough forms."},
         {"kind": "ADD_INS"},
-        {"title": "Shape", "text": "Turn the dough onto a lightly floured surface and gently pat it into a round about 2 cm (3/4 in) thick - knead only 2-3 times. Cut into wedges (about 4 for every cup of flour) and brush the tops with a little cream or milk."},
+        {"title": "Shape", "text": "Turn the dough onto a lightly floured surface and gently pat it into a round about 2 cm (3/4 in) thick - knead only 2-3 times. Cut into wedges (about 4 for every cup of flour) and brush the tops with a little {#heavy_cream|cream} or milk."},
         {"title": "Cool", "text": "Let the scones cool on the sheet for 5-10 minutes before serving.", "kind": "AFTER_COOK"}
       ],
       "addIns": [
@@ -147,7 +147,7 @@
         "coarse_sugar"
       ],
       "tips": [
-        "Keep the butter cold - warm butter melts into the flour and makes flat, tough scones.",
+        "@butter: Keep the butter cold - warm butter melts into the flour and makes flat, tough scones.",
         "Handle the dough as little as possible.",
         "Cut straight down with a knife - do not twist, or the scones will not rise evenly."
       ]
@@ -165,7 +165,7 @@
         {"ingredient": "granulated_sugar", "amount": 0.25, "unit": "CUP", "role": "SUGAR"},
         {"ingredient": "baking_powder", "amount": 3, "unit": "TSP"},
         {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
-        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "cold, cubed"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "cold, cubed", "importance": "STRUCTURAL"},
         {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
         {"ingredient": "heavy_cream", "amount": 0.5, "unit": "CUP"}
       ],
@@ -175,11 +175,11 @@
       },
       "profileSet": "scone",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
-        {"title": "Cut In the Butter", "text": "Rub or cut the cold butter into the dry ingredients with your fingertips or a pastry cutter until the mixture looks like coarse crumbs with some pea-sized pieces."},
-        {"title": "Add the Wet Ingredients", "text": "Whisk the egg and cream together, pour into the dry mixture and stir with a fork until a shaggy dough forms."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#granulated_sugar|sugar;#baking_powder|baking powder;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Cut In the {^butter|Butter}", "text": "Rub or cut the {@butter|cold butter} into the dry ingredients with your fingertips or a pastry cutter until the mixture looks like coarse crumbs with some pea-sized pieces."},
+        {"title": "Add the Wet Ingredients", "text": "Whisk the {L|#egg|egg;#heavy_cream|cream} together, pour into the dry mixture and stir with a fork until a shaggy dough forms."},
         {"kind": "ADD_INS"},
-        {"title": "Shape", "text": "Turn the dough onto a lightly floured surface and gently pat it into a round about 2 cm (3/4 in) thick - knead only 2-3 times. Cut into wedges (about 4 for every cup of flour) and brush the tops with a little cream or milk."},
+        {"title": "Shape", "text": "Turn the dough onto a lightly floured surface and gently pat it into a round about 2 cm (3/4 in) thick - knead only 2-3 times. Cut into wedges (about 4 for every cup of flour) and brush the tops with a little {#heavy_cream|cream} or milk."},
         {"title": "Cool", "text": "Let the scones cool on the sheet for 5-10 minutes before serving.", "kind": "AFTER_COOK"}
       ],
       "addIns": [
@@ -204,7 +204,7 @@
         "coarse_sugar"
       ],
       "tips": [
-        "Keep the butter cold - warm butter melts into the flour and makes flat, tough scones.",
+        "@butter: Keep the butter cold - warm butter melts into the flour and makes flat, tough scones.",
         "Handle the dough as little as possible.",
         "Cut straight down with a knife - do not twist, or the scones will not rise evenly."
       ]
@@ -222,7 +222,7 @@
         {"ingredient": "granulated_sugar", "amount": 0.25, "unit": "CUP", "role": "SUGAR"},
         {"ingredient": "baking_powder", "amount": 3, "unit": "TSP"},
         {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
-        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "cold, cubed"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "cold, cubed", "importance": "STRUCTURAL"},
         {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
         {"ingredient": "heavy_cream", "amount": 0.5, "unit": "CUP"}
       ],
@@ -232,11 +232,11 @@
       },
       "profileSet": "scone",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
-        {"title": "Cut In the Butter", "text": "Rub or cut the cold butter into the dry ingredients with your fingertips or a pastry cutter until the mixture looks like coarse crumbs with some pea-sized pieces."},
-        {"title": "Add the Wet Ingredients", "text": "Whisk the egg and cream together, pour into the dry mixture and stir with a fork until a shaggy dough forms."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#granulated_sugar|sugar;#baking_powder|baking powder;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Cut In the {^butter|Butter}", "text": "Rub or cut the {@butter|cold butter} into the dry ingredients with your fingertips or a pastry cutter until the mixture looks like coarse crumbs with some pea-sized pieces."},
+        {"title": "Add the Wet Ingredients", "text": "Whisk the {L|#egg|egg;#heavy_cream|cream} together, pour into the dry mixture and stir with a fork until a shaggy dough forms."},
         {"kind": "ADD_INS"},
-        {"title": "Shape", "text": "Turn the dough onto a lightly floured surface and gently pat it into a round about 2 cm (3/4 in) thick - knead only 2-3 times. Cut into wedges (about 4 for every cup of flour) and brush the tops with a little cream or milk."},
+        {"title": "Shape", "text": "Turn the dough onto a lightly floured surface and gently pat it into a round about 2 cm (3/4 in) thick - knead only 2-3 times. Cut into wedges (about 4 for every cup of flour) and brush the tops with a little {#heavy_cream|cream} or milk."},
         {"title": "Cool", "text": "Let the scones cool on the sheet for 5-10 minutes before serving.", "kind": "AFTER_COOK"}
       ],
       "addIns": [
@@ -261,7 +261,7 @@
         "coarse_sugar"
       ],
       "tips": [
-        "Keep the butter cold - warm butter melts into the flour and makes flat, tough scones.",
+        "@butter: Keep the butter cold - warm butter melts into the flour and makes flat, tough scones.",
         "Handle the dough as little as possible.",
         "Cut straight down with a knife - do not twist, or the scones will not rise evenly."
       ]

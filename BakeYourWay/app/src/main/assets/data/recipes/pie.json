@@ -31,7 +31,7 @@
         {"ingredient": "all_purpose_flour", "amount": 2.5, "unit": "CUP", "role": "FLOUR", "group": "Crust"},
         {"ingredient": "salt", "amount": 1, "unit": "TSP", "group": "Crust"},
         {"ingredient": "granulated_sugar", "amount": 1, "unit": "TBSP", "group": "Crust"},
-        {"ingredient": "butter", "amount": 1, "unit": "CUP", "prep": "very cold, cubed", "group": "Crust"},
+        {"ingredient": "butter", "amount": 1, "unit": "CUP", "prep": "very cold, cubed", "group": "Crust", "importance": "STRUCTURAL"},
         {"ingredient": "water", "amount": 6, "unit": "TBSP", "prep": "ice-cold", "group": "Crust"},
         {"ingredient": "apple_sliced", "amount": 6, "unit": "CUP", "prep": "peeled, cored and thinly sliced", "group": "Filling"},
         {"ingredient": "granulated_sugar", "amount": 0.5, "unit": "CUP", "role": "SUGAR", "group": "Filling"},
@@ -39,7 +39,7 @@
         {"ingredient": "cornstarch", "amount": 2, "unit": "TBSP", "group": "Filling"},
         {"ingredient": "cinnamon", "amount": 1, "unit": "TSP", "group": "Filling"},
         {"ingredient": "lemon_juice", "amount": 1, "unit": "TBSP", "group": "Filling"},
-        {"ingredient": "butter", "amount": 2, "unit": "TBSP", "prep": "cut into small pieces", "group": "Filling"},
+        {"ingredient": "butter", "amount": 2, "unit": "TBSP", "prep": "cut into small pieces", "group": "Filling", "importance": "STRUCTURAL"},
         {"ingredient": "milk", "amount": 1, "unit": "TBSP", "prep": "for brushing the top", "group": "Filling"}
       ],
       "yield": {"base": 8, "singular": "slice", "plural": "slices", "note": "Based on one 9 in (23 cm) double-crust pie."},
@@ -49,11 +49,11 @@
       "profileSet": "pie",
       "preheatTiming": "BEFORE_COOK",
       "steps": [
-        {"title": "Make the Crust", "text": "Whisk the flour, salt and sugar. Cut in the cold butter with your fingertips or a pastry cutter until pea-sized pieces remain. Sprinkle in the ice water 1 tablespoon at a time, tossing, until the dough just holds together when squeezed."},
+        {"title": "Make the Crust", "text": "Whisk the {L|=flour;=salt;#granulated_sugar|sugar}. Cut in the {@butter|cold butter} with your fingertips or a pastry cutter until pea-sized pieces remain. Sprinkle in the ice water 1 tablespoon at a time, tossing, until the dough just holds together when squeezed."},
         {"title": "Chill the Dough", "text": "Divide the dough into two discs (one slightly larger), wrap them and chill for at least 1 hour."},
-        {"title": "Make the Filling", "text": "Toss the sliced apples with both sugars, the cornstarch, cinnamon and lemon juice until evenly coated."},
+        {"title": "Make the Filling", "text": "Toss the sliced apples with both sugars, the {L|#cornstarch|cornstarch;#cinnamon|cinnamon;#lemon_juice|lemon juice} until evenly coated."},
         {"kind": "ADD_INS"},
-        {"title": "Assemble the Pie", "text": "Roll out the larger disc and fit it into your pie dish ({pan}). Add the filling and dot with the butter. Roll out the second disc, lay it over the top, trim and crimp the edges, cut 4-5 steam vents and brush the top with the milk."},
+        {"title": "Assemble the Pie", "text": "Roll out the larger disc and fit it into your pie dish ({pan}). Add the filling and dot with the {#butter|butter}. Roll out the second disc, lay it over the top, trim and crimp the edges, cut 4-5 steam vents and brush the top with the {#milk|milk}."},
         {"title": "Cool", "text": "Cool the pie on a wire rack for at least 2 hours before slicing.", "kind": "AFTER_COOK"}
       ],
       "addIns": [
@@ -73,7 +73,7 @@
         "mixed_nuts_top"
       ],
       "tips": [
-        "Keep everything cold - cold butter and ice water make a flaky crust.",
+        "@butter: Keep everything cold - cold butter and ice water make a flaky crust.",
         "Mix a variety of apples (tart and sweet) for the best flavor and texture.",
         "Do not skip the vents - they let steam escape so the crust stays crisp."
       ],
@@ -95,14 +95,14 @@
         {"ingredient": "all_purpose_flour", "amount": 2.5, "unit": "CUP", "role": "FLOUR", "group": "Crust"},
         {"ingredient": "salt", "amount": 1, "unit": "TSP", "group": "Crust"},
         {"ingredient": "granulated_sugar", "amount": 1, "unit": "TBSP", "group": "Crust"},
-        {"ingredient": "butter", "amount": 1, "unit": "CUP", "prep": "very cold, cubed", "group": "Crust"},
+        {"ingredient": "butter", "amount": 1, "unit": "CUP", "prep": "very cold, cubed", "group": "Crust", "importance": "STRUCTURAL"},
         {"ingredient": "water", "amount": 6, "unit": "TBSP", "prep": "ice-cold", "group": "Crust"},
         {"ingredient": "blueberries", "amount": 5, "unit": "CUP", "prep": "fresh or frozen (do not thaw)", "group": "Filling"},
         {"ingredient": "granulated_sugar", "amount": 0.75, "unit": "CUP", "role": "SUGAR", "group": "Filling"},
         {"ingredient": "cornstarch", "amount": 3, "unit": "TBSP", "group": "Filling"},
         {"ingredient": "lemon_juice", "amount": 1, "unit": "TBSP", "group": "Filling"},
         {"ingredient": "cinnamon", "amount": 0.25, "unit": "TSP", "group": "Filling"},
-        {"ingredient": "butter", "amount": 1, "unit": "TBSP", "prep": "cut into small pieces", "group": "Filling"},
+        {"ingredient": "butter", "amount": 1, "unit": "TBSP", "prep": "cut into small pieces", "group": "Filling", "importance": "STRUCTURAL"},
         {"ingredient": "milk", "amount": 1, "unit": "TBSP", "prep": "for brushing the top", "group": "Filling"}
       ],
       "yield": {"base": 8, "singular": "slice", "plural": "slices", "note": "Based on one 9 in (23 cm) double-crust pie."},
@@ -112,11 +112,11 @@
       "profileSet": "pie",
       "preheatTiming": "BEFORE_COOK",
       "steps": [
-        {"title": "Make the Crust", "text": "Whisk the flour, salt and sugar. Cut in the cold butter with your fingertips or a pastry cutter until pea-sized pieces remain. Sprinkle in the ice water 1 tablespoon at a time, tossing, until the dough just holds together when squeezed."},
+        {"title": "Make the Crust", "text": "Whisk the {L|=flour;=salt;#granulated_sugar|sugar}. Cut in the {@butter|cold butter} with your fingertips or a pastry cutter until pea-sized pieces remain. Sprinkle in the ice water 1 tablespoon at a time, tossing, until the dough just holds together when squeezed."},
         {"title": "Chill the Dough", "text": "Divide the dough into two discs (one slightly larger), wrap them and chill for at least 1 hour."},
-        {"title": "Make the Filling", "text": "Gently toss the blueberries with the sugar, cornstarch, lemon juice and cinnamon until evenly coated."},
+        {"title": "Make the Filling", "text": "Gently toss the blueberries with the {L|#granulated_sugar|sugar;#cornstarch|cornstarch;#lemon_juice|lemon juice;#cinnamon|cinnamon} until evenly coated."},
         {"kind": "ADD_INS"},
-        {"title": "Assemble the Pie", "text": "Roll out the larger disc and fit it into your pie dish ({pan}). Add the filling and dot with the butter. Roll out the second disc, lay it over the top, trim and crimp the edges, cut 4-5 steam vents and brush the top with the milk."},
+        {"title": "Assemble the Pie", "text": "Roll out the larger disc and fit it into your pie dish ({pan}). Add the filling and dot with the {#butter|butter}. Roll out the second disc, lay it over the top, trim and crimp the edges, cut 4-5 steam vents and brush the top with the {#milk|milk}."},
         {"title": "Cool", "text": "Cool the pie on a wire rack for at least 2 hours before slicing.", "kind": "AFTER_COOK"}
       ],
       "addIns": [
@@ -136,8 +136,8 @@
         "powdered_sugar_berries"
       ],
       "tips": [
-        "Use the cornstarch exactly as written - blueberries release lots of juice.",
-        "Bake until you see thick bubbles - that means the cornstarch has set the filling.",
+        "@cornstarch: Use the cornstarch exactly as written - blueberries release lots of juice.",
+        "@cornstarch: Bake until you see thick bubbles - that means the cornstarch has set the filling.",
         "Cool for at least 2 hours, or the filling will run."
       ],
       "panOptions": [

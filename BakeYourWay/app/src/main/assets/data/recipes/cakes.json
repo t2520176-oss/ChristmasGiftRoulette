@@ -34,7 +34,7 @@
         {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
         {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "softened"},
         {"ingredient": "granulated_sugar", "amount": 1, "unit": "CUP", "role": "SUGAR"},
-        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE", "importance": "STRUCTURAL"},
         {"ingredient": "milk", "amount": 0.6666666667, "unit": "CUP"},
         {"ingredient": "vanilla_extract", "amount": 2, "unit": "TSP"}
       ],
@@ -44,10 +44,10 @@
       },
       "profileSet": "cake",
       "steps": [
-        {"title": "Cream Butter and Sugar", "text": "Beat the softened butter and sugar until pale and fluffy, about 3 minutes."},
-        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs one at a time, then the vanilla."},
-        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, baking powder and salt."},
-        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture in two additions, alternating with the milk. Mix until just smooth."},
+        {"title": "Cream {L|^butter|Butter;^granulated_sugar|Sugar}", "text": "Beat the {L|@butter|softened butter;#granulated_sugar|sugar} until pale and fluffy, about 3 minutes.", "tag": "CREAM_FAT"},
+        {"title": "Add {L|^egg|Eggs;^vanilla_extract|Vanilla}", "text": "Beat in the {#egg|eggs} one at a time{?vanilla_extract|, then the |vanilla|}."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the {L|=flour;#baking_powder|baking powder;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Combine", "text": "Add the dry ingredients to the {#butter|butter} mixture in two additions, alternating with the {#milk|milk}. Mix until just smooth."},
         {"kind": "ADD_INS"},
         {"title": "Cool", "text": "Cool in the pan for 10 minutes, then turn out onto a wire rack and cool completely before frosting.", "kind": "AFTER_COOK"}
       ],
@@ -104,7 +104,7 @@
         {"ingredient": "baking_soda", "amount": 0.5, "unit": "TSP"},
         {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
         {"ingredient": "granulated_sugar", "amount": 1, "unit": "CUP", "role": "SUGAR"},
-        {"ingredient": "egg", "amount": 2, "unit": "PIECE"},
+        {"ingredient": "egg", "amount": 2, "unit": "PIECE", "importance": "STRUCTURAL"},
         {"ingredient": "milk", "amount": 0.75, "unit": "CUP"},
         {"ingredient": "vegetable_oil", "amount": 0.3333333333, "unit": "CUP"},
         {"ingredient": "vanilla_extract", "amount": 1, "unit": "TSP"}
@@ -115,8 +115,8 @@
       },
       "profileSet": "cake",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, cocoa powder, sugar, baking powder, baking soda and salt."},
-        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the eggs, milk, oil and vanilla until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#cocoa_powder|cocoa powder;#granulated_sugar|sugar;#baking_powder|baking powder;#baking_soda|baking soda;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the {L|#egg|eggs;#milk|milk;#vegetable_oil|oil;#vanilla_extract|vanilla} until smooth.", "tag": "MIX_WET"},
         {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and whisk until smooth - the batter will be fairly thin."},
         {"kind": "ADD_INS"},
         {"title": "Cool", "text": "Cool in the pan for 10 minutes, then turn out onto a wire rack and cool completely before frosting.", "kind": "AFTER_COOK"}
@@ -147,7 +147,7 @@
       ],
       "tips": [
         "The batter is thin - that is what makes the cake moist.",
-        "Sift the cocoa to avoid dry lumps.",
+        "@cocoa_powder: Sift the cocoa to avoid dry lumps.",
         "Do not overbake - chocolate cake dries out quickly."
       ],
       "panOptions": [

@@ -13,7 +13,7 @@
         "cook": "Place the biscuits close together on the sheet (they rise taller when their sides touch). Bake at {temp} for {time}, until tall and golden brown.",
         "check": "The tops should be deep golden and the biscuits should feel light for their size.",
         "notes": [
-          "A very hot oven makes the butter steam, creating flaky layers.",
+          "@butter: A very hot oven makes the butter steam, creating flaky layers.",
           "Serve warm - biscuits are best within an hour of baking."
         ],
         "batchCapacity": 8
@@ -52,7 +52,7 @@
         {"ingredient": "baking_soda", "amount": 0.25, "unit": "TSP"},
         {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
         {"ingredient": "granulated_sugar", "amount": 1, "unit": "TBSP", "role": "SUGAR"},
-        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "very cold, cubed"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "very cold, cubed", "importance": "STRUCTURAL"},
         {"ingredient": "buttermilk", "amount": 0.75, "unit": "CUP"}
       ],
       "yield": {"base": 8, "singular": "biscuit", "plural": "biscuits", "note": "Cut with a 6 cm (2 1/2 in) cutter."},
@@ -61,12 +61,12 @@
       },
       "profileSet": "biscuit",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the dry ingredients."},
-        {"title": "Cut In the Butter", "text": "Rub or grate the very cold butter into the flour until the mixture looks like coarse crumbs with pea-sized pieces."},
-        {"title": "Add the Buttermilk", "text": "Pour in the buttermilk and stir with a fork until a shaggy dough forms. Do not overmix."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the dry ingredients.", "tag": "MIX_DRY"},
+        {"title": "Cut In the {^butter|Butter}", "text": "Rub or grate the {@butter|very cold butter} into the flour until the mixture looks like coarse crumbs with pea-sized pieces."},
+        {"title": "Add the {^buttermilk|Buttermilk}", "text": "Pour in the {#buttermilk|buttermilk} and stir with a fork until a shaggy dough forms. Do not overmix."},
         {"kind": "ADD_INS"},
         {"title": "Fold and Cut", "text": "Turn the dough onto a floured surface and pat it to about 2.5 cm (1 in) thick. Fold it in thirds twice for flaky layers, pat out again and cut straight down with a floured cutter - do not twist."},
-        {"title": "Finish", "text": "Brush the warm biscuits with a little melted butter if you like.", "kind": "AFTER_COOK"}
+        {"title": "Finish", "text": "Brush the warm biscuits with a little {@butter|melted butter} if you like.", "kind": "AFTER_COOK"}
       ],
       "addIns": [
         {"id": "cheese"},
@@ -77,7 +77,7 @@
       ],
       "toppingSuggestions": ["honey_butter", "melted_butter", "butter_jam", "savory_butter", "extra_cheese", "flaky_salt"],
       "tips": [
-        "Keep the butter and buttermilk very cold.",
+        "@butter,buttermilk: Keep the butter and buttermilk very cold.",
         "Press the cutter straight down - twisting seals the edges and stops the rise.",
         "Pat out and cut quickly; overworked dough makes tough biscuits."
       ]
@@ -96,8 +96,8 @@
         {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
         {"ingredient": "garlic_powder", "amount": 0.5, "unit": "TSP"},
         {"ingredient": "granulated_sugar", "amount": 2, "unit": "TSP", "role": "SUGAR"},
-        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "very cold, cubed"},
-        {"ingredient": "cheddar", "amount": 0.75, "unit": "CUP"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "very cold, cubed", "importance": "STRUCTURAL"},
+        {"ingredient": "cheddar", "amount": 0.75, "unit": "CUP", "importance": "IMPORTANT"},
         {"ingredient": "buttermilk", "amount": 0.75, "unit": "CUP"}
       ],
       "yield": {"base": 8, "singular": "biscuit", "plural": "biscuits", "note": "Cut with a 6 cm (2 1/2 in) cutter."},
@@ -106,12 +106,12 @@
       },
       "profileSet": "biscuit",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, baking powder, salt, garlic powder and sugar."},
-        {"title": "Cut In the Butter", "text": "Rub or grate the very cold butter into the flour until the mixture looks like coarse crumbs with pea-sized pieces. Stir in the cheddar."},
-        {"title": "Add the Buttermilk", "text": "Pour in the buttermilk and stir with a fork until a shaggy dough forms. Do not overmix."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#baking_powder|baking powder;=salt;#garlic_powder|garlic powder;#granulated_sugar|sugar}.", "tag": "MIX_DRY"},
+        {"title": "Cut In the {^butter|Butter}", "text": "Rub or grate the {@butter|very cold butter} into the flour until the mixture looks like coarse crumbs with pea-sized pieces. Stir in the cheddar."},
+        {"title": "Add the {^buttermilk|Buttermilk}", "text": "Pour in the {#buttermilk|buttermilk} and stir with a fork until a shaggy dough forms. Do not overmix."},
         {"kind": "ADD_INS"},
         {"title": "Fold and Cut", "text": "Turn the dough onto a floured surface and pat it to about 2.5 cm (1 in) thick. Fold it in thirds once, pat out again and cut straight down with a floured cutter - do not twist."},
-        {"title": "Finish", "text": "Brush the warm biscuits with melted butter if you like.", "kind": "AFTER_COOK"}
+        {"title": "Finish", "text": "Brush the warm biscuits with {@butter|melted butter} if you like.", "kind": "AFTER_COOK"}
       ],
       "addIns": [
         {"id": "cheese"},
@@ -120,8 +120,8 @@
       "toppingSuggestions": ["savory_butter", "melted_butter", "extra_cheese", "honey_butter", "flaky_salt"],
       "tips": [
         "Use freshly shredded cheddar - pre-shredded cheese has anti-caking powder that dries the dough.",
-        "Keep the butter and buttermilk very cold.",
-        "A garlic-butter brush right out of the oven makes them irresistible."
+        "@butter,buttermilk: Keep the butter and buttermilk very cold.",
+        "@butter: A garlic-butter brush right out of the oven makes them irresistible."
       ]
     }
   ]

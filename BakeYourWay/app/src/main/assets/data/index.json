@@ -15,5 +15,7 @@
     "recipes/quickbreads.json",
     "recipes/biscuits.json",
     "recipes/more.json"
-  ]
+  ],
+  "substitutions": "ingredient_substitutions.json",
+  "aliases": "ingredient_aliases.json"
 }

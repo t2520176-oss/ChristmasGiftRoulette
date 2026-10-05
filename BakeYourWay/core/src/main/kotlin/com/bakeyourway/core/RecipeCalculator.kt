@@ -18,6 +18,8 @@ data class RecipeSelection(
     val method: CookingMethod,
     val addInIds: Set<String> = emptySet(),
     val unitSystem: UnitSystem = UnitSystem.US_CUPS,
+    /** Substitutions for ingredients the user does not have (see [SubstitutionEngine]). */
+    val substitutions: List<SubstitutionChoice> = emptyList(),
 )
 
 // ---------------------------------------------------------------------------------------------
@@ -40,7 +42,19 @@ data class CalculatedIngredient(
     val primaryText: String,
     val secondaryText: String?,
     val note: String?,
+    val function: IngredientFunction = IngredientFunction.OTHER,
+    val importance: IngredientImportance = IngredientImportance.NORMAL,
+    /** The preparation as written in the recipe ("melted", "cold, cubed"). */
+    val prep: String? = null,
+    /** Set for lines that come from an add-in. */
+    val addInId: String? = null,
+    /** Set when this line replaces an ingredient the user does not have ("butter"). */
+    val substitutedFor: String? = null,
+    val substitutionId: String? = null,
+    /** e.g. "reduced by 2 tbsp because honey adds liquid" */
+    val adjustment: String? = null,
 ) {
+    val isSubstitute: Boolean get() = substitutedFor != null
     /** "2 cups (240 g)" */
     val displayText: String get() = if (secondaryText.isNullOrBlank()) primaryText else "$primaryText ($secondaryText)"
 }
@@ -85,7 +99,19 @@ data class Conclusion(
     val allergenNotices: List<String>,
     val allergenDisclaimer: String,
     val generalNote: String,
+    /** "YOUR RECIPE SUMMARY": recipe, flour, sweetness, cooking and substitutions. */
+    val recipeSummary: List<SummaryLine> = emptyList(),
+    /** "Butter → Neutral oil" */
+    val substitutionSummary: List<String> = emptyList(),
+    /** Personalised paragraph about what the sweetness choice and the substitutions will change. */
+    val substitutionExpect: String? = null,
+    /** Suggested optional improvements after substituting. */
+    val substitutionImprovement: String? = null,
+    /** Label reminders for substitutes (plant milk, margarine ...). */
+    val labelChecks: List<String> = emptyList(),
 )
+
+data class SummaryLine(val label: String, val value: String)
 
 data class CalculatedRecipe(
     val recipe: Recipe,
@@ -110,6 +136,9 @@ data class CalculatedRecipe(
     val conclusion: Conclusion,
     val warnings: List<String>,
     val cookingDisclaimer: String,
+    val appliedSubstitutions: List<AppliedSubstitution> = emptyList(),
+    /** Ids of requested substitutions that could not be applied to this recipe. */
+    val rejectedSubstitutions: List<String> = emptyList(),
 ) {
     val allIngredients: List<CalculatedIngredient> get() = ingredients + addInIngredients
     val summaryUsing: String get() = "Using: $flourText flour"
@@ -215,6 +244,13 @@ object RecipeCalculator {
     fun scaleFactor(recipe: Recipe, flourCups: Double): Double = flourCups / recipe.baseFlourAmount
 
     fun calculate(recipe: Recipe, catalog: RecipeCatalog, selection: RecipeSelection): CalculatedRecipe {
+        val baseline = calculateBaseline(recipe, catalog, selection)
+        if (selection.substitutions.isEmpty()) return baseline
+        return applySubstitutions(baseline, catalog, selection)
+    }
+
+    /** The recipe exactly as written (no substitutions): the amounts every substitution is calculated from. */
+    fun calculateBaseline(recipe: Recipe, catalog: RecipeCatalog, selection: RecipeSelection): CalculatedRecipe {
         require(selection.flourCups > 0 && selection.flourCups.isFinite()) { "Flour amount must be positive" }
         val profile = recipe.profileFor(selection.method)
             ?: throw IllegalArgumentException("${recipe.name} does not support ${selection.method.displayName}")
@@ -252,7 +288,7 @@ object RecipeCalculator {
                     group = "Your optional add-ins",
                     note = def.name,
                 )
-                buildIngredient(ing, synthetic, amount, system, addIn = true)
+                buildIngredient(ing, synthetic, amount, system, addIn = true, addInId = def.id)
             }
         }
 
@@ -273,19 +309,75 @@ object RecipeCalculator {
         val pan = recipe.panOptions.firstOrNull { selection.flourCups <= it.maxFlourCups + 1e-9 }
             ?: recipe.panOptions.lastOrNull()
 
-        // ----- Cooking (independent of the scale factor) ---------------------------------------
-        val cooking = cookingInfo(profile, selected = true)
-        val comparison = recipe.cookingProfiles.map { cookingInfo(it, it.method == selection.method) }
+        val flourText = flourLabel(selection.flourCups, system, flourPerCup)
+        return assemble(
+            recipe = recipe, catalog = catalog, selection = selection, profile = profile, factor = factor,
+            flourText = flourText, flourPerCup = flourPerCup,
+            ingredients = ingredients, addInIngredients = addInIngredients,
+            addIns = selectedAddIns.map { it.second },
+            yieldEstimate = yieldEstimate, batch = batch, panText = pan?.text,
+            applied = emptyList(), rejected = emptyList(),
+            stepText = StepText.NONE, overrides = emptyList(),
+        )
+    }
 
-        // ----- Allergens -----------------------------------------------------------------------
+    private fun applySubstitutions(
+        baseline: CalculatedRecipe,
+        catalog: RecipeCatalog,
+        selection: RecipeSelection,
+    ): CalculatedRecipe {
+        val recipe = baseline.recipe
+        val selectedDefs = recipe.addIns.filter { it.id in selection.addInIds }.mapNotNull { catalog.addIns[it.id] }
+        val result = SubstitutionEngine.apply(baseline, catalog, selectedDefs, selection.substitutions)
+        val profile = recipe.profileFor(selection.method)!!
+        val flourPerCup = catalog.ingredient(recipe.flourIngredient).gramsPerCup ?: error("Flour has no density")
+        return assemble(
+            recipe = recipe, catalog = catalog, selection = selection, profile = profile, factor = baseline.scaleFactor,
+            flourText = baseline.flourText, flourPerCup = flourPerCup,
+            ingredients = result.ingredients, addInIngredients = result.addInIngredients,
+            addIns = result.addIns,
+            yieldEstimate = baseline.yieldEstimate, batch = baseline.batchInfo, panText = baseline.panGuidance,
+            applied = result.applied, rejected = result.rejected,
+            stepText = StepText(result.changes), overrides = result.overrides,
+        )
+    }
+
+    /** Builds everything that depends on the final ingredient lists (steps, allergens, conclusion ...). */
+    private fun assemble(
+        recipe: Recipe,
+        catalog: RecipeCatalog,
+        selection: RecipeSelection,
+        profile: CookingProfile,
+        factor: Double,
+        flourText: String,
+        flourPerCup: Double,
+        ingredients: List<CalculatedIngredient>,
+        addInIngredients: List<CalculatedIngredient>,
+        addIns: List<AddInDef>,
+        yieldEstimate: YieldEstimate,
+        batch: BatchInfo?,
+        panText: String?,
+        applied: List<AppliedSubstitution>,
+        rejected: List<String>,
+        stepText: StepText,
+        overrides: List<ResolvedOverride>,
+    ): CalculatedRecipe {
+        val system = selection.unitSystem
+
+        // ----- Cooking (independent of the scale factor) ---------------------------------------
+        val cooking = cookingInfo(profile, selected = true, stepText = stepText)
+        val comparison = recipe.cookingProfiles.map { cookingInfo(it, it.method == selection.method, stepText) }
+
+        // ----- Allergens (from the final ingredient lists, so substitutions are respected) ------
         val allergens = buildSet {
             addAll(recipe.allergenTags)
-            recipe.ingredients.forEach { addAll(catalog.ingredient(it.ingredient).allergens) }
-            selectedAddIns.forEach { (_, def) -> def.lines.forEach { addAll(catalog.ingredient(it.ingredient).allergens) } }
+            (ingredients + addInIngredients).forEach { addAll(catalog.ingredient(it.ingredientId).allergens) }
         }.sortedBy { it.ordinal }
+        val labelChecks = (ingredients + addInIngredients).filter { it.isSubstitute }
+            .mapNotNull { catalog.ingredient(it.ingredientId).allergenHint }.distinct()
 
         // ----- Steps ---------------------------------------------------------------------------
-        val steps = buildSteps(recipe, profile, selectedAddIns.map { it.second }, addInIngredients, batch, pan?.text)
+        val steps = buildSteps(recipe, profile, addIns, addInIngredients, batch, panText, stepText, overrides)
 
         // ----- Warnings ------------------------------------------------------------------------
         val warnings = mutableListOf<String>()
@@ -294,32 +386,44 @@ object RecipeCalculator {
             warnings += "The egg amount is not a whole number at this flour amount, so a little beaten egg makes up the difference."
         }
         batch?.let { warnings += "Multiple batches needed: ${it.batches} batches of up to ${it.perBatch}." }
+        applied.forEach { a -> a.warnings.forEach { if (it !in warnings) warnings += it } }
+        val combo = SubstitutionEngine.combinationWarningFor(applied.map { importanceOf(recipe, catalog, it.originalIngredient) })
+        if (combo != null && combo !in warnings) warnings += combo
 
         val toppings = recipe.toppingSuggestions.mapNotNull { catalog.toppings[it] }
-        val conclusion = buildConclusion(recipe, catalog, selection, ingredients, selectedAddIns.map { it.second }, allergens, batch)
+        val conclusion = buildConclusion(
+            recipe, catalog, selection, ingredients, addIns, allergens, batch, applied, flourText, labelChecks,
+        )
 
         return CalculatedRecipe(
             recipe = recipe,
             selection = selection,
             flourCups = selection.flourCups,
-            flourText = flourLabel(selection.flourCups, system, flourPerCup),
+            flourText = flourText,
             scaleFactor = factor,
             ingredients = ingredients,
             addInIngredients = addInIngredients,
             yieldEstimate = yieldEstimate,
             batchInfo = batch,
-            panGuidance = pan?.text,
+            panGuidance = panText,
             cooking = cooking,
             methodComparison = comparison,
             steps = steps,
-            tips = recipe.tips,
-            methodTips = profile.notes,
+            tips = recipe.tips.mapNotNull { stepText.filterNote(it) },
+            methodTips = profile.notes.mapNotNull { stepText.filterNote(it) },
             toppingSuggestions = toppings,
             allergens = allergens,
             conclusion = conclusion,
             warnings = warnings,
             cookingDisclaimer = COOKING_DISCLAIMER,
+            appliedSubstitutions = applied,
+            rejectedSubstitutions = rejected,
         )
+    }
+
+    private fun importanceOf(recipe: Recipe, catalog: RecipeCatalog, ingredientId: String): IngredientImportance {
+        val line = recipe.ingredients.firstOrNull { it.ingredient == ingredientId }
+        return line?.importance ?: catalog.ingredients[ingredientId]?.importance ?: IngredientImportance.NORMAL
     }
 
     /** "2 cups (240 g)" - the flour is always shown in both systems. */
@@ -331,18 +435,22 @@ object RecipeCalculator {
 
     // ----- Ingredient formatting ------------------------------------------------------------
 
-    private fun buildIngredient(
+    internal fun buildIngredient(
         def: IngredientDef,
         line: IngredientLine,
         amount: Double,
         system: UnitSystem,
         addIn: Boolean = false,
+        addInId: String? = null,
+        label: String? = null,
+        fine: Boolean = false,
     ): CalculatedIngredient {
         val grams = MeasureFormatter.toGrams(amount, line.unit, def)
         val cups = MeasureFormatter.toCups(amount, line.unit, def)
         val rule = line.rounding ?: def.rounding
-        val (primary, secondary) = displayText(def, line.unit, amount, rule, system)
-        val name = if (line.prep.isNullOrBlank()) def.name else "${def.name}, ${line.prep}"
+        val (primary, secondary) = displayText(def, line.unit, amount, rule, system, fine)
+        val baseName = label ?: def.name
+        val name = if (line.prep.isNullOrBlank()) baseName else "$baseName, ${line.prep}"
         return CalculatedIngredient(
             ingredientId = def.id,
             name = name,
@@ -357,6 +465,10 @@ object RecipeCalculator {
             primaryText = primary,
             secondaryText = secondary,
             note = line.note,
+            function = line.function ?: def.function,
+            importance = line.importance ?: if (line.optional) IngredientImportance.OPTIONAL else def.importance,
+            prep = line.prep,
+            addInId = addInId,
         )
     }
 
@@ -367,6 +479,7 @@ object RecipeCalculator {
         amount: Double,
         rule: RoundingRule,
         system: UnitSystem,
+        fine: Boolean = false,
     ): Pair<String, String?> {
         // Counted items
         if (def.style == MeasureStyle.COUNT || unit == MeasureUnit.PIECE) {
@@ -386,7 +499,7 @@ object RecipeCalculator {
             // "3 tsp baking powder", not "1 tbsp" - leaveners and spices stay in teaspoons.
             MeasureFormatter.formatTeaspoons(tsp)
         } else {
-            MeasureFormatter.formatVolume(tsp)
+            MeasureFormatter.formatVolume(tsp, fine)
         }
         val grams = MeasureFormatter.toGrams(amount, unit, def)
         val metricText: String? = grams?.let {
@@ -414,7 +527,7 @@ object RecipeCalculator {
 
     // ----- Cooking ----------------------------------------------------------------------------
 
-    private fun cookingInfo(p: CookingProfile, selected: Boolean) = CookingInfo(
+    private fun cookingInfo(p: CookingProfile, selected: Boolean, stepText: StepText) = CookingInfo(
         method = p.method,
         temperatureC = p.temperatureC,
         temperatureF = p.temperatureF,
@@ -422,7 +535,7 @@ object RecipeCalculator {
         timeMax = p.timeMax,
         heatLevel = p.heatLevel,
         preheat = p.preheat,
-        notes = p.notes,
+        notes = p.notes.mapNotNull { stepText.filterNote(it) },
         temperatureText = temperatureText(p),
         timeText = timeText(p),
         isSelected = selected,
@@ -470,6 +583,9 @@ object RecipeCalculator {
 
     private fun lowerFirst(s: String) = s.replaceFirstChar { it.lowercase() }
 
+    /** One recipe step while it is being assembled (before numbering). */
+    private class RawStep(val title: String, val text: String, val tag: String? = null, val isAddInMarker: Boolean = false)
+
     private fun buildSteps(
         recipe: Recipe,
         p: CookingProfile,
@@ -477,12 +593,15 @@ object RecipeCalculator {
         addInIngredients: List<CalculatedIngredient>,
         batch: BatchInfo?,
         pan: String?,
+        stepText: StepText,
+        overrides: List<ResolvedOverride>,
     ): List<InstructionStep> {
-        val raw = mutableListOf<Pair<String, String>>()
+        fun render(text: String) = fill(stepText.render(text), p, pan)
+        fun renderStep(s: RecipeStep) = fill(stepText.render(s.text, dry = s.tag == "MIX_DRY"), p, pan)
 
         val setup = mutableListOf<Pair<String, String>>()
         preheatStep(p)?.let { setup += it }
-        p.prep?.takeIf { it.isNotBlank() }?.let { setup += "Prepare" to fill(it, p, pan) }
+        p.prep?.takeIf { it.isNotBlank() }?.let { setup += "Prepare" to render(it) }
 
         val foldIns = addIns.filter { it.placement == AddInPlacement.FOLD_IN }
         val tops = addIns.filter { it.placement == AddInPlacement.BEFORE_COOK_TOP }
@@ -490,32 +609,73 @@ object RecipeCalculator {
 
         val foldStep: Pair<String, String>? = if (foldIns.isEmpty()) null else {
             val parts = foldIns.map { def ->
-                val first = addInIngredients.firstOrNull { it.note == def.name }
-                if (first != null) "${def.name.lowercase()} (${first.primaryText})" else def.name.lowercase()
+                val first = addInIngredients.firstOrNull { it.addInId == def.id }
+                val noun = if (first != null && first.isSubstitute) first.name.substringBefore(',').lowercase() else def.name.lowercase()
+                if (first != null) "$noun (${first.primaryText})" else noun
             }
             "Add Optional Ingredients" to "Gently fold in ${joinNatural(parts)} until just combined. Don't overmix."
         }
         val topStep: Pair<String, String>? = if (tops.isEmpty()) null else
-            "Add Toppings" to tops.joinToString(" ") { it.instruction.orEmpty() }
+            "Add Toppings" to tops.joinToString(" ") { render(it.instruction.orEmpty()) }
         val afterAddInStep: Pair<String, String>? = if (afters.isEmpty()) null else
-            "Finish" to afters.joinToString(" ") { it.instruction.orEmpty() }
+            "Finish" to afters.joinToString(" ") { render(it.instruction.orEmpty()) }
 
-        val before = recipe.steps.filter { it.kind != StepKind.AFTER_COOK && (it.methods.isEmpty() || p.method in it.methods) }
-        val after = recipe.steps.filter { it.kind == StepKind.AFTER_COOK && (it.methods.isEmpty() || p.method in it.methods) }
-        val hasMarker = before.any { it.kind == StepKind.ADD_INS }
+        fun applicable(s: RecipeStep) = s.methods.isEmpty() || p.method in s.methods
+        val beforeSteps = recipe.steps.filter { it.kind != StepKind.AFTER_COOK && applicable(it) }.map { s ->
+            if (s.kind == StepKind.ADD_INS) RawStep("", "", isAddInMarker = true)
+            else RawStep(stepText.render(s.title), renderStep(s), s.tag)
+        }.toMutableList()
+        val afterSteps = recipe.steps.filter { it.kind == StepKind.AFTER_COOK && applicable(it) }
+            .map { RawStep(stepText.render(it.title), renderStep(it), it.tag) }.toMutableList()
+        val hasMarker = beforeSteps.any { it.isAddInMarker }
 
+        // Substitution-specific instruction changes, driven by step tags (never by text search).
+        val category = recipe.category
+        var prepended = 0
+        for (resolved in overrides) {
+            val o = resolved.override
+            if (o.categories.isNotEmpty() && category !in o.categories) continue
+            fun fillText(t: String?): String? = t?.let { raw ->
+                var out = raw
+                resolved.placeholders.forEach { (k, v) -> out = out.replace("{$k}", v) }
+                render(out)
+            }
+            val title = fillText(o.title)
+            val text = fillText(o.text)
+            when (o.action) {
+                OverrideAction.PREPEND_STEP -> {
+                    beforeSteps.add(prepended, RawStep(title.orEmpty(), text.orEmpty()))
+                    prepended++
+                }
+                OverrideAction.REPLACE_STEP -> for (list in listOf(beforeSteps, afterSteps)) {
+                    for (i in list.indices) if (list[i].tag == o.stepTag) {
+                        list[i] = RawStep(title ?: list[i].title, text ?: list[i].text, list[i].tag)
+                    }
+                }
+                OverrideAction.APPEND_TO_STEP -> for (list in listOf(beforeSteps, afterSteps)) {
+                    for (i in list.indices) if (list[i].tag == o.stepTag && text != null) {
+                        list[i] = RawStep(list[i].title, list[i].text + " " + text, list[i].tag)
+                    }
+                }
+                OverrideAction.REMOVE_STEP -> for (list in listOf(beforeSteps, afterSteps)) {
+                    list.removeAll { it.tag == o.stepTag }
+                }
+            }
+        }
+
+        val raw = mutableListOf<Pair<String, String>>()
         if (recipe.preheatTiming == PreheatTiming.START) raw += setup
-        for (s in before) {
-            if (s.kind == StepKind.ADD_INS) foldStep?.let { raw += it } else raw += s.title to fill(s.text, p, pan)
+        for (s in beforeSteps) {
+            if (s.isAddInMarker) foldStep?.let { raw += it } else raw += s.title to s.text
         }
         if (!hasMarker) foldStep?.let { raw += it }
         if (recipe.preheatTiming == PreheatTiming.BEFORE_COOK) raw += setup
         topStep?.let { raw += it }
 
         val batchText = if (batch != null) " Cook in ${batch.batches} batches; each batch uses this same time." else ""
-        raw += cookTitle(p.method) to fill(p.cook, p, pan) + batchText
-        raw += "Check for Doneness" to (p.check?.let { fill(it, p, pan) } ?: "Check for doneness before removing.")
-        for (s in after) raw += s.title to fill(s.text, p, pan)
+        raw += cookTitle(p.method) to render(p.cook) + batchText
+        raw += "Check for Doneness" to (p.check?.let { render(it) } ?: "Check for doneness before removing.")
+        for (s in afterSteps) raw += s.title to s.text
         afterAddInStep?.let { raw += it }
 
         return raw.mapIndexed { i, (title, text) -> InstructionStep(i + 1, title, text) }
@@ -531,6 +691,81 @@ object RecipeCalculator {
     // ----- Conclusion ---------------------------------------------------------------------------
 
     private fun buildConclusion(
+        recipe: Recipe,
+        catalog: RecipeCatalog,
+        selection: RecipeSelection,
+        ingredients: List<CalculatedIngredient>,
+        addIns: List<AddInDef>,
+        allergens: List<Allergen>,
+        batch: BatchInfo?,
+        applied: List<AppliedSubstitution>,
+        flourText: String,
+        labelChecks: List<String>,
+    ): Conclusion {
+        val base = sweetnessConclusion(recipe, catalog, selection, ingredients, addIns, allergens, batch)
+        val summary = buildList {
+            add(SummaryLine("Recipe", recipe.name))
+            add(SummaryLine("Flour", flourText))
+            add(SummaryLine("Sweetness", selection.sweetness.displayName))
+            add(SummaryLine("Cooking", selection.method.displayName))
+            if (addIns.isNotEmpty()) add(SummaryLine("Add-ins", addIns.joinToString(", ") { it.name }))
+            applied.forEach { add(SummaryLine("Substitution", it.summary)) }
+        }
+        if (applied.isEmpty()) return base.copy(recipeSummary = summary)
+
+        val lowerName = recipe.name.lowercase()
+        val plural = recipe.name.endsWith("s")
+        val subject = if (plural) "These $lowerName" else "This $lowerName"
+        val pronoun = if (plural) "They" else "It"
+        val verbs = applied.map {
+            if (it.rule.isOmission) "left out ${it.originalName.lowercase()}"
+            else "replaced ${it.originalName.lowercase()} with ${it.rule.substituteName.lowercase()}"
+        }
+        val sweetClause = if (selection.sweetness == SweetnessType.LESS_SUGAR) "will be less sweet than the traditional version"
+        else "will have the traditional level of sweetness"
+        val texture = applied.mapNotNull { it.rule.expectTexture }.distinct()
+        val flavor = applied.mapNotNull { it.rule.expectFlavor }.distinct()
+        val expect = buildString {
+            append("You selected ${selection.sweetness.displayName} and ${joinNatural(verbs)}. ")
+            append("$subject $sweetClause")
+            if (texture.isNotEmpty()) append(" and may be ${joinNatural(texture)}")
+            append(".")
+            if (flavor.isNotEmpty()) append(" $pronoun will also have ${joinNatural(flavor)}.")
+        }
+
+        val replacedIds = applied.map { it.originalIngredient }.toSet()
+        val boosters = (applied.flatMap { it.rule.flavorBoosters } + recipe.sweetness.less.suggestedAlternatives).distinct()
+            .filter { id -> recipe.addIns.any { it.id == id } && id !in selection.addInIds }
+            .mapNotNull { catalog.addIns[it] }
+            .filter { def -> def.lines.none { it.ingredient in replacedIds } }
+            .take(4)
+            .map { lowerFirst(it.improveHint ?: it.sweetHint ?: it.name) }
+        val improvement = if (boosters.isEmpty()) null
+        else "For additional flavor without greatly increasing sweetness, try ${joinOr(boosters)}."
+
+        val notes = base.importantNotes.toMutableList()
+        notes.add(
+            maxOf(0, notes.size - 1),
+            "Substitutions can change how quickly a recipe browns and sets, so start checking for doneness a little early.",
+        )
+        return base.copy(
+            recipeSummary = summary,
+            substitutionSummary = applied.map { it.summary },
+            substitutionExpect = expect,
+            substitutionImprovement = improvement,
+            importantNotes = notes,
+            labelChecks = labelChecks,
+        )
+    }
+
+    private fun joinOr(items: List<String>): String = when (items.size) {
+        0 -> ""
+        1 -> items[0]
+        2 -> "${items[0]} or ${items[1]}"
+        else -> items.dropLast(1).joinToString(", ") + ", or " + items.last()
+    }
+
+    private fun sweetnessConclusion(
         recipe: Recipe,
         catalog: RecipeCatalog,
         selection: RecipeSelection,

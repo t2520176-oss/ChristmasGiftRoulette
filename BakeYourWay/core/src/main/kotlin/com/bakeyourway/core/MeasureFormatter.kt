@@ -106,9 +106,13 @@ object MeasureFormatter {
     // ----- Volume text --------------------------------------------------------------------
 
     /** Practical spoon/cup text for an amount given in teaspoons. */
-    fun formatVolume(totalTsp: Double): String {
+    fun formatVolume(totalTsp: Double, fine: Boolean = false): String {
         if (totalTsp >= 12.0 - 1e-9) {
-            val (whole, frac) = splitNearest(totalTsp / TSP_PER_CUP, CUP_FRACTIONS)
+            val exact = totalTsp / TSP_PER_CUP
+            val (whole, frac) = splitNearest(exact, CUP_FRACTIONS)
+            if (fine && kotlin.math.abs(whole + frac - exact) / exact > 0.04) {
+                cupsAndTablespoons(exact)?.let { return it }
+            }
             return cupsText(whole, frac)
         }
         if (totalTsp >= 3.0 - 1e-9) {
@@ -118,6 +122,21 @@ object MeasureFormatter {
             return "${mixed(whole, frac)} tbsp"
         }
         return formatTeaspoons(totalTsp)
+    }
+
+    private val CUP_BASES = doubleArrayOf(0.0, 1.0 / 4, 1.0 / 3, 1.0 / 2, 2.0 / 3, 3.0 / 4)
+
+    /** "1/2 cup + 1 tbsp": used when plain cup fractions would be off by more than a few percent. */
+    private fun cupsAndTablespoons(exactCups: Double): String? {
+        val whole = floor(exactCups + 1e-9).toInt()
+        val rem = exactCups - whole
+        val base = CUP_BASES.last { it <= rem + 1e-9 }
+        val tbsp = Math.round((rem - base) * TBSP_PER_CUP * 2) / 2.0
+        if (tbsp <= 0.0 || tbsp >= 4.0) return null
+        val baseText = mixed(whole, base)
+        if (baseText == "0") return null
+        val unit = if (whole > 1 || (whole == 1 && base > 0)) "cups" else "cup"
+        return "$baseText $unit + ${mixedHalf(tbsp)} tbsp"
     }
 
     /**

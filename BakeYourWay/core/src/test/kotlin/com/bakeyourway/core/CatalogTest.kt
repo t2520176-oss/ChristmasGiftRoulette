@@ -91,4 +91,18 @@ class CatalogTest {
         assertTrue("INTERNET permission must not be declared", !text.contains("android.permission.INTERNET"))
         assertTrue(!text.contains("ACCESS_NETWORK_STATE"))
     }
+
+    @Test
+    fun `substitution library covers the required ingredients and confidence levels`() {
+        val rules = catalog.library.rules
+        assertTrue("only ${rules.size} rules", rules.size >= 70)
+        listOf(
+            "butter", "milk", "buttermilk", "egg", "brown_sugar", "granulated_sugar", "baking_powder", "baking_soda",
+            "cake_flour", "all_purpose_flour", "bread_flour", "heavy_cream", "sour_cream", "plain_yogurt", "vanilla_extract",
+            "chocolate_chips", "cocoa_powder", "honey", "maple_syrup", "cornstarch", "vegetable_oil", "coconut_oil",
+            "cream_cheese", "powdered_sugar", "lemon_juice", "white_vinegar",
+        ).forEach { id -> assertTrue("no substitution rule for $id", catalog.library.rulesFor(id).isNotEmpty()) }
+        SubstituteConfidence.entries.forEach { c -> assertTrue("no $c rule", rules.any { it.confidenceLevel == c }) }
+        assertEquals("rule ids are unique", rules.size, rules.map { it.id }.toSet().size)
+    }
 }

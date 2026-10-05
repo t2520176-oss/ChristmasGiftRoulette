@@ -50,7 +50,7 @@
         {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
         {"ingredient": "baking_soda", "amount": 0.5, "unit": "TSP"},
         {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
-        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "softened"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "softened", "importance": "STRUCTURAL"},
         {"ingredient": "granulated_sugar", "amount": 0.25, "unit": "CUP", "role": "SUGAR"},
         {"ingredient": "brown_sugar", "amount": 0.3333333333, "unit": "CUP", "prep": "packed", "role": "SUGAR"},
         {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
@@ -62,10 +62,10 @@
       },
       "profileSet": "cookie",
       "steps": [
-        {"title": "Cream Butter and Sugars", "text": "Beat the softened butter with the sugars until light and fluffy, about 2 minutes."},
-        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs and vanilla until smooth."},
-        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, baking soda and salt."},
-        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture and mix on low speed until just combined. Do not overmix."},
+        {"title": "Cream {^butter|Butter} and Sugars", "text": "Beat the {@butter|softened butter} with the sugars until light and fluffy, about 2 minutes.", "tag": "CREAM_FAT"},
+        {"title": "Add {L|^egg|Eggs;^vanilla_extract|Vanilla}", "text": "Beat in the {L|#egg|eggs;#vanilla_extract|vanilla} until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the {L|=flour;#baking_soda|baking soda;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Combine", "text": "Add the dry ingredients to the {#butter|butter} mixture and mix on low speed until just combined. Do not overmix."},
         {"kind": "ADD_INS"},
         {"title": "Chill the Dough", "text": "Cover and chill the dough for 30 minutes so it is easy to scoop and the cookies keep their shape."},
         {"title": "Cool", "text": "Let the cookies cool on the tray for 5 minutes, then move them to a wire rack.", "kind": "AFTER_COOK"}
@@ -91,7 +91,7 @@
       ],
       "tips": [
         "Chilling the dough for 30 minutes gives thicker, chewier cookies.",
-        "Use room-temperature (not melted) butter for the best texture.",
+        "@butter: Use room-temperature (not melted) butter for the best texture.",
         "Pull the cookies out when the centers still look slightly soft - they finish on the tray."
       ]
     },
@@ -107,7 +107,7 @@
         {"ingredient": "all_purpose_flour", "amount": 2, "unit": "CUP", "role": "FLOUR"},
         {"ingredient": "baking_powder", "amount": 1, "unit": "TSP"},
         {"ingredient": "salt", "amount": 0.5, "unit": "TSP"},
-        {"ingredient": "butter", "amount": 0.75, "unit": "CUP", "prep": "softened"},
+        {"ingredient": "butter", "amount": 0.75, "unit": "CUP", "prep": "softened", "importance": "STRUCTURAL"},
         {"ingredient": "granulated_sugar", "amount": 0.75, "unit": "CUP", "role": "SUGAR"},
         {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
         {"ingredient": "vanilla_extract", "amount": 2, "unit": "TSP"}
@@ -118,10 +118,10 @@
       },
       "profileSet": "cookie",
       "steps": [
-        {"title": "Cream Butter and Sugars", "text": "Beat the softened butter with the sugars until light and fluffy, about 2 minutes."},
-        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs and vanilla until smooth."},
-        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, baking powder and salt."},
-        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture and mix on low speed until just combined. Do not overmix."},
+        {"title": "Cream {^butter|Butter} and Sugars", "text": "Beat the {@butter|softened butter} with the sugars until light and fluffy, about 2 minutes.", "tag": "CREAM_FAT"},
+        {"title": "Add {L|^egg|Eggs;^vanilla_extract|Vanilla}", "text": "Beat in the {L|#egg|eggs;#vanilla_extract|vanilla} until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the {L|=flour;#baking_powder|baking powder;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Combine", "text": "Add the dry ingredients to the {#butter|butter} mixture and mix on low speed until just combined. Do not overmix."},
         {"kind": "ADD_INS"},
         {"title": "Chill the Dough", "text": "Cover and chill the dough for 30 minutes so it is easy to scoop and the cookies keep their shape."},
         {"title": "Cool", "text": "Let the cookies cool on the tray for 5 minutes, then move them to a wire rack.", "kind": "AFTER_COOK"}
@@ -163,7 +163,7 @@
         {"ingredient": "baking_soda", "amount": 0.5, "unit": "TSP"},
         {"ingredient": "cinnamon", "amount": 1, "unit": "TSP"},
         {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
-        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "softened"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "softened", "importance": "STRUCTURAL"},
         {"ingredient": "brown_sugar", "amount": 0.5, "unit": "CUP", "prep": "packed", "role": "SUGAR"},
         {"ingredient": "granulated_sugar", "amount": 0.25, "unit": "CUP", "role": "SUGAR"},
         {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
@@ -175,10 +175,10 @@
       },
       "profileSet": "cookie",
       "steps": [
-        {"title": "Cream Butter and Sugars", "text": "Beat the softened butter with the sugars until light and fluffy, about 2 minutes."},
-        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs and vanilla until smooth."},
-        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, oats, baking soda, cinnamon and salt."},
-        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture and mix on low speed until just combined. Do not overmix."},
+        {"title": "Cream {^butter|Butter} and Sugars", "text": "Beat the {@butter|softened butter} with the sugars until light and fluffy, about 2 minutes.", "tag": "CREAM_FAT"},
+        {"title": "Add {L|^egg|Eggs;^vanilla_extract|Vanilla}", "text": "Beat in the {L|#egg|eggs;#vanilla_extract|vanilla} until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the {L|=flour;=oats;#baking_soda|baking soda;#cinnamon|cinnamon;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Combine", "text": "Add the dry ingredients to the {#butter|butter} mixture and mix on low speed until just combined. Do not overmix."},
         {"kind": "ADD_INS"},
         {"title": "Cool", "text": "Let the cookies cool on the tray for 5 minutes, then move them to a wire rack.", "kind": "AFTER_COOK"}
       ],
@@ -218,7 +218,7 @@
         {"ingredient": "all_purpose_flour", "amount": 1, "unit": "CUP", "role": "FLOUR"},
         {"ingredient": "baking_soda", "amount": 0.5, "unit": "TSP"},
         {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
-        {"ingredient": "butter", "amount": 0.3333333333, "unit": "CUP", "prep": "softened"},
+        {"ingredient": "butter", "amount": 0.3333333333, "unit": "CUP", "prep": "softened", "importance": "STRUCTURAL"},
         {"ingredient": "peanut_butter", "amount": 0.5, "unit": "CUP"},
         {"ingredient": "brown_sugar", "amount": 0.25, "unit": "CUP", "prep": "packed", "role": "SUGAR"},
         {"ingredient": "granulated_sugar", "amount": 0.25, "unit": "CUP", "role": "SUGAR"},
@@ -231,10 +231,10 @@
       },
       "profileSet": "cookie",
       "steps": [
-        {"title": "Cream Butter and Sugars", "text": "Beat the softened butter with the sugars until light and fluffy, about 2 minutes."},
-        {"title": "Add Eggs and Vanilla", "text": "Beat in the peanut butter, eggs and vanilla until smooth."},
-        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, baking soda and salt."},
-        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture and mix on low speed until just combined. Do not overmix."},
+        {"title": "Cream {^butter|Butter} and Sugars", "text": "Beat the {@butter|softened butter} with the sugars until light and fluffy, about 2 minutes.", "tag": "CREAM_FAT"},
+        {"title": "Add {L|^egg|Eggs;^vanilla_extract|Vanilla}", "text": "Beat in the {L|=peanut butter;#egg|eggs;#vanilla_extract|vanilla} until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the {L|=flour;#baking_soda|baking soda;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Combine", "text": "Add the dry ingredients to the {#butter|butter} mixture and mix on low speed until just combined. Do not overmix."},
         {"kind": "ADD_INS"},
         {"title": "Chill the Dough", "text": "Cover and chill the dough for 30 minutes so it is easy to scoop and the cookies keep their shape."},
         {"title": "Cool", "text": "Let the cookies cool on the tray for 5 minutes, then move them to a wire rack.", "kind": "AFTER_COOK"}
@@ -258,7 +258,7 @@
       ],
       "tips": [
         "Press each ball flat with a fork in a crisscross pattern - this helps them cook evenly.",
-        "Use regular creamy peanut butter (not natural, oil-separated) for the most reliable texture.",
+        "@vegetable_oil: Use regular creamy peanut butter (not natural, oil-separated) for the most reliable texture.",
         "Cookies are fragile when hot - let them set on the tray."
       ]
     },
@@ -275,7 +275,7 @@
         {"ingredient": "cocoa_powder", "amount": 0.25, "unit": "CUP"},
         {"ingredient": "baking_soda", "amount": 0.5, "unit": "TSP"},
         {"ingredient": "salt", "amount": 0.25, "unit": "TSP"},
-        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "softened"},
+        {"ingredient": "butter", "amount": 0.5, "unit": "CUP", "prep": "softened", "importance": "STRUCTURAL"},
         {"ingredient": "granulated_sugar", "amount": 0.3333333333, "unit": "CUP", "role": "SUGAR"},
         {"ingredient": "brown_sugar", "amount": 0.3333333333, "unit": "CUP", "prep": "packed", "role": "SUGAR"},
         {"ingredient": "egg", "amount": 1, "unit": "PIECE"},
@@ -287,10 +287,10 @@
       },
       "profileSet": "cookie",
       "steps": [
-        {"title": "Cream Butter and Sugars", "text": "Beat the softened butter with the sugars until light and fluffy, about 2 minutes."},
-        {"title": "Add Eggs and Vanilla", "text": "Beat in the eggs and vanilla until smooth."},
-        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the flour, cocoa powder, baking soda and salt."},
-        {"title": "Combine", "text": "Add the dry ingredients to the butter mixture and mix on low speed until just combined. Do not overmix."},
+        {"title": "Cream {^butter|Butter} and Sugars", "text": "Beat the {@butter|softened butter} with the sugars until light and fluffy, about 2 minutes.", "tag": "CREAM_FAT"},
+        {"title": "Add {L|^egg|Eggs;^vanilla_extract|Vanilla}", "text": "Beat in the {L|#egg|eggs;#vanilla_extract|vanilla} until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a separate bowl, whisk together the {L|=flour;#cocoa_powder|cocoa powder;#baking_soda|baking soda;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Combine", "text": "Add the dry ingredients to the {#butter|butter} mixture and mix on low speed until just combined. Do not overmix."},
         {"kind": "ADD_INS"},
         {"title": "Chill the Dough", "text": "Cover and chill the dough for 30 minutes so it is easy to scoop and the cookies keep their shape."},
         {"title": "Cool", "text": "Let the cookies cool on the tray for 5 minutes, then move them to a wire rack.", "kind": "AFTER_COOK"}
@@ -315,7 +315,7 @@
         "ice_cream"
       ],
       "tips": [
-        "Sift the cocoa with the flour to avoid dry lumps.",
+        "@cocoa_powder: Sift the cocoa with the flour to avoid dry lumps.",
         "These cookies look done before they are - judge by the edges, not the color.",
         "Chill the dough for thicker cookies."
       ]

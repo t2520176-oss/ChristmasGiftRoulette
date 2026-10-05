@@ -52,6 +52,26 @@ core/   (pure Kotlin, no Android)             app/   (Android, Compose)
 * **Instructions follow the method:** preheat/prepare, cook and doneness-check steps come from the selected
   method's profile; the mixing steps come from the recipe.
 
+### Missing ingredients & smart substitutions (fully offline)
+
+On the Ingredients tab, **Missing an Ingredient?** (or **Don't have this?** on any ingredient row) looks the
+ingredient up in the *current* recipe, shows the best substitute with the exact amount calculated from the
+*scaled* quantity, what will change (texture / flavor / browning), a tip and a rating (BEST MATCH / GOOD
+ALTERNATIVE / TEXTURE WILL CHANGE). **Use this substitute** updates the ingredient list ("↻ Substituted"),
+the instructions and the "Your recipe summary" in the notes.
+
+* `data/ingredient_substitutions.json` - the rules (`IngredientSubstitution`): original ingredient, conversion
+  rule (ratios of the original amount, per-piece amounts, "fill to total"), compatible/incompatible
+  categories, recipes and cooking methods, quantity limits, effects, warning, tip, confidence level
+  (RECOMMENDED / ACCEPTABLE / LIMITED / NOT_RECOMMENDED) and structured `instructionOverrides`.
+* `data/ingredient_aliases.json` - typed names ("AP flour", "icing sugar", "BUTTER" ...) and groups.
+* `SubstitutionEngine` (core) - lookup, option ranking, amount math and applying a choice to the calculation.
+  Recipe steps carry tokens such as `{L|=flour;#butter|butter}` and tags (`CREAM_FAT`, `MIX_DRY`, `MIX_WET`) that
+  `StepText` renders, so a substitution rewrites the right steps (no "cream the butter" when oil is used) instead of
+  doing text replacement. When no rule is suitable the app says so rather than inventing something.
+* `SubstitutionEngineTest` and `CatalogValidator` check the rules, aliases, tokens and every applicable
+  substitution in every recipe.
+
 ### Adding a recipe
 
 1. Add an object to a file in `app/src/main/assets/data/recipes/` (or create a file and list it in
@@ -61,6 +81,6 @@ core/   (pure Kotlin, no Android)             app/   (Android, Compose)
 
 ## Not in version 1 (by design)
 
-AI assistant, recipe/shopping APIs, cloud sync, user-created recipes, substitutions, shopping list,
+AI assistant, recipe/shopping APIs, cloud sync, user-created recipes, shopping list,
 serving-size calculator, sharing, other languages. The data model and `RecipeCalculator` are kept free of
 UI code so these can be added later.

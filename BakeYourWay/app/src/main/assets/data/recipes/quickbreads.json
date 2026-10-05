@@ -27,8 +27,8 @@
         {"method": "OVEN", "temperatureC": 200, "temperatureF": 400, "timeMin": 20, "timeMax": 25, "preheat": true, "preheatMinutes": 15, "prep": "Grease your pan ({pan}) well. For a crisper crust, put the greased pan in the oven while it preheats.", "cook": "Pour the batter into the pan. Bake at {temp} for {time}, until golden and the edges pull away from the pan.", "check": "A toothpick inserted into the center should come out clean.", "notes": ["A hot, greased pan gives cornbread a crisp bottom and edge.", "Cornbread dries out if overbaked - check at the early end of the range."]}
       ],
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, cornmeal, baking powder, salt and sugar."},
-        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the milk, oil and egg until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;=cornmeal;#baking_powder|baking powder;=salt;#granulated_sugar|sugar}.", "tag": "MIX_DRY"},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the {L|#milk|milk;#vegetable_oil|oil;#egg|egg} until smooth.", "tag": "MIX_WET"},
         {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. Do not overmix."},
         {"kind": "ADD_INS"},
         {"title": "Cool", "text": "Let the cornbread cool in the pan for 10 minutes before cutting.", "kind": "AFTER_COOK"}
@@ -40,7 +40,7 @@
       ],
       "toppingSuggestions": ["honey_butter", "melted_butter", "butter_jam", "extra_cheese", "flaky_salt", "maple_syrup"],
       "tips": [
-        "Use fresh baking powder - old powder makes dense cornbread.",
+        "@baking_powder: Use fresh baking powder - old powder makes dense cornbread.",
         "A cast-iron skillet gives the best crust.",
         "Let the batter stand 5 minutes so the cornmeal can absorb some moisture."
       ],
@@ -71,12 +71,12 @@
         "less": {"multiplier": 0.5, "note": "Soda bread uses only a tablespoon of sugar, so halving it makes very little difference.", "expectedChanges": ["Barely noticeable difference", "Crust may be slightly paler"], "suggestedAlternatives": ["raisins", "cinnamon"]}
       },
       "profileOverrides": [
-        {"method": "OVEN", "temperatureC": 200, "temperatureF": 400, "timeMin": 35, "timeMax": 45, "preheat": true, "preheatMinutes": 15, "prep": "Line a baking sheet with parchment paper or dust a cast-iron skillet with flour.", "cook": "Bake the loaf at {temp} for {time}, until deep golden brown.", "check": "The loaf should sound hollow when you tap the bottom.", "notes": ["Work quickly - the baking soda starts reacting as soon as it meets the buttermilk.", "Wrap the cooled loaf in a clean towel to keep the crust soft."]}
+        {"method": "OVEN", "temperatureC": 200, "temperatureF": 400, "timeMin": 35, "timeMax": 45, "preheat": true, "preheatMinutes": 15, "prep": "Line a baking sheet with parchment paper or dust a cast-iron skillet with flour.", "cook": "Bake the loaf at {temp} for {time}, until deep golden brown.", "check": "The loaf should sound hollow when you tap the bottom.", "notes": ["@buttermilk,baking_soda: Work quickly - the baking soda starts reacting as soon as it meets the buttermilk.", "Wrap the cooled loaf in a clean towel to keep the crust soft."]}
       ],
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, baking soda, salt and sugar."},
-        {"title": "Cut In the Butter", "text": "Rub the cold butter into the flour with your fingertips until the mixture looks like fine crumbs."},
-        {"title": "Add the Buttermilk", "text": "Pour in the buttermilk and stir with a fork until a shaggy dough forms. Do not overwork it."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#baking_soda|baking soda;=salt;#granulated_sugar|sugar}.", "tag": "MIX_DRY"},
+        {"title": "Cut In the {^butter|Butter}", "text": "Rub the {@butter|cold butter} into the flour with your fingertips until the mixture looks like fine crumbs."},
+        {"title": "Add the {^buttermilk|Buttermilk}", "text": "Pour in the {#buttermilk|buttermilk} and stir with a fork until a shaggy dough forms. Do not overwork it."},
         {"kind": "ADD_INS"},
         {"title": "Shape", "text": "Turn the dough onto a floured surface, knead just 5-6 times and shape into a round about 4 cm (1 1/2 in) thick. Place it on your sheet ({pan}) and cut a deep cross about 2 cm (3/4 in) into the top."},
         {"title": "Cool", "text": "Cool on a wire rack for at least 20 minutes before slicing.", "kind": "AFTER_COOK"}
@@ -90,7 +90,7 @@
       ],
       "toppingSuggestions": ["honey_butter", "melted_butter", "butter_jam", "extra_cheese", "oats_topping", "flaky_salt"],
       "tips": [
-        "Use real buttermilk (or milk with a splash of lemon juice) - the acid activates the baking soda.",
+        "@buttermilk,milk,baking_soda,lemon_juice: Use real buttermilk (or milk with a splash of lemon juice) - the acid activates the baking soda.",
         "Do not knead for long; soda bread is best handled very little.",
         "Cut the cross deep so the center bakes through."
       ],

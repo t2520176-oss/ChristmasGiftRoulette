@@ -124,6 +124,30 @@ enum class StepKind {
     AFTER_COOK,
 }
 
+/** What an ingredient does in a recipe; the substitution engine reasons with this. */
+@Serializable
+enum class IngredientFunction(val label: String) {
+    FAT("Fat"),
+    SWEETENER("Sweetener"),
+    LEAVENER("Leavener"),
+    BINDER("Binder"),
+    LIQUID("Liquid"),
+    STRUCTURE("Structure"),
+    FLAVOR("Flavor"),
+    MOISTURE("Moisture"),
+    TOPPING("Topping"),
+    OTHER("Other"),
+}
+
+/** How much a recipe depends on an ingredient. */
+@Serializable
+enum class IngredientImportance(val label: String) {
+    NORMAL("Normal"),
+    IMPORTANT("Important"),
+    STRUCTURAL("Structural"),
+    OPTIONAL("Optional"),
+}
+
 @Serializable
 enum class PreheatTiming {
     /** Preheat is the first step (batters, cookies ...). */
@@ -149,7 +173,16 @@ data class IngredientDef(
     val piecePlural: String? = null,
     val rounding: RoundingRule = RoundingRule.MEASURE,
     val allergens: List<Allergen> = emptyList(),
-)
+    /** Default role of this ingredient; a recipe line can override the importance. */
+    val function: IngredientFunction = IngredientFunction.OTHER,
+    val importance: IngredientImportance = IngredientImportance.NORMAL,
+    /** How instructions refer to it ("flour" for all-purpose flour). Defaults to the lower-cased name. */
+    val stepName: String? = null,
+    /** Shown when this ingredient is used as a substitute, e.g. "check the label for soy, almond or oat". */
+    val allergenHint: String? = null,
+) {
+    val noun: String get() = stepName ?: name.lowercase()
+}
 
 @Serializable
 data class AddInLine(
@@ -173,6 +206,8 @@ data class AddInDef(
     val naturalSweet: Boolean = false,
     /** Short hint shown in "If you want more natural sweetness". */
     val sweetHint: String? = null,
+    /** How the conclusion names this add-in when suggesting improvements ("extra blueberries"). */
+    val improveHint: String? = null,
 )
 
 @Serializable
@@ -201,6 +236,9 @@ data class IngredientLine(
     val group: String? = null,
     val rounding: RoundingRule? = null,
     val note: String? = null,
+    /** Overrides the ingredient's default importance for this recipe (e.g. eggs are structural in cakes). */
+    val importance: IngredientImportance? = null,
+    val function: IngredientFunction? = null,
 )
 
 @Serializable
@@ -256,6 +294,12 @@ data class RecipeStep(
     val kind: StepKind = StepKind.NORMAL,
     /** Empty = applies to every cooking method. */
     val methods: List<CookingMethod> = emptyList(),
+    /**
+     * Names the technique of this step (e.g. CREAM_FAT) so substitution rules can replace it safely.
+     * Ingredient mentions inside [title] and [text] are tokens such as `{@butter|melted butter}`
+     * which render the ingredient currently in use (see [StepText]).
+     */
+    val tag: String? = null,
 )
 
 @Serializable
@@ -345,4 +389,135 @@ data class CatalogIndex(
     val addIns: String,
     val toppings: String,
     val recipeFiles: List<String>,
+    /** Substitution rules (`ingredient_substitutions.json`). */
+    val substitutions: String? = null,
+    /** Ingredient names/aliases (`ingredient_aliases.json`). */
+    val aliases: String? = null,
+)
+
+// ---------------------------------------------------------------------------------------------
+// Ingredient substitutions
+// ---------------------------------------------------------------------------------------------
+
+@Serializable
+enum class SubstituteConfidence(val label: String, val defaultRating: String) {
+    RECOMMENDED("Recommended", "BEST MATCH"),
+    ACCEPTABLE("Acceptable", "GOOD ALTERNATIVE"),
+    LIMITED("Limited", "TEXTURE WILL CHANGE"),
+    NOT_RECOMMENDED("Not recommended", "NOT RECOMMENDED"),
+}
+
+/** How a substitute amount is derived from the (already scaled) amount of the missing ingredient. */
+@Serializable
+enum class QuantityMode {
+    /** ratio x the original volume in cups. */
+    VOLUME_RATIO,
+
+    /** ratio x the original weight in grams. */
+    WEIGHT_RATIO,
+
+    /** perPieceAmount (in perPieceUnit) for every counted piece of the original (eggs). */
+    PER_PIECE,
+
+    /** Whatever is left of the original volume after the other components (e.g. milk + lemon juice). */
+    FILL_TO_TOTAL,
+}
+
+@Serializable
+data class SubstituteComponent(
+    val ingredient: String,
+    val mode: QuantityMode = QuantityMode.VOLUME_RATIO,
+    val ratio: Double = 1.0,
+    val perPieceAmount: Double? = null,
+    val perPieceUnit: MeasureUnit? = null,
+    val prep: String? = null,
+    /** Use the same preparation as the original line ("melted", "softened", "cold, cubed"). */
+    val inheritPrep: Boolean = false,
+    /** Name shown in the ingredient list instead of the catalog name (e.g. "Neutral oil"). */
+    val label: String? = null,
+)
+
+@Serializable
+data class ConversionRule(
+    val components: List<SubstituteComponent> = emptyList(),
+    /** Reduce the recipe's main liquid by this fraction of the original volume (honey and syrups add liquid). */
+    val liquidReduction: Double? = null,
+    /** Leave the ingredient out instead of replacing it. */
+    val omit: Boolean = false,
+)
+
+@Serializable
+enum class OverrideAction { REPLACE_STEP, PREPEND_STEP, APPEND_TO_STEP, REMOVE_STEP }
+
+/** A structured change to the instructions that a substitution needs. Never a global text replace. */
+@Serializable
+data class InstructionOverride(
+    val action: OverrideAction,
+    /** The [RecipeStep.tag] this applies to (not needed for PREPEND_STEP). */
+    val stepTag: String? = null,
+    val title: String? = null,
+    val text: String? = null,
+    /** Restricts the override to these categories (empty = all). */
+    val categories: List<RecipeCategory> = emptyList(),
+)
+
+@Serializable
+data class IngredientSubstitution(
+    val id: String,
+    val originalIngredient: String,
+    /** Display name of the substitute, e.g. "Neutral oil". */
+    val substituteName: String,
+    val conversionRule: ConversionRule = ConversionRule(),
+    // Compatibility. A rule applies to a recipe whose category or id is listed as compatible; when both
+    // compatible lists are empty it applies everywhere except what is listed as incompatible.
+    val compatibleCategories: List<RecipeCategory> = emptyList(),
+    val incompatibleCategories: List<RecipeCategory> = emptyList(),
+    val compatibleRecipes: List<String> = emptyList(),
+    val incompatibleRecipes: List<String> = emptyList(),
+    val compatibleMethods: List<CookingMethod> = emptyList(),
+    val incompatibleMethods: List<CookingMethod> = emptyList(),
+    /** Largest amount of the original this rule is trusted for (pieces for eggs, otherwise cups). */
+    val maxOriginalAmount: Double? = null,
+    /** The same limit, per cup of flour the user chose. */
+    val maxPerFlourCup: Double? = null,
+    /** True for liquid substitutes that cannot replace a solid fat that must stay cold (cut-in, streusel). */
+    val liquidSubstitute: Boolean = false,
+    /** True when the swap only makes sense in the main recipe; add-ins that use the ingredient are removed instead. */
+    val mainRecipeOnly: Boolean = false,
+    /** True when the substitute is liquid and belongs with the wet ingredients, never in the dry mix (honey, syrup). */
+    val wetSubstitute: Boolean = false,
+    val effectOnTexture: String? = null,
+    val effectOnFlavor: String? = null,
+    val effectOnBrowning: String? = null,
+    /** Short fragment for the conclusion: "slightly softer and moister" (fits "may be ..."). */
+    val expectTexture: String? = null,
+    /** Short fragment for the conclusion: "less buttery flavor" (fits "will have ..."). */
+    val expectFlavor: String? = null,
+    val specialInstructions: String? = null,
+    val warning: String? = null,
+    val tip: String? = null,
+    val confidenceLevel: SubstituteConfidence,
+    /** Overrides the rating label derived from the confidence level. */
+    val ratingLabel: String? = null,
+    /** How instructions refer to the substitute ("oil", or "baking soda" + "cream of tartar"). */
+    val stepNouns: List<String> = emptyList(),
+    val instructionOverrides: List<InstructionOverride> = emptyList(),
+    /** Add-in ids that add flavor back, suggested in the conclusion. */
+    val flavorBoosters: List<String> = emptyList(),
+) {
+    val substituteIngredient: String? get() = conversionRule.components.firstOrNull()?.ingredient
+    val isOmission: Boolean get() = conversionRule.omit
+    val isUsable: Boolean get() = confidenceLevel != SubstituteConfidence.NOT_RECOMMENDED
+    val rating: String get() = ratingLabel ?: confidenceLevel.defaultRating
+}
+
+@Serializable
+data class SubstitutionFile(val substitutions: List<IngredientSubstitution>)
+
+@Serializable
+data class AliasFile(
+    /** Canonical ingredient id -> other names people use for it. */
+    val aliases: Map<String, List<String>> = emptyMap(),
+    /** Broad words ("sugar", "oil") -> every ingredient id they may mean. */
+    val groups: Map<String, List<String>> = emptyMap(),
 )

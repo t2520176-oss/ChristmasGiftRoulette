@@ -76,8 +76,8 @@
       },
       "profileSet": "muffin",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
-        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the eggs, milk, melted butter and vanilla until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#granulated_sugar|sugar;#baking_powder|baking powder;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the {L|#egg|eggs;#milk|milk;@butter|melted butter;#vanilla_extract|vanilla} until smooth.", "tag": "MIX_WET"},
         {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. A few lumps are fine - overmixing makes tough muffins."},
         {"kind": "ADD_INS"},
         {"title": "Cool", "text": "Let the muffins cool for a few minutes before serving. They are best the day they are made.", "kind": "AFTER_COOK"}
@@ -108,7 +108,7 @@
       "tips": [
         "Use frozen blueberries straight from the freezer - do not thaw them, or the batter turns purple.",
         "Stir only until the flour disappears. A few lumps are fine and keep muffins tender.",
-        "Room-temperature eggs and milk blend more evenly into the batter."
+        "@milk,egg: Room-temperature eggs and milk blend more evenly into the batter."
       ]
     },
     {
@@ -135,8 +135,8 @@
       },
       "profileSet": "muffin",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
-        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the eggs, milk, melted butter and vanilla until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#granulated_sugar|sugar;#baking_powder|baking powder;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the {L|#egg|eggs;#milk|milk;@butter|melted butter;#vanilla_extract|vanilla} until smooth.", "tag": "MIX_WET"},
         {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. A few lumps are fine - overmixing makes tough muffins."},
         {"kind": "ADD_INS"},
         {"title": "Cool", "text": "Let the muffins cool for a few minutes before serving. They are best the day they are made.", "kind": "AFTER_COOK"}
@@ -165,8 +165,8 @@
         "mixed_nuts_top"
       ],
       "tips": [
-        "Toss the chips in a spoonful of the measured flour so they do not all sink to the bottom.",
-        "Save a few chips to sprinkle on top for a bakery look.",
+        "@chocolate_chips: Toss the chips in a spoonful of the measured flour so they do not all sink to the bottom.",
+        "@chocolate_chips: Save a few chips to sprinkle on top for a bakery look.",
         "Do not overmix - stir just until no dry flour remains."
       ]
     },
@@ -197,8 +197,8 @@
       },
       "profileSet": "muffin",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, brown sugar, baking powder, baking soda, salt and cinnamon."},
-        {"title": "Mix Wet Ingredients", "text": "In another bowl, mash the ripe bananas well, then whisk in the eggs, milk, melted butter and vanilla."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#brown_sugar|brown sugar;#baking_powder|baking powder;#baking_soda|baking soda;=salt;#cinnamon|cinnamon}.", "tag": "MIX_DRY"},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, mash the ripe bananas well, then whisk in the {L|#egg|eggs;#milk|milk;@butter|melted butter;#vanilla_extract|vanilla}.", "tag": "MIX_WET"},
         {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. A few lumps are fine."},
         {"kind": "ADD_INS"},
         {"title": "Cool", "text": "Let the muffins cool for a few minutes before serving.", "kind": "AFTER_COOK"}
@@ -258,8 +258,8 @@
       },
       "profileSet": "muffin",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder, cinnamon and salt."},
-        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the eggs, milk, melted butter and vanilla until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#granulated_sugar|sugar;#baking_powder|baking powder;#cinnamon|cinnamon;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the {L|#egg|eggs;#milk|milk;@butter|melted butter;#vanilla_extract|vanilla} until smooth.", "tag": "MIX_WET"},
         {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. Fold in the diced apple."},
         {"kind": "ADD_INS"},
         {"title": "Cool", "text": "Let the muffins cool for a few minutes before serving.", "kind": "AFTER_COOK"}
@@ -287,7 +287,7 @@
       "tips": [
         "Dice the apple small (about 1 cm / 1/2 in) so it cooks through in the muffin.",
         "Firm, slightly tart apples such as Granny Smith keep their shape best.",
-        "Toss the diced apple with a pinch of cinnamon before folding it in."
+        "@cinnamon: Toss the diced apple with a pinch of cinnamon before folding it in."
       ]
     },
     {
@@ -314,8 +314,8 @@
       },
       "profileSet": "muffin",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
-        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the eggs, milk, melted butter and vanilla until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#granulated_sugar|sugar;#baking_powder|baking powder;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the {L|#egg|eggs;#milk|milk;@butter|melted butter;#vanilla_extract|vanilla} until smooth.", "tag": "MIX_WET"},
         {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. A few lumps are fine - overmixing makes tough muffins."},
         {"kind": "ADD_INS"},
         {"title": "Cool", "text": "Let the muffins cool for a few minutes before serving. They are best the day they are made.", "kind": "AFTER_COOK"}
@@ -346,9 +346,9 @@
         "mixed_nuts_top"
       ],
       "tips": [
-        "This is a great base for add-ins: try blueberries, chocolate chips or cinnamon.",
+        "@chocolate_chips: This is a great base for add-ins: try blueberries, chocolate chips or cinnamon.",
         "Stir only until the flour disappears for a tender crumb.",
-        "A spoonful of yogurt or sour cream in place of some milk makes them extra soft."
+        "@milk,plain_yogurt,heavy_cream: A spoonful of yogurt or sour cream in place of some milk makes them extra soft."
       ]
     }
   ]

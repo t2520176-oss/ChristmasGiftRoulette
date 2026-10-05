@@ -44,8 +44,8 @@
       "profileSet": "pancake",
       "preheatTiming": "BEFORE_COOK",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
-        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the egg, milk, melted butter and vanilla until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#granulated_sugar|sugar;#baking_powder|baking powder;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the {L|#egg|egg;#milk|milk;@butter|melted butter;#vanilla_extract|vanilla} until smooth.", "tag": "MIX_WET"},
         {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. A few lumps are fine."},
         {"kind": "ADD_INS"},
         {"title": "Rest the Batter", "text": "Let the batter rest for 5 minutes while you get the pan ready. This gives fluffier pancakes."},
@@ -106,8 +106,8 @@
       "profileSet": "pancake",
       "preheatTiming": "BEFORE_COOK",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder, salt and cinnamon."},
-        {"title": "Mix Wet Ingredients", "text": "In another bowl, mash the banana well, then whisk in the egg, milk, melted butter and vanilla until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#granulated_sugar|sugar;#baking_powder|baking powder;=salt;#cinnamon|cinnamon}.", "tag": "MIX_DRY"},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, mash the banana well, then whisk in the {L|#egg|egg;#milk|milk;@butter|melted butter;#vanilla_extract|vanilla} until smooth.", "tag": "MIX_WET"},
         {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. A few lumps are fine."},
         {"kind": "ADD_INS"},
         {"title": "Rest the Batter", "text": "Let the batter rest for 5 minutes while you get the pan ready. This gives fluffier pancakes."},
@@ -163,8 +163,8 @@
       "profileSet": "pancake",
       "preheatTiming": "BEFORE_COOK",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, sugar, baking powder and salt."},
-        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the egg, milk, melted butter and vanilla until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#granulated_sugar|sugar;#baking_powder|baking powder;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the {L|#egg|egg;#milk|milk;@butter|melted butter;#vanilla_extract|vanilla} until smooth.", "tag": "MIX_WET"},
         {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. A few lumps are fine."},
         {"kind": "ADD_INS"},
         {"title": "Rest the Batter", "text": "Let the batter rest for 5 minutes while you get the pan ready. This gives fluffier pancakes."},
@@ -222,8 +222,8 @@
       "profileSet": "pancake",
       "preheatTiming": "BEFORE_COOK",
       "steps": [
-        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the flour, cocoa powder, sugar, baking powder and salt."},
-        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the egg, milk, melted butter and vanilla until smooth."},
+        {"title": "Mix Dry Ingredients", "text": "In a large bowl, whisk together the {L|=flour;#cocoa_powder|cocoa powder;#granulated_sugar|sugar;#baking_powder|baking powder;=salt}.", "tag": "MIX_DRY"},
+        {"title": "Mix Wet Ingredients", "text": "In another bowl, whisk the {L|#egg|egg;#milk|milk;@butter|melted butter;#vanilla_extract|vanilla} until smooth.", "tag": "MIX_WET"},
         {"title": "Combine", "text": "Pour the wet ingredients into the dry ingredients and stir until just combined. A few lumps are fine."},
         {"kind": "ADD_INS"},
         {"title": "Rest the Batter", "text": "Let the batter rest for 5 minutes while you get the pan ready. This gives fluffier pancakes."},
@@ -249,8 +249,8 @@
       ],
       "tips": [
         "Chocolate pancakes are hard to judge by color - check that the edges are set and bubbles have popped.",
-        "Use medium-low heat; cocoa batter scorches easily.",
-        "Sift the cocoa to avoid dry lumps."
+        "@cocoa_powder: Use medium-low heat; cocoa batter scorches easily.",
+        "@cocoa_powder: Sift the cocoa to avoid dry lumps."
       ]
     }
   ]
