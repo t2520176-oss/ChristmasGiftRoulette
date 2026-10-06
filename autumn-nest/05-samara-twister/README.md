@@ -81,4 +81,5 @@ blender -b -P ../tools/blender_render.py -- spinner.stl preview.png 35 64       
 
 - `samara_twister.scad` 파라메트릭 모델 (Customizer 지원)
 - `stl/samara_twister.stl` 기본값 완성본, `stl/swivel_coupon.stl` 스위블 시험편
+- `plate_256.3mf`, `plate_256.png` 256×256 베드 배치(스피너 + 스위블 시험편). 브림 때문에 간격을 16mm로 잡았습니다. 시험편을 먼저 따로 출력해 `clr`을 정한 뒤 본 출력하는 것을 권장합니다.
 - `preview_front.png`, `preview_side.png` Blender(Cycles) 렌더

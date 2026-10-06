@@ -18,5 +18,6 @@
 | `blender_assemble.py` | OpenSCAD가 내보낸 파트들을 Blender Manifold 불리언으로 합침 (CGAL 합집합보다 훨씬 빠름) |
 | `blender_render.py` | Cycles CPU로 스튜디오 렌더(제출용 사진 기반). STL 1개 또는 `파일:재질` 여러 개로 조립 장면도 가능 |
 | `chime_calc.py` | 윈드차임 튜브 절단표(Euler-Bernoulli와 Timoshenko 유한요소)와 바람 추정 |
+| `print_layout.py` | 여러 STL을 한 베드에 외곽선 기준으로 자동 배치(3MF, STL, 도면 PNG). 베드 크기와 간격을 인자로 지정 |
 
-환경: OpenSCAD 2021.01 이상, Blender 또는 `pip install bpy`(Python 3.11), `pip install trimesh numpy scipy networkx rtree`.
+환경: OpenSCAD 2021.01 이상, Blender 또는 `pip install bpy`(Python 3.11), `pip install trimesh numpy scipy networkx rtree shapely matplotlib lxml`.
