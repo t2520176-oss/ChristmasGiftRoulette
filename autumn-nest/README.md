@@ -5,9 +5,10 @@
 
 | # | 작품 | 부문 | 상태 |
 |---|---|---|---|
-| 5 | [Samara Twister](05-samara-twister/) 단풍 시과 회전 모빌 | Autumn in Motion | 모델과 검증 완료, 출력 테스트 필요 |
+| 5 | [Samara Twister](05-samara-twister/) 단풍 시과 회전 모빌 | Autumn in Motion | 모델 완료. 베어링 마찰 때문에 약한 바람에서는 안 돌 가능성이 높아 개선 방향 결정 필요 |
+| 6 | [Maple Chime](06-maple-chime/) 단풍 펜타토닉 윈드차임 | Autumn in Motion | 모델, 절단표, 배치 검증 완료. 출력과 음정, 바람 테스트 필요 |
 
-나머지 9개(1 나이테 회전 정리함, 2 솔방울 황금각 정리대, 3 뿌리 트루셰 타일, 4 말굽버섯 선반, 6 잎사귀 돛 윈드차임, 7 계산형 숲 모빌, 8 자가급수 화분, 9 조립식 덩굴 지지대, 10 잎맥 리소페인 램프)는 아직 시작 전입니다.
+나머지 8개(1 나이테 회전 정리함, 2 솔방울 황금각 정리대, 3 뿌리 트루셰 타일, 4 말굽버섯 선반, 7 계산형 숲 모빌, 8 자가급수 화분, 9 조립식 덩굴 지지대, 10 잎맥 리소페인 램프)는 아직 시작 전입니다.
 
 ## 도구 (`tools/`)
 
@@ -15,6 +16,7 @@
 |---|---|
 | `check_mesh.py` | STL 검사: 수밀 여부, 가동부 간극, 서포트가 필요한 오버행 면적 |
 | `blender_assemble.py` | OpenSCAD가 내보낸 파트들을 Blender Manifold 불리언으로 합침 (CGAL 합집합보다 훨씬 빠름) |
-| `blender_render.py` | Cycles CPU로 스튜디오 렌더(제출용 사진 기반) |
+| `blender_render.py` | Cycles CPU로 스튜디오 렌더(제출용 사진 기반). STL 1개 또는 `파일:재질` 여러 개로 조립 장면도 가능 |
+| `chime_calc.py` | 윈드차임 튜브 절단표(Euler-Bernoulli와 Timoshenko 유한요소)와 바람 추정 |
 
 환경: OpenSCAD 2021.01 이상, Blender 또는 `pip install bpy`(Python 3.11), `pip install trimesh numpy scipy networkx rtree`.
