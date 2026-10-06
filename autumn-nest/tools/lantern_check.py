@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """Verify the Vein-Glow Lantern (entry #10): shade, base, how they fit, heat clearance and light.
 
-    python lantern_check.py 10-vein-lantern [--led-d 38.5 --led-h 20 --base-h 12]
+    python lantern_check.py 10-vein-lantern --field 10-vein-lantern/field.npz [--led-d 59 --led-h 18 --face-z 34]
 
 Reads stl/shade.stl and stl/base.stl (and field.npz if given with --field), then checks:
   - each part: one watertight body, overhang area
   - wall thickness of the shade measured on the mesh (rays along the surface normal) against the map
   - fit: the shade sits on the base without any interference, clearance of the centring lip
-  - heat: gap between the LED body and the shade wall, and between the LED and the open top
-  - light: brightness of the veins at the bottom and top of the shade (lamp_light.py model)
+  - the LED puck (default: Bambu Lab LED Lamp Kit 001, round, 59 x 18 mm, taped on the post) does not touch
+    the base lip or the shade, and how far its edge is from the wall (heat) and the open top
+  - light: brightness of the veins at the bottom and top of the shade (lamp_light.py, flat round puck model)
 Exit code 1 if a check fails.
 """
 import argparse
@@ -27,12 +28,10 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("folder")
     ap.add_argument("--field", required=True, help="field.npz the shade was built from")
-    ap.add_argument("--led-d", type=float, default=38.5)
-    ap.add_argument("--led-h", type=float, default=20.0)
+    ap.add_argument("--led-d", type=float, default=59.0, help="puck diameter")
+    ap.add_argument("--led-h", type=float, default=18.0, help="puck height")
+    ap.add_argument("--face-z", type=float, default=34.0, help="height of the lit face above the shade seat")
     ap.add_argument("--base-h", type=float, default=12.0, help="height of the base top (the shade seat)")
-    ap.add_argument("--riser-h", type=float, default=17.0)
-    ap.add_argument("--pocket", type=float, default=3.0)
-    ap.add_argument("--led-emit", type=float, default=17.0)
     a = ap.parse_args()
     ok = True
 
@@ -96,28 +95,43 @@ def main():
     print(f"\nfit: shade-rim points inside the base {inside_b}, base points inside the shade rim {inside_s}, "
           f"lip to shade clearance {d_lip.min():.2f} mm  {'ok' if good else 'FAIL'}")
 
-    # heat: LED body against the shade wall and the open top
-    led_bottom = a.base_h + a.riser_h - a.pocket
-    led_top = led_bottom + a.led_h
-    rr = np.hypot(s2.vertices[:, 0], s2.vertices[:, 1])
-    band = (s2.vertices[:, 2] > led_bottom) & (s2.vertices[:, 2] < led_top)
-    wall_gap = rr[band].min() - a.led_d / 2
-    top_gap = s2.bounds[1][2] - led_top
-    good = wall_gap > 8 and top_gap > 40
+    # the puck: a cylinder taped on top of the post, its lit face at face_z above the shade seat
+    post_h = max(0.0, a.face_z - a.led_h)
+    puck_bottom = a.base_h + a.face_z - a.led_h
+    puck = trimesh.creation.cylinder(radius=a.led_d / 2, height=a.led_h, sections=96)
+    puck.apply_translation([0, 0, puck_bottom + a.led_h / 2])
+    pts_p = puck.sample(15000)
+    # 1 mm shaved off the underside so the taped contact with the post top is not counted as interference
+    pts_p = pts_p[pts_p[:, 2] > puck_bottom + 0.2]
+    in_base = int(base.contains(pts_p).sum())
+    in_rim = int(rim.contains(pts_p).sum())
+    lip_pts2 = pts_b[(np.hypot(pts_b[:, 0], pts_b[:, 1]) > 25) & (pts_b[:, 2] > a.base_h + 0.5)]
+    _, d_pl, _ = trimesh.proximity.closest_point(puck, lip_pts2)
+    good = in_base == 0 and in_rim == 0 and d_pl.min() > 1.0
     ok &= good
-    print(f"heat: LED body {led_bottom:.0f}..{led_top:.0f} mm, nearest wall {wall_gap:.1f} mm away, "
-          f"open top {top_gap:.0f} mm above it  {'ok' if good else 'TOO CLOSE'}")
+    print(f"\npuck {a.led_d:.0f} x {a.led_h:.0f} mm on a {post_h:.0f} mm post (underside {puck_bottom:.0f} mm): points inside the base "
+          f"{in_base}, inside the shade rim {in_rim}, nearest lip {d_pl.min():.1f} mm  {'ok' if good else 'FAIL'}")
+
+    # heat: puck edge against the shade wall, and the open top
+    puck_top = puck_bottom + a.led_h
+    rr = np.hypot(s2.vertices[:, 0], s2.vertices[:, 1])
+    band = (s2.vertices[:, 2] > puck_bottom) & (s2.vertices[:, 2] < puck_top)
+    wall_gap = rr[band].min() - a.led_d / 2
+    top_gap = s2.bounds[1][2] - puck_top
+    good = wall_gap > 4 and top_gap > 40
+    ok &= good
+    print(f"heat: puck edge to the shade wall {wall_gap:.1f} mm, open top {top_gap:.0f} mm above the puck  "
+          f"{'ok' if good else 'TOO CLOSE'}  (the kit is rated 3 W; judge the temperature after running it)")
 
     # light
-    z_led = a.riser_h - a.pocket + a.led_emit
-    print(f"\nlight (simple model, LED {z_led:.0f} mm above the shade bottom, post shades the wall below):")
+    print(f"\nlight (simple model, flat round puck r = {a.led_d/2:.1f} mm, lit face {a.face_z:.0f} mm above the shade bottom):")
     veins = t <= 1.0 + 1e-6
     rows = np.repeat(v[:, None], nu, 1)
     lo_m, hi_m = (rows > 20) & (rows < 45) & veins, (rows > 85) & (rows < 108) & veins
-    for zz in (z_led - 9, z_led, z_led + 9):
-        b = brightness(f, zz, occluder_r=a.led_d / 2 + 2.75, up_only=True)
+    for zz in (a.face_z - 5, a.face_z, a.face_z + 5):
+        b = brightness(f, zz, disc_r=a.led_d / 2)
         bl, bh = b[lo_m].mean(), b[hi_m].mean()
-        print(f"  LED at {zz:3.0f} mm: bottom veins {bl*1e4:5.2f}, top veins {bh*1e4:5.2f}, top/bottom {bh/bl:4.2f}")
+        print(f"  lit face at {zz:3.0f} mm: bottom veins {bl*1e4:5.2f}, top veins {bh*1e4:5.2f}, top/bottom {bh/bl:4.2f}")
 
     print("\nRESULT:", "all checks passed" if ok else "CHECK FAILED")
     sys.exit(0 if ok else 1)

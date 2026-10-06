@@ -8,8 +8,9 @@
 The shade is a surface of revolution (profile from vein_field.profile). Its outer surface is smooth;
 the inner surface is pushed inward along the surface normal by the wall thickness T(u, v), so the veins
 are where the wall is thin. The renders show the lit lamp with the emission of every point taken from
-the simple LED model in lamp_light.py (LED height, shading by the post, Beer-Lambert transmission with
-an ASSUMED absorption of white PLA, plus a little diffuse scatter): a preview, not a measurement.
+the simple LED model in lamp_light.py (a flat round puck, 59 mm like the Bambu Lab LED Lamp Kit, lit face at
+34 mm; Beer-Lambert transmission with an ASSUMED absorption of white PLA, plus a little diffuse scatter):
+a preview, not a measurement.
 The unlit shade is plain white plastic.
 """
 import argparse
@@ -26,7 +27,7 @@ from vein_field import profile  # noqa: E402
 from lamp_light import brightness  # noqa: E402
 
 
-def build_arrays(f, led_z=31.0, occluder_r=22.0, scatter=0.10, uniform=False):
+def build_arrays(f, led_z=34.0, occluder_r=0.0, scatter=0.10, uniform=False, disc_r=29.5):
     u, v, t = f["u"], f["v"], f["t"]
     h, r0, rmax, rtop = float(f["height"]), float(f["r_bottom"]), float(f["r_max"]), float(f["r_top"])
     nv1, nu = t.shape
@@ -55,7 +56,7 @@ def build_arrays(f, led_z=31.0, occluder_r=22.0, scatter=0.10, uniform=False):
     if uniform:
         glow = np.exp(-float(f["alpha"]) * t)
     else:
-        b = brightness(f, led_z, occluder_r=occluder_r, up_only=True)
+        b = brightness(f, led_z, occluder_r=occluder_r, up_only=disc_r <= 0, disc_r=disc_r)
         b = b + scatter * b.mean()                          # light scattered inside the shade reaches the dark part
         glow = b / np.median(b[(t <= 1.0 + 1e-6) & (b > 0)])   # veins about 1.0
     glow = glow.reshape(-1)
@@ -171,14 +172,15 @@ def main():
     ap.add_argument("--base")
     ap.add_argument("--base-h", type=float, default=12.0)
     ap.add_argument("--samples", type=int, default=96)
-    ap.add_argument("--led-z", type=float, default=31.0, help="LED emission height above the shade bottom (mm)")
-    ap.add_argument("--occluder-r", type=float, default=22.0)
+    ap.add_argument("--led-z", type=float, default=34.0, help="height of the lit face above the shade bottom (mm)")
+    ap.add_argument("--disc-r", type=float, default=29.5, help="radius of the round LED puck (mm); 0 = point LED")
+    ap.add_argument("--occluder-r", type=float, default=0.0, help="point LED only: radius of the post that shades the wall below")
     ap.add_argument("--uniform", action="store_true", help="old preview: every point lit the same way")
     a = ap.parse_args(argv)
 
     bpy.ops.wm.read_factory_settings(use_empty=True)
     f = np.load(a.field)
-    verts, faces, glow, t = build_arrays(f, a.led_z, a.occluder_r, uniform=a.uniform)
+    verts, faces, glow, t = build_arrays(f, a.led_z, a.occluder_r, uniform=a.uniform, disc_r=a.disc_r)
     ob = make_mesh(verts, faces, glow)
     bpy.ops.object.select_all(action="DESELECT")
     ob.select_set(True)

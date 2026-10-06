@@ -8,8 +8,9 @@
 //  to fit it: the base with a seat for the shade and a pocket for the LED, and a step wedge
 //  that lets you calibrate wall thickness against your own filament and LED.
 //
-//  LIGHT SOURCE: a warm-white LED only (battery tealight or a USB LED puck, max 1 W).
-//  Never an incandescent, halogen or any bulb above 1 W: PLA softens at about 55 C.
+//  LIGHT SOURCE: the Bambu Lab LED Lamp Kit 001 (MH001), a round warm-white puck, 5 V USB, 3 W.
+//  The base is sized for it (diameter 59 mm). Other flat round pucks work by changing led_d / led_h.
+//  Never an incandescent or halogen bulb: PLA softens at about 55 C.
 //
 //  Tested with OpenSCAD 2021.01.
 // =====================================================================
@@ -33,18 +34,18 @@ base_h = 12;
 lip_h = 6;
 lip_t = 2;
 
-/* [LED] */
-// Diameter of the LED tealight or puck (mm). Common tealights are 38-39 mm
-led_d = 38.5;
-// Depth of the pocket that holds it (mm)
-led_pocket = 3;
-// Height of the riser post under the LED (mm). Sets where the light sits inside the shade:
-// emission height above the shade's bottom edge = riser_h - led_pocket + led_emit_h.
-// tools/lamp_light.py finds ~31 mm gives the most even glow top to bottom; 17 mm does that for a tealight
-riser_h = 17;
-// Height of the light-emitting part above the bottom of the LED body (mm): a tealight's LED is near its top
-led_emit_h = 17;
-// Cut a groove for a USB cable (a 5 V USB LED puck)
+/* [LED: Bambu Lab LED Lamp Kit 001 (MH001) round puck] */
+// Diameter of the puck (mm). Listed as D59 by every retailer found
+led_d = 59;
+// Height of the puck (mm). Most listings say 18, a few say 8: MEASURE YOURS and enter it here
+led_h = 18;
+// Height of the puck's lit face above the shade's seat (mm). tools/lamp_light.py finds 34 mm
+// lights the veins at the top and bottom of the shade most evenly. The post under the puck is
+// face_z - led_h tall, so a different led_h keeps the light at the same height
+face_z = 34;
+// Diameter of the double-sided tape that comes with the kit (mm): it holds the puck on the post
+tape_d = 40;
+// Cut a groove for the 1.5 m USB cable: down the post and across the base to the edge
 usb_groove = true;
 usb_w = 6;
 usb_depth = 3.5;
@@ -60,8 +61,12 @@ $fn = 120;
 lip_ro = shade_r0 - rim_t - clr;      // outer radius of the lip
 lip_ri = lip_ro - lip_t;
 
+post_h = max(0, face_z - led_h);        // post under the puck
+sink   = max(0, led_h - face_z);        // pocket depth if the puck has to sit lower than its own height
+post_d = tape_d + 4;                    // the tape sticks the puck to the top of the post
+
 module base() {
-    post_d = led_d + 5.5;
+    groove_r = post_h > 0 ? post_d / 2 : (led_d + 1) / 2;
     difference() {
         union() {
             // body with a 2 mm chamfer at the bottom edge (no sharp bed-contact edge)
@@ -72,17 +77,18 @@ module base() {
                 cylinder(r = lip_ro, h = lip_h + 0.01);
                 translate([0, 0, -1]) cylinder(r = lip_ri, h = lip_h + 2);
             }
-            // riser post under the LED
-            translate([0, 0, base_h - 0.01]) cylinder(d = post_d, h = riser_h + 0.01);
+            // post under the puck
+            if (post_h > 0) translate([0, 0, base_h - 0.01]) cylinder(d = post_d, h = post_h + 0.01);
         }
-        // LED pocket at the top of the post
-        translate([0, 0, base_h + riser_h - led_pocket]) cylinder(d = led_d + 1.0, h = led_pocket + 1);
+        // pocket, only when the puck has to sit lower than its own height
+        if (sink > 0) translate([0, 0, base_h - sink]) cylinder(d = led_d + 1.0, h = sink + 1);
         // cable groove: down the post (toward -y), then across the base to the edge, through the lip too
         if (usb_groove) {
-            translate([-usb_w / 2, -post_d / 2 - 1, base_h - usb_depth])
-                cube([usb_w, usb_depth + 1, usb_depth + riser_h + 1]);
+            if (post_h > 0)
+                translate([-usb_w / 2, -groove_r - 1, base_h - usb_depth])
+                    cube([usb_w, usb_depth + 1, usb_depth + post_h + 1]);
             translate([-usb_w / 2, -base_r - 1, base_h - usb_depth])
-                cube([usb_w, base_r - post_d / 2 + 1, usb_depth + lip_h + 1]);
+                cube([usb_w, base_r - groove_r + 1, usb_depth + lip_h + 1]);
         }
     }
 }
@@ -99,4 +105,4 @@ if (part == "wedge") wedge();
 else base();
 
 echo(str("lip outer radius ", lip_ro, " mm, shade rim inner radius ", shade_r0 - rim_t, " mm"));
-echo(str("LED emission height above the shade bottom edge: ", riser_h - led_pocket + led_emit_h, " mm"));
+echo(str("puck underside ", base_h + post_h - sink, " mm, lit face ", face_z, " mm above the shade seat; post ", post_h, " mm"));
