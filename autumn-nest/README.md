@@ -20,7 +20,7 @@
 | `blender_assemble.py` | OpenSCAD가 내보낸 파트들을 Blender Manifold 불리언으로 합침 (CGAL 합집합보다 훨씬 빠름) |
 | `blender_render.py` | Cycles CPU로 스튜디오 렌더(제출용 사진 기반). STL 1개 또는 `파일:재질` 여러 개로 조립 장면도 가능 |
 | `chime_calc.py` | 윈드차임 튜브 절단표(Euler-Bernoulli와 Timoshenko 유한요소)와 바람 추정 |
-| `print_layout.py` | 여러 STL을 한 베드에 외곽선 기준으로 자동 배치(3MF, STL, 도면 PNG). 베드 크기와 간격을 인자로 지정 |
+| `print_layout.py` | 여러 STL을 한 베드에 외곽선 기준으로 자동 배치(3MF, STL, 도면 PNG). 베드 크기와 간격을 인자로 지정하고, `--group 색@부품,...`으로 색상별 베드, `--split`으로 여러 베드, `--tries`로 배치 순서 탐색 |
 | `mobile_check.py` | 모빌 검증: 장식 질량 측정, 팔별 무게중심 대 받침 링, 연결부 간극, 형제 하위 모빌 회전 여유, 질량 오차 민감도, 연결부 비틀림 범위 |
 | `vein_field.py` | 리소페인 갓의 잎맥 벽 두께 지도 생성(주맥, 곁맥, 잔맥 + 부드러운 두께 전이) |
 | `blender_vein_shade.py` | 두께 지도로 곡면 갓 메시를 만들고 STL로 내보내며, 켠 모습과 끈 모습을 렌더 |
