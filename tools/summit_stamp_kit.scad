@@ -19,10 +19,12 @@ custom_elev = "1234 m";
 custom_shape = "alpine";    // [alpine, volcano, ridge, domes]
 
 /* [Stamp] */
-show_name = false;          // mountain name on the lower arc (elevation always shown)
+show_name = false;          // mountain name on the lower arc
+show_elev = false;          // elevation figure ("1947 m") under the picture
 head_d    = 37;             // stamp face diameter
 head_t    = 4;              // head base thickness
-inlay_depth = 0.6;          // multi-color flush inlay depth (표면과 평평하게 채워지는 깊이)
+relief_h  = 1.2;            // height of the raised (embossed) stamp artwork (양각 높이)
+inlay_depth = 0.6;          // flush inlay depth for the handle logo and badges (표면과 평평하게 채워지는 깊이)
 badge_t   = 3;
 
 /* [Text legibility] */
@@ -165,22 +167,25 @@ module arc_text(t, rb, sz) {
     }
 }
 
+// With no lettering the picture is moved down so it sits in the middle of
+// the face instead of leaving the lower third empty.
+function art_dy(shape) = shape == "domes" ? -2.4 : -3.8;
+
 module stamp_art(p) {
+    has_text = show_name || show_elev;
+    dy = has_text ? 0 : art_dy(peak_shape(p));
     intersection() {
         circle(r = R - 2.4);
-        difference() {
-            union() {
+        union() {
+            translate([0,dy]) difference() {
                 silhouette(peak_shape(p));
-                if (show_name) {
-                    translate([0,-7.4]) text(peak_elev(p), size = 2.6, halign = "center",
-                                             valign = "center", font = font);
-                    arc_text(peak_name(p), 14.6, 3.0);
-                } else {
-                    translate([0,-9.6]) text(peak_elev(p), size = 3.6, halign = "center",
-                                             valign = "center", font = font);
-                }
+                crack_lines(peak_shape(p));
             }
-            crack_lines(peak_shape(p));
+            if (show_elev)
+                translate([0, show_name ? -7.4 : -9.6])
+                    text(peak_elev(p), size = show_name ? 2.6 : 3.6, halign = "center",
+                         valign = "center", font = font);
+            if (show_name) arc_text(peak_name(p), 14.6, 3.0);
         }
     }
     // border ring with a "N" tick at the top
@@ -193,10 +198,11 @@ module stamp_art(p) {
 // ------------------------------------------------------------------
 module hex(af, h) { cylinder(h = h, r = af/2/cos(30), $fn = 6); }
 
-// Head: back on the bed, relief facing up. The relief is mirrored so
-// the stamp prints the right way round.
+// Head: back on the bed, relief facing up. The artwork stands proud of the
+// face by relief_h (embossed, so it picks up ink and prints an impression)
+// and is mirrored so the stamp prints the right way round.
 module head(p = peak) {
-    // Base head with cutout for flush inlay
+    // Plain base disc: the artwork is NOT cut into it
     color(head_col) difference() {
         hull() {
             translate([0,0,0.5]) cylinder(h = head_t - 0.5, r = R);
@@ -207,15 +213,11 @@ module head(p = peak) {
         translate([0,0,-eps]) cylinder(h = mag_h + 0.3, d = mag_d + mag_clr);
         // orientation notch at the top of the artwork
         translate([0, R, -1]) rotate(45) cube([1.6,1.6,head_t + 2], center = true);
-        
-        // Subtract art for flush inlay
-        translate([0,0,head_t - inlay_depth])
-            linear_extrude(inlay_depth + eps) mirror([1,0]) stamp_art(p);
     }
-    
-    // Black artwork flush with the top surface
-    color(art_col) translate([0,0,head_t - inlay_depth])
-        linear_extrude(inlay_depth) mirror([1,0]) stamp_art(p);
+
+    // Raised artwork = the stamping surface (eps overlap fuses it to the base)
+    color(art_col) translate([0,0,head_t - eps])
+        linear_extrude(relief_h + eps) mirror([1,0]) stamp_art(p);
 }
 
 // Handle: printed upside down (flat top on the bed). Profile keeps every
