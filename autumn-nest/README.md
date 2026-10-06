@@ -8,8 +8,9 @@
 | 5 | [Samara Twister](05-samara-twister/) 단풍 시과 회전 모빌 | Autumn in Motion | 모델 완료. 베어링 마찰 때문에 약한 바람에서는 안 돌 가능성이 높아 개선 방향 결정 필요 |
 | 6 | [Maple Chime](06-maple-chime/) 단풍 펜타토닉 윈드차임 | Autumn in Motion | 모델, 절단표, 배치 검증 완료. 출력과 음정, 바람 테스트 필요 |
 | 7 | [Forest Balance Mobile](07-forest-mobile/) 계산형 숲 모빌 | Autumn in Motion | 모델, 균형, 간극 검증 완료. 출력과 실제 바람에서의 움직임 테스트 필요 |
+| 10 | [Vein-Glow Lantern](10-vein-lantern/) 잎맥 리소페인 램프 | A Forest Corner | 모델, 결합, 열 여유 검증 완료. 흰색 PLA 투과율과 출력은 시험편으로 확인 필요 |
 
-나머지 7개(1 나이테 회전 정리함, 2 솔방울 황금각 정리대, 3 뿌리 트루셰 타일, 4 말굽버섯 선반, 8 자가급수 화분, 9 조립식 덩굴 지지대, 10 잎맥 리소페인 램프)는 아직 시작 전입니다.
+나머지 6개(1 나이테 회전 정리함, 2 솔방울 황금각 정리대, 3 뿌리 트루셰 타일, 4 말굽버섯 선반, 8 자가급수 화분, 9 조립식 덩굴 지지대)는 아직 시작 전입니다.
 
 ## 도구 (`tools/`)
 
@@ -21,5 +22,9 @@
 | `chime_calc.py` | 윈드차임 튜브 절단표(Euler-Bernoulli와 Timoshenko 유한요소)와 바람 추정 |
 | `print_layout.py` | 여러 STL을 한 베드에 외곽선 기준으로 자동 배치(3MF, STL, 도면 PNG). 베드 크기와 간격을 인자로 지정 |
 | `mobile_check.py` | 모빌 검증: 장식 질량 측정, 팔별 무게중심 대 받침 링, 연결부 간극, 형제 하위 모빌 회전 여유, 질량 오차 민감도, 연결부 비틀림 범위 |
+| `vein_field.py` | 리소페인 갓의 잎맥 벽 두께 지도 생성(주맥, 곁맥, 잔맥 + 부드러운 두께 전이) |
+| `blender_vein_shade.py` | 두께 지도로 곡면 갓 메시를 만들고 STL로 내보내며, 켠 모습과 끈 모습을 렌더 |
+| `lamp_light.py` | LED 높이에 따른 갓 밝기 분포 모델(거리, 입사각, 가림, 투과) |
+| `lantern_check.py` | 램프 검증: 수밀, 벽 두께, 갓-받침 결합, 열 여유, 밝기 균일도 |
 
-환경: OpenSCAD 2021.01 이상, Blender 또는 `pip install bpy`(Python 3.11), `pip install trimesh numpy scipy networkx rtree shapely matplotlib lxml`.
+환경: OpenSCAD 2021.01 이상, Blender 또는 `pip install bpy`(Python 3.11), `pip install trimesh numpy scipy networkx rtree shapely matplotlib lxml mapbox-earcut`.
