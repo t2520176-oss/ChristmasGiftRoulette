@@ -1,30 +1,29 @@
-// 별자리판 + 해시계 (Planisphere + Gnomon) v4 - Color Edition
+// 별자리판 + 해시계 (Planisphere + Gnomon) v4.1 - Color Edition (흰색 / 검정 / 노랑)
 // 250x250 베드 한 장에 전부 배치 (전체 약 190 x 135mm, 원점 기준 x -50~140 / y -85~50)
 //
-// 색상 4가지 (AMS 4슬롯에 딱 맞음)
-//   cream : 베이스 본체, 힌지 핀            -> 별 구멍으로 보이는 "별빛" 바탕
-//   navy  : 별판, 방위 글자(S/E/W), 눈금    -> 밤하늘
-//   gold  : 베이스 테두리, 별판 링/별 테두리, 지시 마크, 중앙 핀
-//   coral : 북쪽 N 글자, 그노몬(해)
+// 색상 3가지
+//   white  : 베이스 본체, 힌지 핀                        -> 별 구멍으로 보이는 "별빛" 바탕
+//   black  : 별판, 눈금, 방위 글자(S/E/W), N 배지        -> 밤하늘
+//   yellow : 베이스 테두리, 별판 링/별 테두리, 지시 마크, 중앙 핀, 그노몬, N 글자
 //
 // 사용법
 //   part = "all"   : 전체 색상 미리보기 (F5)
-//   part = "cream" / "navy" / "gold" / "coral" : 색상별로 따로 렌더(F6) 후 STL 내보내기
-//   4개 STL은 좌표가 동일하므로 슬라이서에 한꺼번에 불러오면 자동으로 정렬됩니다.
-//   (커맨드라인: openscad -o navy.stl -D 'part="navy"' planisphere_gnomon_color.scad)
+//   part = "white" / "black" / "yellow" : 색상별로 따로 렌더(F6) 후 STL 내보내기
+//   3개 STL은 좌표가 동일하므로 슬라이서에 한꺼번에 불러오면 자동으로 정렬됩니다.
+//   (커맨드라인: openscad -o black.stl -D 'part="black"' planisphere_gnomon_color.scad)
 
 $fn = 128;
 
-part       = "all";  // [all, cream, navy, gold, coral]
-tick_inlay = true;   // true: 눈금 홈을 navy로 채움 / false: 홈으로 남김 (단색 출력용)
-star_halo  = true;   // 별 구멍 둘레 금색 테두리
+part       = "all";  // [all, white, black, yellow]
+tick_inlay = true;   // true: 눈금 홈을 검정으로 채움 / false: 홈으로 남김 (단색 출력용)
+star_halo  = true;   // 별 구멍 둘레 노란 테두리
+north_badge = true;  // N 글자 뒤에 검정 원형 배지 (흰 베이스 위에서 노란 N이 잘 보이게)
 show_bed   = true;   // 미리보기에 250x250 베드 윤곽 표시 (STL 내보내기에는 영향 없음)
 
 // ---- 팔레트 ----
-c_cream = "#F3EAD3";
-c_navy  = "#12224A";
-c_gold  = "#F2B531";
-c_coral = "#EE5B3B";
+c_white  = "#F6F6F1";
+c_black  = "#17181C";
+c_yellow = "#FFD21F";
 
 // ---- 치수 ----
 base_d = 100;   // 베이스 지름
@@ -45,7 +44,7 @@ hole_hinge = 3.2;
 pin_hinge  = 3.0;
 
 // 장식 치수
-accent_h = 0.4; // 금색 장식(링/별 테두리) 높이
+accent_h = 0.4; // 노란 장식(링/별 테두리) 높이
 mark_h   = 0.8; // 지시 마크 높이
 halo_d   = 3.6; // 별 테두리 바깥 지름
 star_d   = 1.5; // 별 구멍 지름
@@ -75,24 +74,31 @@ module hang_hole() {
   rotate([0, 0, 225]) translate([0, 44, 0]) cylinder(d = 6, h = 10, center = true);
 }
 
-// 5도 간격 눈금 (방위 글자가 있는 0/90/180/270도와 걸이 구멍 자리 225도는 비움)
+// 5도 간격 눈금 (방위 글자가 있는 0/90/180/270도, 걸이 구멍 자리 225도, N 배지 옆 5/355도는 비움)
 // depth: 베이스 윗면 아래로 파인 깊이, extra: 윗면 위로 튀어나오는 여유(절단용)
 module ticks(depth = 1.0, extra = 0) {
-  for (a = [0 : 5 : 355]) if (a % 90 != 0 && a != 225)
+  for (a = [0 : 5 : 355]) if (a % 90 != 0 && a != 225 && !(north_badge && (a == 5 || a == 355)))
     rotate([0, 0, a])
       translate([0, 44.5, base_h - depth / 2 + extra / 2])
         cube([0.8, 5, depth + extra], center = true);
 }
 
-module letter(i) {
+module letter(i, z = base_h) {
   t = compass[i];
-  translate([t[1], t[2], base_h])
+  translate([t[1], t[2], z])
     linear_extrude(0.6)
       text(t[0], size = 5, font = "Liberation Sans:style=Bold",
            halign = "center", valign = "center");
 }
 
-// ---------- cream : 베이스 ----------
+// N 글자 뒤 배지 (지름 7.6mm: 별판 가장자리 r=40과 테두리 안쪽 r=48 사이에 들어감)
+badge_d = 7.6;
+badge_h = 0.6;
+module north_badge_body() {
+  translate([compass[0][1], compass[0][2], base_h]) cylinder(d = badge_d, h = badge_h);
+}
+
+// ---------- white : 베이스 ----------
 module base_body() {
   difference() {
     union() {
@@ -109,7 +115,7 @@ module base_body() {
   }
 }
 
-// ---------- gold : 베이스 테두리 ----------
+// ---------- yellow : 베이스 테두리 ----------
 module base_rim() {
   difference() {
     translate([0, 0, base_h]) linear_extrude(1.5)
@@ -118,7 +124,7 @@ module base_rim() {
   }
 }
 
-// ---------- navy : 눈금 인레이 ----------
+// ---------- black : 눈금 인레이 ----------
 module tick_inlay_body() {
   difference() {
     ticks(1.0, 0);
@@ -127,7 +133,7 @@ module tick_inlay_body() {
   }
 }
 
-// ---------- navy : 별판 ----------
+// ---------- black : 별판 ----------
 module star_disc_body() {
   difference() {
     cylinder(d = disc_d, h = disc_h);
@@ -139,8 +145,8 @@ module star_disc_body() {
   }
 }
 
-// ---------- gold : 별판 장식 ----------
-module star_disc_gold() {
+// ---------- yellow : 별판 장식 ----------
+module star_disc_yellow() {
   // 가장자리 링
   translate([0, 0, disc_h]) linear_extrude(accent_h)
     difference() { circle(d = disc_d - 1); circle(d = disc_d - 3.4); }
@@ -151,7 +157,7 @@ module star_disc_gold() {
   translate([0, 28, disc_h + mark_h / 2]) cube([3, 10, mark_h], center = true);
 }
 
-// ---------- coral : 그노몬 ----------
+// ---------- yellow : 그노몬 ----------
 module gnomon_v3() {
   difference() {
     linear_extrude(g_t)
@@ -161,13 +167,13 @@ module gnomon_v3() {
   }
 }
 
-// ---------- cream : 힌지 핀 (3mm 필라멘트 조각으로 대체 가능) ----------
+// ---------- white : 힌지 핀 (3mm 필라멘트 조각으로 대체 가능) ----------
 module hinge_pin() {
   translate([0, 0, pin_hinge / 2])        // 베드 위에 올려놓기 (v3는 절반이 베드 아래로 파묻혀 있었음)
     rotate([0, 90, 0]) cylinder(d = pin_hinge, h = 53);
 }
 
-// ---------- gold : 중앙 핀 (머리를 아래로 두어 오버행 없이 출력) ----------
+// ---------- yellow : 중앙 핀 (머리를 아래로 두어 오버행 없이 출력) ----------
 module pivot_pin() {
   cylinder(d = 9, h = 2);
   cylinder(d = pivot - 0.2, h = 2 + base_h + disc_h + 0.2);
@@ -175,26 +181,24 @@ module pivot_pin() {
 
 // ---- 출력 배치 (한 베드) ----
 // 베이스(원점) / 별판(+100,0) / 그노몬(0,-85) / 힌지 핀(60,-75) / 중앙 핀(130,-75)
-paint("cream", c_cream) {
+paint("white", c_white) {
   base_body();
   translate([60, -75, 0]) hinge_pin();
 }
 
-paint("gold", c_gold) {
-  base_rim();
-  translate([100, 0, 0]) star_disc_gold();
-  translate([130, -75, 0]) pivot_pin();
-}
-
-paint("navy", c_navy) {
+paint("black", c_black) {
   translate([100, 0, 0]) star_disc_body();
   if (tick_inlay) tick_inlay_body();
-  for (i = [1 : 3]) letter(i);      // S, E, W
+  for (i = [1 : 3]) letter(i);                  // S, E, W
+  if (north_badge) north_badge_body();
 }
 
-paint("coral", c_coral) {
-  letter(0);                        // N
+paint("yellow", c_yellow) {
+  base_rim();
+  translate([100, 0, 0]) star_disc_yellow();
+  translate([130, -75, 0]) pivot_pin();
   translate([0, -85, 0]) gnomon_v3();
+  letter(0, north_badge ? base_h + badge_h : base_h);   // N (배지 위에 얹음)
 }
 
 // 미리보기용 베드 윤곽 (배치 중심을 베드 중앙에 맞춤). %는 렌더/내보내기에서 무시됨
