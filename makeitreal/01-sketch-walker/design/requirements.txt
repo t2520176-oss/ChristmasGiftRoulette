@@ -1,0 +1,6 @@
+numpy
+scipy
+shapely
+matplotlib
+opencv-python-headless
+pillow
