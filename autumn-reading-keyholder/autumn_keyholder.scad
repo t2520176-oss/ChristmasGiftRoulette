@@ -46,11 +46,9 @@ Z_LANT   = 8.4;
 Z_TWIG   = 8.6;
 Z_STEM   = 9.0;
 Z_FENCE  = 8.0;
-Z_CONE   = 10.0;
 Z_BOOK   = 12.0;
 Z_PAGES  = 10.8;
 Z_CUP    = 13.0;
-Z_CAT    = 12.4;
 Z_LIP    = 14.0;       // 선반 윗턱
 Z_BORDER = 13.0;       // 선반 앞판 테두리
 Z_PLANK  = 11.5;       // 선반 앞판 속널(후크가 꽂히는 면)
@@ -74,6 +72,16 @@ KH_SLOT  = 4.2;          // 나사목 슬롯 폭 (뒷판 부분)
 KH_POCK  = 7.6;          // 머리가 들어가는 안쪽 포켓 폭
 KH_LEN   = 9;            // 슬롯 길이 (위쪽으로)
 KH_Z     = 5.8;          // 포켓 상단 높이
+
+// ------------------------------- 위쪽 못걸이 (균형점) ------------------------
+// 무게중심 바로 위에 두면 못 1개만으로도 수평으로 걸립니다. 지붕 띠는 얇아서 포켓을 못 넣으므로
+// 지붕 아래 박공 벽에 둥근 다락창(두꺼운 부분)을 올리고 그 뒷면에 못걸이를 팝니다.
+NAIL_X    = 750;      // px — 무게중심 x (본체+후크 STL 부피중심 x=94.8mm 를 px 로 환산)
+NAIL_HEAD = 6.4;      // 못머리가 들어가는 입구 원 지름 (mm)
+NAIL_NECK = 3.4;      // 못 몸통이 지나는 슬롯 폭 (뒷판 부분)
+NAIL_POCK = 5.6;      // 못머리가 앉는 안쪽 포켓 폭
+NAIL_LEN  = 3.0;      // 슬롯 길이(위로)
+NAIL_Z    = 4.6;      // 포켓 천장 높이 (못머리 두께 ≤ 2.0mm)
 
 // ------------------------------- 베드 배치 ----------------------------------
 BED      = [256, 256];
@@ -144,7 +152,7 @@ IVY_AX   = [[0, 1.00], [58, 0.74], [-58, 0.74]];
 
 module leaf_shape(R, kind) {
   scale([R, -R]) { if (kind == 0) maple_unit(); else ivy_unit(); }
-  hull() { translate([0, R*0.20]) circle(d = max(3.4, R*0.09), $fn = 10); translate([0, R*0.64]) circle(d = max(3.4, R*0.09), $fn = 10); }
+  hull() { translate([0, R*0.20]) circle(d = max(6, R*0.16), $fn = 12); translate([0, R*0.52]) circle(d = max(6, R*0.16), $fn = 12); }
 }
 module leaf_veins(R, kind) {
   w = max(3.0, R * 0.055);
@@ -152,30 +160,29 @@ module leaf_veins(R, kind) {
   for (A = ax) line2([0, R*0.05], [R*A[1]*0.80*(-sin(A[0])), -R*A[1]*0.80*cos(A[0])], w);
 }
 
-// [cx, cy, R, rot, kind(0단풍/1담쟁이), color(O/C/G), tier, group(0=고양이 뒤/1=맨 앞)]
-LEAVES = [
-  // ---- group 0 : 고양이 귀 뒤에 숨는 잎
-  [658, 388, 26,  60, 0, "O", 0, 0],
+// 책 위 화분에서 자라는 담쟁이 : [cx, cy, R, rot]
+PLANT = [[447,333,24,-48],[478,322,26,0],[509,333,24,48],[430,356,20,-80],[526,356,20,80]];
+
+// [cx, cy, R, rot, kind(0단풍/1담쟁이), color(O/C/G), tier, group(0=다른 아이템 뒤/1=맨 앞)]
+LEAVES = concat([
   // ---- 오른쪽 담쟁이 군락 (낮은 단계)
   [1062, 428, 34, -40, 1, "G", 1, 1],
-  [1126, 414, 36,  10, 1, "G", 1, 1],
   [1192, 430, 38,  42, 1, "G", 1, 1],
   [1210, 492, 34,  85, 1, "G", 1, 1],
   [1160, 532, 34, 170, 1, "G", 1, 1],
   [1036, 452, 28, -65, 1, "G", 1, 1],
   // ---- 늘어진 담쟁이
   [1196, 578, 30, 150, 1, "G", 1, 1],
-  [1224, 618, 30,  62, 1, "G", 1, 1],
+  [1212, 618, 30,  62, 1, "G", 1, 1],
   [1190, 652, 30,-125, 1, "G", 1, 1],
-  [1222, 700, 28,  70, 1, "G", 1, 1],
+  [1210, 700, 28,  70, 1, "G", 1, 1],
   [1188, 726, 28,-110, 1, "G", 1, 1],
-  [1214, 760, 26,  75, 1, "G", 1, 1],
+  [1205, 760, 26,  75, 1, "G", 1, 1],
   [1203, 800, 26, 175, 1, "G", 1, 1],
   // ---- 단풍
   [872,   68, 30,  40, 0, "C", 2, 1],   // 노랑(크림)
   [905,  100, 62,   8, 0, "O", 3, 1],
   [952,  178, 64, -30, 0, "O", 4, 1],
-  [1136, 308, 52,  22, 0, "C", 2, 1],   // 노랑
   [1026, 384, 48, -18, 0, "O", 3, 1],
   [1134, 480, 52,  14, 0, "C", 4, 1],   // 노랑
   [985,  553, 42, -15, 0, "O", 3, 1],
@@ -185,7 +192,7 @@ LEAVES = [
   [350,  398, 32,  30, 0, "C", 5, 1],
   [322,  456, 58, -30, 0, "O", 6, 1],
   [364,  522, 42,  10, 0, "O", 6, 1]
-];
+], [for (p = PLANT) [p[0], p[1], p[2], p[3], 1, "G", 5, 1]]);
 LEAF_K = 1.18;          // 잎 전체 크기 배율
 NL = len(LEAVES);
 // j 가 i 의 앞에서 i 를 가리는가? (같은 색끼리는 겹쳐도 한 덩어리이므로 자르지 않음 → 맞닿은 경계 폴리곤이 꼬이는 것을 방지)
@@ -225,8 +232,8 @@ module leaves_color(col) {
 //  아이템 원형(raw) 2D — 뒤에서 앞 순서 (번호가 클수록 앞)
 // ============================================================================
 I_NOOK=0; I_WALL=1; I_LEAN=2; I_WAIN=3; I_FBACK=4; I_PIER=5; I_CHIM=6; I_ROOF=7;
-I_GLASS=8; I_MUN=9; I_FRAME=10; I_LANT=11; I_TWIG=12; I_STEM=13; I_LEAF0=14; I_FENCE=15;
-I_CONE=16; I_BOOKS=17; I_CUP=18; I_CAT=19; I_LEAF1=20; I_SHELF=21; N_ITEMS=22;   // 번호가 클수록 앞
+I_GLASS=8; I_MUN=9; I_FRAME=10; I_VENT=11; I_LANT=12; I_TWIG=13; I_STEM=14; I_LEAF0=15; I_FENCE=16;
+I_PUMP=17; I_BOOKS=18; I_CUP=19; I_DECO=20; I_LEAF1=21; I_SHELF=22; N_ITEMS=23;   // 번호가 클수록 앞
 
 // ---- 선반 ----
 module S_lip()   { translate([288,548]) square([1185-288, 566-548]); }
@@ -252,6 +259,23 @@ module S_mun()       { intersection() { S_glass_all();
 module S_glass()     { S_glass_all(); }
 module S_frame()     { difference() { S_win_outer(); S_glass_all(); } rrect(650, 458, 972, 488, 4); }
 
+// ---- 둥근 다락창 + 못걸이 (지붕 아래, 창 위의 벽) ----
+function roof_under(x) = 72 + 0.675 * abs(803 - x);                       // 지붕 아래면 (px)
+function arch_top(x)   = 308 - sqrt(max(0, 151*151 - (x - 811)*(x - 811)));  // 창틀 위쪽 곡선 (px)
+NAIL_YC = (roof_under(NAIL_X) + arch_top(NAIL_X)) / 2;                    // 다락창 중심 y
+VENT_R  = min(30, (arch_top(NAIL_X) - roof_under(NAIL_X)) / 2 - 1.5);        // 다락창 반지름
+NAIL_LEN_PX = NAIL_LEN / S;
+NAIL_YE = NAIL_YC + (NAIL_LEN_PX + NAIL_POCK/S/2 - NAIL_HEAD/S/2) / 2;     // 키홀 전체를 다락창 중앙에 맞춤
+module S_vent()       { translate([NAIL_X, NAIL_YC]) circle(r = VENT_R, $fn = 64); }
+module vent_pane2d()  { translate([NAIL_X, NAIL_YC]) circle(r = VENT_R - 6, $fn = 64); }
+module vent_ring2d()  { difference() { S_vent(); vent_pane2d(); } }
+module vent_bars2d()  { intersection() { vent_pane2d();
+                          union() { translate([NAIL_X - 2.5, NAIL_YC - VENT_R]) square([5, 2*VENT_R]); translate([NAIL_X - VENT_R, NAIL_YC - 2.5]) square([2*VENT_R, 5]); } } }
+module nail_entry()   { translate([NAIL_X, NAIL_YE]) circle(d = NAIL_HEAD / S, $fn = 36); }
+module nail_slot(w)   { hull() { translate([NAIL_X, NAIL_YE]) circle(d = w / S, $fn = 24); translate([NAIL_X, NAIL_YE - NAIL_LEN_PX]) circle(d = w / S, $fn = 24); } }
+module nail_narrow()  { nail_entry(); nail_slot(NAIL_NECK); }
+module nail_wide()    { nail_entry(); nail_slot(NAIL_POCK); }
+
 // ---- 랜턴 ----
 module L_brown() {
   translate([603,160]) square([6, 72]);                                  // 걸이 막대
@@ -272,8 +296,11 @@ TWIG_PATH = [[1138,408],[1088,372],[1044,346],[1012,312],[992,272],[962,218],[93
 STEM_PATH = [[1186,556],[1198,600],[1190,650],[1200,700],[1190,750],[1203,812]];
 STEM_CLUSTER = [[1060,430],[1096,420],[1126,414],[1160,424],[1192,430]];
 module S_twig() { polyline(TWIG_PATH, 11); }
-module S_stem() { polyline(STEM_PATH, 6.5); polyline(STEM_CLUSTER, 6.5); line2([1150,426],[1160,530],6.5); line2([1186,556],[1160,530],6.5);
-                  line2([1192,430],[1208,492],6.5); line2([1208,492],[1186,556],6.5); }
+STEM_W = 10;       // 담쟁이 줄기 굵기(px) ≈ 2mm — 가는 목으로 위태롭게 붙지 않도록
+module plant_stems() { for (p = PLANT) line2([POT_TOP[0], POT_TOP[1]], [p[0], p[1]], 8); }
+POT_TOP = [478, 366];
+module S_stem() { polyline(STEM_PATH, STEM_W); polyline(STEM_CLUSTER, STEM_W); line2([1150,426],[1160,530],STEM_W); line2([1186,556],[1160,530],STEM_W);
+                  line2([1192,430],[1208,492],STEM_W); line2([1208,492],[1186,556],STEM_W); plant_stems(); }
 
 // ---- 울타리 ----
 PICKETS = [for (k = [0:5]) 1006 + k*24];
@@ -281,8 +308,15 @@ module S_pickets() { intersection() { above_shelf(); union() { for (x = PICKETS)
 module S_rails()   { for (y = [498, 530]) translate([1000, y]) square([155, 9]); }
 module S_fence()   { intersection() { above_shelf(); union() { S_pickets(); S_rails(); } } }
 
-// ---- 솔방울 ----
-module S_cone() { intersection() { above_shelf(); hull() { ell2([806,490], 27, 34); ell2([808,525], 33, 26); } } }
+// ---- 미니 호박 (솔방울이 있던 자리) ----
+//         cx   cy   rx  ry  ztop
+PUMPS  = [[812, 530, 25, 21, 10.4], [782, 538, 17, 13, 9.0]];   // 바닥이 선반선(548)을 살짝 넘게 → 접점(핀치) 방지
+PK_DX  = [-0.62, -0.31, 0, 0.31, 0.62];     // 호박 5조각(세로 골) 배치
+PK_RY  = [ 0.84,  0.95, 1.0, 0.95, 0.84];
+PK_RZ  = [ 0.86,  0.95, 1.0, 0.95, 0.86];
+module pump_lobes2d(p) { for (k = [0:4]) ell2([p[0] + PK_DX[k]*p[2], p[1]], 0.42*p[2], PK_RY[k]*p[3]); }
+module pump_stem2d(p)  { line2([p[0], p[1] - 0.80*p[3]], [p[0] + 0.20*p[2], p[1] - 1.28*p[3]], 7); }
+module S_pump() { intersection() { above_shelf(); union() { for (p = PUMPS) { pump_lobes2d(p); pump_stem2d(p); } } } }
 
 // ---- 책 ----
 //        x0   y0   x1   y1  표지끝  색
@@ -300,23 +334,18 @@ module cup_handle2d() { difference() { ell2([966,489], 27, 40); ell2([966,489], 
 module cup_whip2d()   { ell2([897,428], 38, 14); ell2([900,411], 28, 14); ell2([902,399], 15, 12); ell2([904,392], 8, 9); }
 module S_cup() { intersection() { above_shelf(); union() { cup_body2d(); cup_handle2d(); cup_whip2d(); } } }
 
-// ---- 고양이 ----
-//          cx   cy   rx  ry  ztop
-CAT_E = [[480, 358,  82, 52, 11.0],     // 몸통
-         [445, 366,  52, 46, 10.6],     // 엉덩이
-         [597, 365,  60, 48, 13.0],     // 머리
-         [553, 386,  40, 28, 11.2],     // 가슴
-         [562, 409,  27, 13,  9.4],     // 앞발 1
-         [613, 413,  28, 12,  9.2]];    // 앞발 2
-CAT_TAIL = [[422,346],[412,372],[425,394],[455,404],[486,402]];
-CAT_TAIL_R = 14;
-EAR_L = [[546,338],[563,300],[592,327]];
-EAR_R = [[624,330],[661,331],[647,370]];
-module S_cat() {
-  for (e = CAT_E) ell2([e[0], e[1]], e[2], e[3]);
-  for (i = [0 : len(CAT_TAIL) - 2]) hull() { translate(CAT_TAIL[i]) circle(r = CAT_TAIL_R, $fn = 24); translate(CAT_TAIL[i+1]) circle(r = CAT_TAIL_R, $fn = 24); }
-  polygon(EAR_L); polygon(EAR_R);
-}
+// ---- 책 위 장식 : 작은 화분 + 도토리 2개 (고양이가 있던 자리) ----
+BOOK_TOP = 405;
+module above_books() { translate([-100,-100]) square([2000, 100 + BOOK_TOP]); }
+module pot_body2d() { polygon([[454,405],[502,405],[508,373],[448,373]]); }
+module pot_rim2d()  { rrect(441, 358, 515, 376, 4); }
+module pot_band2d() { intersection() { pot_body2d(); translate([440,386]) square([80, 8]); } }
+//            x   y(바닥)  배율
+ACORNS = [[574, 408, 1.00], [606, 408, 0.82]];   // 바닥이 책 윗선(405)을 살짝 넘게 → 잘려서 평평하게 앉음
+module acorn_cap_ell(a) { ell2([a[0], a[1] - 32*a[2]], 13.5*a[2], 8*a[2]); }
+module acorn_stem(a)    { line2([a[0], a[1] - 37*a[2]], [a[0] + 3*a[2], a[1] - 46*a[2]], 6*a[2]); }
+module acorn_nut(a)     { difference() { ell2([a[0], a[1] - 15*a[2]], 11*a[2], 15*a[2]); acorn_cap_ell(a); } }
+module S_deco() { intersection() { above_books(); union() { pot_body2d(); pot_rim2d(); for (a = ACORNS) { acorn_nut(a); acorn_cap_ell(a); acorn_stem(a); } } } }
 
 // ============================================================================
 //  아이템 선택 / 앞쪽 가림(carve)
@@ -334,15 +363,16 @@ module item(i) {
   else if (i == I_GLASS) S_glass();
   else if (i == I_MUN)   S_mun();
   else if (i == I_FRAME) S_frame();
+  else if (i == I_VENT)  S_vent();
   else if (i == I_LANT)  S_lant();
   else if (i == I_TWIG)  S_twig();
   else if (i == I_STEM)  S_stem();
   else if (i == I_LEAF0) leaves_group(0);
   else if (i == I_FENCE) S_fence();
-  else if (i == I_CONE)  S_cone();
+  else if (i == I_PUMP)  S_pump();
   else if (i == I_BOOKS) S_books();
   else if (i == I_CUP)   S_cup();
-  else if (i == I_CAT)   S_cat();
+  else if (i == I_DECO)  S_deco();
   else if (i == I_LEAF1) leaves_group(1);
 }
 module above(i) { if (i < N_ITEMS - 1) for (j = [i + 1 : N_ITEMS - 1]) item(j); }   // (역순 범위 주의: 2021.01은 양 끝을 뒤집음)
@@ -381,9 +411,6 @@ module plank_grain() {
     polyline([[334, y],[480, y+1.5],[640, y-1],[820, y+1.2],[990, y-1.2],[1146, y+1]], 2.0);
   }
 }
-module cone_grooves() {
-  for (k = [-8:8]) { line2([806 + k*13 - 60, 450], [806 + k*13 + 60, 570], 3.0); line2([806 + k*13 + 60, 450], [806 + k*13 - 60, 570], 3.0); }
-}
 module hk_pockets() {
   for (x = HK_X) translate([x - (HK_W + 2*HK_CLR)/S/2, HK_YC - (HK_TENON_H + 2*HK_CLR)/S/2]) square([(HK_W + 2*HK_CLR)/S, (HK_TENON_H + 2*HK_CLR)/S]);
 }
@@ -418,62 +445,12 @@ module glass_leaves() { for (g = GLASS_LEAVES) translate([g[0], g[1]]) rotate(g[
 module ell3(c, rx, ry, ztop, zc = ZB) {
   translate([X(c[0]), Y(c[1]), zc]) scale([rx * S, ry * S, ztop - zc]) sphere(r = 1, $fn = 40);
 }
-module ear3d(pts, h) {
-  hull() {
-    translate([0,0,ZB]) linear_extrude(height = 0.01) px() polygon(pts);
-    translate([0,0,h - 0.5]) linear_extrude(height = 0.5) px() offset(delta = -7) polygon(pts);
-  }
-}
 module skin(depth) {   // children(0)=몸체, children(1)=칠할 2D(px) → 위쪽 depth(mm) 껍질만
   difference() {
     intersection() { children(0); prismZ(0, 60) children(1); }
     translate([0,0,-depth]) children(0);
   }
 }
-
-module cat_body3d() {
-  intersection() {
-    union() {
-      for (e = CAT_E) ell3([e[0], e[1]], e[2], e[3], e[4]);
-      for (i = [0 : len(CAT_TAIL) - 2]) hull() for (k = [i, i+1])
-        translate([X(CAT_TAIL[k][0]), Y(CAT_TAIL[k][1]), ZB]) scale([CAT_TAIL_R*S, CAT_TAIL_R*S, 5.6]) sphere(r = 1, $fn = 30);
-      ear3d(EAR_L, 11.4);
-      ear3d(EAR_R, 11.6);
-    }
-    prismZ(ZB, 40) carved(I_CAT);
-  }
-}
-// 칠하기 영역
-module cat_cream2d() {
-  ell2([478,372], 30, 20);                 // 배 흰 무늬
-  ell2([602,393], 50, 22);                 // 얼굴 아래(턱·볼)
-  ell2([638,386], 19, 23);                 // 반대쪽 볼
-  ell2([556,398], 26, 16);                 // 가슴
-  ell2([562,409], 27, 13); ell2([613,413], 28, 12);   // 앞발
-  ell2([482,403], 20, 9);                  // 꼬리 끝
-  polygon([[556,334],[564,314],[580,328]]); polygon([[634,336],[652,338],[645,356]]);   // 귀 안쪽
-}
-module cat_brown2d() {
-  // 감은 눈, 코, 입
-  polyline([[565,357],[577,369],[591,374]], 5.4);
-  polyline([[606,383],[619,389],[632,385]], 5.4);
-  ell2([598,397], 6, 4.5);
-  polyline([[587,405],[598,411],[610,406]], 3.6);
-  // 목선 (머리와 몸통 경계)
-  polyline([[553,322],[541,346],[541,372],[553,392]], 3.8);
-  // 이마 줄무늬
-  for (x = [585, 599, 612]) line2([x, 322], [x + 2, 340], 4.2);
-  // 등 줄무늬
-  for (p = [[456,312,466,340],[486,307,493,337],[516,309,520,335]]) line2([p[0],p[1]],[p[2],p[3]], 6);
-  // 꼬리 줄무늬
-  for (p = [[408,350,432,352],[406,372,430,372],[418,392,436,386],[448,402,450,390]]) line2([p[0],p[1]],[p[2],p[3]], 6);
-}
-module cat_orange() {
-  if (FLAT) difference() { carved(I_CAT); cat_cream2d(); cat_brown2d(); }
-  else difference() { cat_body3d(); skin(1.4) { cat_body3d(); cat_cream2d(); } skin(1.0) { cat_body3d(); cat_brown2d(); } }
-}
-module cat_cream() { if (FLAT) intersection() { carved(I_CAT); cat_cream2d(); } else skin(1.4) { cat_body3d(); cat_cream2d(); } }
-module cat_brown() { if (FLAT) intersection() { carved(I_CAT); cat_brown2d(); } else skin(1.0) { cat_body3d(); difference() { cat_brown2d(); cat_cream2d(); } } }
 
 // ---- 컵 ----
 CUP_RIM = 56 * S;  CUP_BOT = 41 * S;  CUP_H = (548 - 437) * S;
@@ -512,14 +489,33 @@ module cup_cream() {
 module cup_orange() { if (FLAT) intersection() { carved(I_CUP); union() { cup_rim2d(); pumpkin2d(); } } else { skin(2.4) { cup_body3d(); cup_rim2d(); } skin(2.4) { cup_body3d(); difference() { pumpkin2d(); pumpkin_stem2d(); } } } }
 module cup_green()  { if (FLAT) intersection() { carved(I_CUP); pumpkin_stem2d(); } else skin(2.4) { cup_body3d(); pumpkin_stem2d(); } }
 
-// ---- 솔방울 ----
-module cone3d() {
+// ---- 미니 호박 3D ----
+module pump_lobes3d(p) {
+  for (k = [0:4]) ell3([p[0] + PK_DX[k]*p[2], p[1]], 0.42*p[2], PK_RY[k]*p[3], ZB + (p[4] - ZB)*PK_RZ[k]);
+}
+module pump_body3d() {
   intersection() {
-    union() { ell3([806,490], 27, 34, Z_CONE - 0.6); ell3([808,525], 33, 26, Z_CONE); ell3([806,508], 31, 36, Z_CONE); }
-    prismZ(ZB, 40) carved(I_CONE);
+    for (p = PUMPS) pump_lobes3d(p);
+    prismZ(ZB, 40) difference() { carved(I_PUMP); for (p = PUMPS) pump_stem2d(p); }
   }
 }
-module cone_brown() { if (FLAT) carved(I_CONE); else difference() { cone3d(); skin(0.9) { cone3d(); cone_grooves(); } } }
+module pump_orange() { if (FLAT) difference() { carved(I_PUMP); for (p = PUMPS) pump_stem2d(p); } else pump_body3d(); }
+module pump_green()  { for (p = PUMPS) ext(ZB, p[4] + 1.0) intersection() { carved(I_PUMP); pump_stem2d(p); } }
+
+// ---- 책 위 장식 (화분·도토리) 층 ----
+module deco_brown() {      // 도토리 모자 + 꼭지
+  ext(ZB, 10.2)  for (a = ACORNS) intersection() { carved(I_DECO); union() { acorn_cap_ell(a); acorn_stem(a); } }
+  ext(10.2, 10.8) for (a = ACORNS) intersection() { carved(I_DECO); union() { offset(delta = -1.6) acorn_cap_ell(a); acorn_stem(a); } }
+}
+module deco_orange() {     // 화분 + 도토리 알맹이
+  ext(ZB, 9.8)    intersection() { carved(I_DECO); pot_body2d(); }
+  ext(9.8, 10.8)  intersection() { carved(I_DECO); difference() { pot_body2d(); pot_band2d(); } }
+  ext(ZB, 11.0)   intersection() { carved(I_DECO); pot_rim2d(); }
+  ext(11.0, 11.6) intersection() { carved(I_DECO); offset(delta = -2) pot_rim2d(); }
+  ext(ZB, 9.4)    for (a = ACORNS) intersection() { carved(I_DECO); acorn_nut(a); }
+  ext(9.4, 10.0)  for (a = ACORNS) intersection() { carved(I_DECO); offset(delta = -1.6) acorn_nut(a); }
+}
+module deco_cream() { ext(9.8, 10.8) intersection() { carved(I_DECO); pot_band2d(); } }    // 화분 띠
 
 // ============================================================================
 //  색상별 본체 (plaque)
@@ -546,7 +542,7 @@ module carved_part(i, which) {
 
 module brown_plaque() {
   // 0) 뒷판 (모든 아이템 외곽 + 키홀 입구)
-  ext(0, ZB) difference() { base2d(); kh_narrow(); }
+  ext(0, ZB) difference() { base2d(); kh_narrow(); nail_narrow(); }
   // 1) 선반
   shelf_brown();
   // 2) 처마 아래 둥지/경사지붕
@@ -568,13 +564,18 @@ module brown_plaque() {
   ext(Z_FRAME - 0.8, Z_FRAME) intersection() { carved(I_FRAME); offset(delta = -4) S_frame(); }
   ext(ZB, Z_MUN - 0.5) carved(I_MUN);
   ext(Z_MUN - 0.5, Z_MUN) intersection() { carved(I_MUN); offset(delta = -3) S_mun(); }
+  // 6.5) 둥근 다락창 : 테두리 + 십자살 (십자살 아래에 못걸이 포켓)
+  ext(ZB, NAIL_Z) difference() { intersection() { carved(I_VENT); vent_ring2d(); } nail_wide(); }
+  ext(NAIL_Z, 7.2) intersection() { carved(I_VENT); vent_ring2d(); }
+  ext(7.2, 7.8) intersection() { carved(I_VENT); offset(delta = -1.5) vent_ring2d(); }
+  ext(ZB, NAIL_Z) difference() { intersection() { carved(I_VENT); vent_bars2d(); } nail_wide(); }
+  ext(NAIL_Z, 7.0) intersection() { carved(I_VENT); vent_bars2d(); }
   // 7) 랜턴 프레임
   ext(ZB, Z_LANT) intersection() { carved(I_LANT); L_brown(); }
   // 8) 덩굴 가지
   ext(ZB, Z_TWIG) carved(I_TWIG);
   // 9) 솔방울, 고양이 줄무늬
-  cone_brown();
-  cat_brown();
+  deco_brown();
 }
 
 module cream_plaque() {
@@ -595,17 +596,20 @@ module cream_plaque() {
   ext(Z_FENCE - 1.4, Z_FENCE) intersection() { carved(I_FENCE); S_pickets(); }
   // 컵, 고양이, 노란 잎
   cup_cream();
-  cat_cream();
+  deco_cream();
   leaves_color("C");
 }
 
 module orange_plaque() {
   ext(ZB, Z_GLASS) carved(I_GLASS);                                      // 창 유리(주황 빛)
+  ext(ZB, NAIL_Z) difference() { intersection() { carved(I_VENT); difference() { vent_pane2d(); vent_bars2d(); } } nail_wide(); }   // 다락창 유리
+  ext(NAIL_Z, 6.4) intersection() { carved(I_VENT); difference() { vent_pane2d(); vent_bars2d(); } }   // 포켓 천장 두께 1.8mm
   ext(ZB, Z_LANT - 1.0) intersection() { carved(I_LANT); L_glass(); }     // 랜턴 유리
   // 가운데 책 (주황)
   ext(ZB, Z_BOOK - 0.8) for (b = BOOKS) if (b[5] == "O") intersection() { carved(I_BOOKS); book_cover(b); }
   ext(Z_BOOK - 0.8, Z_BOOK) for (b = BOOKS) if (b[5] == "O") intersection() { carved(I_BOOKS); offset(delta = -3) book_cover(b); }
-  cat_orange();
+  deco_orange();
+  pump_orange();
   cup_orange();
   leaves_color("O");
 }
@@ -615,6 +619,7 @@ module green_plaque() {
   ext(Z_BOOK - 0.8, Z_BOOK) for (b = BOOKS) if (b[5] == "G") intersection() { carved(I_BOOKS); offset(delta = -3) book_cover(b); }
   ext(ZB, Z_STEM) carved(I_STEM);
   cup_green();
+  pump_green();
   leaves_color("G");
 }
 
