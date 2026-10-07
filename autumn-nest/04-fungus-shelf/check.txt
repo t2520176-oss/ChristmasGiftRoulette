@@ -1,0 +1,30 @@
+
+===== size L =====
+  shelf  bodies 1, watertight True, 150 x 62 x 14.0 mm, 60 cm3 (75 g if solid PLA), overhang 1715 mm2  ok
+  plaque bodies 1, watertight True, 150 x 110 x 17.0 mm, 157 cm3 (195 g if solid PLA), overhang 300 mm2  ok
+  slide: shelf against the rail at 40 heights from the stop to the top edge: overlap 0.000 mm2, smallest gap 0.30 mm  ok
+  stop: top at 14.00 mm, shelf underside at 14.00 mm, contact area 125 mm2 (0.08 MPa for a 10 N load, 1 kg is 9.8 N)  ok
+  keyholes: 2, circle 9.5 mm wide (head passes), slot in the lip 4.6 mm, pocket 10.5 mm wide x 16.2 mm tall, centres -53 / 53 mm  ok
+  shelf: 22 separate bands on the top face at 0.25 mm depth (rings are engraved, 0.5 and 0.9 mm), card slot 70 x 2.4 mm, display surface 7248 mm2, a circle of 58 mm fits  ok
+  load estimate (ASSUMED, not measured): 1 kg at 43 mm gives 30 N on the dovetail flanks = 0.19 MPa; PLA is typically 20 to 40 MPa along the layers and less across them, so the dovetail is not the limit; the wall screws are
+
+===== size M =====
+  shelf  bodies 1, watertight True, 130 x 54 x 14.0 mm, 45 cm3 (56 g if solid PLA), overhang 1505 mm2  ok
+  plaque bodies 1, watertight True, 130 x 110 x 17.0 mm, 135 cm3 (168 g if solid PLA), overhang 300 mm2  ok
+  slide: shelf against the rail at 40 heights from the stop to the top edge: overlap 0.000 mm2, smallest gap 0.30 mm  ok
+  stop: top at 14.00 mm, shelf underside at 14.00 mm, contact area 125 mm2 (0.08 MPa for a 10 N load, 1 kg is 9.8 N)  ok
+  keyholes: 2, circle 9.5 mm wide (head passes), slot in the lip 4.6 mm, pocket 10.5 mm wide x 16.2 mm tall, centres -43 / 43 mm  ok
+  shelf: 20 separate bands on the top face at 0.25 mm depth (rings are engraved, 0.5 and 0.9 mm), card slot 60 x 2.4 mm, display surface 5457 mm2, a circle of 50 mm fits  ok
+  load estimate (ASSUMED, not measured): 1 kg at 38 mm gives 26 N on the dovetail flanks = 0.17 MPa; PLA is typically 20 to 40 MPa along the layers and less across them, so the dovetail is not the limit; the wall screws are
+
+===== size S =====
+  shelf  bodies 1, watertight True, 110 x 46 x 14.0 mm, 32 cm3 (40 g if solid PLA), overhang 1340 mm2  ok
+  plaque bodies 1, watertight True, 110 x 110 x 17.0 mm, 117 cm3 (145 g if solid PLA), overhang 300 mm2  ok
+  slide: shelf against the rail at 40 heights from the stop to the top edge: overlap 0.000 mm2, smallest gap 0.30 mm  ok
+  stop: top at 14.00 mm, shelf underside at 14.00 mm, contact area 125 mm2 (0.08 MPa for a 10 N load, 1 kg is 9.8 N)  ok
+  keyholes: 2, circle 9.5 mm wide (head passes), slot in the lip 4.6 mm, pocket 10.5 mm wide x 16.2 mm tall, centres -33 / 33 mm  ok
+  shelf: 22 separate bands on the top face at 0.25 mm depth (rings are engraved, 0.5 and 0.9 mm), card slot 51 x 2.4 mm, display surface 3918 mm2, a circle of 41 mm fits  ok
+  load estimate (ASSUMED, not measured): 1 kg at 32 mm gives 23 N on the dovetail flanks = 0.14 MPa; PLA is typically 20 to 40 MPa along the layers and less across them, so the dovetail is not the limit; the wall screws are
+wrote 04-fungus-shelf/rings.png
+
+RESULT: all checks passed
