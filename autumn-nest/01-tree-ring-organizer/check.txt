@@ -1,0 +1,47 @@
+parts (print position)
+  base    bodies 1, watertight True, 124 x 124 x 9.0 mm, 41.5 cm3 (51 g if solid PLA), overhang 4 mm2  ok
+  ring_b  bodies 1, watertight True, 118 x 118 x 54.0 mm, 71.0 cm3 (88 g if solid PLA), overhang 0 mm2  ok
+  ring_a  bodies 1, watertight True, 73 x 73 x 54.0 mm, 32.6 cm3 (40 g if solid PLA), overhang 0 mm2  ok
+  core    bodies 1, watertight True, 35 x 35 x 54.0 mm, 8.3 cm3 (10 g if solid PLA), overhang 0 mm2  ok
+  lid     bodies 1, watertight True, 127 x 127 x 10.4 mm, 28.5 cm3 (35 g if solid PLA), overhang 2083 mm2  ok
+          the lid overhang is at z = 0.50..0.50 mm: the roofs of the engraved tree rings, 0.8 mm wide bridges
+  all parts together: 182 cm3, 226 g if solid (the slicer infill makes it less)
+
+fit (radii measured on the meshes)
+  core in ring A           clearance 0.40 mm  ok
+  ring A in ring B         clearance 0.40 mm  ok
+  ring B in the base lip   clearance 0.40 mm  ok
+  lid skirt around ring B   clearance 0.40 mm  ok
+  ring tops at 57.00 / 57.00 / 57.00 mm, lid plate underside at 57.00 mm: the lid rests on all three  ok
+
+compartments (section at mid height; depth 52.4 mm)
+  core: 1 compartment(s), radius 16.4..16.4 mm, each 44..44 mL, spread 0.0 %
+  A   : 6 compartment(s), radius 19.2..35.2 mm, each 23..23 mL, spread 0.0 %
+  B   : 6 compartment(s), radius 38.0..57.2 mm, each 49..49 mL, spread 0.0 %
+  how many fit standing (greedy lower bound, per compartment):
+    AAA 10.5 x 44.5          core 7, ring A 2, ring B 5 per compartment
+    AA 14.5 x 50.5           core 3, ring A 1, ring B 3 per compartment
+    CR2032 20 x 3.2 (stack)  core 1, ring A 0, ring B 0 per compartment
+    coin 25                  core 1, ring A 0, ring B 0 per compartment
+  reachable through the window (the part of one sector under the opening):
+    AAA 10.5 x 44.5          ring A: 2 per opening  (compartment alone holds 2)
+    AA 14.5 x 50.5           ring B: 3 per opening  (compartment alone holds 3)
+  at least one AAA (ring A) and one AA (ring B) can be lifted out through the window  ok
+  AAA stand in ring A and AA in ring B (depth 52.4 mm > 50.5 mm)  ok
+
+lid window: share of each sector that is open from above (rays through the lid mesh)
+  position 0: ring A open sector at 30 deg (96 % open, others at most 0 %), ring B (95 % open, others 0 %), core 100 % open  ok
+  position 1: ring A open sector at 90 deg (97 % open, others at most 0 %), ring B (95 % open, others 0 %), core 100 % open  ok
+  position 2: ring A open sector at 150 deg (96 % open, others at most 0 %), ring B (95 % open, others 0 %), core 100 % open  ok
+  position 3: ring A open sector at 210 deg (94 % open, others at most 0 %), ring B (94 % open, others 0 %), core 100 % open  ok
+  position 4: ring A open sector at 270 deg (96 % open, others at most 0 %), ring B (93 % open, others 0 %), core 100 % open  ok
+  position 5: ring A open sector at 330 deg (97 % open, others at most 0 %), ring B (94 % open, others 0 %), core 100 % open  ok
+  halfway (lid turned 30 deg): ring A sectors [30, 90] open ['42 %', '45 %'], ring B ['43 %', '46 %']; the window straddles a divider
+
+detent (ribs inside the lid skirt, grooves in the top of ring B)
+  at a groove (rest position)   : rib tips free of ring B by 0.35 mm
+  between two grooves           : rib tips press 0.35 mm into ring B
+  (a 0.35 mm press is the designed click; how it feels in your plastic is not something a mesh check can tell)
+wrote 01-tree-ring-organizer/plan.png
+
+RESULT: all checks passed
