@@ -1,0 +1,19 @@
+parts
+  shell     bodies 1, watertight True, size 112 x 112 x 100 mm, volume 174.5 cm3, overhang 17.5 mm2  ok
+            the overhang is the roof of the 5 mm overflow hole: z 34.3..35.0 mm, a 5 mm bridge
+  pot       bodies 1, watertight True, size 102 x 97 x 66 mm, volume 61.6 cm3, overhang 0.0 mm2  ok
+  dipstick  bodies 1, watertight True, size 131 x 23 x 3 mm, volume 2.6 cm3, overhang 0.0 mm2  ok
+
+shell wall: 2892 rays, thinnest 3.20 mm, thickest 8.33 mm (smooth wall 3.2 mm + bark relief)  ok
+shell floor: 3.00 mm  ok
+overflow hole: open True, from z = 30.05 to 34.95 mm; the water cannot rise above 30.1 mm  ok
+
+reservoir up to the overflow (30.0 mm): 187 mL; soil in the pot up to 60 mm: 281 mL
+inner pot: body radius 42.0 mm, slot to the shell wall 5.0 mm; pot floor 38.0 mm above the shell floor = 8.0 mm above the highest water; cone seat radius at the rim 47.00 mm (rim edge 47.0)  ok
+            4015 sampled points of the pot body and floor to the shell: closest 5.0 mm  ok
+wick holes (3) and drain holes (6) open: 9 of 9  ok
+
+dipstick standing in the slot at 151 degrees: radius 43.1 to 46.1 mm, closest to the pot 1.00 mm, to the shell wall 0.93 mm, tip 3.4 mm above the floor, top 134 mm  ok
+dipstick grooves at heights (mm above the floor): 10.0, 30.0; MAX should be 30.0  ok
+
+RESULT: all checks passed
