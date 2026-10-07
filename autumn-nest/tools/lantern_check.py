@@ -7,8 +7,8 @@ Reads stl/shade.stl and stl/base.stl (and field.npz if given with --field), then
   - each part: one watertight body, overhang area
   - wall thickness of the shade measured on the mesh (rays along the surface normal) against the map
   - fit: the shade sits on the base without any interference, clearance of the centring lip
-  - the LED puck (default: Bambu Lab LED Lamp Kit 001, round, 59 x 18 mm, taped on the post) does not touch
-    the base lip or the shade, and how far its edge is from the wall (heat) and the open top
+  - the LED module (default: Bambu Lab LED Lamp Kit 001, round, 59 x 18 mm) sits in the pocket of the tray with
+    clearance all round, does not touch the shade, and how far its edge is from the wall (heat) and the open top
   - light: brightness of the veins at the bottom and top of the shade (lamp_light.py, flat round puck model)
 Exit code 1 if a check fails.
 """
@@ -95,22 +95,23 @@ def main():
     print(f"\nfit: shade-rim points inside the base {inside_b}, base points inside the shade rim {inside_s}, "
           f"lip to shade clearance {d_lip.min():.2f} mm  {'ok' if good else 'FAIL'}")
 
-    # the puck: a cylinder taped on top of the post, its lit face at face_z above the shade seat
-    post_h = max(0.0, a.face_z - a.led_h)
+    # the module: a cylinder standing in the pocket, its lit face at face_z above the shade seat
+    floor_z = max(0.0, a.face_z - a.led_h)
     puck_bottom = a.base_h + a.face_z - a.led_h
     puck = trimesh.creation.cylinder(radius=a.led_d / 2, height=a.led_h, sections=96)
     puck.apply_translation([0, 0, puck_bottom + a.led_h / 2])
     pts_p = puck.sample(15000)
-    # 1 mm shaved off the underside so the taped contact with the post top is not counted as interference
+    # the underside rests on the pocket floor, so the first 0.2 mm is not counted as interference
     pts_p = pts_p[pts_p[:, 2] > puck_bottom + 0.2]
     in_base = int(base.contains(pts_p).sum())
     in_rim = int(rim.contains(pts_p).sum())
-    lip_pts2 = pts_b[(np.hypot(pts_b[:, 0], pts_b[:, 1]) > 25) & (pts_b[:, 2] > a.base_h + 0.5)]
+    # wall points only: the pocket floor is excluded because the module rests on it
+    lip_pts2 = pts_b[(np.hypot(pts_b[:, 0], pts_b[:, 1]) > 25) & (pts_b[:, 2] > puck_bottom + 0.5)]
     _, d_pl, _ = trimesh.proximity.closest_point(puck, lip_pts2)
-    good = in_base == 0 and in_rim == 0 and d_pl.min() > 1.0
+    good = in_base == 0 and in_rim == 0 and d_pl.min() > 0.15
     ok &= good
-    print(f"\npuck {a.led_d:.0f} x {a.led_h:.0f} mm on a {post_h:.0f} mm post (underside {puck_bottom:.0f} mm): points inside the base "
-          f"{in_base}, inside the shade rim {in_rim}, nearest lip {d_pl.min():.1f} mm  {'ok' if good else 'FAIL'}")
+    print(f"\nmodule {a.led_d:.0f} x {a.led_h:.0f} mm in the pocket (bottom {floor_z:.0f} mm above the seat): points inside the base "
+          f"{in_base}, inside the shade rim {in_rim}, clearance to the pocket wall {d_pl.min():.2f} mm  {'ok' if good else 'FAIL'}")
 
     # heat: puck edge against the shade wall, and the open top
     puck_top = puck_bottom + a.led_h
@@ -120,11 +121,11 @@ def main():
     top_gap = s2.bounds[1][2] - puck_top
     good = wall_gap > 4 and top_gap > 40
     ok &= good
-    print(f"heat: puck edge to the shade wall {wall_gap:.1f} mm, open top {top_gap:.0f} mm above the puck  "
+    print(f"heat: module edge to the shade wall {wall_gap:.1f} mm, open top {top_gap:.0f} mm above the module  "
           f"{'ok' if good else 'TOO CLOSE'}  (the kit is rated 3 W; judge the temperature after running it)")
 
     # light
-    print(f"\nlight (simple model, flat round puck r = {a.led_d/2:.1f} mm, lit face {a.face_z:.0f} mm above the shade bottom):")
+    print(f"\nlight (simple model, flat round module r = {a.led_d/2:.1f} mm, lit face {a.face_z:.0f} mm above the shade bottom):")
     veins = t <= 1.0 + 1e-6
     rows = np.repeat(v[:, None], nu, 1)
     lo_m, hi_m = (rows > 20) & (rows < 45) & veins, (rows > 85) & (rows < 108) & veins

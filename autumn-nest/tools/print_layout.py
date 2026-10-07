@@ -142,7 +142,8 @@ def finish(results, a, out, color=None):
     used = sum(c.area for _, _, c, _ in results) / (a.bed[0] * a.bed[1]) * 100
     print(f"  {len(results)} parts, silhouettes cover {used:.0f} % of the bed, tallest {max(r[1].bounds[1][2] for r in results):.0f} mm")
 
-    trimesh.util.concatenate([r[1] for r in results]).export(out + ".stl")
+    if not a.no_stl:
+        trimesh.util.concatenate([r[1] for r in results]).export(out + ".stl")
     scene = trimesh.Scene()
     for name, mm, _, _ in results:
         scene.add_geometry(mm, node_name=name, geom_name=name)
@@ -181,7 +182,7 @@ def finish(results, a, out, color=None):
     fig.tight_layout()
     fig.savefig(out + ".png")
     plt.close(fig)
-    print(f"  wrote {out}.stl, {out}.3mf, {out}.png")
+    print(f"  wrote {out}" + ("" if a.no_stl else ".stl") + f".3mf, {out}.png")
     return ok
 
 
@@ -197,6 +198,7 @@ def main():
     ap.add_argument("--angles", type=float, default=15.0, help="rotation step (deg)")
     ap.add_argument("--split", action="store_true", help="put parts that do not fit on further beds")
     ap.add_argument("--tries", type=int, default=1, help="number of placement orders to try")
+    ap.add_argument("--no-stl", action="store_true", help="do not write the merged STL (the 3MF has the same parts)")
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--out", default="plate")
     a = ap.parse_args()

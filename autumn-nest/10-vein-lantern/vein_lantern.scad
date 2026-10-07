@@ -9,15 +9,16 @@
 //  that lets you calibrate wall thickness against your own filament and LED.
 //
 //  LIGHT SOURCE: the Bambu Lab LED Lamp Kit 001 (MH001), a round warm-white puck, 5 V USB, 3 W.
-//  The base is sized for it (diameter 59 mm). Other flat round pucks work by changing led_d / led_h.
+//  The base holds the 59 mm module in a tray (pocket). Other flat round modules work by changing led_d / led_h.
+//  Print part = "led_fit" first (about 10 minutes) to check your module fits before printing the whole base.
 //  Never an incandescent or halogen bulb: PLA softens at about 55 C.
 //
 //  Tested with OpenSCAD 2021.01.
 // =====================================================================
 
 /* [Part to render] */
-// base = lamp base, wedge = wall-thickness calibration wedge
-part = "base"; // [base, wedge]
+// base = lamp base, wedge = wall-thickness calibration wedge, led_fit = small test piece: print it first to check the LED fits
+part = "base"; // [base, wedge, led_fit]
 
 /* [Shade interface - must match vein_field.py / blender_vein_shade.py] */
 // Outer radius of the shade at its bottom edge (mm), vein_field.py --r-bottom
@@ -34,18 +35,20 @@ base_h = 12;
 lip_h = 6;
 lip_t = 2;
 
-/* [LED: Bambu Lab LED Lamp Kit 001 (MH001) round puck] */
-// Diameter of the puck (mm). Listed as D59 by every retailer found
+/* [LED: Bambu Lab LED Lamp Kit 001 (MH001) round module] */
+// Diameter of the module (mm). D59 in every retailer spec: MEASURE yours
 led_d = 59;
-// Height of the puck (mm). Most listings say 18, a few say 8: MEASURE YOURS and enter it here
+// Height of the module (mm). 18 in most listings, 8 in some: MEASURE yours
 led_h = 18;
-// Height of the puck's lit face above the shade's seat (mm). tools/lamp_light.py finds 34 mm
-// lights the veins at the top and bottom of the shade most evenly. The post under the puck is
-// face_z - led_h tall, so a different led_h keeps the light at the same height
+// Total clearance between the module and the pocket wall (mm)
+led_clr = 0.6;
+// Height of the module's lit face above the shade's seat (mm). tools/lamp_light.py finds 34 mm
+// lights the veins at the top and bottom of the shade most evenly. The tray floor is raised to
+// face_z - led_h, so a different led_h keeps the light at the same height
 face_z = 34;
-// Diameter of the double-sided tape that comes with the kit (mm): it holds the puck on the post
-tape_d = 40;
-// Cut a groove for the 1.5 m USB cable: down the post and across the base to the edge
+// How deep the module sits in the pocket (mm)
+pocket_depth = 8;
+// Cable groove (1.5 m USB cable): a notch in the tray wall, down the tray and across the base to the edge
 usb_groove = true;
 usb_w = 6;
 usb_depth = 3.5;
@@ -61,35 +64,43 @@ $fn = 120;
 lip_ro = shade_r0 - rim_t - clr;      // outer radius of the lip
 lip_ri = lip_ro - lip_t;
 
-post_h = max(0, face_z - led_h);        // post under the puck
-sink   = max(0, led_h - face_z);        // pocket depth if the puck has to sit lower than its own height
-post_d = tape_d + 4;                    // the tape sticks the puck to the top of the post
+floor_z  = max(0, face_z - led_h);      // the pocket floor above the shade's seat
+tray_h   = floor_z + pocket_depth;      // top of the tray above the seat
+pocket_r = (led_d + led_clr) / 2;
+tray_r   = lip_ro;                      // the tray is also the lip that centres the shade
+
+assert(tray_r - pocket_r >= 2, "tray wall too thin: the module is too wide for this shade");
+
+module cable_notch(z0, h) {
+    translate([-usb_w / 2, -tray_r - 1, z0]) cube([usb_w, tray_r - pocket_r + 2, h]);
+}
 
 module base() {
-    groove_r = post_h > 0 ? post_d / 2 : (led_d + 1) / 2;
     difference() {
         union() {
             // body with a 2 mm chamfer at the bottom edge (no sharp bed-contact edge)
             cylinder(r1 = base_r - 2, r2 = base_r, h = 2);
             translate([0, 0, 2]) cylinder(r = base_r, h = base_h - 2);
-            // lip that centres the shade
-            translate([0, 0, base_h - 0.01]) difference() {
-                cylinder(r = lip_ro, h = lip_h + 0.01);
-                translate([0, 0, -1]) cylinder(r = lip_ri, h = lip_h + 2);
-            }
-            // post under the puck
-            if (post_h > 0) translate([0, 0, base_h - 0.01]) cylinder(d = post_d, h = post_h + 0.01);
+            // tray: its outer wall centres the shade (0.35 mm clearance), its pocket holds the LED module
+            translate([0, 0, base_h - 0.01]) cylinder(r = tray_r, h = tray_h + 0.01);
         }
-        // pocket, only when the puck has to sit lower than its own height
-        if (sink > 0) translate([0, 0, base_h - sink]) cylinder(d = led_d + 1.0, h = sink + 1);
-        // cable groove: down the post (toward -y), then across the base to the edge, through the lip too
+        translate([0, 0, base_h + floor_z]) cylinder(r = pocket_r, h = pocket_depth + 1);
         if (usb_groove) {
-            if (post_h > 0)
-                translate([-usb_w / 2, -groove_r - 1, base_h - usb_depth])
-                    cube([usb_w, usb_depth + 1, usb_depth + post_h + 1]);
-            translate([-usb_w / 2, -base_r - 1, base_h - usb_depth])
-                cube([usb_w, base_r - groove_r + 1, usb_depth + lip_h + 1]);
+            cable_notch(base_h + floor_z, pocket_depth + 1);                       // window in the tray wall
+            translate([-usb_w / 2, -tray_r - 1, base_h - usb_depth])               // down the outside of the tray
+                cube([usb_w, 4, floor_z + pocket_depth + usb_depth + 1]);
+            translate([-usb_w / 2, -base_r - 1, base_h - usb_depth])               // across the base, under the shade rim
+                cube([usb_w, base_r - tray_r + 4, usb_depth + 1]);
         }
+    }
+}
+
+// quick fit test: the top of the tray only (3 mm floor, the pocket and the cable notch)
+module led_fit() {
+    difference() {
+        cylinder(r = tray_r, h = pocket_depth + 3);
+        translate([0, 0, 3]) cylinder(r = pocket_r, h = pocket_depth + 1);
+        if (usb_groove) cable_notch(3, pocket_depth + 1);
     }
 }
 
@@ -102,7 +113,8 @@ module wedge() {
 }
 
 if (part == "wedge") wedge();
+else if (part == "led_fit") led_fit();
 else base();
 
 echo(str("lip outer radius ", lip_ro, " mm, shade rim inner radius ", shade_r0 - rim_t, " mm"));
-echo(str("puck underside ", base_h + post_h - sink, " mm, lit face ", face_z, " mm above the shade seat; post ", post_h, " mm"));
+echo(str("module bottom ", floor_z, " mm and lit face ", face_z, " mm above the shade seat; tray ", tray_h, " mm tall, pocket diameter ", 2 * pocket_r, " mm"));
