@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Verify the Vein-Glow Lantern (entry #10): shade, base, how they fit, heat clearance and light.
 
-    python lantern_check.py 10-vein-lantern --field 10-vein-lantern/field.npz [--led-d 59 --led-h 18 --face-z 34]
+    python lantern_check.py 10-vein-lantern --field 10-vein-lantern/field.npz [--led-d 60 --led-h 10 --face-z 34]
 
 Reads stl/shade.stl and stl/base.stl (and field.npz if given with --field), then checks:
   - each part: one watertight body, overhang area
   - wall thickness of the shade measured on the mesh (rays along the surface normal) against the map
   - fit: the shade sits on the base without any interference, clearance of the centring lip
-  - the LED module (default: Bambu Lab LED Lamp Kit 001, round, 59 x 18 mm) sits in the pocket of the tray with
+  - the LED module (default: Bambu Lab LED Lamp Kit 001, round, measured 60 x 10 mm) sits in the pocket of the tray with
     clearance all round, does not touch the shade, and how far its edge is from the wall (heat) and the open top
   - light: brightness of the veins at the bottom and top of the shade (lamp_light.py, flat round puck model)
 Exit code 1 if a check fails.
@@ -28,8 +28,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("folder")
     ap.add_argument("--field", required=True, help="field.npz the shade was built from")
-    ap.add_argument("--led-d", type=float, default=59.0, help="puck diameter")
-    ap.add_argument("--led-h", type=float, default=18.0, help="puck height")
+    ap.add_argument("--led-d", type=float, default=60.0, help="module diameter")
+    ap.add_argument("--led-h", type=float, default=10.0, help="module height")
     ap.add_argument("--face-z", type=float, default=34.0, help="height of the lit face above the shade seat")
     ap.add_argument("--base-h", type=float, default=12.0, help="height of the base top (the shade seat)")
     a = ap.parse_args()

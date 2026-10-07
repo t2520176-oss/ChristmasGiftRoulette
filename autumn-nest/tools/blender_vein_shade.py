@@ -8,7 +8,7 @@
 The shade is a surface of revolution (profile from vein_field.profile). Its outer surface is smooth;
 the inner surface is pushed inward along the surface normal by the wall thickness T(u, v), so the veins
 are where the wall is thin. The renders show the lit lamp with the emission of every point taken from
-the simple LED model in lamp_light.py (a flat round puck, 59 mm like the Bambu Lab LED Lamp Kit, lit face at
+the simple LED model in lamp_light.py (a flat round module, 60 mm like the Bambu Lab LED Lamp Kit, lit face at
 34 mm; Beer-Lambert transmission with an ASSUMED absorption of white PLA, plus a little diffuse scatter):
 a preview, not a measurement.
 The unlit shade is plain white plastic.
@@ -27,7 +27,7 @@ from vein_field import profile  # noqa: E402
 from lamp_light import brightness  # noqa: E402
 
 
-def build_arrays(f, led_z=34.0, occluder_r=0.0, scatter=0.10, uniform=False, disc_r=29.5):
+def build_arrays(f, led_z=34.0, occluder_r=0.0, scatter=0.10, uniform=False, disc_r=30.0):
     u, v, t = f["u"], f["v"], f["t"]
     h, r0, rmax, rtop = float(f["height"]), float(f["r_bottom"]), float(f["r_max"]), float(f["r_top"])
     nv1, nu = t.shape
@@ -173,7 +173,7 @@ def main():
     ap.add_argument("--base-h", type=float, default=12.0)
     ap.add_argument("--samples", type=int, default=96)
     ap.add_argument("--led-z", type=float, default=34.0, help="height of the lit face above the shade bottom (mm)")
-    ap.add_argument("--disc-r", type=float, default=29.5, help="radius of the round LED puck (mm); 0 = point LED")
+    ap.add_argument("--disc-r", type=float, default=30.0, help="radius of the round LED puck (mm); 0 = point LED")
     ap.add_argument("--occluder-r", type=float, default=0.0, help="point LED only: radius of the post that shades the wall below")
     ap.add_argument("--uniform", action="store_true", help="old preview: every point lit the same way")
     a = ap.parse_args(argv)
