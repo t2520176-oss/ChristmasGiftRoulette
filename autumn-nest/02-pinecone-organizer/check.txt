@@ -1,0 +1,19 @@
+body: 1 body, watertight True, 128 x 128 x 52.0 mm, 378 cm3 (469 g if solid PLA), overhang 42 mm2 of 70071 (0.06 %)  ok
+      overhang at z 32..52 mm, radius 3..50 mm: slivers where a hole breaks through a groove between two scales
+
+holes: 42 of 42 open with the designed depth (3 rays each, started inside the hole, depth error at most 0.00 mm)  ok
+volume removed 71.6 cm3 against 72.3 cm3 for the 42 cylinders (ratio 0.991)  ok
+golden angle: hole k+1 is 137.5078 degrees round from hole k (largest error 0.0000)  ok
+wall between two holes: at least 2.02 mm (holes 1 and 2; 4 perimeters of 0.4 mm need 1.6)  ok
+wall between a hole and the outside of the body, lower half of every hole: at least 2.73 mm (4220 sample points); bottom edge of every hole at least 3.28 mm from the surface; lowest point of any hole 3.3 mm above the bed  ok
+      2 % of the sample points on the hole walls are where the hole opens through the slope of the dome (the lower lip of a leaning hole is a notch, which is what lets a pen lean); 90 points of the upper half are within 0.8 mm of the surface (a knife edge at the end of that notch, harmless)
+
+holes by size (diameter includes the clearance; the items are typical, not measured)
+   3.6 mm: 12 holes, depth 36..36 mm, tilt 1..13 deg: needles, pins, earring posts, hair pins, SIM tool (up to 3.2 mm)
+   6.5 mm: 14 holes, depth 36..36 mm, tilt 5..12 deg: thin pens, mechanical pencils, fine brushes, tweezers (up to 6 mm)
+   9.5 mm: 12 holes, depth 36..36 mm, tilt 10..16 deg: pencils (7.2 round, 8.7 across a hexagon's corners), ball pens, markers, screwdrivers (up to 9 mm)
+  13.5 mm:  4 holes, depth 36..36 mm, tilt 17..18 deg: thick markers, highlighters, big brushes (up to 13 mm)
+wrote 02-pinecone-organizer/plan.png
+wrote 02-pinecone-organizer/section.png
+
+RESULT: all checks passed
