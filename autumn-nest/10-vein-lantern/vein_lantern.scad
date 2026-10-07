@@ -9,7 +9,7 @@
 //  that lets you calibrate wall thickness against your own filament and LED.
 //
 //  LIGHT SOURCE: the Bambu Lab LED Lamp Kit 001 (MH001), a round warm-white puck, 5 V USB, 3 W.
-//  The base holds the 60 x 10 mm module in a tray (pocket). Other flat round modules work by changing led_d / led_h.
+//  The base holds the 59 x 9 mm module in a tray (pocket). Other flat round modules work by changing led_d / led_h.
 //  Print part = "led_fit" first (about 10 minutes) to check your module fits before printing the whole base.
 //  Never an incandescent or halogen bulb: PLA softens at about 55 C.
 //
@@ -36,12 +36,13 @@ lip_h = 6;
 lip_t = 2;
 
 /* [LED: Bambu Lab LED Lamp Kit 001 (MH001) round module] */
-// Diameter of the module (mm). Measured on the real module: 60 (retailers list 59)
-led_d = 60;
-// Height of the module (mm). Measured on the real module: about 10 (retailers list 18 or 8)
-led_h = 10;
-// Total clearance between the module and the pocket wall (mm)
-led_clr = 0.6;
+// Diameter of the module (mm): 59 (about; the real one may measure up to 60)
+led_d = 59;
+// Height of the module (mm): about 9 (retailers list 18 or 8, one measurement said 10)
+led_h = 9;
+// Total clearance between the module and the pocket wall (mm). 1.6 gives a 60.6 mm pocket, so a module
+// of 59 to 60.4 mm fits; the module is held by the pocket wall and the kit's double-sided tape
+led_clr = 1.6;
 // Height of the module's lit face above the shade's seat (mm). tools/lamp_light.py finds 34 mm
 // lights the veins at the top and bottom of the shade most evenly. The tray floor is raised to
 // face_z - led_h, so a different led_h keeps the light at the same height
