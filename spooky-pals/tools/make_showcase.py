@@ -152,8 +152,11 @@ def do_render(args):
         blender(write_cfg(os.path.join(TMP, "cfg_group.json"), cfg))
     # ---- hero close-ups
     if "hero" in shots:
+        only = set(args.only.split(",")) if args.only else None
         for i, (n, p, c, b) in enumerate(HEROES):
-            cfg = {"output": os.path.join(RND, f"hero_{n.lower()}.png"), "resolution": [1600, 1600], "samples": s,
+            if only and n not in only:
+                continue
+            cfg = {"output": os.path.join(RND, f"hero_{n.lower()}.png"), "resolution": [1400, 1400], "samples": s,
                    "scene": "table", "props": True, "bokeh": 30, "seed": 3 + i,
                    "items": [item(n, p, c, b, [0, 0, 0], rot=-12)],
                    "extras": [lantern([-95, 85, -14], 10, 1.0)] + scatter_props(20 + i, -90, 80, -130, -55, 6, 4),
