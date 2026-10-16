@@ -5,10 +5,10 @@
 #   tools/build_all.sh --family SMITH --year 2027 --members boy girl dog cat --names Ethan Lily Buddy Mochi
 #
 #   # 4-colour edition (brown / ivory / green / red), everything under ./four_color
-#   SCAD=openscad/family_ornament_4color.scad PALETTE=palettes/four_color.json GROUPS=palettes/groups_4color.json \
+#   SCAD=openscad/family_ornament_4color.scad PALETTE=palettes/four_color.json PIECE_GROUPS=palettes/groups_4color.json \
 #   OUT=four_color PRINT_LAYOUT=local tools/build_all.sh
 #
-# Environment: SKIP_RENDER=1 (no Blender) · QUALITY=draft|final · PYTHON=... · SLICE=0 (skip PrusaSlicer) · CHECKS=0
+# Environment: SKIP_EXPORT=1 (reuse the STLs) · SKIP_RENDER=1 (no Blender) · QUALITY=draft|final · PYTHON=... · SLICE=0 (skip PrusaSlicer) · CHECKS=0
 # Needs: openscad, python3 with trimesh numpy shapely rtree manifold3d pillow, Blender 4.x (renders), PrusaSlicer (slice check)
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -18,10 +18,12 @@ OUT=${OUT:-.}
 PRINT_LAYOUT=${PRINT_LAYOUT:-print}
 EXTRA=("$@")
 PAL=(); [ -n "${PALETTE:-}" ] && PAL=(--palette "$PALETTE")
-GRP=(); [ -n "${GROUPS:-}" ] && GRP=(--groups "$GROUPS")
+GRP=(); [ -n "${PIECE_GROUPS:-}" ] && GRP=(--groups "$PIECE_GROUPS")   # (GROUPS is a reserved bash variable)
 mkdir -p "$OUT/docs"
-$PY tools/export_roles.py --scad "$SCAD" --out "$OUT/stl/print" --layout "$PRINT_LAYOUT" "${EXTRA[@]}"
-$PY tools/export_roles.py --scad "$SCAD" --out "$OUT/stl/assembled" --layout assembled "${EXTRA[@]}"
+if [ "${SKIP_EXPORT:-0}" != "1" ]; then
+  $PY tools/export_roles.py --scad "$SCAD" --out "$OUT/stl/print" --layout "$PRINT_LAYOUT" "${EXTRA[@]}"
+  $PY tools/export_roles.py --scad "$SCAD" --out "$OUT/stl/assembled" --layout assembled "${EXTRA[@]}"
+fi
 rm -rf "$OUT/beds" && $PY tools/plan_beds.py --print-dir "$OUT/stl/print" --out "$OUT/beds" "${PAL[@]}" "${GRP[@]}"
 if [ "${CHECKS:-1}" = "1" ]; then
   $PY tools/check_pieces.py "$OUT/stl/print" --islands 5 --md "$OUT/docs/PRINT_REPORT.md"
