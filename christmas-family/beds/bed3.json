@@ -1,0 +1,124 @@
+{
+ "bed": 3,
+ "colors": [
+  "WHITE",
+  "RED",
+  "BLACK",
+  "PINK"
+ ],
+ "slots": {
+  "1": "WHITE",
+  "2": "RED",
+  "3": "BLACK",
+  "4": "PINK"
+ },
+ "pieces": [
+  "fig0",
+  "fig2"
+ ],
+ "footprint_pct": 5.1,
+ "solid_volume_cm3": {
+  "WHITE": 3.3,
+  "RED": 7.6,
+  "BLACK": 2.8,
+  "PINK": 3.8
+ },
+ "volumes": [
+  {
+   "file": "bed3/fig2__dress__RED.stl",
+   "piece": "fig2",
+   "role": "dress",
+   "color": "RED",
+   "hex": "#C8202F",
+   "slot": 2
+  },
+  {
+   "file": "bed3/fig2__collar__WHITE.stl",
+   "piece": "fig2",
+   "role": "collar",
+   "color": "WHITE",
+   "hex": "#F2F2EC",
+   "slot": 1
+  },
+  {
+   "file": "bed3/fig2__hair__BLACK.stl",
+   "piece": "fig2",
+   "role": "hair",
+   "color": "BLACK",
+   "hex": "#1E1E22",
+   "slot": 3
+  },
+  {
+   "file": "bed3/fig2__bow__RED.stl",
+   "piece": "fig2",
+   "role": "bow",
+   "color": "RED",
+   "hex": "#C8202F",
+   "slot": 2
+  },
+  {
+   "file": "bed3/fig2__face__PINK.stl",
+   "piece": "fig2",
+   "role": "face",
+   "color": "PINK",
+   "hex": "#F2B8A8",
+   "slot": 4
+  },
+  {
+   "file": "bed3/fig2__eyes__BLACK.stl",
+   "piece": "fig2",
+   "role": "eyes",
+   "color": "BLACK",
+   "hex": "#1E1E22",
+   "slot": 3
+  },
+  {
+   "file": "bed3/fig0__jacket__WHITE.stl",
+   "piece": "fig0",
+   "role": "jacket",
+   "color": "WHITE",
+   "hex": "#F2F2EC",
+   "slot": 1
+  },
+  {
+   "file": "bed3/fig0__scarf__RED.stl",
+   "piece": "fig0",
+   "role": "scarf",
+   "color": "RED",
+   "hex": "#C8202F",
+   "slot": 2
+  },
+  {
+   "file": "bed3/fig0__hat__RED.stl",
+   "piece": "fig0",
+   "role": "hat",
+   "color": "RED",
+   "hex": "#C8202F",
+   "slot": 2
+  },
+  {
+   "file": "bed3/fig0__pom__WHITE.stl",
+   "piece": "fig0",
+   "role": "pom",
+   "color": "WHITE",
+   "hex": "#F2F2EC",
+   "slot": 1
+  },
+  {
+   "file": "bed3/fig0__face__PINK.stl",
+   "piece": "fig0",
+   "role": "face",
+   "color": "PINK",
+   "hex": "#F2B8A8",
+   "slot": 4
+  },
+  {
+   "file": "bed3/fig0__eyes__BLACK.stl",
+   "piece": "fig0",
+   "role": "eyes",
+   "color": "BLACK",
+   "hex": "#1E1E22",
+   "slot": 3
+  }
+ ]
+}

@@ -1,0 +1,268 @@
+{
+ "bed": 2,
+ "colors": [
+  "WHITE",
+  "GREEN",
+  "RED",
+  "BLACK"
+ ],
+ "slots": {
+  "1": "WHITE",
+  "2": "GREEN",
+  "3": "RED",
+  "4": "BLACK"
+ },
+ "pieces": [
+  "fig1",
+  "fig4",
+  "holly0",
+  "holly1",
+  "lantern0",
+  "lantern1",
+  "tree0",
+  "tree1",
+  "tree2",
+  "tree3"
+ ],
+ "footprint_pct": 21.5,
+ "solid_volume_cm3": {
+  "WHITE": 15.9,
+  "GREEN": 9.9,
+  "RED": 4.4,
+  "BLACK": 9.5
+ },
+ "volumes": [
+  {
+   "file": "bed2/tree1__green__GREEN.stl",
+   "piece": "tree1",
+   "role": "green",
+   "color": "GREEN",
+   "hex": "#1F6B3A",
+   "slot": 2
+  },
+  {
+   "file": "bed2/tree1__snow__WHITE.stl",
+   "piece": "tree1",
+   "role": "snow",
+   "color": "WHITE",
+   "hex": "#F2F2EC",
+   "slot": 1
+  },
+  {
+   "file": "bed2/tree1__star__RED.stl",
+   "piece": "tree1",
+   "role": "star",
+   "color": "RED",
+   "hex": "#C8202F",
+   "slot": 3
+  },
+  {
+   "file": "bed2/tree2__green__GREEN.stl",
+   "piece": "tree2",
+   "role": "green",
+   "color": "GREEN",
+   "hex": "#1F6B3A",
+   "slot": 2
+  },
+  {
+   "file": "bed2/tree2__snow__WHITE.stl",
+   "piece": "tree2",
+   "role": "snow",
+   "color": "WHITE",
+   "hex": "#F2F2EC",
+   "slot": 1
+  },
+  {
+   "file": "bed2/tree2__star__RED.stl",
+   "piece": "tree2",
+   "role": "star",
+   "color": "RED",
+   "hex": "#C8202F",
+   "slot": 3
+  },
+  {
+   "file": "bed2/tree0__green__GREEN.stl",
+   "piece": "tree0",
+   "role": "green",
+   "color": "GREEN",
+   "hex": "#1F6B3A",
+   "slot": 2
+  },
+  {
+   "file": "bed2/tree0__snow__WHITE.stl",
+   "piece": "tree0",
+   "role": "snow",
+   "color": "WHITE",
+   "hex": "#F2F2EC",
+   "slot": 1
+  },
+  {
+   "file": "bed2/tree0__star__RED.stl",
+   "piece": "tree0",
+   "role": "star",
+   "color": "RED",
+   "hex": "#C8202F",
+   "slot": 3
+  },
+  {
+   "file": "bed2/tree3__green__GREEN.stl",
+   "piece": "tree3",
+   "role": "green",
+   "color": "GREEN",
+   "hex": "#1F6B3A",
+   "slot": 2
+  },
+  {
+   "file": "bed2/tree3__snow__WHITE.stl",
+   "piece": "tree3",
+   "role": "snow",
+   "color": "WHITE",
+   "hex": "#F2F2EC",
+   "slot": 1
+  },
+  {
+   "file": "bed2/tree3__star__RED.stl",
+   "piece": "tree3",
+   "role": "star",
+   "color": "RED",
+   "hex": "#C8202F",
+   "slot": 3
+  },
+  {
+   "file": "bed2/fig1__body__WHITE.stl",
+   "piece": "fig1",
+   "role": "body",
+   "color": "WHITE",
+   "hex": "#F2F2EC",
+   "slot": 1
+  },
+  {
+   "file": "bed2/fig1__hat__BLACK.stl",
+   "piece": "fig1",
+   "role": "hat",
+   "color": "BLACK",
+   "hex": "#1E1E22",
+   "slot": 4
+  },
+  {
+   "file": "bed2/fig1__band__RED.stl",
+   "piece": "fig1",
+   "role": "band",
+   "color": "RED",
+   "hex": "#C8202F",
+   "slot": 3
+  },
+  {
+   "file": "bed2/fig1__scarf__RED.stl",
+   "piece": "fig1",
+   "role": "scarf",
+   "color": "RED",
+   "hex": "#C8202F",
+   "slot": 3
+  },
+  {
+   "file": "bed2/fig1__nose__RED.stl",
+   "piece": "fig1",
+   "role": "nose",
+   "color": "RED",
+   "hex": "#C8202F",
+   "slot": 3
+  },
+  {
+   "file": "bed2/fig1__eyes__BLACK.stl",
+   "piece": "fig1",
+   "role": "eyes",
+   "color": "BLACK",
+   "hex": "#1E1E22",
+   "slot": 4
+  },
+  {
+   "file": "bed2/fig4__fur__BLACK.stl",
+   "piece": "fig4",
+   "role": "fur",
+   "color": "BLACK",
+   "hex": "#1E1E22",
+   "slot": 4
+  },
+  {
+   "file": "bed2/fig4__white__WHITE.stl",
+   "piece": "fig4",
+   "role": "white",
+   "color": "WHITE",
+   "hex": "#F2F2EC",
+   "slot": 1
+  },
+  {
+   "file": "bed2/fig4__red__RED.stl",
+   "piece": "fig4",
+   "role": "red",
+   "color": "RED",
+   "hex": "#C8202F",
+   "slot": 3
+  },
+  {
+   "file": "bed2/lantern0__frame__BLACK.stl",
+   "piece": "lantern0",
+   "role": "frame",
+   "color": "BLACK",
+   "hex": "#1E1E22",
+   "slot": 4
+  },
+  {
+   "file": "bed2/lantern0__glass__WHITE.stl",
+   "piece": "lantern0",
+   "role": "glass",
+   "color": "WHITE",
+   "hex": "#F2F2EC",
+   "slot": 1
+  },
+  {
+   "file": "bed2/lantern1__frame__BLACK.stl",
+   "piece": "lantern1",
+   "role": "frame",
+   "color": "BLACK",
+   "hex": "#1E1E22",
+   "slot": 4
+  },
+  {
+   "file": "bed2/lantern1__glass__WHITE.stl",
+   "piece": "lantern1",
+   "role": "glass",
+   "color": "WHITE",
+   "hex": "#F2F2EC",
+   "slot": 1
+  },
+  {
+   "file": "bed2/holly0__leaf__GREEN.stl",
+   "piece": "holly0",
+   "role": "leaf",
+   "color": "GREEN",
+   "hex": "#1F6B3A",
+   "slot": 2
+  },
+  {
+   "file": "bed2/holly0__berry__RED.stl",
+   "piece": "holly0",
+   "role": "berry",
+   "color": "RED",
+   "hex": "#C8202F",
+   "slot": 3
+  },
+  {
+   "file": "bed2/holly1__leaf__GREEN.stl",
+   "piece": "holly1",
+   "role": "leaf",
+   "color": "GREEN",
+   "hex": "#1F6B3A",
+   "slot": 2
+  },
+  {
+   "file": "bed2/holly1__berry__RED.stl",
+   "piece": "holly1",
+   "role": "berry",
+   "color": "RED",
+   "hex": "#C8202F",
+   "slot": 3
+  }
+ ]
+}

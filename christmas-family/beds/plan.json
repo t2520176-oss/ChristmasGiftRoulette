@@ -1,0 +1,103 @@
+{
+ "bed": [
+  256,
+  256
+ ],
+ "max_colors": 4,
+ "beds": [
+  {
+   "bed": 1,
+   "colors": [
+    "BLUE",
+    "YELLOW",
+    "WHITE",
+    "BROWN"
+   ],
+   "slots": {
+    "1": "BLUE",
+    "2": "YELLOW",
+    "3": "WHITE",
+    "4": "BROWN"
+   },
+   "pieces": [
+    "base",
+    "fig3",
+    "house",
+    "plaque",
+    "sky",
+    "tag0",
+    "tag1",
+    "tag2",
+    "tag3",
+    "tag4"
+   ],
+   "footprint_pct": 63.2,
+   "solid_volume_cm3": {
+    "BLUE": 49.3,
+    "YELLOW": 21.5,
+    "WHITE": 46.7,
+    "BROWN": 209.6
+   }
+  },
+  {
+   "bed": 2,
+   "colors": [
+    "WHITE",
+    "GREEN",
+    "RED",
+    "BLACK"
+   ],
+   "slots": {
+    "1": "WHITE",
+    "2": "GREEN",
+    "3": "RED",
+    "4": "BLACK"
+   },
+   "pieces": [
+    "fig1",
+    "fig4",
+    "holly0",
+    "holly1",
+    "lantern0",
+    "lantern1",
+    "tree0",
+    "tree1",
+    "tree2",
+    "tree3"
+   ],
+   "footprint_pct": 21.5,
+   "solid_volume_cm3": {
+    "WHITE": 15.9,
+    "GREEN": 9.9,
+    "RED": 4.4,
+    "BLACK": 9.5
+   }
+  },
+  {
+   "bed": 3,
+   "colors": [
+    "WHITE",
+    "RED",
+    "BLACK",
+    "PINK"
+   ],
+   "slots": {
+    "1": "WHITE",
+    "2": "RED",
+    "3": "BLACK",
+    "4": "PINK"
+   },
+   "pieces": [
+    "fig0",
+    "fig2"
+   ],
+   "footprint_pct": 5.1,
+   "solid_volume_cm3": {
+    "WHITE": 3.3,
+    "RED": 7.6,
+    "BLACK": 2.8,
+    "PINK": 3.8
+   }
+  }
+ ]
+}
