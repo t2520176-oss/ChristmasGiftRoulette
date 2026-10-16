@@ -30,6 +30,7 @@ def main():
     ap.add_argument("--print-dir", required=True)
     a = ap.parse_args()
     plan = json.load(open(os.path.join(a.beds, "plan.json")))
+    fp.COLOR_HEX.update(plan.get("hex", {}))
     cfg = json.load(open(os.path.join(a.print_dir, "config.json")))
     sl_path = os.path.join(a.beds, "slice_summary.json")
     sl = json.load(open(sl_path)) if os.path.exists(sl_path) else {}

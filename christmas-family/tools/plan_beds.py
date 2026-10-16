@@ -284,6 +284,7 @@ def main():
     ap.add_argument("--tower", type=float, nargs=2, default=[45.0, 70.0], metavar=("W", "D"),
                     help="width and depth of the back-right area kept free for the prime / wipe tower (0 0 = none)")
     ap.add_argument("--palette", default="", help="json {'piece-kind.role': 'COLOUR'} overrides")
+    ap.add_argument("--groups", default="", help="json list of piece-name lists = one bed each (the rest is planned automatically)")
     ap.add_argument("--balance", action="store_true", help="even out the print time of the beds (default: fullest bed first, keeps pairs/groups together)")
     a = ap.parse_args()
 
@@ -295,7 +296,21 @@ def main():
         roles = [(r, os.path.join(a.print_dir, f"{it['piece']}__{r}.stl")) for r in it["roles"]]
         roles = [(r, p) for r, p in roles if os.path.exists(p)]
         pieces.append(Piece(it["piece"], roles, cfg["members"], overrides))
-    beds = plan(pieces, a.bed, a.max_colors, a.margin, a.gap, a.tower)
+    beds = []
+    if a.groups:                                      # hand-made beds: [["base", "sky", ...], ["fig0", ...]]
+        by_name = {p.name: p for p in pieces}
+        for gi, names in enumerate(json.load(open(a.groups)), 1):
+            ps = [by_name.pop(n) for n in names]
+            cols = sorted({c for p in ps for c in p.colors}, key=fp.ORDER.index)
+            if len(cols) > a.max_colors:
+                sys.exit(f"group {gi} needs {len(cols)} colours {cols} (max {a.max_colors})")
+            placed = try_pack(ps, a.bed, a.margin, a.gap, a.tower)
+            if len(placed) != len(ps):
+                sys.exit(f"group {gi}: only {len(placed)} of {len(ps)} pieces fit on the bed")
+            beds.append({"colors": cols, "placed": placed})
+        pieces = list(by_name.values())               # pieces not named in any group are planned automatically
+    if pieces:
+        beds += plan(pieces, a.bed, a.max_colors, a.margin, a.gap, a.tower)
     if a.balance:
         beds = balance(beds, a.bed, a.max_colors, a.margin, a.gap, a.tower)
 
@@ -326,7 +341,9 @@ def main():
         summary.append(info)
         print(f"bed {bi}: colours {slots}  pieces {len(info['pieces'])}  footprint {info['footprint_pct']}%")
         print("   ", ", ".join(info["pieces"]))
-    json.dump({"bed": a.bed, "max_colors": a.max_colors, "beds": [{k: v for k, v in s.items() if k != 'volumes'} for s in summary]},
+    used = sorted({c for s in summary for c in s["colors"]}, key=fp.ORDER.index)
+    json.dump({"bed": a.bed, "max_colors": a.max_colors, "tower": a.tower, "hex": {c: fp.COLOR_HEX[c] for c in used},
+               "overrides": overrides or {}, "beds": [{k: v for k, v in s.items() if k != 'volumes'} for s in summary]},
               open(os.path.join(a.out, "plan.json"), "w"), indent=1)
 
 

@@ -32,7 +32,7 @@ names   = ["Ethan", "Lily", "Hazel", "Buddy", "Mochi"];
 // All individual parts or one selected part. [all,sky,tree0,tree1,tree2,tree3,house,base,plaque,holly0,holly1,lantern0,lantern1,fig0,fig1,fig2,fig3,fig4,fig5,tag0,tag1,tag2,tag3,tag4,tag5,manifest]
 part = "all";
 
-// [print,assembled]
+// [print,assembled,local]
 layout = "print";
 
 // "" shows all colors; type a role only if isolating one color role.
@@ -281,76 +281,56 @@ module panel2d() union() {
 }
 
 // ----------------------------------------------------------------------------------------
-//  REINFORCED CELESTIAL MOTIF
-//  Moon, four stars and a gently curved connecting ribbon share ONE 2D outline.
-//  Width is 2.6 mm at full scale and never falls below 2.2 mm.
-//  All the ivory stars/ribbon sit DIRECTLY ON the 3.0 mm sky panel, so they
-//  bond to the base in an AMS multicolour print; no loose stars to glue on.
+//  CELESTIAL MOTIF on the back plate (moon + stars), designed around what the viewer really sees
+//
+//  From the front the trees, the house, the figures and the lanterns hide the lower two thirds of the
+//  arch, so the sky is the "crown" above them.  The motif lives only there:
+//    * a thick crescent moon left of the apex, with a small star resting in its crook,
+//    * one big star right of the apex and two ever smaller ones stepping down to the right (a calm
+//      diagonal that answers the moon and follows the curve of the arch),
+//    * four tiny four-point sparkles that fill the gaps without competing.
+//  Every element keeps >= 2.5 mm away from the silhouette of the trees / house / figures and >= 4 mm from
+//  the arch edge (checked with the projected silhouettes of the assembled model, see tools/check_sky.py).
+//  Everything is ivory ink printed straight onto the 3 mm brown panel, 2 mm high, tips rounded by
+//  soften() so nothing is thinner than ~0.7 mm: no loose parts, nothing to glue.
+//  Coordinates are for the 200 mm wide scene (5 figures) and scale with the arch.
 // ----------------------------------------------------------------------------------------
 CELESTIAL_S = W / 200;
-RIBBON_WIDTH = max(2.2, 2.6 * CELESTIAL_S);
 
-module ribbon2d(points, width = RIBBON_WIDTH) {
-    for (k = [0 : len(points) - 2]) hull() {
-        translate([points[k][0] * CELESTIAL_S,
-                   points[k][1] * CELESTIAL_S]) circle(d = width);
-        translate([points[k+1][0] * CELESTIAL_S,
-                   points[k+1][1] * CELESTIAL_S]) circle(d = width);
-    }
-}
+//        centre         radius  opening  cut     cut radius
+//                              (deg)    offset
+MOON    = [[-21, 75.5],  12.5,   35,      5.0,    10.9];
+//        x     y     R    rotation
+STARS   = [[-13.5, 80.2, 3.3,  0],
+           [ 20.0, 79.5, 7.2,  6],
+           [ 38.5, 78.0, 4.2, -9],
+           [ 62.0, 64.0, 3.0, 10]];
+//        x     y     R
+SPARKLES = [[  3, 68, 3.2],
+            [-34, 64, 2.6],
+            [-62, 66, 2.5],
+            [  9, 88, 2.6]];
 
-// A broad crescent, not a fragile hairline / floating cut-out.
-module moon2d() scale([CELESTIAL_S, CELESTIAL_S]) difference() {
-    translate([-38, 78]) circle(r = 10.0);
-    translate([-32.8, 81.2]) circle(r = 7.8);
-}
-
-module sparkle2d(R) polygon([for (i = [0 : 7])
-    let(a = 90 + i * 45, rr = (i % 2 == 0) ? R : R * 0.35)
+module sparkle2d(R, k = 0.34) polygon([for (i = [0 : 7])
+    let(a = 90 + i * 45, rr = (i % 2 == 0) ? R : R * k)
     [rr * cos(a), rr * sin(a)]]);
 
-// Four large, printable stars. Coordinates refer to the 200 mm wide scene.
-STARS = [
-    [-14, 84, 4.8, 5],
-    [ 11, 87, 4.9, 5],
-    [ 34, 81, 4.4, 5],
-    [ 55, 72, 4.1, 4]
-];
+module moon2d() scale([CELESTIAL_S, CELESTIAL_S]) soften(0.6) difference() {
+    translate(MOON[0]) circle(r = MOON[1], $fn = 96);
+    translate(MOON[0] + MOON[3] * [cos(MOON[2]), sin(MOON[2])]) circle(r = MOON[4], $fn = 96);
+}
 
 module stars2d() union() {
     moon2d();
-
-    // Both ends overlap the crescent and stars by more than a line width.
-    // Thin decorative constellation, physically ONE contiguous piece.
-    ribbon2d([[-42, 77], [-31, 78], [-23, 82], [-14, 84],
-              [-2, 86], [11, 87], [22, 85], [34, 81],
-              [45, 77], [55, 72]]);
-
-    // A smaller curved accent tucked under the middle star.
-    ribbon2d([[11, 87], [18, 79], [24, 76]], max(2.2, 2.3 * CELESTIAL_S));
-
-    for (s = STARS)
-        translate([s[0] * CELESTIAL_S, s[1] * CELESTIAL_S])
-            if (s[3] == 5)
-                star2d(max(3.6, s[2] * CELESTIAL_S),
-                       max(1.8, s[2] * CELESTIAL_S * 0.5));
-            else
-                sparkle2d(max(3.6, s[2] * CELESTIAL_S));
+    for (s = STARS) translate([s[0] * CELESTIAL_S, s[1] * CELESTIAL_S]) rotate(s[3]) scale([CELESTIAL_S, CELESTIAL_S])
+        soften(0.35) star2d(s[2], 0.46 * s[2]);
+    for (s = SPARKLES) translate([s[0] * CELESTIAL_S, s[1] * CELESTIAL_S]) scale([CELESTIAL_S, CELESTIAL_S])
+        soften(0.25) sparkle2d(s[2]);
 }
 
-// silhouettes of the four trees (in the sky frame): the moon and the stars stay out of them, so a tree never has to
-// share its space with a star (the stars behind a tree are simply hidden by it)
-module tree_blockers() for (i = [0 : 3]) translate([TREES[i][0] * SX, 0.5]) offset(delta = 0.4) union() {
-    tree_tiers2d(tree_w(i), tree_h(i));
-    translate([0, tree_h(i) + 1.2]) star2d(5.2, 2.3);
-}
 module sky(r) {
     if (r == "panel") slab(3) panel2d();
-    if (r == "stars") translate([0, 0, 3]) slab(2.0)
-        difference() {
-            intersection() { stars2d(); offset(delta = -0.5) panel2d(); }
-            tree_blockers();
-        }
+    if (r == "stars") translate([0, 0, 3]) slab(2.0) intersection() { stars2d(); offset(delta = -0.5) panel2d(); }
 }
 
 // ----------------------------------------------------------------------------------------
@@ -475,7 +455,8 @@ module boy(r) {
 // ---- girl --------------------------------------------------------------------------------
 module girl_hairback() union() { D([0, 31], [14.9, 14.6, 8.0]); for (s = [-1, 1]) translate([s * 12.4, 22]) rotate(-s * 10) D([0, 0], [2.7, 5.6, 6.2]); }
 module girl_bangs() intersection() { D([0, 37.5], [13.4, 8.4, 12.7]); clipy(34.0); }
-module girl_bow() translate([-8.4, 44.6]) { rotate(28) D([-4.3, 0], [4.8, 3.0, 5.0]); rotate(-28) D([4.3, 0], [4.8, 3.0, 5.0]); D([0, 0], [2.2, 2.2, 5.6]); }
+// FIX: bow moved 1 mm to the right (was x = -8.4), so it never reaches into the neighbouring figure's x-range
+module girl_bow() translate([-7.4, 44.6]) { rotate(28) D([-4.3, 0], [4.8, 3.0, 5.0]); rotate(-28) D([4.3, 0], [4.8, 3.0, 5.0]); D([0, 0], [2.2, 2.2, 5.6]); }
 module girl_collar() D([0, 19.3], [9.6, 3.8, 8.8]);
 module girl_features() { EYES2(4.6, 29.6); smile(25.4); }
 module girl(r) {
@@ -674,6 +655,7 @@ module show(p) {
         if (role == "" || role == r)
             color(filament(p,r))
                 if (layout == "print") print_place(p) emit(p,r);
+                else if (layout == "local") emit(p,r);      // each piece at its own origin (STL export: no far-from-origin rounding)
                 else place(p) emit(p,r);
 }
 

@@ -53,4 +53,10 @@ def role_color(piece, role, members, overrides=None):
 
 
 def load_overrides(path):
-    return json.load(open(path)) if path else None
+    """Palette json: {"kind.role": "COLOUR", ...}.  The optional key "_hex" re-defines the HEX value of colour names,
+    e.g. {"_hex": {"BROWN": "#936039"}} (applied to COLOR_HEX, so every tool sees it)."""
+    if not path:
+        return None
+    table = json.load(open(path))
+    COLOR_HEX.update(table.pop("_hex", {}))
+    return table

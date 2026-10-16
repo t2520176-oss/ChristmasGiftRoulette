@@ -34,6 +34,7 @@ def main():
     ap.add_argument("--slice", default="", help="json {bed: {time, filament_g:[..]}} to print under the legend")
     a = ap.parse_args()
     plan = json.load(open(os.path.join(a.beds, "plan.json")))
+    fp.COLOR_HEX.update(plan.get("hex", {}))
     sl = json.load(open(a.slice)) if a.slice and os.path.exists(a.slice) else {}
     for b in plan["beds"]:
         n = b["bed"]

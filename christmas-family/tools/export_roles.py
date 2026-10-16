@@ -58,9 +58,10 @@ def run(piece, role, a):
 
 
 def main():
+    global SCAD
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
-    ap.add_argument("--layout", default="print", choices=["print", "assembled"])
+    ap.add_argument("--layout", default="print", choices=["print", "assembled", "local"])
     ap.add_argument("--family", default="PIXELFORM")
     ap.add_argument("--year", type=int, default=2026)
     ap.add_argument("--members", nargs="+", default=["boy", "snowman", "girl", "dog", "cat"])
@@ -71,7 +72,9 @@ def main():
     ap.add_argument("--font-text", default="Liberation Serif:style=Regular")
     ap.add_argument("--only", default="", help="comma separated piece names")
     ap.add_argument("--jobs", type=int, default=4)
+    ap.add_argument("--scad", default=SCAD, help="model file (default: openscad/family_ornament.scad; the 4-colour variant is family_ornament_4color.scad)")
     a = ap.parse_args()
+    SCAD = os.path.abspath(a.scad)
     a.font_serif, a.font_text = a.font_serif, a.font_text
     os.makedirs(a.out, exist_ok=True)
     items = manifest(a)

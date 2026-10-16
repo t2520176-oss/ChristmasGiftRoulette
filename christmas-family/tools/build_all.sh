@@ -1,16 +1,39 @@
 #!/usr/bin/env bash
-# One command from the OpenSCAD model to print beds + renders.
-#   tools/build_all.sh                       # PIXELFORM family, 2026, the five default members
-#   tools/build_all.sh --family SMITH --year 2027 --names Anna Ben Cleo   (members/names must match in count)
-# Needs: openscad, python3 with trimesh numpy shapely (check) + pillow (legend), blender (renders).
+# One command from the OpenSCAD model to print beds, checks and renders.
+#
+#   tools/build_all.sh                                   # 8-colour edition: PIXELFORM 2026 -> ./stl ./beds ./renders
+#   tools/build_all.sh --family SMITH --year 2027 --members boy girl dog cat --names Ethan Lily Buddy Mochi
+#
+#   # 4-colour edition (brown / ivory / green / red), everything under ./four_color
+#   SCAD=openscad/family_ornament_4color.scad PALETTE=palettes/four_color.json GROUPS=palettes/groups_4color.json \
+#   OUT=four_color PRINT_LAYOUT=local tools/build_all.sh
+#
+# Environment: SKIP_RENDER=1 (no Blender) · QUALITY=draft|final · PYTHON=... · SLICE=0 (skip PrusaSlicer) · CHECKS=0
+# Needs: openscad, python3 with trimesh numpy shapely rtree manifold3d pillow, Blender 4.x (renders), PrusaSlicer (slice check)
 set -euo pipefail
 cd "$(dirname "$0")/.."
 PY=${PYTHON:-python3}
+SCAD=${SCAD:-openscad/family_ornament.scad}
+OUT=${OUT:-.}
+PRINT_LAYOUT=${PRINT_LAYOUT:-print}
 EXTRA=("$@")
-$PY tools/export_roles.py --out stl/print --layout print "${EXTRA[@]}"
-$PY tools/export_roles.py --out stl/assembled --layout assembled "${EXTRA[@]}"
-rm -rf beds && $PY tools/plan_beds.py --print-dir stl/print --out beds
+PAL=(); [ -n "${PALETTE:-}" ] && PAL=(--palette "$PALETTE")
+GRP=(); [ -n "${GROUPS:-}" ] && GRP=(--groups "$GROUPS")
+mkdir -p "$OUT/docs"
+$PY tools/export_roles.py --scad "$SCAD" --out "$OUT/stl/print" --layout "$PRINT_LAYOUT" "${EXTRA[@]}"
+$PY tools/export_roles.py --scad "$SCAD" --out "$OUT/stl/assembled" --layout assembled "${EXTRA[@]}"
+rm -rf "$OUT/beds" && $PY tools/plan_beds.py --print-dir "$OUT/stl/print" --out "$OUT/beds" "${PAL[@]}" "${GRP[@]}"
+if [ "${CHECKS:-1}" = "1" ]; then
+  $PY tools/check_pieces.py "$OUT/stl/print" --islands 5 --md "$OUT/docs/PRINT_REPORT.md"
+  { $PY tools/check_fit.py "$OUT/stl/assembled" --min-mm3 0.05;
+    $PY tools/check_assembly.py "$OUT/stl/assembled" || true;
+    $PY tools/check_sky.py "$OUT/stl/assembled" || true; } | tee "$OUT/docs/ASSEMBLY_REPORT.txt"
+fi
+if [ "${SLICE:-1}" = "1" ] && command -v prusa-slicer >/dev/null; then
+  $PY tools/slice_check.py --beds "$OUT/beds" --ini slicer/prusaslicer_4color_256.ini --json "$OUT/beds/slice_summary.json"
+fi
+$PY tools/write_plan_md.py --beds "$OUT/beds" --print-dir "$OUT/stl/print"
 if [ "${SKIP_RENDER:-0}" != "1" ]; then
-  $PY tools/render_family.py --assembled stl/assembled --beds beds --out renders --quality "${QUALITY:-final}"
-  $PY tools/compose_beds.py --beds beds --renders renders ${SLICE_SUMMARY:+--slice "$SLICE_SUMMARY"}
+  $PY tools/render_family.py --assembled "$OUT/stl/assembled" --beds "$OUT/beds" --out "$OUT/renders" --quality "${QUALITY:-final}" ${EXPOSURE:+--exposure "$EXPOSURE"}
+  $PY tools/compose_beds.py --beds "$OUT/beds" --renders "$OUT/renders" --slice "$OUT/beds/slice_summary.json"
 fi

@@ -69,9 +69,15 @@ def main():
     ap.add_argument("--quality", default="draft", choices=["draft", "final"])
     ap.add_argument("--only", default="")
     ap.add_argument("--palette", default="")
+    ap.add_argument("--exposure", type=float, default=-0.3, help="exposure of the beauty shots (light-coloured models need less)")
     a = ap.parse_args()
     only = {s for s in a.only.split(",") if s}
     overrides = fp.load_overrides(a.palette)
+    plan_path = os.path.join(a.beds, "plan.json")
+    if not a.palette and os.path.exists(plan_path):           # same colours as the planner used
+        pj = json.load(open(plan_path))
+        fp.COLOR_HEX.update(pj.get("hex", {}))
+        overrides = pj.get("overrides") or None
     cfg0 = json.load(open(os.path.join(a.assembled, "config.json")))
     members = cfg0["members"]
     stems = sorted(f[:-4] for f in os.listdir(a.assembled) if f.endswith(".stl"))
@@ -92,7 +98,7 @@ def main():
         {"pos": [150, -30, 9], "r": 9, "color": "#F2C230", "metal": 0.9},
     ]
     base = dict(scene="table", floor_z=0, world_color="#0D0A10", world_strength=0.35, default_roughness=0.42, roughness=rough,
-                light_colors={"key": (1.0, 0.86, 0.68), "rim": (0.55, 0.7, 1.0), "fill": (1.0, 0.82, 0.62)}, exposure=-0.3,
+                light_colors={"key": (1.0, 0.86, 0.68), "rim": (0.55, 0.7, 1.0), "fill": (1.0, 0.82, 0.62)}, exposure=a.exposure,
                 emissive=emissive, props=True, bokeh=46, bokeh_colors=XMAS_BOKEH, bokeh_strength=1.0, bump=0.1,
                 items=[{"dir": a.assembled, "pos": [0, 0, 0], "rot": 0, "colors": cols}],
                 lights={"key": [220, -420, 380], "key_target": [0, 0, 55], "key_power": 38,
@@ -102,10 +108,12 @@ def main():
     jobs = {}
     jobs["hero"] = common(dict(base, output=os.path.join(a.out, "hero.png"), balls=balls,
                                camera={"location": [95, -560, 215], "target": [0, 0, 56], "lens": 62, "fstop": 6.0}), a.quality)
-    jobs["hero_close"] = common(dict(base, output=os.path.join(a.out, "hero_close.png"), balls=balls[:2], exposure=-1.0,
+    jobs["hero_close"] = common(dict(base, output=os.path.join(a.out, "hero_close.png"), balls=balls[:2], exposure=a.exposure - 0.7,
                                      camera={"location": [-40, -250, 70], "target": [-5, -5, 52], "lens": 70, "fstop": 7.0, "focus": [-5, -9, 48]}), a.quality)
+    jobs["sky_close"] = common(dict(base, output=os.path.join(a.out, "sky_close.png"), balls=[], props=False, bokeh=0, exposure=a.exposure - 0.4,
+                                    camera={"location": [10, -330, 118], "target": [0, 14, 84], "lens": 80, "fstop": 12.0}), a.quality)
     ex = dict(base, output=os.path.join(a.out, "exploded.png"), balls=[], scene="studio", props=False, floor_color="#B9B1A5",
-              world_color="#EFE7DA", world_strength=0.45, exposure=-0.3,
+              world_color="#EFE7DA", world_strength=0.45, exposure=a.exposure,
               lights={"key": [220, -420, 380], "key_target": [0, 0, 80], "key_power": 7,
                       "rim": [-380, 240, 300], "rim_target": [0, 0, 80], "rim_power": 4,
                       "fill": [-260, -420, 120], "fill_target": [0, 0, 60], "fill_power": 1.5})

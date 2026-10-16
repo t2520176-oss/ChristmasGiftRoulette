@@ -1,0 +1,19 @@
+{
+  "_hex": {"BROWN": "#936039", "WHITE": "#F4EEDD", "GREEN": "#32694C", "RED": "#CA4046"},
+
+  "sky.panel": "BROWN", "sky.stars": "WHITE",
+  "tree.green": "GREEN", "tree.snow": "WHITE", "tree.star": "RED",
+  "house.wall": "BROWN", "house.snow": "WHITE", "house.window": "RED",
+  "base.wood": "BROWN", "base.snow": "WHITE",
+  "plaque.plate": "BROWN", "plaque.text": "WHITE",
+  "holly.leaf": "GREEN", "holly.berry": "RED",
+  "lantern.frame": "BROWN", "lantern.glass": "RED",
+  "tag.plate": "GREEN", "tag.text": "WHITE",
+
+  "boy.jacket": "RED", "boy.scarf": "GREEN", "boy.hat": "BROWN", "boy.pom": "WHITE", "boy.face": "WHITE", "boy.eyes": "GREEN",
+  "girl.dress": "RED", "girl.collar": "WHITE", "girl.hair": "BROWN", "girl.bow": "GREEN", "girl.face": "WHITE", "girl.eyes": "GREEN",
+  "snowman.body": "WHITE", "snowman.hat": "BROWN", "snowman.band": "GREEN", "snowman.scarf": "GREEN", "snowman.nose": "RED", "snowman.eyes": "GREEN",
+  "dog.fur": "BROWN", "dog.ears": "BROWN", "dog.scarf": "GREEN", "dog.eyes": "GREEN",
+  "cat.fur": "BROWN", "cat.white": "WHITE", "cat.red": "RED",
+  "reindeer.fur": "BROWN", "reindeer.antlers": "BROWN", "reindeer.scarf": "GREEN", "reindeer.nose": "RED", "reindeer.eyes": "GREEN"
+}
