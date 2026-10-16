@@ -110,7 +110,7 @@ def main():
                       "rim": [-380, 240, 300], "rim_target": [0, 0, 80], "rim_power": 4,
                       "fill": [-260, -420, 120], "fill_target": [0, 0, 60], "fill_power": 1.5})
     ex["items"] = [{"dir": a.assembled, "pos": [0, 0, 0], "rot": 0, "colors": cols, "offsets": explode_offsets(stems)}]
-    ex["camera"] = {"location": [170, -640, 230], "target": [0, 6, 86], "lens": 64, "fstop": 9.0}
+    ex["camera"] = {"location": [170, -640, 230], "target": [0, 6, 80], "lens": 58, "fstop": 9.0}
     jobs["exploded"] = common(ex, a.quality)
 
     plan = json.load(open(os.path.join(a.beds, "plan.json")))

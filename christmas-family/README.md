@@ -80,6 +80,7 @@
 `openscad/family_ornament.scad` 를 열고 Customizer 에서 `family`, `year`, `members`, `names` 를 바꿉니다 (인물 3~6명: `boy`, `girl`, `snowman`, `dog`, `cat`, `reindeer`).
 `part = "assembled"` 는 완성품 미리보기, `part = "fig2"`, `layout = "print"` 처럼 하면 조각 하나를 출력 자세로 볼 수 있고, `role` 로 색 영역 하나만 뽑을 수 있습니다.
 Liberation 글꼴(OpenSCAD 에 포함)을 사용하며, 글자는 틀 안에 맞게 자동으로 줄어듭니다.
+전체 완성품(`part = "assembled"`)을 F6 으로 렌더하면 몇 분 걸립니다(이 환경에서 약 6분, 빈 결과 없이 STL 15 MB 생성 확인). F5 미리보기는 바로 뜹니다. 출력용 STL 은 조각×색으로 나눠 내보내는 `tools/export_roles.py`(병렬)를 쓰는 편이 훨씬 빠릅니다.
 
 ### 명령줄에서 (STL → 베드 → 렌더 한 번에)
 ```bash
