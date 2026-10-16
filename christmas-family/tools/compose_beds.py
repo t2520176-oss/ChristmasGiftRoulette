@@ -80,7 +80,7 @@ def main():
             y += int(22 * s)
             d.text((x0, y), "Filament (g, per slot): " + ", ".join(f"{float(v):.0f}" for v in sl[str(n)]["filament_g"]), font=font(FONT, int(14 * s)), fill="#9AA0AE")
             y += int(22 * s)
-        d.text((x0, out.size[1] - int(50 * s)), "grey box = prime / wipe tower", font=font(FONT, int(12 * s)), fill="#7C8294")
+        d.text((x0, out.size[1] - int(50 * s)), "pale box = prime / wipe tower (keep free)", font=font(FONT, int(12 * s)), fill="#7C8294")
         d.text((x0, out.size[1] - int(30 * s)), "PIXELFORM family ornament", font=font(FONT, int(12 * s)), fill="#7C8294")
         out.save(os.path.join(a.renders, f"bed{n}.png"))
         print("   ->", os.path.join(a.renders, f"bed{n}.png"))

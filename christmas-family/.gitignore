@@ -1,3 +1,4 @@
 __pycache__/
 renders/_cfg/
 renders/_bed*_raw.png
+dist/
