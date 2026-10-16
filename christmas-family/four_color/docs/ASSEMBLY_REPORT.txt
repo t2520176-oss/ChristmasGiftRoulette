@@ -1,0 +1,28 @@
+64 meshes, 0 overlapping pairs above 0.05 mm3
+piece      seated  gap to base touching                     lift
+fig0         7.2        0.00  base                         free
+fig1         7.2        0.00  base                         free
+fig2         7.2        0.00  base                         free
+fig3         7.2        0.00  base                         free
+fig4         7.2        0.00  base                         free
+holly0       0.0        0.00  base,tag0                    free
+holly1       0.0        0.00  base,lantern1                free
+house        6.7        0.20  base                         free
+lantern0     7.0        0.00  base                         free
+lantern1     7.0        0.00  base,holly1                  free
+plaque      26.0       59.50  base                         glue-on: slides in from the front
+sky          7.0        0.00  base                         free
+tag0         0.0       59.50  base,holly0                  glue-on: slides in from the front
+tag1         0.0       59.50  base                         glue-on: slides in from the front
+tag2         0.0       59.50  base                         glue-on: slides in from the front
+tag3         0.0       59.50  base                         glue-on: slides in from the front
+tag4         0.0        0.00  base                         free
+tree0        6.7        0.20  base                         free
+tree1        6.7        0.20  base                         free
+tree2        6.7        0.20  base                         free
+tree3        6.7        0.20  base                         free
+
+no problems found
+elements: 9   ink area 328 mm2   area in parts thinner than 0.6 mm: 0.5 mm2
+distance to foreground silhouettes: 5.9 mm   (limit 2.5)
+distance to the arch edge:          5.4 mm   (limit 3.5)

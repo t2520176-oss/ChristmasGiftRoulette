@@ -1,0 +1,176 @@
+[
+ {
+  "piece": "sky",
+  "roles": [
+   "panel",
+   "stars"
+  ]
+ },
+ {
+  "piece": "tree0",
+  "roles": [
+   "green",
+   "snow",
+   "star"
+  ]
+ },
+ {
+  "piece": "tree1",
+  "roles": [
+   "green",
+   "snow",
+   "star"
+  ]
+ },
+ {
+  "piece": "tree2",
+  "roles": [
+   "green",
+   "snow",
+   "star"
+  ]
+ },
+ {
+  "piece": "tree3",
+  "roles": [
+   "green",
+   "snow",
+   "star"
+  ]
+ },
+ {
+  "piece": "house",
+  "roles": [
+   "wall",
+   "snow",
+   "window"
+  ]
+ },
+ {
+  "piece": "base",
+  "roles": [
+   "wood",
+   "snow"
+  ]
+ },
+ {
+  "piece": "plaque",
+  "roles": [
+   "plate",
+   "text"
+  ]
+ },
+ {
+  "piece": "holly0",
+  "roles": [
+   "leaf",
+   "berry"
+  ]
+ },
+ {
+  "piece": "holly1",
+  "roles": [
+   "leaf",
+   "berry"
+  ]
+ },
+ {
+  "piece": "lantern0",
+  "roles": [
+   "frame",
+   "glass"
+  ]
+ },
+ {
+  "piece": "lantern1",
+  "roles": [
+   "frame",
+   "glass"
+  ]
+ },
+ {
+  "piece": "fig0",
+  "roles": [
+   "jacket",
+   "scarf",
+   "hat",
+   "pom",
+   "face",
+   "eyes"
+  ]
+ },
+ {
+  "piece": "fig1",
+  "roles": [
+   "body",
+   "hat",
+   "band",
+   "scarf",
+   "nose",
+   "eyes"
+  ]
+ },
+ {
+  "piece": "fig2",
+  "roles": [
+   "dress",
+   "collar",
+   "hair",
+   "bow",
+   "face",
+   "eyes"
+  ]
+ },
+ {
+  "piece": "fig3",
+  "roles": [
+   "fur",
+   "ears",
+   "scarf",
+   "eyes"
+  ]
+ },
+ {
+  "piece": "fig4",
+  "roles": [
+   "fur",
+   "white",
+   "red"
+  ]
+ },
+ {
+  "piece": "tag0",
+  "roles": [
+   "plate",
+   "text"
+  ]
+ },
+ {
+  "piece": "tag1",
+  "roles": [
+   "plate",
+   "text"
+  ]
+ },
+ {
+  "piece": "tag2",
+  "roles": [
+   "plate",
+   "text"
+  ]
+ },
+ {
+  "piece": "tag3",
+  "roles": [
+   "plate",
+   "text"
+  ]
+ },
+ {
+  "piece": "tag4",
+  "roles": [
+   "plate",
+   "text"
+  ]
+ }
+]

@@ -1,0 +1,139 @@
+{
+ "bed": [
+  256,
+  256
+ ],
+ "max_colors": 4,
+ "tower": [
+  45.0,
+  70.0
+ ],
+ "hex": {
+  "WHITE": "#F4EEDD",
+  "BROWN": "#936039",
+  "GREEN": "#32694C",
+  "RED": "#CA4046"
+ },
+ "overrides": {
+  "sky.panel": "BROWN",
+  "sky.stars": "WHITE",
+  "tree.green": "GREEN",
+  "tree.snow": "WHITE",
+  "tree.star": "RED",
+  "house.wall": "BROWN",
+  "house.snow": "WHITE",
+  "house.window": "RED",
+  "base.wood": "BROWN",
+  "base.snow": "WHITE",
+  "plaque.plate": "BROWN",
+  "plaque.text": "WHITE",
+  "holly.leaf": "GREEN",
+  "holly.berry": "RED",
+  "lantern.frame": "BROWN",
+  "lantern.glass": "RED",
+  "tag.plate": "GREEN",
+  "tag.text": "WHITE",
+  "boy.jacket": "RED",
+  "boy.scarf": "GREEN",
+  "boy.hat": "BROWN",
+  "boy.pom": "WHITE",
+  "boy.face": "WHITE",
+  "boy.eyes": "GREEN",
+  "girl.dress": "RED",
+  "girl.collar": "WHITE",
+  "girl.hair": "BROWN",
+  "girl.bow": "GREEN",
+  "girl.face": "WHITE",
+  "girl.eyes": "GREEN",
+  "snowman.body": "WHITE",
+  "snowman.hat": "BROWN",
+  "snowman.band": "GREEN",
+  "snowman.scarf": "GREEN",
+  "snowman.nose": "RED",
+  "snowman.eyes": "GREEN",
+  "dog.fur": "BROWN",
+  "dog.ears": "BROWN",
+  "dog.scarf": "GREEN",
+  "dog.eyes": "GREEN",
+  "cat.fur": "BROWN",
+  "cat.white": "WHITE",
+  "cat.red": "RED",
+  "reindeer.fur": "BROWN",
+  "reindeer.antlers": "BROWN",
+  "reindeer.scarf": "GREEN",
+  "reindeer.nose": "RED",
+  "reindeer.eyes": "GREEN"
+ },
+ "beds": [
+  {
+   "bed": 1,
+   "colors": [
+    "WHITE",
+    "BROWN",
+    "GREEN",
+    "RED"
+   ],
+   "slots": {
+    "1": "WHITE",
+    "2": "BROWN",
+    "3": "GREEN",
+    "4": "RED"
+   },
+   "pieces": [
+    "base",
+    "holly0",
+    "holly1",
+    "plaque",
+    "sky",
+    "tag0",
+    "tag1",
+    "tag2",
+    "tag3",
+    "tag4"
+   ],
+   "footprint_pct": 55.2,
+   "solid_volume_cm3": {
+    "WHITE": 42.0,
+    "BROWN": 254.5,
+    "GREEN": 8.7,
+    "RED": 0.2
+   }
+  },
+  {
+   "bed": 2,
+   "colors": [
+    "WHITE",
+    "BROWN",
+    "GREEN",
+    "RED"
+   ],
+   "slots": {
+    "1": "WHITE",
+    "2": "BROWN",
+    "3": "GREEN",
+    "4": "RED"
+   },
+   "pieces": [
+    "fig0",
+    "fig1",
+    "fig2",
+    "fig3",
+    "fig4",
+    "house",
+    "lantern0",
+    "lantern1",
+    "tree0",
+    "tree1",
+    "tree2",
+    "tree3"
+   ],
+   "footprint_pct": 33.0,
+   "solid_volume_cm3": {
+    "WHITE": 19.4,
+    "BROWN": 28.9,
+    "GREEN": 15.9,
+    "RED": 8.8
+   }
+  }
+ ]
+}

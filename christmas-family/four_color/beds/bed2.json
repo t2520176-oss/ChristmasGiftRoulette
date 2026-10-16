@@ -1,0 +1,390 @@
+{
+ "bed": 2,
+ "colors": [
+  "WHITE",
+  "BROWN",
+  "GREEN",
+  "RED"
+ ],
+ "slots": {
+  "1": "WHITE",
+  "2": "BROWN",
+  "3": "GREEN",
+  "4": "RED"
+ },
+ "pieces": [
+  "fig0",
+  "fig1",
+  "fig2",
+  "fig3",
+  "fig4",
+  "house",
+  "lantern0",
+  "lantern1",
+  "tree0",
+  "tree1",
+  "tree2",
+  "tree3"
+ ],
+ "footprint_pct": 33.0,
+ "solid_volume_cm3": {
+  "WHITE": 19.4,
+  "BROWN": 28.9,
+  "GREEN": 15.9,
+  "RED": 8.8
+ },
+ "volumes": [
+  {
+   "file": "bed2/house__wall__BROWN.stl",
+   "piece": "house",
+   "role": "wall",
+   "color": "BROWN",
+   "hex": "#936039",
+   "slot": 2
+  },
+  {
+   "file": "bed2/house__snow__WHITE.stl",
+   "piece": "house",
+   "role": "snow",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed2/house__window__RED.stl",
+   "piece": "house",
+   "role": "window",
+   "color": "RED",
+   "hex": "#CA4046",
+   "slot": 4
+  },
+  {
+   "file": "bed2/tree1__green__GREEN.stl",
+   "piece": "tree1",
+   "role": "green",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed2/tree1__snow__WHITE.stl",
+   "piece": "tree1",
+   "role": "snow",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed2/tree1__star__RED.stl",
+   "piece": "tree1",
+   "role": "star",
+   "color": "RED",
+   "hex": "#CA4046",
+   "slot": 4
+  },
+  {
+   "file": "bed2/fig1__body__WHITE.stl",
+   "piece": "fig1",
+   "role": "body",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed2/fig1__hat__BROWN.stl",
+   "piece": "fig1",
+   "role": "hat",
+   "color": "BROWN",
+   "hex": "#936039",
+   "slot": 2
+  },
+  {
+   "file": "bed2/fig1__band__GREEN.stl",
+   "piece": "fig1",
+   "role": "band",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed2/fig1__scarf__GREEN.stl",
+   "piece": "fig1",
+   "role": "scarf",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed2/fig1__nose__RED.stl",
+   "piece": "fig1",
+   "role": "nose",
+   "color": "RED",
+   "hex": "#CA4046",
+   "slot": 4
+  },
+  {
+   "file": "bed2/fig1__eyes__GREEN.stl",
+   "piece": "fig1",
+   "role": "eyes",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed2/tree0__green__GREEN.stl",
+   "piece": "tree0",
+   "role": "green",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed2/tree0__snow__WHITE.stl",
+   "piece": "tree0",
+   "role": "snow",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed2/tree0__star__RED.stl",
+   "piece": "tree0",
+   "role": "star",
+   "color": "RED",
+   "hex": "#CA4046",
+   "slot": 4
+  },
+  {
+   "file": "bed2/tree3__green__GREEN.stl",
+   "piece": "tree3",
+   "role": "green",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed2/tree3__snow__WHITE.stl",
+   "piece": "tree3",
+   "role": "snow",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed2/tree3__star__RED.stl",
+   "piece": "tree3",
+   "role": "star",
+   "color": "RED",
+   "hex": "#CA4046",
+   "slot": 4
+  },
+  {
+   "file": "bed2/tree2__green__GREEN.stl",
+   "piece": "tree2",
+   "role": "green",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed2/tree2__snow__WHITE.stl",
+   "piece": "tree2",
+   "role": "snow",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed2/tree2__star__RED.stl",
+   "piece": "tree2",
+   "role": "star",
+   "color": "RED",
+   "hex": "#CA4046",
+   "slot": 4
+  },
+  {
+   "file": "bed2/fig2__dress__RED.stl",
+   "piece": "fig2",
+   "role": "dress",
+   "color": "RED",
+   "hex": "#CA4046",
+   "slot": 4
+  },
+  {
+   "file": "bed2/fig2__collar__WHITE.stl",
+   "piece": "fig2",
+   "role": "collar",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed2/fig2__hair__BROWN.stl",
+   "piece": "fig2",
+   "role": "hair",
+   "color": "BROWN",
+   "hex": "#936039",
+   "slot": 2
+  },
+  {
+   "file": "bed2/fig2__bow__GREEN.stl",
+   "piece": "fig2",
+   "role": "bow",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed2/fig2__face__WHITE.stl",
+   "piece": "fig2",
+   "role": "face",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed2/fig2__eyes__GREEN.stl",
+   "piece": "fig2",
+   "role": "eyes",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed2/fig0__jacket__RED.stl",
+   "piece": "fig0",
+   "role": "jacket",
+   "color": "RED",
+   "hex": "#CA4046",
+   "slot": 4
+  },
+  {
+   "file": "bed2/fig0__scarf__GREEN.stl",
+   "piece": "fig0",
+   "role": "scarf",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed2/fig0__hat__BROWN.stl",
+   "piece": "fig0",
+   "role": "hat",
+   "color": "BROWN",
+   "hex": "#936039",
+   "slot": 2
+  },
+  {
+   "file": "bed2/fig0__pom__WHITE.stl",
+   "piece": "fig0",
+   "role": "pom",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed2/fig0__face__WHITE.stl",
+   "piece": "fig0",
+   "role": "face",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed2/fig0__eyes__GREEN.stl",
+   "piece": "fig0",
+   "role": "eyes",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed2/fig3__fur__BROWN.stl",
+   "piece": "fig3",
+   "role": "fur",
+   "color": "BROWN",
+   "hex": "#936039",
+   "slot": 2
+  },
+  {
+   "file": "bed2/fig3__ears__BROWN.stl",
+   "piece": "fig3",
+   "role": "ears",
+   "color": "BROWN",
+   "hex": "#936039",
+   "slot": 2
+  },
+  {
+   "file": "bed2/fig3__scarf__GREEN.stl",
+   "piece": "fig3",
+   "role": "scarf",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed2/fig3__eyes__GREEN.stl",
+   "piece": "fig3",
+   "role": "eyes",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed2/fig4__fur__BROWN.stl",
+   "piece": "fig4",
+   "role": "fur",
+   "color": "BROWN",
+   "hex": "#936039",
+   "slot": 2
+  },
+  {
+   "file": "bed2/fig4__white__WHITE.stl",
+   "piece": "fig4",
+   "role": "white",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed2/fig4__red__RED.stl",
+   "piece": "fig4",
+   "role": "red",
+   "color": "RED",
+   "hex": "#CA4046",
+   "slot": 4
+  },
+  {
+   "file": "bed2/lantern0__frame__BROWN.stl",
+   "piece": "lantern0",
+   "role": "frame",
+   "color": "BROWN",
+   "hex": "#936039",
+   "slot": 2
+  },
+  {
+   "file": "bed2/lantern0__glass__RED.stl",
+   "piece": "lantern0",
+   "role": "glass",
+   "color": "RED",
+   "hex": "#CA4046",
+   "slot": 4
+  },
+  {
+   "file": "bed2/lantern1__frame__BROWN.stl",
+   "piece": "lantern1",
+   "role": "frame",
+   "color": "BROWN",
+   "hex": "#936039",
+   "slot": 2
+  },
+  {
+   "file": "bed2/lantern1__glass__RED.stl",
+   "piece": "lantern1",
+   "role": "glass",
+   "color": "RED",
+   "hex": "#CA4046",
+   "slot": 4
+  }
+ ]
+}

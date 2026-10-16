@@ -1,0 +1,196 @@
+{
+ "bed": 1,
+ "colors": [
+  "WHITE",
+  "BROWN",
+  "GREEN",
+  "RED"
+ ],
+ "slots": {
+  "1": "WHITE",
+  "2": "BROWN",
+  "3": "GREEN",
+  "4": "RED"
+ },
+ "pieces": [
+  "base",
+  "holly0",
+  "holly1",
+  "plaque",
+  "sky",
+  "tag0",
+  "tag1",
+  "tag2",
+  "tag3",
+  "tag4"
+ ],
+ "footprint_pct": 55.2,
+ "solid_volume_cm3": {
+  "WHITE": 42.0,
+  "BROWN": 254.5,
+  "GREEN": 8.7,
+  "RED": 0.2
+ },
+ "volumes": [
+  {
+   "file": "bed1/sky__panel__BROWN.stl",
+   "piece": "sky",
+   "role": "panel",
+   "color": "BROWN",
+   "hex": "#936039",
+   "slot": 2
+  },
+  {
+   "file": "bed1/sky__stars__WHITE.stl",
+   "piece": "sky",
+   "role": "stars",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed1/base__wood__BROWN.stl",
+   "piece": "base",
+   "role": "wood",
+   "color": "BROWN",
+   "hex": "#936039",
+   "slot": 2
+  },
+  {
+   "file": "bed1/base__snow__WHITE.stl",
+   "piece": "base",
+   "role": "snow",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed1/plaque__plate__BROWN.stl",
+   "piece": "plaque",
+   "role": "plate",
+   "color": "BROWN",
+   "hex": "#936039",
+   "slot": 2
+  },
+  {
+   "file": "bed1/plaque__text__WHITE.stl",
+   "piece": "plaque",
+   "role": "text",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed1/holly0__leaf__GREEN.stl",
+   "piece": "holly0",
+   "role": "leaf",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed1/holly0__berry__RED.stl",
+   "piece": "holly0",
+   "role": "berry",
+   "color": "RED",
+   "hex": "#CA4046",
+   "slot": 4
+  },
+  {
+   "file": "bed1/holly1__leaf__GREEN.stl",
+   "piece": "holly1",
+   "role": "leaf",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed1/holly1__berry__RED.stl",
+   "piece": "holly1",
+   "role": "berry",
+   "color": "RED",
+   "hex": "#CA4046",
+   "slot": 4
+  },
+  {
+   "file": "bed1/tag0__plate__GREEN.stl",
+   "piece": "tag0",
+   "role": "plate",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed1/tag0__text__WHITE.stl",
+   "piece": "tag0",
+   "role": "text",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed1/tag1__plate__GREEN.stl",
+   "piece": "tag1",
+   "role": "plate",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed1/tag1__text__WHITE.stl",
+   "piece": "tag1",
+   "role": "text",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed1/tag2__plate__GREEN.stl",
+   "piece": "tag2",
+   "role": "plate",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed1/tag2__text__WHITE.stl",
+   "piece": "tag2",
+   "role": "text",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed1/tag3__plate__GREEN.stl",
+   "piece": "tag3",
+   "role": "plate",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed1/tag3__text__WHITE.stl",
+   "piece": "tag3",
+   "role": "text",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  },
+  {
+   "file": "bed1/tag4__plate__GREEN.stl",
+   "piece": "tag4",
+   "role": "plate",
+   "color": "GREEN",
+   "hex": "#32694C",
+   "slot": 3
+  },
+  {
+   "file": "bed1/tag4__text__WHITE.stl",
+   "piece": "tag4",
+   "role": "text",
+   "color": "WHITE",
+   "hex": "#F4EEDD",
+   "slot": 1
+  }
+ ]
+}

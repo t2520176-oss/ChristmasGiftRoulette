@@ -6,6 +6,9 @@
 
 ![hero](renders/hero.png)
 
+> **새로 추가: 4색 에디션 → [`four_color/`](four_color/README.md)** — 필라멘트 4색(갈색·아이보리·초록·빨강)만 쓰는 버전.
+> 조립 가능 여부를 전부 검사해 고친 SCAD, 새로 디자인한 달·별 뒤판, 같은 4색으로 베드 2장. 아래 설명은 8색 에디션입니다.
+
 | | |
 |---|---|
 | 크기 | 가로 203 × 깊이 50 × 높이 123 mm |
@@ -115,13 +118,16 @@ SKIP_RENDER=1 tools/build_all.sh ...                 # Blender 렌더 생략
 ## 5. 폴더
 
 ```
-openscad/family_ornament.scad   파라메트릭 모델
+openscad/family_ornament.scad          파라메트릭 모델 (8색)
+openscad/family_ornament_4color.scad   파라메트릭 모델 (4색 에디션)
 stl/print/                      조각×색 STL, 출력 자세 (64개 + manifest/config)
 stl/assembled/                  조각×색 STL, 완성품 좌표 (조립 확인·렌더용)
 beds/                           bed1~3.3mf, bedN/ (베드 좌표에 배치된 STL), PLAN.md, plan.json, slice_summary.json
 renders/                        hero · hero_close · exploded · bed1~3
 docs/PRINT_REPORT.md            조각별 검사 결과
 slicer/prusaslicer_4color_256.ini   256 × 256, 4색 점검용 최소 프로파일
-tools/                          export_roles · plan_beds · check_pieces · check_fit · slice_check · render_family · compose_beds · build_all.sh
+tools/                          export_roles · plan_beds · check_pieces · check_fit · check_assembly · check_sky · slice_check · render_family · compose_beds · write_plan_md · build_all.sh
+palettes/                       four_color.json (역할→색, HEX), groups_4color.json (베드 묶음)
+four_color/                     4색 에디션: README, stl/, beds/, renders/, docs/
 blender/render_showcase.py      Cycles 렌더러(headless)
 ```
