@@ -102,11 +102,15 @@ def main():
     jobs = {}
     jobs["hero"] = common(dict(base, output=os.path.join(a.out, "hero.png"), balls=balls,
                                camera={"location": [95, -560, 215], "target": [0, 0, 56], "lens": 62, "fstop": 6.0}), a.quality)
-    jobs["hero_close"] = common(dict(base, output=os.path.join(a.out, "hero_close.png"), balls=balls[:2], exposure=-0.7,
-                                     camera={"location": [-40, -250, 70], "target": [-5, -5, 52], "lens": 70, "fstop": 3.2, "focus": [-5, -9, 48]}), a.quality)
-    ex = dict(base, output=os.path.join(a.out, "exploded.png"), balls=[])
+    jobs["hero_close"] = common(dict(base, output=os.path.join(a.out, "hero_close.png"), balls=balls[:2], exposure=-1.0,
+                                     camera={"location": [-40, -250, 70], "target": [-5, -5, 52], "lens": 70, "fstop": 7.0, "focus": [-5, -9, 48]}), a.quality)
+    ex = dict(base, output=os.path.join(a.out, "exploded.png"), balls=[], scene="studio", props=False, floor_color="#D9D0C3",
+              world_color="#EFE7DA", world_strength=0.9, exposure=-0.2,
+              lights={"key": [220, -420, 380], "key_target": [0, 0, 55], "key_power": 22,
+                      "rim": [-380, 240, 300], "rim_target": [0, 0, 60], "rim_power": 14,
+                      "fill": [-260, -420, 120], "fill_target": [0, 0, 45], "fill_power": 5})
     ex["items"] = [{"dir": a.assembled, "pos": [0, 0, 0], "rot": 0, "colors": cols, "offsets": explode_offsets(stems)}]
-    ex["camera"] = {"location": [230, -680, 270], "target": [0, 0, 62], "lens": 58, "fstop": 8.0}
+    ex["camera"] = {"location": [190, -560, 235], "target": [0, 4, 66], "lens": 58, "fstop": 9.0}
     jobs["exploded"] = common(ex, a.quality)
 
     plan = json.load(open(os.path.join(a.beds, "plan.json")))
