@@ -40,8 +40,11 @@ font_text  = "Liberation Serif:style=Regular";
 $fn = fn;
 eps = 0.01;
 N   = len(members);
-W   = max(120, min(200, 40 * N));                  // length of the base / width of the arch
-PITCH = N > 1 ? min(32, (W - 66) / (N - 1)) : 0;   // distance between figures
+// FIX: the figures are 32 mm wide and do not shrink, so the pitch is fixed at 32 mm and the base grows with the number of
+// figures (5 figures -> W = 200 as before).  The old formula squeezed the pitch below 32 mm for 3, 4 and 6 figures,
+// so neighbouring figures overlapped.
+W   = max(120, 32 * N + 40);                       // length of the base / width of the arch
+PITCH = 32;                                        // distance between figures
 BASE_D = 46;  BASE_H = 22;  SNOW_H = 5;
 TOP    = BASE_H + SNOW_H;                          // z of the top of the snow
 AH     = 0.48 * W;                                 // height of the arch
