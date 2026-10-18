@@ -10,8 +10,8 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: "/chat",
     scope: "/",
     display: "standalone",
-    background_color: "#f7f9fc",
-    theme_color: "#294f59",
+    background_color: "#0b3b8f",
+    theme_color: "#0b3b8f",
     icons: [
       { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
       { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },

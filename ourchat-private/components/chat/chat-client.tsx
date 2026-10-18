@@ -471,25 +471,25 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
   const peerName = peer?.display_name ?? "Your person";
 
   return (
-    <div ref={shellRef} className="chat-shell flex min-h-0 flex-col bg-[#f7f5f0] text-[#283c37] dark:bg-[#131c1a] dark:text-[#e7eee9]">
-      <header className="chat-topbar shrink-0 border-b border-[#dedfd6] bg-[#fcfbf8]/95 dark:border-[#304039] dark:bg-[#19231f]">
+    <div ref={shellRef} className="chat-shell flex min-h-0 flex-col bg-canvas text-white">
+      <header className="chat-topbar shrink-0 border-b border-white/20 bg-panel/95">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-2 px-3 sm:h-20 sm:px-8">
-          <a href="/chat" aria-label="OurChat home" className="flex min-h-11 min-w-0 items-center gap-2 rounded-xl outline-offset-4 focus-visible:outline-2 focus-visible:outline-[#35624d] sm:gap-3">
-            <span className="flex size-9 shrink-0 items-center justify-center rounded-2xl bg-[#244d3d] text-[#fbf8ef] sm:size-10 dark:bg-[#b6ccb8] dark:text-[#1e392e]"><MessageCircle size={22} strokeWidth={1.6} /></span>
-            <span className="text-xl font-semibold tracking-[-0.8px] sm:text-[23px]">OurChat<span className="text-[#b0b9a8]">.</span></span>
+          <a href="/chat" aria-label="OurChat home" className="flex min-h-11 min-w-0 items-center gap-2 rounded-xl outline-offset-4 focus-visible:outline-2 focus-visible:outline-focus sm:gap-3">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-2xl bg-raised text-white sm:size-10"><MessageCircle size={22} strokeWidth={1.6} /></span>
+            <span className="text-xl font-semibold tracking-[-0.8px] sm:text-[23px]">OurChat<span className="text-white/80">.</span></span>
           </a>
           <div className="flex shrink-0 items-center gap-1 sm:gap-3">
-            <span className="hidden items-center gap-1.5 text-xs text-[#718175] md:flex dark:text-[#b5c3b7]"><LockKeyhole size={12} /> Just the two of us</span>
+            <span className="hidden items-center gap-1.5 text-xs text-white/80 md:flex"><LockKeyhole size={12} /> Just the two of us</span>
             <PhoneAccess authenticated compact />
-            <button type="button" onClick={toggleTheme} className="flex size-11 items-center justify-center rounded-full text-[#607469] transition hover:bg-[#e9ede4] focus-visible:outline-2 focus-visible:outline-[#35624d] dark:text-[#bbcebf] dark:hover:bg-[#304039]" aria-label={dark ? "Use light mode" : "Use dark mode"}>{dark ? <Sun size={19} /> : <Moon size={19} />}</button>
+            <button type="button" onClick={toggleTheme} className="flex size-11 items-center justify-center rounded-full text-white/80 transition hover:bg-highlight focus-visible:outline-2 focus-visible:outline-focus" aria-label={dark ? "Use light mode" : "Use dark mode"}>{dark ? <Sun size={19} /> : <Moon size={19} />}</button>
             <div className="relative">
-              <button type="button" onClick={() => setSettingsOpen((open) => !open)} aria-label={`${currentMember.display_name} account`} aria-expanded={settingsOpen} aria-controls="account-menu" className="flex min-h-11 items-center gap-1 rounded-full border border-[#dde2d8] bg-white px-1.5 py-1 text-sm focus-visible:outline-2 focus-visible:outline-[#35624d] sm:gap-2 sm:px-2 dark:border-[#3c4d42] dark:bg-[#223029]">
-                <span className="flex size-8 items-center justify-center rounded-full bg-[#e8edde] text-xs font-semibold text-[#516447] dark:bg-[#3b4c3a] dark:text-[#dce9cd]">{initials(currentMember.display_name)}</span>
+              <button type="button" onClick={() => setSettingsOpen((open) => !open)} aria-label={`${currentMember.display_name} account`} aria-expanded={settingsOpen} aria-controls="account-menu" className="flex min-h-11 items-center gap-1 rounded-full border border-white/20 bg-panel px-1.5 py-1 text-sm focus-visible:outline-2 focus-visible:outline-focus sm:gap-2 sm:px-2">
+                <span className="flex size-8 items-center justify-center rounded-full bg-raised text-xs font-semibold text-white">{initials(currentMember.display_name)}</span>
                 <span className="hidden max-w-24 truncate sm:inline">{currentMember.display_name}</span><ChevronDown size={14} className="mr-1" />
               </button>
-              <div id="account-menu" hidden={!settingsOpen} className="absolute right-0 top-full z-30 mt-2 w-80 max-w-[calc(100vw-2.5rem)] rounded-2xl border border-[#dee4d9] bg-[#fcfbf8] p-4 shadow-xl dark:border-[#3a4c3f] dark:bg-[#23302a]">
-                <p className="mb-1 truncate text-sm font-semibold">{currentMember.display_name}</p><p className="text-xs leading-5 text-[#718175] dark:text-[#b8c7bb]">Your private OurChat account.</p>
-                <button type="button" disabled={signingOut} onClick={() => void signOut()} className="mt-3 flex min-h-11 w-full items-center gap-2 rounded-xl border-t border-[#e2e6dc] px-2 py-3 text-sm hover:text-[#a04c39] disabled:opacity-50 dark:border-[#405143]"><LogOut size={16} />{signingOut ? "Signing out…" : "Sign out"}</button>
+              <div id="account-menu" hidden={!settingsOpen} className="absolute right-0 top-full z-30 mt-2 w-80 max-w-[calc(100vw-2.5rem)] rounded-2xl border border-white/20 bg-panel p-4 shadow-xl">
+                <p className="mb-1 truncate text-sm font-semibold">{currentMember.display_name}</p><p className="text-xs leading-5 text-white/80">Your private OurChat account.</p>
+                <button type="button" disabled={signingOut} onClick={() => void signOut()} className="mt-3 flex min-h-11 w-full items-center gap-2 rounded-xl border-t border-white/20 px-2 py-3 text-sm hover:text-white/80 disabled:opacity-50"><LogOut size={16} />{signingOut ? "Signing out…" : "Sign out"}</button>
               </div>
             </div>
           </div>
@@ -498,26 +498,26 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
 
       <main className="chat-content mx-auto flex w-full max-w-6xl min-h-0 flex-1 flex-col px-0 sm:px-8 sm:py-8 lg:flex-row lg:gap-8">
         <aside className="hidden w-60 shrink-0 flex-col py-8 lg:flex">
-          <span className="mb-4 text-[10px] font-semibold tracking-[0.23em] text-[#8a9889] dark:text-[#a5b4a4]">A SPACE FOR US</span>
+          <span className="mb-4 text-[10px] font-semibold tracking-[0.23em] text-white/80">A SPACE FOR US</span>
           <h1 className="font-serif text-4xl leading-[1.18] tracking-[-1px]">Close, even<br />from here.</h1>
-          <p className="mt-5 max-w-48 text-sm leading-7 text-[#7b8879] dark:text-[#a8baaa]">The everyday things.<br />The thinking-of-you things.<br />All in one little place.</p>
-          <div className="mt-10 flex items-center gap-3 rounded-2xl border border-[#dde3d5] bg-[#eef1e7] p-4 dark:border-[#3c4d3c] dark:bg-[#233126]">
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-[#d9e2cb] font-serif text-lg text-[#4f6549] dark:bg-[#3b5138] dark:text-[#dae7d0]">{initials(peerName)}</span>
-            <div className="min-w-0"><p className="truncate text-sm font-semibold">{peerName}</p><p className="mt-0.5 flex items-center gap-1.5 text-xs text-[#71816a] dark:text-[#afc2a8]"><span className={`size-1.5 rounded-full ${peerOnline && online ? "bg-[#76995b]" : "bg-[#9da69a]"}`} />{peerOnline && online ? "Online" : "Your conversation"}</p></div>
+          <p className="mt-5 max-w-48 text-sm leading-7 text-white/80">The everyday things.<br />The thinking-of-you things.<br />All in one little place.</p>
+          <div className="mt-10 flex items-center gap-3 rounded-2xl border border-white/20 bg-panel p-4">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-raised font-serif text-lg text-white">{initials(peerName)}</span>
+            <div className="min-w-0"><p className="truncate text-sm font-semibold">{peerName}</p><p className="mt-0.5 flex items-center gap-1.5 text-xs text-white/80"><span className={`size-1.5 rounded-full ${peerOnline && online ? "bg-emerald-300" : "bg-white/60"}`} />{peerOnline && online ? "Online" : "Your conversation"}</p></div>
           </div>
-          <div className="mt-auto pt-12"><Heart size={19} strokeWidth={1.2} className="mb-3 text-[#a5b095]" /><p className="max-w-44 text-xs leading-6 text-[#919b8a] dark:text-[#a1b09c]">A private conversation,<br />made for the two of you.</p></div>
+          <div className="mt-auto pt-12"><Heart size={19} strokeWidth={1.2} className="mb-3 text-white/80" /><p className="max-w-44 text-xs leading-6 text-white/80">A private conversation,<br />made for the two of you.</p></div>
         </aside>
 
-        <section aria-label={`Conversation with ${peerName}`} className="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-[#fffefa] sm:rounded-[28px] sm:border sm:border-[#dfe4d8] sm:shadow-[0_8px_40px_rgba(40,60,45,0.04)] dark:border-[#34463a] dark:bg-[#1c2822]">
-          <div className="flex min-h-18 shrink-0 items-center justify-between gap-3 border-b border-[#e9ece3] px-4 py-3 sm:min-h-22 sm:px-7 sm:py-4 dark:border-[#35463a]">
-            <div className="flex min-w-0 items-center gap-3.5"><span className="relative flex size-11 shrink-0 items-center justify-center rounded-full bg-[#e7eada] font-serif text-xl text-[#687b54] dark:bg-[#3a4a33] dark:text-[#d3e2c5]">{initials(peerName)}<span className={`absolute right-0 bottom-0 size-3 rounded-full border-2 border-[#fffefa] dark:border-[#1c2822] ${peerOnline && online ? "bg-[#8ba370]" : "bg-[#adb5a6]"}`} /></span><div className="min-w-0"><h2 className="truncate text-[17px] font-semibold tracking-[-0.3px]">{peerName}</h2><p role="status" aria-live="polite" className="mt-0.5 flex items-center gap-1 text-xs text-[#87917d] dark:text-[#adbea5]">{!online && <WifiOff size={11} />}{connectionLabel}</p></div></div>
+        <section aria-label={`Conversation with ${peerName}`} className="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-panel sm:rounded-[28px] sm:border sm:border-white/20 sm:shadow-[0_8px_40px_rgba(40,60,45,0.04)]">
+          <div className="flex min-h-18 shrink-0 items-center justify-between gap-3 border-b border-white/20 px-4 py-3 sm:min-h-22 sm:px-7 sm:py-4">
+            <div className="flex min-w-0 items-center gap-3.5"><span className="relative flex size-11 shrink-0 items-center justify-center rounded-full bg-raised font-serif text-xl text-white">{initials(peerName)}<span className={`absolute right-0 bottom-0 size-3 rounded-full border-2 border-panel ${peerOnline && online ? "bg-emerald-300" : "bg-white/60"}`} /></span><div className="min-w-0"><h2 className="truncate text-[17px] font-semibold tracking-[-0.3px]">{peerName}</h2><p role="status" aria-live="polite" className="mt-0.5 flex items-center gap-1 text-xs text-white/80">{!online && <WifiOff size={11} />}{connectionLabel}</p></div></div>
             <MessageSoundControl sound={sound} />
           </div>
 
-          {!online && <div role="status" className="flex items-center justify-center gap-2 bg-[#f3e8cd] px-4 py-2 text-xs text-[#7b602d] dark:bg-[#493d23] dark:text-[#efcf8e]"><WifiOff size={13} />Offline. Your draft stays here. Reconnect to send.</div>}
-          {(accountError || error) && <div role="alert" className="flex items-center justify-between gap-3 bg-[#fbebe3] px-4 py-2 text-xs text-[#98573e] dark:bg-[#4b3028] dark:text-[#efb99f]"><span>{accountError || error}</span><button type="button" onClick={() => { if (accountError) void signOut(); else void synchronize(); }} className="shrink-0 underline underline-offset-2">Try again</button></div>}
+          {!online && <div role="status" className="flex items-center justify-center gap-2 bg-warning px-4 py-2 text-xs text-white"><WifiOff size={13} />Offline. Your draft stays here. Reconnect to send.</div>}
+          {(accountError || error) && <div role="alert" className="flex items-center justify-between gap-3 bg-danger px-4 py-2 text-xs text-white"><span>{accountError || error}</span><button type="button" onClick={() => { if (accountError) void signOut(); else void synchronize(); }} className="shrink-0 underline underline-offset-2">Try again</button></div>}
 
-          <div ref={viewportRef} role="region" aria-label="Message history" tabIndex={0} className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-6 [scrollbar-width:thin] focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-[#96aa83] sm:px-7" onScroll={() => {
+          <div ref={viewportRef} role="region" aria-label="Message history" tabIndex={0} className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-6 [scrollbar-width:thin] focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-focus sm:px-7" onScroll={() => {
             const viewport = viewportRef.current;
             if (!viewport) return;
             const atBottom = viewport.scrollHeight - viewport.scrollTop - viewport.clientHeight < 80;
@@ -526,8 +526,8 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
             if (atBottom) setNewCount(0);
             if (viewport.scrollTop < 60 && !atBottom) void loadOlder();
           }}>
-            {hasMore && <div className="flex justify-center pt-5"><button type="button" disabled={loadingOlder || !online} onClick={() => void loadOlder()} className="flex items-center gap-1.5 rounded-full px-4 py-2 text-xs text-[#7b8a71] transition hover:bg-[#f0f2e9] disabled:opacity-50 dark:text-[#b3c2a8] dark:hover:bg-[#344132]">{loadingOlder ? <LoaderCircle size={13} className="animate-spin" /> : <ArrowUp size={13} />}{loadingOlder ? "Loading…" : "Earlier messages"}</button></div>}
-            {!messages.length && <div className="flex min-h-full flex-col items-center justify-center px-6 py-16 text-center"><span className="mb-5 flex size-16 items-center justify-center rounded-[24px] bg-[#edf1e3] text-[#82956c] dark:bg-[#34452e] dark:text-[#b2c69a]"><Heart size={28} strokeWidth={1.2} /></span><h3 className="font-serif text-2xl">Every hello belongs here.</h3><p className="mt-3 max-w-56 text-sm leading-6 text-[#8a9581] dark:text-[#aeba9f]">Send the first little note to {peerName}.</p></div>}
+            {hasMore && <div className="flex justify-center pt-5"><button type="button" disabled={loadingOlder || !online} onClick={() => void loadOlder()} className="flex items-center gap-1.5 rounded-full px-4 py-2 text-xs text-white/80 transition hover:bg-highlight disabled:opacity-50">{loadingOlder ? <LoaderCircle size={13} className="animate-spin" /> : <ArrowUp size={13} />}{loadingOlder ? "Loading…" : "Earlier messages"}</button></div>}
+            {!messages.length && <div className="flex min-h-full flex-col items-center justify-center px-6 py-16 text-center"><span className="mb-5 flex size-16 items-center justify-center rounded-[24px] bg-raised text-white/80"><Heart size={28} strokeWidth={1.2} /></span><h3 className="font-serif text-2xl">Every hello belongs here.</h3><p className="mt-3 max-w-56 text-sm leading-6 text-white/80">Send the first little note to {peerName}.</p></div>}
             {messages.map((message, index) => {
               const own = message.sender_id === currentMember.user_id;
               const previous = messages[index - 1];
@@ -538,28 +538,28 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
               const status = message.status ?? "sent";
               const read = own && lastOwn?.id === message.id && isRead(message.id, peerReceipt);
               return <div key={messageIdentity(message)}>
-                {showDate && <div className="flex items-center justify-center gap-4 pt-7 pb-6"><span className="h-px w-12 bg-[#e9ecdf] dark:bg-[#394836]" /><span className="text-[10px] font-medium tracking-[0.08em] text-[#99a18c] dark:text-[#a5b394]">{hydrated ? dateLabel(message.created_at) : "Messages"}</span><span className="h-px w-12 bg-[#e9ecdf] dark:bg-[#394836]" /></div>}
+                {showDate && <div className="flex items-center justify-center gap-4 pt-7 pb-6"><span className="h-px w-12 bg-white/20" /><span className="text-[10px] font-medium tracking-[0.08em] text-white/80">{hydrated ? dateLabel(message.created_at) : "Messages"}</span><span className="h-px w-12 bg-white/20" /></div>}
                 <div data-message-id={isMessageId(message.id) ? message.id : undefined} className={`flex ${own ? "justify-end" : "justify-start"} ${grouped ? "mt-1.5" : "mt-4"}`}>
                   <div className={`max-w-[86%] sm:max-w-[75%] ${own ? "items-end" : "items-start"} flex min-w-0 flex-col`}>
-                    {!own && !grouped && <span className="mb-1.5 ml-1 text-[10px] font-medium text-[#8b967f] dark:text-[#abbb9d]">{peerName}</span>}
-                    <div className={`whitespace-pre-wrap wrap-anywhere px-4 py-3 text-[14px] leading-[1.7] ${own ? "rounded-[20px] rounded-br-md bg-[#dfe9d3] text-[#344e35] dark:bg-[#425f3b] dark:text-[#f0f6e8]" : "rounded-[20px] rounded-bl-md border border-[#e8eadf] bg-[#f3f3ec] text-[#4b5845] dark:border-[#3b4b38] dark:bg-[#2a3829] dark:text-[#e0e8d7]"} ${status === "pending" ? "opacity-60" : ""}`}>{message.body}</div>
-                    {(groupEnd || status !== "sent" || read) && <div className={`mt-1.5 flex flex-wrap items-center gap-1.5 px-1 text-[10px] text-[#9aA18e] dark:text-[#a7b598] ${own ? "justify-end" : "justify-start"}`}><time dateTime={message.created_at}>{hydrated ? timeFormatter.format(new Date(message.created_at)) : "…"}</time>{own && status === "pending" && <span className="inline-flex items-center gap-1"><LoaderCircle size={10} className="animate-spin" />Sending…</span>}{own && status === "failed" && <><span className="text-[#b2664b] dark:text-[#e9ae91]">Failed to send</span><button type="button" disabled={!online || signingOut} title={message.error} onClick={() => void deliver(message)} className="rounded px-1 font-semibold text-[#926043] underline underline-offset-2 disabled:opacity-40 dark:text-[#f0c2a0]" aria-label="Retry failed message">Retry</button></>}{own && status === "sent" && (read ? <span className="inline-flex items-center gap-0.5 text-[#6b8855] dark:text-[#c0d5a2]"><CheckCheck size={13} />Read</span> : <><Check size={11} /><span className="sr-only">Sent</span></>)}</div>}
+                    {!own && !grouped && <span className="mb-1.5 ml-1 text-[10px] font-medium text-white/80">{peerName}</span>}
+                    <div className={`whitespace-pre-wrap wrap-anywhere px-4 py-3 text-[14px] leading-[1.7] ${own ? "rounded-[20px] rounded-br-md bg-accent text-white" : "rounded-[20px] rounded-bl-md border border-white/20 bg-peer text-white"} ${status === "pending" ? "opacity-60" : ""}`}>{message.body}</div>
+                    {(groupEnd || status !== "sent" || read) && <div className={`mt-1.5 flex flex-wrap items-center gap-1.5 px-1 text-[10px] text-white/80 ${own ? "justify-end" : "justify-start"}`}><time dateTime={message.created_at}>{hydrated ? timeFormatter.format(new Date(message.created_at)) : "…"}</time>{own && status === "pending" && <span className="inline-flex items-center gap-1"><LoaderCircle size={10} className="animate-spin" />Sending…</span>}{own && status === "failed" && <><span className="text-white">Failed to send</span><button type="button" disabled={!online || signingOut} title={message.error} onClick={() => void deliver(message)} className="rounded px-1 font-semibold text-white underline underline-offset-2 disabled:opacity-40" aria-label="Retry failed message">Retry</button></>}{own && status === "sent" && (read ? <span className="inline-flex items-center gap-0.5 text-white/80"><CheckCheck size={13} />Read</span> : <><Check size={11} /><span className="sr-only">Sent</span></>)}</div>}
                   </div>
                 </div>
               </div>;
             })}
           </div>
 
-          {awayFromBottom && <div className="pointer-events-none absolute right-0 bottom-36 left-0 z-10 flex justify-center"><button type="button" onClick={jumpToLatest} className="pointer-events-auto flex items-center gap-2 rounded-full border border-[#cfdbbe] bg-[#fcfff5] px-4 py-2.5 text-xs font-medium text-[#5d7549] shadow-md dark:border-[#647953] dark:bg-[#344b2b] dark:text-[#e1edcf]"><ArrowDown size={14} />{newCount ? `New messages${newCount > 1 ? ` (${newCount})` : ""}` : "Back to latest"}</button></div>}
+          {awayFromBottom && <div className="pointer-events-none absolute right-0 bottom-36 left-0 z-10 flex justify-center"><button type="button" onClick={jumpToLatest} className="pointer-events-auto flex items-center gap-2 rounded-full border border-white/20 bg-raised px-4 py-2.5 text-xs font-medium text-white/80 shadow-md"><ArrowDown size={14} />{newCount ? `New messages${newCount > 1 ? ` (${newCount})` : ""}` : "Back to latest"}</button></div>}
 
-          <form className="shrink-0 border-t border-[#e9ece2] bg-[#fffefa] px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6 sm:pb-5 dark:border-[#354536] dark:bg-[#1c2822]" onSubmit={(event) => { event.preventDefault(); send(); }}>
-            <div className={`flex items-end gap-2 rounded-[20px] border bg-[#f7f8f1] p-2 focus-within:ring-2 focus-within:ring-[#b9caa7]/50 dark:bg-[#253024] ${bodyLength > 2000 ? "border-[#c7785a]" : "border-[#e2e7d8] dark:border-[#45543b]"}`}>
+          <form className="shrink-0 border-t border-white/20 bg-panel px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6 sm:pb-5" onSubmit={(event) => { event.preventDefault(); send(); }}>
+            <div className={`flex items-end gap-2 rounded-[20px] border bg-field p-2 focus-within:ring-2 focus-within:ring-focus/50 ${bodyLength > 2000 ? "border-red-300" : "border-white/20"}`}>
               <label htmlFor="message-input" className="sr-only">Type a message</label><textarea id="message-input" ref={textareaRef} value={draft} onChange={(event) => setDraft(event.target.value)} onCompositionStart={() => { composingRef.current = true; }} onCompositionEnd={() => { composingRef.current = false; }} onKeyDown={(event) => {
                 if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing && !composingRef.current && event.keyCode !== 229) { event.preventDefault(); send(); }
-              }} placeholder="Type a message..." rows={1} aria-describedby="composer-help" className="min-h-11 max-h-[min(9rem,calc(var(--chat-viewport-height,100dvh)*0.22))] min-w-0 flex-1 resize-none bg-transparent px-2 py-2.5 text-base leading-6 text-[#3b5137] outline-none placeholder:text-[#a3ac96] dark:text-[#e7efdd] dark:placeholder:text-[#93a486]" />
-              <button type="submit" disabled={!canSendDraft(draft, online) || signingOut} aria-label="Send message" className="flex size-11 shrink-0 items-center justify-center rounded-[14px] bg-[#386044] text-[#f7faef] transition hover:bg-[#284e35] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#456e3c] disabled:cursor-not-allowed disabled:bg-[#d8dfcc] disabled:text-[#9da98d] dark:bg-[#a8c08c] dark:text-[#24371c] dark:hover:bg-[#c4d8aa] dark:disabled:bg-[#405037] dark:disabled:text-[#7d8d6d]"><Send size={18} strokeWidth={1.6} /></button>
+              }} placeholder="Type a message..." rows={1} aria-describedby="composer-help" className="min-h-11 max-h-[min(9rem,calc(var(--chat-viewport-height,100dvh)*0.22))] min-w-0 flex-1 resize-none bg-transparent px-2 py-2.5 text-base leading-6 text-white outline-none placeholder:text-white/80" />
+              <button type="submit" disabled={!canSendDraft(draft, online) || signingOut} aria-label="Send message" className="flex size-11 shrink-0 items-center justify-center rounded-[14px] bg-accent text-white transition hover:bg-highlight focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:cursor-not-allowed disabled:bg-raised disabled:text-white/80"><Send size={18} strokeWidth={1.6} /></button>
             </div>
-            <div id="composer-help" className="mt-2.5 flex justify-between gap-3 px-1 text-[10px] text-[#a1aa92] dark:text-[#9daf8a]"><span className="hidden sm:inline">Enter to send <span className="px-1.5">·</span> Shift + Enter for a new line</span><span className="sm:hidden">A little note goes a long way.</span><span className={bodyLength > 2000 ? "font-semibold text-[#b05c3b] dark:text-[#efae8c]" : ""} aria-live={bodyLength > 1950 ? "polite" : "off"}>{bodyLength.toLocaleString("en")} / 2,000</span></div>
+            <div id="composer-help" className="mt-2.5 flex justify-between gap-3 px-1 text-[10px] text-white/80"><span className="hidden sm:inline">Enter to send <span className="px-1.5">·</span> Shift + Enter for a new line</span><span className="sm:hidden">A little note goes a long way.</span><span className={bodyLength > 2000 ? "font-semibold text-white" : ""} aria-live={bodyLength > 1950 ? "polite" : "off"}>{bodyLength.toLocaleString("en")} / 2,000</span></div>
           </form>
         </section>
       </main>

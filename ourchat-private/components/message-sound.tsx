@@ -193,10 +193,10 @@ export function MessageSoundControl({ sound }: { sound: ReturnType<typeof useMes
   return <div data-message-sound-control className="relative shrink-0">
     <button type="button" onClick={sound.toggle} aria-label={label} aria-pressed={sound.enabled}
       title={sound.enabled ? "Sound plays for new messages while this chat is open. Tap to turn it off." : "Tap to hear a test chime and enable message sound for this visit."}
-      className="flex min-h-11 items-center gap-2 rounded-full border border-[#dce4d4] bg-[#f3f6ec] px-3 text-xs font-medium text-[#526947] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#35624d] dark:border-[#465940] dark:bg-[#2b3c27] dark:text-[#c8d9b9]">
+      className="flex min-h-11 items-center gap-2 rounded-full border border-white/30 bg-raised px-3 text-xs font-medium text-white hover:bg-highlight focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus">
       {sound.enabled ? <Volume2 size={18} aria-hidden="true" /> : <VolumeX size={18} aria-hidden="true" />}
       <span>{text}</span>
     </button>
-    {sound.error && <p role="status" className="absolute top-full right-0 z-20 mt-2 w-56 rounded-xl border border-[#e1dfcc] bg-[#fffdf3] p-3 text-xs leading-5 text-[#78683d] shadow-lg dark:border-[#655b39] dark:bg-[#393520] dark:text-[#e2d6ae]">{sound.error}</p>}
+    {sound.error && <p role="status" className="absolute top-full right-0 z-20 mt-2 w-56 rounded-xl border border-white/20 bg-warning p-3 text-xs leading-5 text-white shadow-lg">{sound.error}</p>}
   </div>;
 }

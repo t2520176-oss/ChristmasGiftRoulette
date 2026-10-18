@@ -268,10 +268,10 @@ export function PwaControls({ defaultOpen = false }: { defaultOpen?: boolean }) 
   }
 
   const buttonClass =
-    "min-h-11 rounded-xl border border-current/20 px-3 py-2 text-sm font-medium transition hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-white/10";
+    "min-h-11 rounded-xl border border-white/30 bg-accent px-3 py-2 text-sm font-medium text-white transition hover:bg-highlight focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:cursor-not-allowed disabled:opacity-50";
 
   return (
-    <details open={defaultOpen || undefined} className="rounded-2xl border border-current/10 bg-white/60 p-3 text-sm dark:bg-slate-900/60">
+    <details open={defaultOpen || undefined} className="rounded-2xl border border-white/20 bg-raised p-3 text-sm text-white">
       <summary className="min-h-11 cursor-pointer py-2 font-medium">Install &amp; notifications</summary>
       <div className="mt-3 space-y-3">
         {installed ? (
@@ -331,7 +331,7 @@ export function PwaControls({ defaultOpen = false }: { defaultOpen?: boolean }) 
         )}
         {busy && <p role="status">Updating this device…</p>}
         {status && <p role="status">{status}</p>}
-        {error && <p role="alert">{error}</p>}
+        {error && <p role="alert" className="rounded-xl bg-danger p-3 text-white">{error}</p>}
       </div>
     </details>
   );

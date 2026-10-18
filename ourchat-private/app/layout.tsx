@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 export const viewport: Viewport = {
   width: "device-width", initialScale: 1, viewportFit: "cover", interactiveWidget: "resizes-content",
-  themeColor: [{ media: "(prefers-color-scheme: light)", color: "#f5f2eb" }, { media: "(prefers-color-scheme: dark)", color: "#181c19" }],
+  themeColor: [{ media: "(prefers-color-scheme: light)", color: "#0b3b8f" }, { media: "(prefers-color-scheme: dark)", color: "#09285f" }],
 };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="en" suppressHydrationWarning><body>{children}</body></html>;

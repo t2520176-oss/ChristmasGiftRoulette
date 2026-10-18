@@ -12,7 +12,7 @@ export default async function ChatPage() {
   try { context = await requireMember(); }
   catch (error) {
     if (error instanceof ApiError && [401, 403].includes(error.status)) redirect("/login");
-    return <main className="grid min-h-dvh place-items-center p-6"><section className="max-w-md rounded-3xl border border-stone-200 bg-white p-8 text-stone-800"><h1 className="text-2xl font-semibold">OurChat needs a little setup</h1><p className="mt-4 leading-7 text-stone-600">Your administrator needs to finish connecting your private conversation. Please try again when setup is complete.</p><Link className="mt-6 inline-block font-semibold text-emerald-800 underline" href="/login">Back to sign in</Link></section></main>;
+    return <main className="grid min-h-dvh place-items-center bg-canvas p-6 text-white"><section className="max-w-md rounded-3xl border border-white/20 bg-panel p-8 text-white"><h1 className="text-2xl font-semibold">OurChat needs a little setup</h1><p className="mt-4 leading-7 text-white/80">Your administrator needs to finish connecting your private conversation. Please try again when setup is complete.</p><Link className="mt-6 inline-block font-semibold text-white underline" href="/login">Back to sign in</Link></section></main>;
   }
   const [messages, receipts, peerResult] = await Promise.all([
     listMessages(context), listReceipts(context),
