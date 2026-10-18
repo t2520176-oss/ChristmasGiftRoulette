@@ -63,6 +63,7 @@ beforeEach(() => {
   TestObserver.instances = [];
   Object.defineProperty(navigator, "onLine", { configurable: true, get: () => networkOnline });
   Object.defineProperty(document, "visibilityState", { configurable: true, value: "visible" });
+  vi.spyOn(document, "hasFocus").mockReturnValue(true);
   vi.stubGlobal("IntersectionObserver", TestObserver);
   vi.stubGlobal("matchMedia", () => ({ matches: false, addEventListener: vi.fn(), removeEventListener: vi.fn() }));
   fetchMock = vi.fn(async (url: string, options?: RequestInit) => {
@@ -80,7 +81,7 @@ beforeEach(() => {
   vi.stubGlobal("fetch", fetchMock);
 });
 
-afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
+afterEach(() => { cleanup(); vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
 describe("chat interaction", () => {
   it("chimes once for a fresh peer batch, without replaying duplicate or own messages", async () => {
@@ -90,17 +91,21 @@ describe("chat interaction", () => {
     render(<ChatClient currentMember={self} peer={peer} initialMessages={[message("10")]} initialReceipts={[]} />);
     await waitFor(() => expect(fetchMock.mock.calls.some(([url]) => url === "/api/read")).toBe(true));
     expect(realtime.playSound).not.toHaveBeenCalled();
+    expect(screen.queryByRole("status", { name: "Incoming message notification" })).toBeNull();
     incoming = [message("11"), message("12"), message("13", "My reply", self.user_id)];
     act(() => window.dispatchEvent(new Event("online")));
     await screen.findByText("Message 12");
     expect(realtime.playSound).toHaveBeenCalledOnce();
+    expect(screen.getByRole("status", { name: "Incoming message notification" }).textContent).toContain("2 new messages");
     incoming = [...incoming, message("14", "Another own message", self.user_id)];
     act(() => window.dispatchEvent(new Event("online")));
     await screen.findByText("Another own message");
     expect(realtime.playSound).toHaveBeenCalledOnce();
+    expect(screen.getByRole("status", { name: "Incoming message notification" }).textContent).toContain("2 new messages");
     act(() => window.dispatchEvent(new Event("online")));
     await waitFor(() => expect(fetchMock.mock.calls.filter(([url]) => url === "/api/messages?after=14").length).toBeGreaterThan(0));
     expect(realtime.playSound).toHaveBeenCalledOnce();
+    expect(screen.getByRole("status", { name: "Incoming message notification" }).textContent).toContain("2 new messages");
   });
 
   it("does not silence a delayed new peer message after a newer own reply", async () => {
@@ -113,10 +118,12 @@ describe("chat interaction", () => {
     act(() => window.dispatchEvent(new Event("online")));
     await screen.findByText("My newer reply");
     expect(realtime.playSound).not.toHaveBeenCalled();
+    expect(screen.queryByRole("status", { name: "Incoming message notification" })).toBeNull();
     incoming = [message("90071992547409931", "A delayed peer reply")];
     act(() => window.dispatchEvent(new Event("online")));
     await screen.findByText("A delayed peer reply");
     expect(realtime.playSound).toHaveBeenCalledOnce();
+    expect(screen.getByRole("status", { name: "Incoming message notification" }).textContent).toContain("New message");
   });
 
   it("does not chime for initial or loaded history, including a repeated history page", async () => {
@@ -130,13 +137,79 @@ describe("chat interaction", () => {
     render(<ChatClient currentMember={self} peer={peer} initialMessages={initial} initialReceipts={[]} />);
     await waitFor(() => expect(fetchMock.mock.calls.some(([url]) => url === "/api/read")).toBe(true));
     expect(realtime.playSound).not.toHaveBeenCalled();
+    expect(screen.queryByRole("status", { name: "Incoming message notification" })).toBeNull();
     fireEvent.click(screen.getByRole("button", { name: "Earlier messages" }));
     await screen.findByText("An earlier note");
     expect(realtime.playSound).not.toHaveBeenCalled();
+    expect(screen.queryByRole("status", { name: "Incoming message notification" })).toBeNull();
     repeatHistory = true;
     act(() => window.dispatchEvent(new Event("online")));
     await waitFor(() => expect(fetchMock.mock.calls.filter(([url]) => url === "/api/read").length).toBeGreaterThan(1));
     expect(realtime.playSound).not.toHaveBeenCalled();
+    expect(screen.queryByRole("status", { name: "Incoming message notification" })).toBeNull();
+  });
+
+  it("shows a private popup without stealing a draft or scroll position, and views it only on request", async () => {
+    let incoming: ChatMessage[] = [];
+    fetchMock.mockImplementation(async (url: string) => url === "/api/read"
+      ? json({ receipts: [] }) : json({ messages: incoming, hasMore: false }));
+    render(<ChatClient currentMember={self} peer={peer} initialMessages={[message("10")]} initialReceipts={[]} />);
+    await waitFor(() => expect(fetchMock.mock.calls.some(([url]) => url === "/api/read")).toBe(true));
+    const input = screen.getByRole("textbox", { name: "Type a message" }) as HTMLTextAreaElement;
+    const history = screen.getByRole("region", { name: "Message history" });
+    const scrollTo = vi.fn();
+    Object.defineProperties(history, {
+      scrollHeight: { configurable: true, value: 1200 },
+      clientHeight: { configurable: true, value: 400 },
+      scrollTo: { configurable: true, value: scrollTo },
+    });
+    history.scrollTop = 100;
+    fireEvent.scroll(history);
+    input.focus();
+    fireEvent.change(input, { target: { value: "Keep my Korean draft 안녕 👋" } });
+    incoming = [message("11", "Private body stays in chat")];
+    act(() => window.dispatchEvent(new Event("online")));
+    const popup = await screen.findByRole("status", { name: "Incoming message notification" });
+    expect(popup.textContent).toContain("WifeNew message");
+    expect(popup.textContent).not.toContain("Private body stays in chat");
+    expect(document.activeElement).toBe(input);
+    expect(input.value).toBe("Keep my Korean draft 안녕 👋");
+    expect(history.scrollTop).toBe(100);
+    expect(scrollTo).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "View new messages" }));
+    expect(scrollTo).toHaveBeenCalledWith({ top: 1200, behavior: "smooth" });
+    expect(document.activeElement).toBe(input);
+    expect(input.value).toBe("Keep my Korean draft 안녕 👋");
+    expect(screen.queryByRole("status", { name: "Incoming message notification" })).toBeNull();
+  });
+
+  it("never queues a hidden or unfocused arrival to show later on return", async () => {
+    let incoming: ChatMessage[] = [];
+    fetchMock.mockImplementation(async (url: string) => url === "/api/read"
+      ? json({ receipts: [] }) : json({ messages: incoming, hasMore: false }));
+    render(<ChatClient currentMember={self} peer={peer} initialMessages={[message("10")]} initialReceipts={[]} />);
+    await waitFor(() => expect(fetchMock.mock.calls.some(([url]) => url === "/api/read")).toBe(true));
+    Object.defineProperty(document, "visibilityState", { configurable: true, value: "hidden" });
+    incoming = [message("11", "A hidden arrival")];
+    act(() => window.dispatchEvent(new Event("online")));
+    await screen.findByText("A hidden arrival");
+    expect(screen.queryByRole("status", { name: "Incoming message notification" })).toBeNull();
+    Object.defineProperty(document, "visibilityState", { configurable: true, value: "visible" });
+    vi.mocked(document.hasFocus).mockReturnValue(false);
+    incoming = [message("11", "A hidden arrival"), message("12", "An unfocused arrival")];
+    act(() => document.dispatchEvent(new Event("visibilitychange")));
+    await screen.findByText("An unfocused arrival");
+    expect(screen.queryByRole("status", { name: "Incoming message notification" })).toBeNull();
+    vi.mocked(document.hasFocus).mockReturnValue(true);
+    act(() => window.dispatchEvent(new Event("online")));
+    await waitFor(() => expect(fetchMock.mock.calls.filter(([url]) => url === "/api/messages?after=12").length).toBeGreaterThan(0));
+    expect(screen.queryByRole("status", { name: "Incoming message notification" })).toBeNull();
+    incoming = [message("13", "A fresh foreground arrival")];
+    act(() => window.dispatchEvent(new Event("online")));
+    await screen.findByRole("status", { name: "Incoming message notification" });
+    fireEvent.click(screen.getByRole("button", { name: /Husband account/ }));
+    fireEvent.click(screen.getByRole("button", { name: "Sign out" }));
+    expect(screen.queryByRole("status", { name: "Incoming message notification" })).toBeNull();
   });
 
   it("keeps a phone draft and the latest message in place when the keyboard resizes the viewport", async () => {

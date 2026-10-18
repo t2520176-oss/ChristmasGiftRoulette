@@ -1,48 +1,16 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-:root {
-  color-scheme: dark;
-  --background: #0b3b8f;
-  --foreground: #ffffff;
-  --surface: #124b9c;
-  --raised: #195bb5;
-  --field: #0a3277;
-  --accent: #2164bd;
-  --peer: #174c93;
-  --highlight: #246bc3;
-}
-:root.dark {
-  --background: #09285f;
-  --surface: #103a7b;
-  --raised: #174c93;
-  --field: #082653;
-  --accent: #1c55a3;
-  --peer: #163e7c;
-  --highlight: #205aa2;
-}
-@theme inline {
-  --color-canvas: var(--background);
-  --color-panel: var(--surface);
-  --color-raised: var(--raised);
-  --color-field: var(--field);
-  --color-accent: var(--accent);
-  --color-peer: var(--peer);
-  --color-highlight: var(--highlight);
-  --color-warning: #674510;
-  --color-danger: #8a243b;
-  --color-focus: #b9ddff;
-}
+:root { color-scheme: light; --background: #f5f2eb; --foreground: #282d28; }
+:root.dark { color-scheme: dark; --background: #181c19; --foreground: #f4f2eb; }
 html, body { min-height: 100%; background: var(--background); color: var(--foreground); }
 body { margin: 0; font-family: Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; }
 button, input, textarea { font: inherit; }
 button, a, input, textarea { -webkit-tap-highlight-color: transparent; }
 button:not(:disabled), a { touch-action: manipulation; }
 button:disabled { cursor: not-allowed; }
-::selection { background: #ffffff; color: #0b3b8f; }
-:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
-input, textarea { caret-color: #ffffff; }
-input:autofill { box-shadow: 0 0 0 1000px var(--field) inset; -webkit-text-fill-color: #ffffff; }
+::selection { background: #b6ceb9; color: #163322; }
+:focus-visible { outline: 3px solid #43825b; outline-offset: 3px; }
 .chat-shell {
   position: fixed;
   inset-inline: 0;

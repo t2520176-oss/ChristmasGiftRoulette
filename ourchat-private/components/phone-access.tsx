@@ -127,7 +127,7 @@ export function PhoneAccess({ authenticated = false, compact = false }: {
     }
   }
 
-  const buttonClass = "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/30 bg-raised px-4 py-2 text-sm font-semibold text-white transition hover:bg-highlight disabled:opacity-50";
+  const buttonClass = "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-[#8fa58c]/40 px-4 py-2 text-sm font-semibold transition hover:bg-[#e4eadd] disabled:opacity-50 dark:hover:bg-white/10";
 
   return (
     <>
@@ -145,26 +145,26 @@ export function PhoneAccess({ authenticated = false, compact = false }: {
         ref={dialogRef}
         aria-labelledby={titleId}
         aria-describedby={descriptionId}
-        className="m-auto max-h-[calc(var(--chat-viewport-height,100dvh)-2rem)] w-[calc(100%-1.5rem)] max-w-xl overflow-y-auto rounded-3xl border border-white/30 bg-panel p-0 text-white shadow-2xl backdrop:bg-black/40"
+        className="m-auto max-h-[calc(var(--chat-viewport-height,100dvh)-2rem)] w-[calc(100%-1.5rem)] max-w-xl overflow-y-auto rounded-3xl border border-[#8fa58c]/30 bg-[#fcfbf7] p-0 text-[#28382b] shadow-2xl backdrop:bg-black/40 dark:bg-[#202820] dark:text-[#f4f2eb]"
       >
-        <div className="sticky top-0 z-10 flex items-start justify-between gap-3 border-b border-white/20 bg-panel px-5 py-4">
+        <div className="sticky top-0 z-10 flex items-start justify-between gap-3 border-b border-[#8fa58c]/20 bg-[#fcfbf7] px-5 py-4 dark:bg-[#202820]">
           <div>
             <h2 id={titleId} className="text-xl font-semibold">OurChat on your phone</h2>
-            <p id={descriptionId} className="mt-1 text-sm text-white/80">Open the link and sign in with your own account.</p>
+            <p id={descriptionId} className="mt-1 text-sm opacity-75">Open the link and sign in with your own account.</p>
           </div>
-          <button type="button" aria-label="Close phone guide" onClick={() => dialogRef.current?.close()} className="flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-xl hover:bg-highlight">
+          <button type="button" aria-label="Close phone guide" onClick={() => dialogRef.current?.close()} className="flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-xl hover:bg-black/5 dark:hover:bg-white/10">
             <X size={21} aria-hidden="true" />
           </button>
         </div>
         <div className="space-y-5 p-5">
           {address && (
             <section aria-label="Open OurChat on your phone" className="space-y-3">
-              <div className="flex flex-col items-center gap-2 rounded-2xl bg-raised p-4 text-center text-white">
-                <div className="rounded-xl bg-white p-2"><QRCodeSVG value={address} size={176} level="M" marginSize={4} title="OurChat public website address" /></div>
+              <div className="flex flex-col items-center gap-2 rounded-2xl bg-white p-4 text-center text-[#28382b]">
+                <QRCodeSVG value={address} size={176} level="M" marginSize={4} title="OurChat public website address" />
                 <p className="text-sm">Scan with your phone&apos;s camera to open OurChat.</p>
               </div>
               <label htmlFor={`${titleId}-address`} className="block text-sm font-medium">Website link</label>
-              <input ref={addressRef} id={`${titleId}-address`} aria-label="OurChat website link" value={address} readOnly onFocus={(event) => event.currentTarget.select()} className="min-h-11 w-full min-w-0 rounded-xl border border-white/30 bg-field px-3 py-2 text-base text-white" />
+              <input ref={addressRef} id={`${titleId}-address`} aria-label="OurChat website link" value={address} readOnly onFocus={(event) => event.currentTarget.select()} className="min-h-11 w-full min-w-0 rounded-xl border border-[#8fa58c]/40 bg-transparent px-3 py-2 text-base" />
               <div className="flex flex-wrap gap-2">
                 <button type="button" onClick={() => void copyAddress()} className={buttonClass}><Copy size={17} aria-hidden="true" />Copy link</button>
                 {canShare && <button type="button" onClick={() => void shareAddress()} className={buttonClass}><Share2 size={17} aria-hidden="true" />Share link</button>}
@@ -173,19 +173,19 @@ export function PhoneAccess({ authenticated = false, compact = false }: {
               {status && <p role="status" className="text-sm">{status}</p>}
             </section>
           )}
-          <section aria-label="Add OurChat to your Home Screen" className="space-y-3 rounded-2xl border border-white/20 p-4 text-sm">
+          <section aria-label="Add OurChat to your Home Screen" className="space-y-3 rounded-2xl border border-[#8fa58c]/25 p-4 text-sm">
             <h3 className="font-semibold">Add an icon to your Home Screen</h3>
             {isInstalled ? <p>OurChat is installed on this device. Open it from your Home Screen.</p> : (
               <>
                 {(device === "iphone" || device === "other") && <div><h4 className="font-semibold">iPhone / iPad</h4><ol className="mt-1 list-decimal space-y-1 pl-5"><li>Open this link in Safari.</li><li>In Safari&apos;s toolbar, tap Share: the square with an upward arrow. If it is hidden, open the ⋯ menu first.</li><li>Scroll to Add to Home Screen, tap Add, then open the OurChat icon.</li></ol></div>}
                 {(device === "android" || device === "other") && <div><h4 className="font-semibold">Android</h4><ol className="mt-1 list-decimal space-y-1 pl-5"><li>Open this link in Chrome.</li><li>Tap the ⋮ menu, then Install app or Add to Home screen.</li><li>Confirm, then open the OurChat icon.</li></ol></div>}
                 {!authenticated && installPrompt && <button type="button" onClick={() => void installApp()} disabled={installing} className={buttonClass}>{installing ? "Opening installer…" : "Install OurChat"}</button>}
-                <p className="text-white/80">Sign in on each device with its member&apos;s account. Your password is never included in this link or QR code.</p>
+                <p className="opacity-75">Sign in on each device with its member&apos;s account. Your password is never included in this link or QR code.</p>
               </>
             )}
-            {device === "iphone" && <p className="text-white/80">For alerts when OurChat is closed, enable notifications from the Home Screen app. In iPhone Settings → Notifications → OurChat, turn on Sounds.</p>}
+            {device === "iphone" && <p className="opacity-75">For alerts when OurChat is closed, enable notifications from the Home Screen app. In iPhone Settings → Notifications → OurChat, turn on Sounds.</p>}
           </section>
-          {authenticated ? <PwaControls defaultOpen /> : <p className="text-sm text-white/80">After signing in, open Use on phone to set up notifications. On iPhone, notifications require the Home Screen app and iOS 16.4 or later.</p>}
+          {authenticated ? <PwaControls defaultOpen /> : <p className="text-sm opacity-75">After signing in, open Use on phone to set up notifications. On iPhone, notifications require the Home Screen app and iOS 16.4 or later.</p>}
         </div>
       </dialog>
     </>

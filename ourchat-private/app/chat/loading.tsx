@@ -1,1 +1,1 @@
-export default function LoadingChat() { return <main className="grid min-h-dvh place-items-center bg-canvas text-white"><p role="status" className="animate-pulse text-sm text-white/80">Loading your conversation…</p></main>; }
+export default function LoadingChat() { return <main className="grid min-h-dvh place-items-center"><p role="status" className="animate-pulse text-sm text-stone-500">Loading your conversation…</p></main>; }
