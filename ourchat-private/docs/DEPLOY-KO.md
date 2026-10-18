@@ -32,9 +32,9 @@ Windows 설치 파일이나 명령어를 실행하지 않는 방법입니다. Su
 
 ## 3. 기존 저장소와 분리하여 새로 배포
 
-원본은 [전달용 브랜치의 OurChat 소스](https://github.com/t2520176-oss/ChristmasGiftRoulette/tree/codex/ourchat-download/ourchat-private)에 있습니다. 원본 저장소의 기본 브랜치는 다른 앱이므로 Vercel에서 원본 저장소 전체를 직접 가져오지 않습니다.
+원본은 [전달용 브랜치의 OurChat 소스](https://github.com/t2520176-oss/ChristmasGiftRoulette/tree/fe19d69fb83c16449da0b82c5269ac51d3bd9c6d/ourchat-private)에 있습니다. 원본 저장소의 기본 브랜치는 다른 앱이므로 Vercel에서 원본 저장소 전체를 직접 가져오지 않습니다.
 
-[**새 OurChat 프로젝트 만들기**](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Ft2520176-oss%2FChristmasGiftRoulette%2Ftree%2Fcodex%2Fourchat-download%2Fourchat-private&project-name=ourchat&repository-name=ourchat-private&env=NEXT_PUBLIC_SUPABASE_URL%2CNEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY)
+[**새 OurChat 프로젝트 만들기**](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Ft2520176-oss%2FChristmasGiftRoulette%2Ftree%2Ffe19d69fb83c16449da0b82c5269ac51d3bd9c6d%2Fourchat-private&project-name=ourchat&repository-name=ourchat-private&env=NEXT_PUBLIC_SUPABASE_URL%2CNEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY)
 
 1. 위 링크로 Vercel의 템플릿 복제 화면을 엽니다. 로그인이나 GitHub 연결이 필요하면 자신의 계정으로 진행합니다.
 2. **새 GitHub 저장소**를 만듭니다. 예시 이름은 `ourchat-private`이며, 비공개로 설정합니다. 기존 저장소를 덮어쓰거나 원본 앱의 브랜치를 바꾸지 않습니다. 같은 이름이 있으면 새 이름을 사용합니다.
