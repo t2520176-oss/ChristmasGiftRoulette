@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; connect-src 'none'; img-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>OurChat — Offline VAPID key generator</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    body { max-width: 46rem; margin: 3rem auto; padding: 0 1.2rem 3rem; line-height: 1.55; }
+    h1 { line-height: 1.2; font-size: 1.75rem; }
+    h2 { font-size: 1.1rem; margin: 1.5rem 0 .5rem; }
+    code { overflow-wrap: anywhere; }
+    input, textarea { box-sizing: border-box; width: 100%; font: .9rem ui-monospace, monospace; padding: .8rem; border: 1px solid #888; border-radius: .4rem; }
+    textarea { min-height: 6rem; }
+    button { font: inherit; cursor: pointer; padding: .6rem .9rem; border: 1px solid #888; border-radius: .4rem; }
+    button:disabled { cursor: default; opacity: .55; }
+    .buttons { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .6rem; }
+    .note { padding: .8rem 1rem; border: 1px solid #888; border-radius: .4rem; }
+    #status { min-height: 1.6rem; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <h1>OurChat — Offline VAPID key generator</h1>
+  <p>This standalone file creates the key pair used for web push notifications. It has no dependencies, makes no network requests, and does not save keys in browser storage. Keys are generated only when you press the button.</p>
+  <p lang="ko">이 HTML 파일을 다운로드한 뒤 브라우저에서 여세요. 아래 버튼으로 키를 만든 후 Vercel의 새 OurChat 프로젝트 환경 변수에 각각 복사하세요. 비밀키는 채팅이나 공개 저장소에 올리지 마세요.</p>
+  <p class="note">Keep the private key somewhere secure. Closing or reloading this page discards the keys from this page. Reuse the same pair for your OurChat deployment; replacing it requires existing devices to subscribe to notifications again.</p>
+
+  <button id="generate" type="button">Generate key pair</button>
+  <p id="status" role="status" aria-live="polite">No keys have been generated.</p>
+
+  <section aria-labelledby="public-heading">
+    <h2 id="public-heading"><label for="public-key">Public key</label></h2>
+    <p>Vercel variable: <code>NEXT_PUBLIC_VAPID_PUBLIC_KEY</code></p>
+    <input id="public-key" type="text" readonly autocomplete="off" spellcheck="false" aria-describedby="public-help">
+    <p id="public-help">This value may be used by the browser app.</p>
+    <button id="copy-public" type="button" disabled>Copy public key</button>
+  </section>
+
+  <section aria-labelledby="private-heading">
+    <h2 id="private-heading"><label for="private-key">Private key — keep secret</label></h2>
+    <p>Vercel variable: <code>VAPID_PRIVATE_KEY</code></p>
+    <input id="private-key" type="password" readonly autocomplete="off" spellcheck="false" aria-describedby="private-help">
+    <p id="private-help">Use this value only in server environment variables. Never add a <code>NEXT_PUBLIC_</code> prefix.</p>
+    <div class="buttons">
+      <button id="reveal-private" type="button" aria-pressed="false" disabled>Show private key</button>
+      <button id="copy-private" type="button" disabled>Copy private key</button>
+    </div>
+  </section>
+
+  <section id="copy-fallback" hidden aria-labelledby="copy-heading">
+    <h2 id="copy-heading">Manual copy</h2>
+    <p id="copy-help">Your browser could not copy automatically. The requested key is selected below. Press Ctrl+C (Windows) or Command+C (Mac), then clear this box. This may display the private key if you requested it.</p>
+    <textarea id="copy-value" readonly autocomplete="off" spellcheck="false" aria-label="Selected key for manual copying" aria-describedby="copy-help"></textarea>
+    <div class="buttons"><button id="clear-copy" type="button">Clear manual copy box</button></div>
+  </section>
+
+  <p>Set <code>VAPID_SUBJECT</code> separately to your own contact address, for example a <code>mailto:</code> address. No website URL or contact information is needed by this generator.</p>
+
+  <script>
+    'use strict';
+    (() => {
+      const generate = document.getElementById('generate');
+      const publicField = document.getElementById('public-key');
+      const privateField = document.getElementById('private-key');
+      const copyPublic = document.getElementById('copy-public');
+      const copyPrivate = document.getElementById('copy-private');
+      const revealPrivate = document.getElementById('reveal-private');
+      const status = document.getElementById('status');
+      const fallback = document.getElementById('copy-fallback');
+      const copyValue = document.getElementById('copy-value');
+
+      function clearManualCopy() {
+        copyValue.value = '';
+        fallback.hidden = true;
+      }
+
+      function base64Url(bytes) {
+        return btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      }
+
+      generate.addEventListener('click', async () => {
+        if (publicField.value && !window.confirm('Generate a new VAPID key pair? Replacing your deployed keys requires existing devices to unsubscribe and subscribe to notifications again. Keep your current keys unless you intend to replace them.')) return;
+        clearManualCopy();
+        generate.disabled = true;
+        status.textContent = 'Generating keys locally…';
+        try {
+          if (!window.isSecureContext || !window.crypto?.subtle) throw new Error('Web Crypto is unavailable. Download this HTML file and open it directly in a current version of Edge, Chrome, Firefox, or Safari.');
+          const keyPair = await crypto.subtle.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, true, ['deriveBits']);
+          const publicBytes = new Uint8Array(await crypto.subtle.exportKey('raw', keyPair.publicKey));
+          const privateJwk = await crypto.subtle.exportKey('jwk', keyPair.privateKey);
+          if (publicBytes.length !== 65 || publicBytes[0] !== 4 || !/^[A-Za-z0-9_-]{43}$/.test(privateJwk.d || '')) throw new Error('The browser returned an unexpected key format. No keys were changed.');
+          publicField.value = base64Url(publicBytes);
+          privateField.value = privateJwk.d;
+          privateField.type = 'password';
+          revealPrivate.setAttribute('aria-pressed', 'false');
+          revealPrivate.textContent = 'Show private key';
+          copyPublic.disabled = copyPrivate.disabled = revealPrivate.disabled = false;
+          generate.textContent = 'Generate a new key pair';
+          status.textContent = 'Key pair generated locally. Copy each value to its matching server setting and keep the pair securely.';
+        } catch (error) {
+          status.textContent = error instanceof Error ? error.message : 'Key generation failed. No keys were changed.';
+        } finally {
+          generate.disabled = false;
+        }
+      });
+
+      async function copyKey(field, label) {
+        clearManualCopy();
+        try {
+          if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+          await navigator.clipboard.writeText(field.value);
+          status.textContent = label + ' copied. Paste it only into its intended setting.';
+        } catch {
+          copyValue.value = field.value;
+          fallback.hidden = false;
+          copyValue.focus();
+          copyValue.select();
+          status.textContent = 'Automatic copying is unavailable. Use the selected manual copy box below.';
+        }
+      }
+
+      copyPublic.addEventListener('click', () => copyKey(publicField, 'Public key'));
+      copyPrivate.addEventListener('click', () => copyKey(privateField, 'Private key'));
+      revealPrivate.addEventListener('click', () => {
+        const show = privateField.type === 'password';
+        privateField.type = show ? 'text' : 'password';
+        revealPrivate.setAttribute('aria-pressed', String(show));
+        revealPrivate.textContent = show ? 'Hide private key' : 'Show private key';
+      });
+      document.getElementById('clear-copy').addEventListener('click', () => {
+        clearManualCopy();
+        status.textContent = 'Manual copy box cleared.';
+      });
+    })();
+  </script>
+</body>
+</html>

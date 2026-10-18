@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; worker-src 'none'">
+  <title>OurChat 설치 도우미</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#f6f3ed;color:#263c31;font:16px/1.7 system-ui,sans-serif}main{max-width:760px;margin:48px auto;padding:0 20px 50px}h1{font-size:34px;line-height:1.25;margin:8px 0 20px}h2{font-size:22px;margin:0 0 12px}p{margin:10px 0}.tag{font-size:13px;font-weight:700;letter-spacing:.08em;color:#56705b}section,.notice{background:#fffdf9;border:1px solid #dfdfd4;border-radius:20px;padding:24px;margin:20px 0}.notice{background:#e8efe3}.small{font-size:14px;color:#596a5c}label{display:block;margin:14px 0 5px}input,textarea{display:block;width:100%;padding:12px;border:1px solid #afbba9;border-radius:10px;font:inherit;background:white;color:#203528}input[type=checkbox]{display:inline;width:auto;margin-right:8px}textarea{font:12px/1.5 ui-monospace,monospace;min-height:200px}button,.button{display:inline-block;cursor:pointer;border:0;border-radius:12px;padding:12px 18px;margin:8px 8px 4px 0;background:#345943;color:white;font:600 15px/1.4 system-ui;text-decoration:none}button:disabled{opacity:.45;cursor:default}.secondary{background:#e6ece1;color:#264832}a{color:#2e6843}details{margin:16px 0}summary{cursor:pointer}#status{min-height:1.8em}.check{display:flex;align-items:flex-start;gap:6px}.check input{margin-top:8px;flex-shrink:0}.empty{display:none}code{overflow-wrap:anywhere}ol{padding-left:24px}@media(max-width:500px){main{margin-top:28px}h1{font-size:29px}section,.notice{padding:20px}button,.button{display:block;width:100%;text-align:center}}
+  </style>
+</head>
+<body><main>
+  <span class="tag">OURCHAT · 브라우저에서 시작</span>
+  <h1>이 파일 하나에서 설치를 준비하세요.</h1>
+  <p>명령어를 실행하지 않는 설치 도우미입니다. <strong>이 파일만 열어도 서버가 자동 생성되거나 채팅 설치가 완료되지는 않습니다.</strong> 첫 사용에는 로그인한 Supabase·Vercel 화면에서 아래 설정이 한 번 필요합니다.</p>
+  <div class="notice"><strong>기존 작업은 그대로 두세요.</strong><p>새 Supabase 프로젝트, 새 비공개 GitHub 저장소, 새 Vercel 프로젝트만 사용합니다. 기존 데이터·사이트·도메인·환경변수를 변경하거나 삭제하지 마세요. 이 도우미는 서비스에 로그인하거나 데이터를 전송·저장하지 않습니다.</p></div>
+
+  <section aria-labelledby="database-heading"><h2 id="database-heading">1. 새 데이터베이스 준비</h2>
+    <a class="button" href="https://supabase.com/dashboard" target="_blank" rel="noopener noreferrer">Supabase 열기</a>
+    <ol><li><strong>New project</strong>에서 OurChat 전용 새 프로젝트를 만드세요.</li><li>Authentication에서 이메일 로그인을 사용하고 공개 가입과 익명 로그인을 끄세요.</li><li>Authentication → Users에서 두 사용자 계정을 확인 완료 상태로 만드세요.</li><li>두 사람의 User UID / UUID를 아래에 넣으세요. 이메일·비밀번호·API 키를 넣는 칸이 아닙니다.</li></ol>
+    <label for="first-uuid">첫 번째 사용자 UUID</label><input id="first-uuid" placeholder="Authentication → Users에서 복사" autocomplete="off" spellcheck="false">
+    <label for="second-uuid">두 번째 사용자 UUID</label><input id="second-uuid" placeholder="다른 사용자의 UUID" autocomplete="off" spellcheck="false">
+    <label class="check"><input type="checkbox" id="new-project"><span>기존 서비스가 없는 <strong>새 OurChat 프로젝트</strong>에만 SQL을 실행합니다.</span></label>
+    <button id="copy-sql" type="button" disabled>설정 SQL 복사</button><button class="secondary" id="show-sql" type="button" disabled>SQL 보기</button>
+    <p id="sql-hint" class="small">서로 다른 실제 UUID 두 개를 입력하고 새 프로젝트 여부를 확인하세요.</p>
+    <p class="small">새 프로젝트의 <strong>SQL Editor → New query</strong>에 붙여넣고 한 번 실행하세요. 테이블 생성과 두 사람 등록이 함께 처리됩니다. 기존 public 테이블·사용자 함수·private 스키마 등이 있으면 변경 전에 중단합니다. 이 검사는 프로젝트 선택 확인을 대신하지 않습니다. 오류가 나면 기존 데이터를 지우지 말고 내용을 확인하세요.</p>
+    <textarea id="sql" class="empty" readonly aria-label="새 프로젝트용 설정 SQL" spellcheck="false"></textarea>
+  </section>
+
+  <section aria-labelledby="deploy-heading"><h2 id="deploy-heading">2. 새 앱 배포 시작</h2>
+    <p>새 Supabase 프로젝트의 URL과 <strong>publishable 키</strong>를 준비하세요. 아래 버튼은 Vercel의 새 프로젝트 복제 화면을 엽니다.</p>
+    <a class="button" id="deploy" href="__DEPLOY_URL__" target="_blank" rel="noopener noreferrer">Vercel에서 새 OurChat 만들기</a>
+    <p>새 Git 저장소를 <strong>Private</strong>으로 만들고 새 Vercel 프로젝트를 생성하세요. 같은 이름이 이미 있으면 다른 새 이름을 사용하세요. 기존 프로젝트를 고르거나 기존 도메인을 연결하지 마세요.</p>
+    <details><summary>Vercel 입력값 안내</summary><p><code>NEXT_PUBLIC_SUPABASE_URL</code>: 새 Supabase 프로젝트 URL</p><p><code>NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code>: 새 프로젝트의 publishable 키</p><p>service_role / secret 키를 publishable 칸에 넣지 마세요. Framework는 Next.js, Node.js는 24.x입니다. 복제된 <code>package.json</code>이 있는 폴더를 Root Directory로 지정하세요.</p><p>소스는 아래 커밋에 고정됩니다. 이 버튼은 현재 계정의 Vercel 화면에서 아직 검증하지 못했습니다.</p><code>__SOURCE_REF__</code></details>
+  </section>
+
+  <section aria-labelledby="origin-heading"><h2 id="origin-heading">3. 새 앱 주소 연결</h2>
+    <p>첫 배포 뒤 새 Vercel 프로젝트의 <strong>고정 운영 주소</strong>를 복사하세요. 아래에 넣으면 환경변수에 쓸 주소를 확인할 수 있습니다.</p>
+    <label for="app-url">새 OurChat HTTPS 주소</label><input id="app-url" type="url" placeholder="https://새프로젝트.vercel.app" autocomplete="off" spellcheck="false">
+    <button id="copy-origin" class="secondary" type="button" disabled>주소 복사</button>
+    <p>새 Vercel 프로젝트에 <code>NEXT_PUBLIC_SITE_URL</code>을 추가하고 이 주소를 값으로 넣으세요. Production에 적용한 뒤 <strong>Redeploy</strong>하세요. 새 Supabase 프로젝트의 Authentication → URL Configuration → Site URL도 같은 주소로 설정하세요.</p>
+    <p class="small">주소를 설정하고 재배포하기 전에는 로그인과 메시지 전송이 준비되지 않습니다. 기존 프로젝트의 도메인이나 환경변수는 바꾸지 마세요.</p>
+  </section>
+
+  <section aria-labelledby="install-heading"><h2 id="install-heading">4. 앱 열고 설치</h2>
+    <button id="open-app" type="button" disabled>새 OurChat 열기</button>
+    <p>두 계정으로 로그인하여 양방향 메시지를 확인한 뒤, 열린 앱에서 Edge·Chrome의 <strong>앱 설치</strong> 메뉴를 누르세요. 이후에는 앱 아이콘으로 실행합니다. 휴대폰에서는 같은 새 HTTPS 주소를 열어 설치하세요.</p>
+    <p class="small">현재 배포·실제 채팅·Windows 기기 설치는 완료되었다고 확인하지 않았습니다. 이 파일은 설정과 설치 경로를 모아 둔 도우미입니다. 푸시 알림 설정은 별도 단계입니다.</p>
+  </section>
+  <p id="status" role="status" aria-live="polite"></p>
+  <p class="small">입력값은 이 창에서만 사용합니다. 창을 닫으면 사라집니다. 비밀번호와 서비스 비밀 키는 이 파일이나 대화에 입력하지 마세요.</p>
+</main>
+<script>
+'use strict';
+const $ = (id) => document.getElementById(id);
+const template = new TextDecoder().decode(Uint8Array.from(atob('__SETUP_SQL_BASE64__'), (c) => c.charCodeAt(0)));
+const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+function setupSql() {
+  const first = $('first-uuid').value.trim().toLowerCase();
+  const second = $('second-uuid').value.trim().toLowerCase();
+  if (!uuidPattern.test(first) || !uuidPattern.test(second) || first === second || !$('new-project').checked) return '';
+  return template.replace("first_auth_uuid_text text := 'REPLACE_FIRST_AUTH_UUID'", "first_auth_uuid_text text := '" + first + "'")
+    .replace("second_auth_uuid_text text := 'REPLACE_SECOND_AUTH_UUID'", "second_auth_uuid_text text := '" + second + "'");
+}
+function updateSql() {
+  const sql = setupSql();
+  $('copy-sql').disabled = $('show-sql').disabled = !sql;
+  $('sql').value = sql;
+  if (!sql) $('sql').classList.add('empty');
+  $('sql-hint').textContent = sql ? '새 프로젝트 SQL Editor에만 붙여넣으세요. 실행 전에 프로젝트 이름을 다시 확인하세요.' : '서로 다른 실제 UUID 두 개를 입력하고 새 프로젝트 여부를 확인하세요.';
+}
+async function copy(text, fallback) {
+  try {
+    if (!navigator.clipboard?.writeText) throw new Error('clipboard');
+    await navigator.clipboard.writeText(text);
+    $('status').textContent = '복사했습니다. 해당하는 새 프로젝트 화면에 붙여넣으세요.';
+  } catch {
+    fallback.classList.remove('empty'); fallback.focus(); fallback.select();
+    $('status').textContent = '자동 복사가 지원되지 않아 내용을 선택했습니다. Ctrl+C로 복사하세요.';
+  }
+}
+for (const id of ['first-uuid', 'second-uuid', 'new-project']) $(id).addEventListener('input', updateSql);
+$('copy-sql').addEventListener('click', () => { const sql = setupSql(); if (sql) void copy(sql, $('sql')); });
+$('show-sql').addEventListener('click', () => $('sql').classList.toggle('empty'));
+function appOrigin() {
+  try {
+    const url = new URL($('app-url').value.trim());
+    if (url.protocol !== 'https:' || url.username || url.password || url.search || url.hash || !url.hostname.endsWith('.vercel.app') || url.port) return '';
+    if (!['', '/', '/login', '/chat'].includes(url.pathname)) return '';
+    return url.origin;
+  } catch { return ''; }
+}
+$('app-url').addEventListener('input', () => { const valid = !!appOrigin(); $('copy-origin').disabled = $('open-app').disabled = !valid; });
+$('copy-origin').addEventListener('click', () => { const origin = appOrigin(); if (origin) { $('app-url').value = origin; void copy(origin, $('app-url')); } });
+$('open-app').addEventListener('click', () => { const origin = appOrigin(); if (origin) window.open(origin + '/login', '_blank', 'noopener,noreferrer'); });
+</script>
+</body></html>
