@@ -11,10 +11,16 @@ ZIP을 한 번 풀면 **OurChat.html** 파일 하나가 나옵니다. 바탕화�
 휴대폰에서는 다음 방법으로 홈 화면 아이콘을 추가할 수도 있습니다.
 
 - Android: Chrome에서 앱 주소 열기 → 메뉴 **⋮** → **앱 설치** 또는 **홈 화면에 추가**.
-- iPhone: Safari에서 앱 주소 열기 → **공유** → **홈 화면에 추가**.
+- iPhone: Safari에서 앱 주소 열기 → **Share(공유)** → **Add to Home Screen(홈 화면에 추가)** → **Add(추가)**. 공유 버튼이 보이지 않으면 먼저 **⋯**를 누르세요.
+
+메시지 도착음은 앱을 새로고침한 뒤 채팅창의 **Sound off**를 눌러 **Sound on**으로 켭니다. 상대방의 새 메시지에만 도착음을 재생하며, 소리를 켰다는 선택은 이 브라우저에 기억됩니다. 다시 열었을 때 화면을 한 번 누르거나 입력하면 브라우저의 오디오가 준비됩니다.
+
+아이폰의 백그라운드 알림은 홈 화면에 추가한 앱에서 휴대폰 버튼 → **Enable notifications** → **Allow**로 허용합니다. iOS 16.4 이상이 필요하며, 실제 소리는 아이폰의 알림 소리·음량·무음 모드·집중 모드 설정을 따릅니다. 실제 휴대폰의 소리와 잠금 화면 알림은 아직 확인하지 않았습니다.
 
 두 휴대폰은 등록된 서로 다른 계정으로 로그인합니다. 가입 차단과 두 회원의 DB 접근 제한을 확인했습니다. 사용자 화면에서 로그인과 첫 메시지 저장을 확인했으며, 양방향 대화·실제 기기 알림은 별도 확인이 필요합니다.
 
 이 전달용 브랜치는 기존 앱 브랜치와 분리되어 있습니다. 시작 파일에는 공개 앱 주소만 있으며, 기존 프로젝트·사이트·도메인·Git 연결은 변경하지 않았습니다.
 
-`OurChat-Start.html`, `OurChat-Setup.cmd`, `OurChat.zip`과 `ourchat-private/`는 이전 설정 자료·초기 소스 스냅샷입니다. 지금 메신저를 다시 열기 위해 이 자료로 새 프로젝트를 만들거나 설치를 반복할 필요는 없습니다. `OurChat-Setup.cmd`는 해당 Windows PC의 Smart App Control에서 차단됐던 자료입니다.
+`ourchat-private/`와 [OurChat-source.zip](https://github.com/t2520176-oss/ChristmasGiftRoulette/raw/refs/heads/codex/ourchat-download/OurChat-source.zip)은 휴대폰 화면·설치 안내·메시지 도착음 개선을 포함한 현재 소스 백업입니다. 계정 비밀번호, 배포 환경의 비밀 키, 대화 데이터는 포함하지 않습니다. 이 백업으로 복구하려면 서버 설정이 별도로 필요합니다. 평소에 메신저를 여는 용도는 위의 **OurChat-Start.zip**입니다.
+
+`OurChat-Start.html`, `OurChat-Setup.cmd`, `OurChat.zip`은 이전 설정 자료·초기 소스 스냅샷입니다. 지금 메신저를 다시 열기 위해 이 자료로 새 프로젝트를 만들거나 설치를 반복할 필요는 없습니다. `OurChat-Setup.cmd`는 해당 Windows PC의 Smart App Control에서 차단됐던 자료입니다.

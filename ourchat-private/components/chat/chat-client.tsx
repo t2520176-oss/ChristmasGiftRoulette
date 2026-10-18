@@ -7,7 +7,9 @@ import {
   ArrowDown, ArrowUp, Check, CheckCheck, ChevronDown, Heart, LoaderCircle,
   LockKeyhole, LogOut, MessageCircle, Moon, Send, Sun, WifiOff,
 } from "lucide-react";
-import { cleanupCurrentPushSubscription, PwaControls } from "@/components/pwa-controls";
+import { cleanupCurrentPushSubscription } from "@/components/pwa-controls";
+import { PhoneAccess } from "@/components/phone-access";
+import { MessageSoundControl, useMessageSound } from "@/components/message-sound";
 import { createClient } from "@/lib/supabase/browser";
 import type { ChatMessage, Member, ReadReceipt } from "@/lib/types";
 import {
@@ -111,6 +113,11 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
   const dark = useSyncExternalStore(subscribeTheme, readTheme, () => false);
   const [signingOut, setSigningOut] = useState(false);
   const [realtimeEpoch, setRealtimeEpoch] = useState(0);
+  const sound = useMessageSound();
+  const { playIncoming } = sound;
+  const initialNewestIdRef = useRef(newestMessageId(initialMessages));
+  const knownSoundIdsRef = useRef(new Set(initialMessages.filter((message) => isMessageId(message.id)).map((message) => message.id)));
+  const shellRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesRef = useRef(messages);
@@ -135,6 +142,18 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
   const acceptMessages = useCallback((incoming: readonly VisibleMessage[], countNew = true) => {
     if (!mountedRef.current || !incoming.length) return;
     const current = messagesRef.current;
+    let hasNewPeerMessage = false;
+    for (const message of incoming) {
+      if (!isMessageId(message.id)) continue;
+      if (message.sender_id === peer?.user_id && !knownSoundIdsRef.current.has(message.id) &&
+        (!initialNewestIdRef.current || compareMessageIds(message.id, initialNewestIdRef.current) > 0)) {
+        hasNewPeerMessage = true;
+      }
+      // Keep a fixed initial boundary and a set of seen IDs. A newer own reply must
+      // not silence a peer message delivered later with a smaller ID.
+      knownSoundIdsRef.current.add(message.id);
+    }
+    if (countNew && sessionActiveRef.current && hasNewPeerMessage) playIncoming();
     if (countNew && !atBottomRef.current) {
       const known = new Set(current.map(messageIdentity));
       const fresh = incoming.filter((message) => isMessageId(message.id) && message.sender_id !== currentMember.user_id && !known.has(messageIdentity(message)));
@@ -143,7 +162,7 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
     const next = mergeMessages(current, incoming);
     messagesRef.current = next;
     setMessages(next);
-  }, [currentMember.user_id]);
+  }, [currentMember.user_id, peer?.user_id, playIncoming]);
 
   const acceptReceipts = useCallback((incoming: readonly ReadReceipt[]) => {
     if (!mountedRef.current) return;
@@ -320,6 +339,48 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
     if (input) { input.style.height = "auto"; input.style.height = `${Math.min(input.scrollHeight, 144)}px`; }
   }, [draft]);
 
+  useEffect(() => {
+    const shell = shellRef.current;
+    const history = viewportRef.current;
+    if (!shell || !history) return;
+    const visual = window.visualViewport;
+    let frame: number | null = null;
+    const keepLatestVisible = () => {
+      if (!atBottomRef.current) return;
+      if (frame !== null) cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        if (atBottomRef.current) history.scrollTop = history.scrollHeight;
+        frame = null;
+      });
+    };
+    const resize = () => {
+      // A keyboard changes the visual viewport on iOS even when 100dvh does not.
+      // Leave browser magnification alone so users can still pinch to zoom.
+      const magnified = visual && Math.abs(visual.scale - 1) >= 0.01;
+      if (visual && !magnified) {
+        shell.style.setProperty("--chat-viewport-height", `${visual.height}px`);
+        shell.style.setProperty("--chat-viewport-top", `${visual.offsetTop}px`);
+      } else {
+        shell.style.removeProperty("--chat-viewport-height");
+        shell.style.removeProperty("--chat-viewport-top");
+      }
+      if (!magnified) keepLatestVisible();
+    };
+    const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(keepLatestVisible);
+    observer?.observe(history);
+    visual?.addEventListener("resize", resize);
+    visual?.addEventListener("scroll", resize);
+    window.addEventListener("resize", resize);
+    resize();
+    return () => {
+      observer?.disconnect();
+      visual?.removeEventListener("resize", resize);
+      visual?.removeEventListener("scroll", resize);
+      window.removeEventListener("resize", resize);
+      if (frame !== null) cancelAnimationFrame(frame);
+    };
+  }, []);
+
   async function loadOlder() {
     const cursor = oldestMessageId(messagesRef.current);
     if (!cursor || !hasMore || loadingOlderRef.current || !onlineRef.current) return;
@@ -410,32 +471,32 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
   const peerName = peer?.display_name ?? "Your person";
 
   return (
-    <div className="flex min-h-dvh flex-col bg-[#f7f5f0] text-[#283c37] dark:bg-[#131c1a] dark:text-[#e7eee9]">
-      <header className="shrink-0 border-b border-[#dedfd6] bg-[#fcfbf8]/95 dark:border-[#304039] dark:bg-[#19231f]">
-        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-5 sm:px-8">
-          <a href="/chat" aria-label="OurChat home" className="flex items-center gap-3 rounded-xl outline-offset-4 focus-visible:outline-2 focus-visible:outline-[#35624d]">
-            <span className="flex size-10 items-center justify-center rounded-2xl bg-[#244d3d] text-[#fbf8ef] dark:bg-[#b6ccb8] dark:text-[#1e392e]"><MessageCircle size={22} strokeWidth={1.6} /></span>
-            <span className="text-[23px] font-semibold tracking-[-0.8px]">OurChat<span className="text-[#b0b9a8]">.</span></span>
+    <div ref={shellRef} className="chat-shell flex min-h-0 flex-col bg-[#f7f5f0] text-[#283c37] dark:bg-[#131c1a] dark:text-[#e7eee9]">
+      <header className="chat-topbar shrink-0 border-b border-[#dedfd6] bg-[#fcfbf8]/95 dark:border-[#304039] dark:bg-[#19231f]">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-2 px-3 sm:h-20 sm:px-8">
+          <a href="/chat" aria-label="OurChat home" className="flex min-h-11 min-w-0 items-center gap-2 rounded-xl outline-offset-4 focus-visible:outline-2 focus-visible:outline-[#35624d] sm:gap-3">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-2xl bg-[#244d3d] text-[#fbf8ef] sm:size-10 dark:bg-[#b6ccb8] dark:text-[#1e392e]"><MessageCircle size={22} strokeWidth={1.6} /></span>
+            <span className="text-xl font-semibold tracking-[-0.8px] sm:text-[23px]">OurChat<span className="text-[#b0b9a8]">.</span></span>
           </a>
-          <div className="flex items-center gap-3 sm:gap-5">
-            <span className="hidden items-center gap-1.5 text-xs text-[#718175] sm:flex dark:text-[#b5c3b7]"><LockKeyhole size={12} /> Just the two of us</span>
-            <button type="button" onClick={toggleTheme} className="rounded-full p-2.5 text-[#607469] transition hover:bg-[#e9ede4] focus-visible:outline-2 focus-visible:outline-[#35624d] dark:text-[#bbcebf] dark:hover:bg-[#304039]" aria-label={dark ? "Use light mode" : "Use dark mode"}>{dark ? <Sun size={19} /> : <Moon size={19} />}</button>
+          <div className="flex shrink-0 items-center gap-1 sm:gap-3">
+            <span className="hidden items-center gap-1.5 text-xs text-[#718175] md:flex dark:text-[#b5c3b7]"><LockKeyhole size={12} /> Just the two of us</span>
+            <PhoneAccess authenticated compact />
+            <button type="button" onClick={toggleTheme} className="flex size-11 items-center justify-center rounded-full text-[#607469] transition hover:bg-[#e9ede4] focus-visible:outline-2 focus-visible:outline-[#35624d] dark:text-[#bbcebf] dark:hover:bg-[#304039]" aria-label={dark ? "Use light mode" : "Use dark mode"}>{dark ? <Sun size={19} /> : <Moon size={19} />}</button>
             <div className="relative">
-              <button type="button" onClick={() => setSettingsOpen((open) => !open)} aria-expanded={settingsOpen} aria-controls="account-menu" className="flex items-center gap-2 rounded-full border border-[#dde2d8] bg-white px-2 py-1.5 text-sm focus-visible:outline-2 focus-visible:outline-[#35624d] dark:border-[#3c4d42] dark:bg-[#223029]">
+              <button type="button" onClick={() => setSettingsOpen((open) => !open)} aria-label={`${currentMember.display_name} account`} aria-expanded={settingsOpen} aria-controls="account-menu" className="flex min-h-11 items-center gap-1 rounded-full border border-[#dde2d8] bg-white px-1.5 py-1 text-sm focus-visible:outline-2 focus-visible:outline-[#35624d] sm:gap-2 sm:px-2 dark:border-[#3c4d42] dark:bg-[#223029]">
                 <span className="flex size-8 items-center justify-center rounded-full bg-[#e8edde] text-xs font-semibold text-[#516447] dark:bg-[#3b4c3a] dark:text-[#dce9cd]">{initials(currentMember.display_name)}</span>
                 <span className="hidden max-w-24 truncate sm:inline">{currentMember.display_name}</span><ChevronDown size={14} className="mr-1" />
               </button>
               <div id="account-menu" hidden={!settingsOpen} className="absolute right-0 top-full z-30 mt-2 w-80 max-w-[calc(100vw-2.5rem)] rounded-2xl border border-[#dee4d9] bg-[#fcfbf8] p-4 shadow-xl dark:border-[#3a4c3f] dark:bg-[#23302a]">
-                <p className="mb-1 text-sm font-semibold">Your little corner</p><p className="mb-4 text-xs leading-5 text-[#718175] dark:text-[#b8c7bb]">Install OurChat and stay in touch on your devices.</p>
-                <PwaControls />
-                <button type="button" disabled={signingOut} onClick={() => void signOut()} className="mt-4 flex w-full items-center gap-2 rounded-xl border-t border-[#e2e6dc] px-2 pt-4 pb-1 text-sm hover:text-[#a04c39] disabled:opacity-50 dark:border-[#405143]"><LogOut size={16} />{signingOut ? "Signing out…" : "Sign out"}</button>
+                <p className="mb-1 truncate text-sm font-semibold">{currentMember.display_name}</p><p className="text-xs leading-5 text-[#718175] dark:text-[#b8c7bb]">Your private OurChat account.</p>
+                <button type="button" disabled={signingOut} onClick={() => void signOut()} className="mt-3 flex min-h-11 w-full items-center gap-2 rounded-xl border-t border-[#e2e6dc] px-2 py-3 text-sm hover:text-[#a04c39] disabled:opacity-50 dark:border-[#405143]"><LogOut size={16} />{signingOut ? "Signing out…" : "Sign out"}</button>
               </div>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="mx-auto flex w-full max-w-6xl min-h-0 flex-1 flex-col px-0 sm:px-8 sm:py-8 lg:flex-row lg:gap-8">
+      <main className="chat-content mx-auto flex w-full max-w-6xl min-h-0 flex-1 flex-col px-0 sm:px-8 sm:py-8 lg:flex-row lg:gap-8">
         <aside className="hidden w-60 shrink-0 flex-col py-8 lg:flex">
           <span className="mb-4 text-[10px] font-semibold tracking-[0.23em] text-[#8a9889] dark:text-[#a5b4a4]">A SPACE FOR US</span>
           <h1 className="font-serif text-4xl leading-[1.18] tracking-[-1px]">Close, even<br />from here.</h1>
@@ -447,10 +508,10 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
           <div className="mt-auto pt-12"><Heart size={19} strokeWidth={1.2} className="mb-3 text-[#a5b095]" /><p className="max-w-44 text-xs leading-6 text-[#919b8a] dark:text-[#a1b09c]">A private conversation,<br />made for the two of you.</p></div>
         </aside>
 
-        <section aria-label={`Conversation with ${peerName}`} className="relative flex h-[calc(100dvh-5rem)] min-h-[400px] min-w-0 flex-1 flex-col overflow-hidden bg-[#fffefa] sm:h-[calc(100dvh-9rem)] sm:rounded-[28px] sm:border sm:border-[#dfe4d8] sm:shadow-[0_8px_40px_rgba(40,60,45,0.04)] dark:border-[#34463a] dark:bg-[#1c2822]">
-          <div className="flex min-h-22 shrink-0 items-center justify-between border-b border-[#e9ece3] px-5 py-4 sm:px-7 dark:border-[#35463a]">
-            <div className="flex items-center gap-3.5"><span className="relative flex size-11 items-center justify-center rounded-full bg-[#e7eada] font-serif text-xl text-[#687b54] dark:bg-[#3a4a33] dark:text-[#d3e2c5]">{initials(peerName)}<span className={`absolute right-0 bottom-0 size-3 rounded-full border-2 border-[#fffefa] dark:border-[#1c2822] ${peerOnline && online ? "bg-[#8ba370]" : "bg-[#adb5a6]"}`} /></span><div><h2 className="text-[17px] font-semibold tracking-[-0.3px]">{peerName}</h2><p role="status" aria-live="polite" className="mt-0.5 flex items-center gap-1 text-xs text-[#87917d] dark:text-[#adbea5]">{!online && <WifiOff size={11} />}{connectionLabel}</p></div></div>
-            <span className="rounded-full border border-[#e4e8dd] px-3 py-1.5 text-[10px] font-medium tracking-wide text-[#89977e] dark:border-[#3b4c3c] dark:text-[#b1c0a8]">OUR CONVERSATION</span>
+        <section aria-label={`Conversation with ${peerName}`} className="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-[#fffefa] sm:rounded-[28px] sm:border sm:border-[#dfe4d8] sm:shadow-[0_8px_40px_rgba(40,60,45,0.04)] dark:border-[#34463a] dark:bg-[#1c2822]">
+          <div className="flex min-h-18 shrink-0 items-center justify-between gap-3 border-b border-[#e9ece3] px-4 py-3 sm:min-h-22 sm:px-7 sm:py-4 dark:border-[#35463a]">
+            <div className="flex min-w-0 items-center gap-3.5"><span className="relative flex size-11 shrink-0 items-center justify-center rounded-full bg-[#e7eada] font-serif text-xl text-[#687b54] dark:bg-[#3a4a33] dark:text-[#d3e2c5]">{initials(peerName)}<span className={`absolute right-0 bottom-0 size-3 rounded-full border-2 border-[#fffefa] dark:border-[#1c2822] ${peerOnline && online ? "bg-[#8ba370]" : "bg-[#adb5a6]"}`} /></span><div className="min-w-0"><h2 className="truncate text-[17px] font-semibold tracking-[-0.3px]">{peerName}</h2><p role="status" aria-live="polite" className="mt-0.5 flex items-center gap-1 text-xs text-[#87917d] dark:text-[#adbea5]">{!online && <WifiOff size={11} />}{connectionLabel}</p></div></div>
+            <MessageSoundControl sound={sound} />
           </div>
 
           {!online && <div role="status" className="flex items-center justify-center gap-2 bg-[#f3e8cd] px-4 py-2 text-xs text-[#7b602d] dark:bg-[#493d23] dark:text-[#efcf8e]"><WifiOff size={13} />Offline. Your draft stays here. Reconnect to send.</div>}
@@ -495,7 +556,7 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
             <div className={`flex items-end gap-2 rounded-[20px] border bg-[#f7f8f1] p-2 focus-within:ring-2 focus-within:ring-[#b9caa7]/50 dark:bg-[#253024] ${bodyLength > 2000 ? "border-[#c7785a]" : "border-[#e2e7d8] dark:border-[#45543b]"}`}>
               <label htmlFor="message-input" className="sr-only">Type a message</label><textarea id="message-input" ref={textareaRef} value={draft} onChange={(event) => setDraft(event.target.value)} onCompositionStart={() => { composingRef.current = true; }} onCompositionEnd={() => { composingRef.current = false; }} onKeyDown={(event) => {
                 if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing && !composingRef.current && event.keyCode !== 229) { event.preventDefault(); send(); }
-              }} placeholder="Type a message..." rows={1} aria-describedby="composer-help" className="min-h-11 flex-1 resize-none bg-transparent px-2 py-2.5 text-[15px] leading-6 text-[#3b5137] outline-none placeholder:text-[#a3ac96] dark:text-[#e7efdd] dark:placeholder:text-[#93a486]" />
+              }} placeholder="Type a message..." rows={1} aria-describedby="composer-help" className="min-h-11 max-h-[min(9rem,calc(var(--chat-viewport-height,100dvh)*0.22))] min-w-0 flex-1 resize-none bg-transparent px-2 py-2.5 text-base leading-6 text-[#3b5137] outline-none placeholder:text-[#a3ac96] dark:text-[#e7efdd] dark:placeholder:text-[#93a486]" />
               <button type="submit" disabled={!canSendDraft(draft, online) || signingOut} aria-label="Send message" className="flex size-11 shrink-0 items-center justify-center rounded-[14px] bg-[#386044] text-[#f7faef] transition hover:bg-[#284e35] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#456e3c] disabled:cursor-not-allowed disabled:bg-[#d8dfcc] disabled:text-[#9da98d] dark:bg-[#a8c08c] dark:text-[#24371c] dark:hover:bg-[#c4d8aa] dark:disabled:bg-[#405037] dark:disabled:text-[#7d8d6d]"><Send size={18} strokeWidth={1.6} /></button>
             </div>
             <div id="composer-help" className="mt-2.5 flex justify-between gap-3 px-1 text-[10px] text-[#a1aa92] dark:text-[#9daf8a]"><span className="hidden sm:inline">Enter to send <span className="px-1.5">·</span> Shift + Enter for a new line</span><span className="sm:hidden">A little note goes a long way.</span><span className={bodyLength > 2000 ? "font-semibold text-[#b05c3b] dark:text-[#efae8c]" : ""} aria-live={bodyLength > 1950 ? "polite" : "off"}>{bodyLength.toLocaleString("en")} / 2,000</span></div>

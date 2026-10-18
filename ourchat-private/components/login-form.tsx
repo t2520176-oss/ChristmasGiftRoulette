@@ -27,7 +27,7 @@ export function LoginForm({ configured }: { configured: boolean }) {
   return <form onSubmit={submit} className="space-y-5">
     <div>
       <label htmlFor="email" className="mb-2 block text-sm font-semibold text-stone-700">Email</label>
-      <input id="email" name="email" type="email" autoComplete="username" placeholder="you@example.com" required maxLength={254} disabled={!configured || pending}
+      <input id="email" name="email" type="email" inputMode="email" autoCapitalize="none" autoCorrect="off" spellCheck={false} autoComplete="username" placeholder="you@example.com" required maxLength={254} disabled={!configured || pending}
         className="w-full rounded-xl border border-stone-300 bg-white px-4 py-3.5 text-base text-stone-900 placeholder:text-stone-400 disabled:opacity-60" />
     </div>
     <div>

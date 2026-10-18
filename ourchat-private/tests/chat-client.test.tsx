@@ -16,12 +16,16 @@ const realtime = vi.hoisted(() => {
     return channel;
   });
   channel.subscribe.mockReturnValue(channel);
-  return { channel, events, removeChannel: vi.fn(), replace: vi.fn(), refresh: vi.fn(), cleanupPush: vi.fn().mockResolvedValue(undefined) };
+  return { channel, events, removeChannel: vi.fn(), replace: vi.fn(), refresh: vi.fn(), cleanupPush: vi.fn().mockResolvedValue(undefined), playSound: vi.fn() };
 });
 
 vi.mock("next/navigation", () => ({ useRouter: () => ({ replace: realtime.replace, refresh: realtime.refresh }) }));
 vi.mock("@/lib/supabase/browser", () => ({ createClient: () => ({ channel: () => realtime.channel, removeChannel: realtime.removeChannel }) }));
 vi.mock("@/components/pwa-controls", () => ({ PwaControls: () => <div>Device settings</div>, cleanupCurrentPushSubscription: realtime.cleanupPush }));
+vi.mock("@/components/message-sound", () => ({
+  useMessageSound: () => ({ playIncoming: realtime.playSound }),
+  MessageSoundControl: () => <div>Sound settings</div>,
+}));
 
 const self = { user_id: "husband", display_name: "Husband" };
 const peer = { user_id: "wife", display_name: "Wife" };
@@ -79,6 +83,116 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 
 describe("chat interaction", () => {
+  it("chimes once for a fresh peer batch, without replaying duplicate or own messages", async () => {
+    let incoming: ChatMessage[] = [];
+    fetchMock.mockImplementation(async (url: string) => url === "/api/read"
+      ? json({ receipts: [] }) : json({ messages: incoming, hasMore: false }));
+    render(<ChatClient currentMember={self} peer={peer} initialMessages={[message("10")]} initialReceipts={[]} />);
+    await waitFor(() => expect(fetchMock.mock.calls.some(([url]) => url === "/api/read")).toBe(true));
+    expect(realtime.playSound).not.toHaveBeenCalled();
+    incoming = [message("11"), message("12"), message("13", "My reply", self.user_id)];
+    act(() => window.dispatchEvent(new Event("online")));
+    await screen.findByText("Message 12");
+    expect(realtime.playSound).toHaveBeenCalledOnce();
+    incoming = [...incoming, message("14", "Another own message", self.user_id)];
+    act(() => window.dispatchEvent(new Event("online")));
+    await screen.findByText("Another own message");
+    expect(realtime.playSound).toHaveBeenCalledOnce();
+    act(() => window.dispatchEvent(new Event("online")));
+    await waitFor(() => expect(fetchMock.mock.calls.filter(([url]) => url === "/api/messages?after=14").length).toBeGreaterThan(0));
+    expect(realtime.playSound).toHaveBeenCalledOnce();
+  });
+
+  it("does not silence a delayed new peer message after a newer own reply", async () => {
+    let incoming: ChatMessage[] = [];
+    fetchMock.mockImplementation(async (url: string) => url === "/api/read"
+      ? json({ receipts: [] }) : json({ messages: incoming, hasMore: false }));
+    render(<ChatClient currentMember={self} peer={peer} initialMessages={[message("90071992547409930")]} initialReceipts={[]} />);
+    await waitFor(() => expect(fetchMock.mock.calls.some(([url]) => url === "/api/read")).toBe(true));
+    incoming = [message("90071992547409932", "My newer reply", self.user_id)];
+    act(() => window.dispatchEvent(new Event("online")));
+    await screen.findByText("My newer reply");
+    expect(realtime.playSound).not.toHaveBeenCalled();
+    incoming = [message("90071992547409931", "A delayed peer reply")];
+    act(() => window.dispatchEvent(new Event("online")));
+    await screen.findByText("A delayed peer reply");
+    expect(realtime.playSound).toHaveBeenCalledOnce();
+  });
+
+  it("does not chime for initial or loaded history, including a repeated history page", async () => {
+    const initial = Array.from({ length: 50 }, (_, index) => message(String(index + 50)));
+    const history = [message("49", "An earlier note")];
+    let repeatHistory = false;
+    fetchMock.mockImplementation(async (url: string) => {
+      if (url === "/api/read") return json({ receipts: [] });
+      return json({ messages: url.includes("before=") || repeatHistory ? history : initial, hasMore: false });
+    });
+    render(<ChatClient currentMember={self} peer={peer} initialMessages={initial} initialReceipts={[]} />);
+    await waitFor(() => expect(fetchMock.mock.calls.some(([url]) => url === "/api/read")).toBe(true));
+    expect(realtime.playSound).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Earlier messages" }));
+    await screen.findByText("An earlier note");
+    expect(realtime.playSound).not.toHaveBeenCalled();
+    repeatHistory = true;
+    act(() => window.dispatchEvent(new Event("online")));
+    await waitFor(() => expect(fetchMock.mock.calls.filter(([url]) => url === "/api/read").length).toBeGreaterThan(1));
+    expect(realtime.playSound).not.toHaveBeenCalled();
+  });
+
+  it("keeps a phone draft and the latest message in place when the keyboard resizes the viewport", async () => {
+    const visual = Object.assign(new EventTarget(), { height: 780, offsetTop: 0, scale: 1 });
+    vi.stubGlobal("visualViewport", visual);
+    const view = render(<ChatClient currentMember={self} peer={peer} initialMessages={[message("10")]} initialReceipts={[]} />);
+    const input = screen.getByRole("textbox", { name: "Type a message" });
+    const shell = input.closest<HTMLElement>(".chat-shell")!;
+    const history = screen.getByRole("region", { name: "Message history" });
+    Object.defineProperties(history, {
+      scrollHeight: { configurable: true, value: 1200 },
+      clientHeight: { configurable: true, value: 400 },
+    });
+    history.scrollTop = 800;
+    fireEvent.scroll(history);
+    fireEvent.change(input, { target: { value: "A phone draft 👋" } });
+    act(() => {
+      visual.height = 350;
+      visual.offsetTop = 24;
+      visual.dispatchEvent(new Event("resize"));
+    });
+    expect(shell.style.getPropertyValue("--chat-viewport-height")).toBe("350px");
+    expect(shell.style.getPropertyValue("--chat-viewport-top")).toBe("24px");
+    await waitFor(() => expect(history.scrollTop).toBe(1200));
+    expect(screen.getByRole("textbox", { name: "Type a message" })).toBe(input);
+    expect((input as HTMLTextAreaElement).value).toBe("A phone draft 👋");
+    expect(posts()).toHaveLength(0);
+    view.unmount();
+    visual.height = 780;
+    visual.dispatchEvent(new Event("resize"));
+    expect(shell.style.getPropertyValue("--chat-viewport-height")).toBe("350px");
+  });
+
+  it("preserves the reader's position in older messages during a phone resize and allows browser zoom", async () => {
+    const visual = Object.assign(new EventTarget(), { height: 780, offsetTop: 0, scale: 1 });
+    vi.stubGlobal("visualViewport", visual);
+    render(<ChatClient currentMember={self} peer={peer} initialMessages={[message("10")]} initialReceipts={[]} />);
+    const history = screen.getByRole("region", { name: "Message history" });
+    Object.defineProperties(history, {
+      scrollHeight: { configurable: true, value: 1200 },
+      clientHeight: { configurable: true, value: 400 },
+    });
+    // Let the initial scroll settle before the user deliberately reads history.
+    await waitFor(() => expect(history.scrollTop).toBe(1200));
+    history.scrollTop = 100;
+    fireEvent.scroll(history);
+    act(() => { visual.height = 350; visual.dispatchEvent(new Event("resize")); });
+    expect(history.scrollTop).toBe(100);
+    act(() => { visual.scale = 2; visual.dispatchEvent(new Event("resize")); });
+    const shell = history.closest<HTMLElement>(".chat-shell")!;
+    expect(shell.style.getPropertyValue("--chat-viewport-height")).toBe("");
+    expect(shell.style.getPropertyValue("--chat-viewport-top")).toBe("");
+    expect(history.scrollTop).toBe(100);
+    expect(posts()).toHaveLength(0);
+  });
+
   it("waits for IME composition and Shift+Enter before sending a Unicode message", async () => {
     render(<ChatClient currentMember={self} peer={peer} initialMessages={[]} initialReceipts={[]} />);
     const input = screen.getByRole("textbox", { name: "Type a message" });

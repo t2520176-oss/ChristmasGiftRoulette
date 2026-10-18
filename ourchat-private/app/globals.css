@@ -11,6 +11,37 @@ button:not(:disabled), a { touch-action: manipulation; }
 button:disabled { cursor: not-allowed; }
 ::selection { background: #b6ceb9; color: #163322; }
 :focus-visible { outline: 3px solid #43825b; outline-offset: 3px; }
+.chat-shell {
+  position: fixed;
+  inset-inline: 0;
+  top: var(--chat-viewport-top, 0px);
+  height: var(--chat-viewport-height, 100dvh);
+  overflow: hidden;
+}
+.chat-topbar {
+  padding-top: env(safe-area-inset-top);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+.chat-content {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+@media (min-width: 40rem) {
+  .chat-content {
+    padding-left: max(2rem, env(safe-area-inset-left));
+    padding-right: max(2rem, env(safe-area-inset-right));
+  }
+}
+.login-shell {
+  padding-top: max(1.25rem, env(safe-area-inset-top));
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+}
+@media (min-width: 48rem) {
+  .login-shell { padding: max(2.5rem, env(safe-area-inset-top)) max(2.5rem, env(safe-area-inset-right)) max(2.5rem, env(safe-area-inset-bottom)) max(2.5rem, env(safe-area-inset-left)); }
+}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }

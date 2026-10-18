@@ -94,7 +94,7 @@ export async function cleanupCurrentPushSubscription(): Promise<void> {
 }
 
 /** Mount this only inside the authenticated members' chat screen. */
-export function PwaControls() {
+export function PwaControls({ defaultOpen = false }: { defaultOpen?: boolean }) {
   const registrationRef = useRef<Promise<ServiceWorkerRegistration> | null>(null);
   const browser = useSyncExternalStore(subscribeBrowser, browserSnapshot, serverBrowserSnapshot);
   const availability: Availability =
@@ -268,11 +268,11 @@ export function PwaControls() {
   }
 
   const buttonClass =
-    "rounded-xl border border-current/20 px-3 py-2 text-sm font-medium transition hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-white/10";
+    "min-h-11 rounded-xl border border-current/20 px-3 py-2 text-sm font-medium transition hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-white/10";
 
   return (
-    <details className="rounded-2xl border border-current/10 bg-white/60 p-3 text-sm dark:bg-slate-900/60">
-      <summary className="cursor-pointer font-medium">Install &amp; notifications</summary>
+    <details open={defaultOpen || undefined} className="rounded-2xl border border-current/10 bg-white/60 p-3 text-sm dark:bg-slate-900/60">
+      <summary className="min-h-11 cursor-pointer py-2 font-medium">Install &amp; notifications</summary>
       <div className="mt-3 space-y-3">
         {installed ? (
           <p>OurChat is installed on this device.</p>

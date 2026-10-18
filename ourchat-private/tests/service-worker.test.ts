@@ -4,7 +4,14 @@ import { describe, expect, it, vi } from "vitest";
 
 const source = readFileSync(new URL("../public/sw.js", import.meta.url), "utf8");
 
-function worker(windows: Array<{ url: string; focus: ReturnType<typeof vi.fn> }> = []) {
+type WindowClient = {
+  url: string;
+  focus?: ReturnType<typeof vi.fn>;
+  visibilityState?: "visible" | "hidden";
+  focused?: boolean;
+};
+
+function worker(windows: WindowClient[] = []) {
   const listeners = new Map<string, (event: Record<string, unknown>) => void>();
   const showNotification = vi.fn().mockResolvedValue(undefined);
   const openWindow = vi.fn().mockResolvedValue(undefined);
@@ -47,6 +54,8 @@ describe("OurChat service worker", () => {
       icon: "/icons/icon-192.png",
       badge: "/icons/badge-96.png",
       tag: "ourchat-new-message",
+      renotify: true,
+      silent: false,
     });
   });
 
@@ -57,6 +66,65 @@ describe("OurChat service worker", () => {
       "OurChat",
       expect.objectContaining({ body: "You have a new message." }),
     );
+  });
+
+  it.each(["/chat", "/chat/?from=home"])("keeps a visible notification but leaves sound to a focused chat at %s", async (path) => {
+    const sw = worker([{ url: `https://ourchat.example${path}`, visibilityState: "visible", focused: true }]);
+    await sw.dispatch("push");
+    expect(sw.matchAll).toHaveBeenCalledExactlyOnceWith({ type: "window", includeUncontrolled: true });
+    expect(sw.showNotification).toHaveBeenCalledExactlyOnceWith("OurChat", expect.objectContaining({
+      body: "You have a new message.", silent: true, renotify: true,
+    }));
+  });
+
+  it.each([
+    { name: "hidden chat", url: "https://ourchat.example/chat", visibilityState: "hidden", focused: true },
+    { name: "unfocused chat", url: "https://ourchat.example/chat", visibilityState: "visible", focused: false },
+    { name: "unknown focus", url: "https://ourchat.example/chat", visibilityState: "visible" },
+    { name: "unknown visibility", url: "https://ourchat.example/chat", focused: true },
+    { name: "foreign chat", url: "https://evil.example/chat", visibilityState: "visible", focused: true },
+    { name: "login page", url: "https://ourchat.example/login", visibilityState: "visible", focused: true },
+    { name: "different path", url: "https://ourchat.example/chatroom", visibilityState: "visible", focused: true },
+    { name: "malformed client", url: "not a valid URL", visibilityState: "visible", focused: true },
+  ])("keeps the background alert for $name", async ({ url, visibilityState, focused }) => {
+    const sw = worker([{ url, visibilityState: visibilityState as WindowClient["visibilityState"], focused }]);
+    await sw.dispatch("push");
+    expect(sw.showNotification).toHaveBeenCalledExactlyOnceWith("OurChat", expect.objectContaining({ silent: false }));
+  });
+
+  it("still finds a focused chat after an unrelated malformed client", async () => {
+    const sw = worker([
+      { url: "not a valid URL", visibilityState: "visible", focused: true },
+      { url: "https://ourchat.example/chat", visibilityState: "visible", focused: true },
+    ]);
+    await sw.dispatch("push");
+    expect(sw.showNotification).toHaveBeenCalledExactlyOnceWith("OurChat", expect.objectContaining({ silent: true }));
+  });
+
+  it("shows the background alert when the client lookup fails", async () => {
+    const sw = worker();
+    sw.matchAll.mockRejectedValue(new Error("Client lookup unavailable"));
+    await sw.dispatch("push");
+    expect(sw.showNotification).toHaveBeenCalledExactlyOnceWith("OurChat", expect.objectContaining({ silent: false }));
+  });
+
+  it("allows the operating system to alert again for repeated private notifications", async () => {
+    const sw = worker();
+    await sw.dispatch("push");
+    await sw.dispatch("push");
+    expect(sw.showNotification).toHaveBeenCalledTimes(2);
+    for (const [title, options] of sw.showNotification.mock.calls) {
+      expect(title).toBe("OurChat");
+      expect(options).toEqual({
+        body: "You have a new message.",
+        icon: "/icons/icon-192.png",
+        badge: "/icons/badge-96.png",
+        tag: "ourchat-new-message",
+        renotify: true,
+        silent: false,
+      });
+      expect(options).not.toHaveProperty("sound");
+    }
   });
 
   it("focuses only an existing same-origin chat window", async () => {
