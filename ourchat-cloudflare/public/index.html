@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f2eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="description" content="A quiet place for your conversation.">
+  <title>OurChat</title>
+  <link rel="icon" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles.css?v=20261019-1">
+  <script type="module" src="/app.js?v=20261019-1"></script>
+</head>
+<body>
+  <main id="login" class="login-shell" hidden>
+    <section class="login-card" aria-labelledby="login-title">
+      <div class="brand-mark" aria-hidden="true">♡</div>
+      <p class="eyebrow">JUST THE TWO OF US</p>
+      <h1 id="login-title">OurChat</h1>
+      <p class="intro">A little space for your everyday conversations.</p>
+      <form id="login-form">
+        <label for="email">Email</label>
+        <input id="email" type="email" autocomplete="username" required inputmode="email" spellcheck="false" autocapitalize="none">
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" required>
+        <p id="login-error" class="error" role="alert" hidden></p>
+        <button id="signin" class="primary" type="submit">Sign in</button>
+      </form>
+      <p class="fine">Only your two configured accounts can sign in.</p>
+      <button type="button" class="text-button install-help">Use OurChat on your phone</button>
+    </section>
+  </main>
+
+  <main id="chat" class="chat-shell" hidden>
+    <header class="topbar">
+      <div id="avatar" class="avatar" aria-hidden="true">♡</div>
+      <div class="peer-detail"><h1 id="peer-name">Our conversation</h1><p id="peer-status">Connecting…</p></div>
+      <button id="settings-button" class="icon-button" type="button" aria-label="Open settings" aria-haspopup="dialog">⚙</button>
+    </header>
+    <div id="connection" class="connection" role="status" hidden></div>
+    <div id="chat-error" class="error chat-error" role="alert" hidden></div>
+    <section id="messages" class="messages" aria-label="Conversation" tabindex="0">
+      <button id="load-older" type="button" class="older" hidden>Load older messages</button>
+      <p id="empty" class="empty" hidden>A little hello can make their day. ♡</p>
+      <div id="message-list"></div>
+    </section>
+    <button id="jump-bottom" class="jump" type="button" hidden>New messages ↓</button>
+    <aside id="incoming-notice" class="incoming" aria-label="New message" hidden>
+      <p>You have a new message.</p>
+      <button id="notice-view" type="button">View</button>
+      <button id="notice-dismiss" class="icon-button" type="button" aria-label="Dismiss new message">×</button>
+    </aside>
+    <footer class="composer-wrap">
+      <form id="composer-form" class="composer">
+        <label class="sr-only" for="draft">Message</label>
+        <textarea id="draft" placeholder="Type a message…" rows="1" enterkeyhint="enter"></textarea>
+        <button id="send" class="send" type="submit" aria-label="Send message">➤</button>
+      </form>
+      <p class="composer-note">Messages are kept for 7 days.</p>
+    </footer>
+  </main>
+
+  <div id="boot" class="boot" role="status">Opening OurChat…</div>
+  <div id="announcement" class="sr-only" role="status" aria-live="polite"></div>
+
+  <dialog id="settings-dialog" class="modal" aria-labelledby="settings-title">
+    <div class="modal-heading"><h2 id="settings-title">Your space</h2><button class="icon-button close-dialog" type="button" aria-label="Close settings">×</button></div>
+    <button id="sound-button" type="button" class="setting-button" aria-pressed="false">Message sound: off</button>
+    <button id="theme-button" type="button" class="setting-button">Switch to dark appearance</button>
+    <button id="push-button" type="button" class="setting-button" hidden>Enable background notifications</button>
+    <p id="push-status" class="fine" role="status" hidden></p>
+    <button type="button" class="setting-button install-help">Add OurChat to your home screen</button>
+    <p class="fine">Messages disappear 7 days (168 hours) after they are sent. Text you copy elsewhere is outside OurChat.</p>
+    <button id="signout" type="button" class="setting-button danger">Sign out</button>
+  </dialog>
+
+  <dialog id="install-dialog" class="modal" aria-labelledby="install-title">
+    <div class="modal-heading"><h2 id="install-title">OurChat on your phone</h2><button class="icon-button close-dialog" type="button" aria-label="Close phone instructions">×</button></div>
+    <p><strong>iPhone / iPad</strong><br>Open this address in Safari. Tap <strong>Share</strong> (the square with the upward arrow), then <strong>Add to Home Screen</strong> → <strong>Add</strong>. The Share button may be inside the browser menu.</p>
+    <p><strong>Android</strong><br>Open this address in Chrome. Open the <strong>⋮</strong> menu, then <strong>Install app</strong> or <strong>Add to Home screen</strong>.</p>
+    <p class="fine">No APK is needed. Internet access is required to send or receive messages. Save this address to return at any time.</p>
+    <label for="app-address">This OurChat address</label><input id="app-address" type="url" readonly>
+    <button id="copy-address" type="button" class="primary">Copy address</button>
+  </dialog>
+
+  <dialog id="copy-dialog" class="modal copy-modal" aria-labelledby="copy-title">
+    <div class="modal-heading"><h2 id="copy-title">Copy message</h2><button class="icon-button close-dialog" type="button" aria-label="Close copy message">×</button></div>
+    <p>Automatic copying is unavailable. The entire message below is selected. Touch and hold the selection and choose <strong>Copy</strong>, or press <strong>Ctrl+C</strong> / <strong>⌘C</strong>.</p>
+    <label class="sr-only" for="copy-text">Entire message to copy</label>
+    <textarea id="copy-text" readonly spellcheck="false"></textarea>
+    <button id="select-copy" type="button" class="primary">Select entire message</button>
+  </dialog>
+  <noscript><p class="noscript">Please enable JavaScript to use OurChat.</p></noscript>
+</body>
+</html>

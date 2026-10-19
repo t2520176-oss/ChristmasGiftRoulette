@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ourchat-free-private",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-10-19",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"],
+    "not_found_handling": "single-page-application"
+  },
+  "d1_databases": [
+    { "binding": "DB", "migrations_dir": "migrations" }
+  ],
+  "triggers": { "crons": ["* * * * *"] },
+  "observability": { "enabled": false }
+}

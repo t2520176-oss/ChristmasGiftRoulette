@@ -1,4 +1,16 @@
-# OurChat 시작 안내
+# OurChat 무료 서버 이전
+
+[**새 Cloudflare 계정에 OurChat 설치하기**](https://deploy.workers.cloudflare.com/?url=https%3A%2F%2Fgithub.com%2Ft2520176-oss%2FChristmasGiftRoulette%2Ftree%2Fcodex%2Fourchat-download%2Fourchat-cloudflare)
+
+기존 Supabase 서버가 중지되어 있으며, 사용자의 요청에 따라 복구하지 않습니다. 새 Cloudflare 계정의 Workers와 새 D1에 두 사람의 **새 로그인과 빈 대화방**을 설치하도록 준비했습니다. 기존 서버·앱·도메인과 데이터는 변경하지 않습니다. 새 계정을 사용하므로 기존 Cloudflare 작업의 무료 한도를 공유하지 않습니다.
+
+위 링크에서 새 계정을 선택하고, 새 Worker 이름과 두 사람의 이메일·서로 다른 16자 이상 비밀번호를 암호화된 Secret으로 입력합니다. Deploy command는 **`npm run deploy`**입니다. 전체 배포가 성공한 뒤 나오는 새 `workers.dev` 주소를 사용하세요. **아직 새 계정의 실제 배포와 운영 확인은 완료되지 않았습니다.**
+
+[설치 안내](ourchat-cloudflare/README.ko.md)와 [새 서버 소스 ZIP](OurChat-Cloudflare-source.zip)을 보관할 수 있습니다. 새 구현은 복사·소리·팝업·168시간 보관 기능을 포함하며, 로컬 D1 검사 29개, 브라우저·서비스 워커 검사 17개, 실제 로컬 서버의 두 계정 왕복 검사 9개를 통과했습니다. 비밀번호·토큰·대화 데이터는 소스에 포함하지 않습니다. 무료 플랜의 요청·저장 한도를 넘으면 서비스가 중단될 수 있습니다.
+
+## 이전 Vercel 버전의 자료
+
+아래 주소와 시작 파일은 중지된 기존 백엔드를 사용하는 이전 버전입니다. 새 Cloudflare 배포가 완료되면 새 주소를 저장하고 홈 화면 아이콘과 알림을 다시 등록하세요.
 
 [**OurChat 웹사이트 열기**](https://ourchat-lwnvrnlkdwjpfwnzugfr.vercel.app/)
 
