@@ -14,7 +14,7 @@ import { IncomingMessageNotice, useIncomingMessageNotice } from "@/components/in
 import { createClient } from "@/lib/supabase/browser";
 import type { ChatMessage, Member, ReadReceipt } from "@/lib/types";
 import {
-  canSendDraft, codePointLength, compareMessageIds, highestVisibleMessageId,
+  canSendDraft, compareMessageIds, highestVisibleMessageId,
   isMessageId, isRead, mergeMessages, mergeReceipts, messageIdentity,
   newestMessageId, oldestMessageId, type VisibleMessage,
 } from "@/lib/chat-state";
@@ -23,6 +23,7 @@ type Props = {
   currentMember: Member;
   peer: Member | null;
   initialMessages: ChatMessage[];
+  initialHasMore?: boolean;
   initialReceipts: ReadReceipt[];
 };
 type MessagePage = { messages: ChatMessage[]; hasMore: boolean };
@@ -95,7 +96,7 @@ function subscribeTheme(callback: () => void) {
   };
 }
 
-export default function ChatClient({ currentMember, peer, initialMessages, initialReceipts }: Props) {
+export default function ChatClient({ currentMember, peer, initialMessages, initialHasMore, initialReceipts }: Props) {
   const router = useRouter();
   const hydrated = useSyncExternalStore(subscribeHydration, () => true, () => false);
   const [messages, setMessages] = useState<VisibleMessage[]>(() => mergeMessages([], initialMessages));
@@ -104,7 +105,7 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
   const online = useSyncExternalStore(subscribeOnline, () => navigator.onLine, () => true);
   const [connection, setConnection] = useState<Connection>("connecting");
   const [peerOnline, setPeerOnline] = useState(false);
-  const [hasMore, setHasMore] = useState(initialMessages.length === 50);
+  const [hasMore, setHasMore] = useState(initialHasMore ?? initialMessages.length === 50);
   const [loadingOlder, setLoadingOlder] = useState(false);
   const [newCount, setNewCount] = useState(0);
   const [awayFromBottom, setAwayFromBottom] = useState(false);
@@ -477,7 +478,6 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
     }
   }
 
-  const bodyLength = codePointLength(draft.trim());
   const peerReceipt = receipts.find((receipt) => receipt.user_id === peer?.user_id)?.last_read_message_id;
   const lastOwn = [...messages].reverse().find((message) => message.sender_id === currentMember.user_id && isMessageId(message.id));
   const connectionLabel = !online ? "Offline" : connection === "connecting" ? "Connecting…" : connection === "reconnecting" ? "Reconnecting…" : peerOnline ? "Online" : "Away";
@@ -568,13 +568,13 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
           {awayFromBottom && <div className="pointer-events-none absolute right-0 bottom-36 left-0 z-10 flex justify-center"><button type="button" onClick={jumpToLatest} className="pointer-events-auto flex items-center gap-2 rounded-full border border-[#cfdbbe] bg-[#fcfff5] px-4 py-2.5 text-xs font-medium text-[#5d7549] shadow-md dark:border-[#647953] dark:bg-[#344b2b] dark:text-[#e1edcf]"><ArrowDown size={14} />{newCount ? `New messages${newCount > 1 ? ` (${newCount})` : ""}` : "Back to latest"}</button></div>}
 
           <form className="shrink-0 border-t border-[#e9ece2] bg-[#fffefa] px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6 sm:pb-5 dark:border-[#354536] dark:bg-[#1c2822]" onSubmit={(event) => { event.preventDefault(); send(); }}>
-            <div className={`flex items-end gap-2 rounded-[20px] border bg-[#f7f8f1] p-2 focus-within:ring-2 focus-within:ring-[#b9caa7]/50 dark:bg-[#253024] ${bodyLength > 2000 ? "border-[#c7785a]" : "border-[#e2e7d8] dark:border-[#45543b]"}`}>
+            <div className="flex items-end gap-2 rounded-[20px] border border-[#e2e7d8] bg-[#f7f8f1] p-2 focus-within:ring-2 focus-within:ring-[#b9caa7]/50 dark:border-[#45543b] dark:bg-[#253024]">
               <label htmlFor="message-input" className="sr-only">Type a message</label><textarea id="message-input" ref={textareaRef} value={draft} onChange={(event) => setDraft(event.target.value)} onCompositionStart={() => { composingRef.current = true; }} onCompositionEnd={() => { composingRef.current = false; }} onKeyDown={(event) => {
                 if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing && !composingRef.current && event.keyCode !== 229) { event.preventDefault(); send(); }
               }} placeholder="Type a message..." rows={1} aria-describedby="composer-help" className="min-h-11 max-h-[min(9rem,calc(var(--chat-viewport-height,100dvh)*0.22))] min-w-0 flex-1 resize-none bg-transparent px-2 py-2.5 text-base leading-6 text-[#3b5137] outline-none placeholder:text-[#a3ac96] dark:text-[#e7efdd] dark:placeholder:text-[#93a486]" />
               <button type="submit" disabled={!canSendDraft(draft, online) || signingOut} aria-label="Send message" className="flex size-11 shrink-0 items-center justify-center rounded-[14px] bg-[#386044] text-[#f7faef] transition hover:bg-[#284e35] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#456e3c] disabled:cursor-not-allowed disabled:bg-[#d8dfcc] disabled:text-[#9da98d] dark:bg-[#a8c08c] dark:text-[#24371c] dark:hover:bg-[#c4d8aa] dark:disabled:bg-[#405037] dark:disabled:text-[#7d8d6d]"><Send size={18} strokeWidth={1.6} /></button>
             </div>
-            <div id="composer-help" className="mt-2.5 flex justify-between gap-3 px-1 text-[10px] text-[#a1aa92] dark:text-[#9daf8a]"><span className="hidden sm:inline">Enter to send <span className="px-1.5">·</span> Shift + Enter for a new line</span><span className="sm:hidden">A little note goes a long way.</span><span className={bodyLength > 2000 ? "font-semibold text-[#b05c3b] dark:text-[#efae8c]" : ""} aria-live={bodyLength > 1950 ? "polite" : "off"}>{bodyLength.toLocaleString("en")} / 2,000</span></div>
+            <div id="composer-help" className="mt-2.5 px-1 text-[10px] text-[#a1aa92] dark:text-[#9daf8a]"><span className="hidden sm:inline">Enter to send <span className="px-1.5">·</span> Shift + Enter for a new line</span><span className="sm:hidden">A little note goes a long way.</span></div>
           </form>
         </section>
       </main>

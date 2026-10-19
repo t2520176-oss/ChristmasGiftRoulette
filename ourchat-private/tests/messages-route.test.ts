@@ -58,6 +58,20 @@ describe("message insertion", () => {
     const result = await POST(request());
     expect(result.status).toBe(200); expect(from).toHaveBeenCalledTimes(1); expect(after).not.toHaveBeenCalled();
   });
+  it.each(["a".repeat(2001), "안녕 👋\n".repeat(500).trim(), "한글 👋\n".repeat(10000).trim()])("saves and returns long text unchanged (%#)", async (body) => {
+    const save = query({ ...stored, body });
+    from.mockReturnValueOnce(query(null)).mockReturnValueOnce(save);
+    const result = await POST(request({ body: ` \n${body}\n `, client_nonce: nonce }));
+    expect(result.status).toBe(201);
+    expect(save.insert).toHaveBeenCalledWith({ body, client_nonce: nonce, sender_id: userId });
+    expect((await result.json()).message.body).toBe(body);
+  });
+  it("retains a transfer-size boundary without querying messages for an oversized request", async () => {
+    const result = await POST(request({ body: "a".repeat(4 * 1024 * 1024), client_nonce: nonce }));
+    expect(result.status).toBe(413);
+    expect(from).not.toHaveBeenCalled();
+    expect(after).not.toHaveBeenCalled();
+  });
   it("recovers the stored message after a concurrent unique-constraint race", async () => {
     from.mockReturnValueOnce(query(null)).mockReturnValueOnce(query(null, { code: "23505" })).mockReturnValueOnce(query(stored));
     expect((await POST(request())).status).toBe(200);

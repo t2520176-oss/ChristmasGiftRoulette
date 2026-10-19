@@ -96,13 +96,8 @@ export function isRead(messageId: string, receiptId: string | null | undefined):
   );
 }
 
-export function codePointLength(value: string): number {
-  return Array.from(value).length;
-}
-
 export function canSendDraft(draft: string, online: boolean): boolean {
-  const body = draft.trim();
-  return online && body.length > 0 && codePointLength(body) <= 2000;
+  return online && draft.trim().length > 0;
 }
 
 export function highestVisibleMessageId(ids: Iterable<string>): string | null {

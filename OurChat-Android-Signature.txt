@@ -1,0 +1,17 @@
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): false
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+Signer #1 certificate DN: CN=OurChat, OU=Private Messenger, O=OurChat
+Signer #1 certificate SHA-256 digest: 3b4e978fa267c23ec307c7b94c092bdf23ce5572f861bd1ee71b35b97b9e6322
+Signer #1 certificate SHA-1 digest: aa27c7e5e3d8c563e979673a2edddc103356bbe1
+Signer #1 certificate MD5 digest: b17608ff5b35e90a344e17ed5a54d52c
+Signer #1 key algorithm: RSA
+Signer #1 key size (bits): 3072
+Signer #1 public key SHA-256 digest: c0031981ec5ba1b3f1a6598936bfaf57dc2ab194458a0049cf47e0674ab8c72c
+Signer #1 public key SHA-1 digest: 40ae071f23b846562c5e8bc2df85f4177a89699e
+Signer #1 public key MD5 digest: 77c4b4f2880553576e11e6b0226b3f6a

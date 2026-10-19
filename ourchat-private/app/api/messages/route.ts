@@ -19,7 +19,8 @@ export async function POST(request: Request) {
   try {
     assertSameOrigin(request);
     const context = await requireMember();
-    const input = await readJson(request, messageInputSchema);
+    // A transfer budget below the hosting gateway limit, independent of text length.
+    const input = await readJson(request, messageInputSchema, 4 * 1024 * 1024);
     const existing = await context.client.from("messages").select(MESSAGE_COLUMNS)
       .eq("sender_id", context.member.user_id).eq("client_nonce", input.client_nonce).maybeSingle();
     throwDatabaseError(existing.error);

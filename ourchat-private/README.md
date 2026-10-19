@@ -9,11 +9,11 @@ This is an independent project. Deploy it to its own Supabase project and its ow
 ## What is included
 
 - Email/password sign-in for two administrator-approved members, with no public sign-up UI or API.
-- Text messages, Unicode/emoji, a 2,000-code-point limit, cursor history, retry deduplication, Realtime updates, and read receipts.
+- Text messages with Unicode/emoji and no product character cap, cursor history, retry deduplication, Realtime updates, and read receipts. Requests still have a 4 MiB transfer budget below the hosting gateway's limit; exceptionally large messages must be split.
 - Responsive light/dark UI, installation guidance, and optional privacy-preserving Web Push to the other person's registered devices.
 - SQL migrations, a two-member administrator seed template, database security tests, and a manual device test checklist.
 
-V1 does **not** provide end-to-end encryption. HTTPS and database access policies protect transport and access; the hosting/database administrator can access stored messages. Notification bodies say **“You have a new message.”** and do not contain message text. There are no file uploads, ads, analytics SDKs, AI APIs, or native IPA/APK/EXE packages.
+V1 does **not** provide end-to-end encryption. HTTPS and database access policies protect transport and access; the hosting/database administrator can access stored messages. Notification bodies say **“You have a new message.”** and do not contain message text. There are no file uploads, ads, analytics SDKs, AI APIs, or native IPA/EXE packages. The separate Android APK opens this same website using a browser Trusted Web Activity; it does not contain a separate backend or accounts.
 
 ## Browser installation
 
@@ -72,7 +72,7 @@ Only the URL, publishable key, and VAPID **public** key are intended for the bro
 
 ## 2. Apply the database migration and register two members
 
-Migration: [`supabase/migrations/202610180001_ourchat.sql`](supabase/migrations/202610180001_ourchat.sql).
+Apply the migrations in filename order: [`202610180001_ourchat.sql`](supabase/migrations/202610180001_ourchat.sql), then [`202610190001_remove_message_character_limit.sql`](supabase/migrations/202610190001_remove_message_character_limit.sql). Existing installations with the base schema apply only the new incremental migration.
 
 Choose one migration method:
 

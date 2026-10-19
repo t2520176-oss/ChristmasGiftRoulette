@@ -84,6 +84,18 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
 describe("chat interaction", () => {
+  it("loads earlier messages when the server marks a short initial page as having more history", async () => {
+    fetchMock.mockImplementation(async (url: string) => {
+      if (url === "/api/read") return json({ receipts: [] });
+      return json({ messages: url.includes("before=") ? [message("9", "An earlier note")] : [], hasMore: false });
+    });
+    render(<ChatClient currentMember={self} peer={peer} initialMessages={[message("10")]} initialHasMore initialReceipts={[]} />);
+    fireEvent.click(screen.getByRole("button", { name: "Earlier messages" }));
+    await screen.findByText("An earlier note");
+    expect(fetchMock.mock.calls.some(([url]) => url === "/api/messages?before=10")).toBe(true);
+    expect(screen.queryByRole("button", { name: "Earlier messages" })).toBeNull();
+  });
+
   it("chimes once for a fresh peer batch, without replaying duplicate or own messages", async () => {
     let incoming: ChatMessage[] = [];
     fetchMock.mockImplementation(async (url: string) => url === "/api/read"
@@ -267,34 +279,37 @@ describe("chat interaction", () => {
   });
 
   it("waits for IME composition and Shift+Enter before sending a Unicode message", async () => {
+    const body = "안녕하세요 👋".repeat(300);
     render(<ChatClient currentMember={self} peer={peer} initialMessages={[]} initialReceipts={[]} />);
     const input = screen.getByRole("textbox", { name: "Type a message" });
-    fireEvent.change(input, { target: { value: "안녕하세요 👋" } });
+    fireEvent.change(input, { target: { value: body } });
     fireEvent.compositionStart(input);
     fireEvent.keyDown(input, { key: "Enter", code: "Enter" });
     expect(posts()).toHaveLength(0);
-    expect((input as HTMLTextAreaElement).value).toBe("안녕하세요 👋");
+    expect((input as HTMLTextAreaElement).value).toBe(body);
     fireEvent.compositionEnd(input);
     fireEvent.keyDown(input, { key: "Enter", shiftKey: true });
     expect(posts()).toHaveLength(0);
     fireEvent.keyDown(input, { key: "Enter" });
     await waitFor(() => expect(posts()).toHaveLength(1));
-    await waitFor(() => expect(screen.getAllByText("안녕하세요 👋")).toHaveLength(1));
+    await waitFor(() => expect(screen.getAllByText(body)).toHaveLength(1));
     expect((input as HTMLTextAreaElement).value).toBe("");
   });
 
   it("keeps the draft offline and sends it only after a connection returns", async () => {
+    const body = "Keep this note 👋".repeat(200);
     networkOnline = false;
     render(<ChatClient currentMember={self} peer={peer} initialMessages={[]} initialReceipts={[]} />);
     const input = screen.getByRole("textbox");
-    fireEvent.change(input, { target: { value: "Keep this note" } });
+    fireEvent.change(input, { target: { value: body } });
     fireEvent.keyDown(input, { key: "Enter" });
     expect(posts()).toHaveLength(0);
-    expect((input as HTMLTextAreaElement).value).toBe("Keep this note");
+    expect((input as HTMLTextAreaElement).value).toBe(body);
     expect((screen.getByRole("button", { name: "Send message" }) as HTMLButtonElement).disabled).toBe(true);
     act(() => { networkOnline = true; window.dispatchEvent(new Event("online")); });
     fireEvent.click(screen.getByRole("button", { name: "Send message" }));
     await waitFor(() => expect(posts()).toHaveLength(1));
+    expect(JSON.parse(String(posts()[0][1].body)).body).toBe(body);
   });
 
   it("retries the same nonce and merges a duplicate acknowledgement into one message", async () => {
@@ -315,11 +330,31 @@ describe("chat interaction", () => {
     expect(screen.getAllByText("Just one note")).toHaveLength(1);
   });
 
-  it("blocks a 2001-code-point draft while accepting Unicode input", () => {
+  it.each(["a".repeat(2001), "안녕 👋\n".repeat(501).trim()])("sends long text unchanged without a character counter (%#)", async (body) => {
     render(<ChatClient currentMember={self} peer={peer} initialMessages={[]} initialReceipts={[]} />);
-    fireEvent.change(screen.getByRole("textbox"), { target: { value: "👋".repeat(2001) } });
-    expect((screen.getByRole("button", { name: "Send message" }) as HTMLButtonElement).disabled).toBe(true);
-    expect(screen.getByText("2,001 / 2,000")).toBeTruthy();
+    const input = screen.getByRole("textbox") as HTMLTextAreaElement;
+    fireEvent.change(input, { target: { value: ` \n${body}\n ` } });
+    expect(input.hasAttribute("maxlength")).toBe(false);
+    expect((screen.getByRole("button", { name: "Send message" }) as HTMLButtonElement).disabled).toBe(false);
+    expect(screen.queryByText(/\/ 2,000/)).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+    await waitFor(() => expect(posts()).toHaveLength(1));
+    expect(JSON.parse(String(posts()[0][1].body)).body).toBe(body);
+    await waitFor(() => expect(screen.getAllByText(body, { normalizer: (value) => value })).toHaveLength(1));
+    expect(input.value).toBe("");
+    expect(realtime.playSound).not.toHaveBeenCalled();
+    expect(screen.queryByRole("status", { name: "Incoming message notification" })).toBeNull();
+  });
+
+  it("keeps empty and whitespace-only drafts unsendable", () => {
+    render(<ChatClient currentMember={self} peer={peer} initialMessages={[]} initialReceipts={[]} />);
+    const input = screen.getByRole("textbox");
+    for (const body of ["", " \n\t ", "\u2003\u00a0"]) {
+      fireEvent.change(input, { target: { value: body } });
+      expect((screen.getByRole("button", { name: "Send message" }) as HTMLButtonElement).disabled).toBe(true);
+      fireEvent.keyDown(input, { key: "Enter" });
+    }
+    expect(posts()).toHaveLength(0);
   });
 
   it("marks only an actually visible history message, and never while hidden", async () => {

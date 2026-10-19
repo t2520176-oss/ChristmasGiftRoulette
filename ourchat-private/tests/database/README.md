@@ -3,13 +3,23 @@
 Run `npm run test:db`. The harness creates an ephemeral PGlite PostgreSQL database,
 minimal Supabase Auth/Realtime fixtures, three random synthetic identities, and
 actual `anon`, `authenticated`, and `service_role` SQL roles. It applies the
-unmodified migration and tests actual SQL grants, row policies, check constraints,
+unmodified original migration followed by the incremental migrations, and tests actual SQL grants, row policies, check constraints,
 foreign keys, triggers and RPC calls. No production connection or secret is used.
 
-Coverage includes two-member cap, sender forgery, Unicode trimming and lengths,
+Coverage includes two-member cap, sender forgery, Unicode trimming and long messages,
 nonces, immutable messages, outsider/anon denial, monotonic read cursors through
 RPC and direct writes, endpoint takeover, scoped server access, DB message limits,
-API limits, and private Presence topic policies.
+API limits, and private Presence topic policies. Message bodies above the old
+2000-character cap, including Unicode and 50000-character text, must round-trip
+intact. Empty or whitespace-only bodies must still fail; the message rate limit
+remains 30 per member per minute.
+
+The character-limit migration is tested against an existing conversation, with
+before/after snapshots of rows, table/sequence grants, RLS, policies, columns,
+functions, triggers, publications, and all other constraints. Replaying the
+migration must preserve even the replacement constraint's identity. Unexpected,
+missing, or extra body checks and a nullable body column must be refused without
+further schema or data changes. These checks run only in the ephemeral database.
 
 The message-order regression test checks the actual trigger's PostgreSQL type
 (`BEFORE INSERT FOR EACH STATEMENT`), then temporarily observes the **real identity

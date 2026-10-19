@@ -2,11 +2,15 @@ import { describe, expect, it } from "vitest";
 import { isAllowedPushEndpoint, messageBodySchema, messageIdSchema, messageInputSchema, subscriptionSchema } from "@/lib/validation";
 
 describe("message validation", () => {
-  it("trims Unicode whitespace, preserves Korean and emoji, and counts codepoints", () => {
+  it("trims surrounding whitespace while preserving Korean, emoji, and line breaks", () => {
     expect(messageBodySchema.parse(" \n 안녕 👋 \n ")).toBe("안녕 👋");
-    expect(messageBodySchema.parse("😀".repeat(2000))).toHaveLength(4000);
-    expect(messageBodySchema.safeParse("😀".repeat(2001)).success).toBe(false);
-    expect(messageBodySchema.safeParse(" \n\t ").success).toBe(false);
+    expect(messageBodySchema.parse("\t 안녕\nHello 👋\n ")).toBe("안녕\nHello 👋");
+  });
+  it.each(["a".repeat(2001), "😀".repeat(2001), "안녕 👋\n".repeat(1000).trim()])("accepts long text unchanged (%#)", (body) => {
+    expect(messageBodySchema.parse(body)).toBe(body);
+  });
+  it.each(["", " \n\t ", "\u2003\u00a0"])("rejects empty or whitespace-only text (%#)", (body) => {
+    expect(messageBodySchema.safeParse(body).success).toBe(false);
   });
   it("requires an idempotency nonce and rejects forged sender IDs", () => {
     expect(messageInputSchema.safeParse({ body: "Hello" }).success).toBe(false);

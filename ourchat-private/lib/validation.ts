@@ -1,10 +1,6 @@
 import { z } from "zod";
 
-export const MAX_MESSAGE_CHARS = 2000;
-export function messageLength(value: string) { return Array.from(value).length; }
-export const messageBodySchema = z.string().transform((text) => text.trim())
-  .refine((text) => messageLength(text) >= 1 && messageLength(text) <= MAX_MESSAGE_CHARS,
-    "Messages must contain between 1 and 2,000 characters.");
+export const messageBodySchema = z.string().trim().min(1, "Messages must contain text.");
 export const messageInputSchema = z.object({ body: messageBodySchema, client_nonce: z.uuid() }).strict();
 export const messageIdSchema = z.string().regex(/^[1-9]\d{0,18}$/)
   .refine((id) => { try { return BigInt(id) <= 9223372036854775807n; } catch { return false; } }, "Invalid message ID.");

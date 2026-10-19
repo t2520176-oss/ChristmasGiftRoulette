@@ -82,7 +82,7 @@ Use separate browser profiles/devices for Member A, Member B, a confirmed **nonm
 | Member modifies `members` or the other person's push subscriptions | Denied. |
 | Member attempts a third membership | Denied, including concurrent attempts. |
 | Missing/foreign Origin on mutation API | Denied; matching configured origin accepted with valid session. |
-| Client submits invalid types, empty/oversized text, bad IDs/nonces | Controlled validation error; no insertion or stack/secrets exposed. |
+| Client submits invalid types, empty text, bad IDs/nonces, or a request exceeding the server's byte budget | Controlled validation error; no insertion or stack/secrets exposed. |
 | Excessive requests | Limited by the implemented server/database controls. |
 
 - [ ] Exercise the rows above against the actual hosted API using the appropriate authenticated sessions. Do not use a service-role key to test client RLS.
@@ -97,7 +97,7 @@ Use separate browser profiles/devices for Member A, Member B, a confirmed **nonm
 - [ ] Refresh each browser; stored history and chronological order remain correct.
 - [ ] More than 100 messages: latest 50 load first; scrolling up fetches earlier pages without duplicates, gaps, or scroll jumps.
 - [ ] Send Korean text, emoji, mixed scripts, line breaks, and `<script>`/HTML-looking text: display as text, not executable markup.
-- [ ] Verify blank/whitespace-only rejection, trimmed boundaries, exactly 2,000 Unicode code points accepted, and 2,001 rejected. Include emoji so UTF-16 code units are not mistaken for characters.
+- [ ] Verify blank/whitespace-only rejection and trimming at the boundaries. Send text well beyond 2,000 characters, including Korean, emoji, and line breaks; confirm it is stored, reloaded, and displayed in full without a character counter or length warning. Requests still obey server/platform byte limits.
 - [ ] On Windows, Enter sends and Shift+Enter adds a newline. IME composition Enter does not accidentally send. Mobile has a usable Send button.
 - [ ] Retry the same sender/client nonce, including concurrent duplicate requests: one stored row and one rendered bubble, with the saved row returned to the retry.
 - [ ] A Realtime event arriving before/after the POST response merges with the pending bubble without duplication.

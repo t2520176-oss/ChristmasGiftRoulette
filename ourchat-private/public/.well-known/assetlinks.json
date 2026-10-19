@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.ourchat.privatechat",
+      "sha256_cert_fingerprints": [
+        "3B:4E:97:8F:A2:67:C2:3E:C3:07:C7:B9:4C:09:2B:DF:23:CE:55:72:F8:61:BD:1E:E7:1B:35:B9:7B:9E:63:22"
+      ]
+    }
+  }
+]

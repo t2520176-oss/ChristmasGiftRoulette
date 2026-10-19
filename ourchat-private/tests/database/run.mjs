@@ -31,6 +31,38 @@ async function insertMessage(body = 'Hello', user = husband, nonce = randomUUID(
   );
   return result.rows[0];
 }
+async function schemaSnapshot(includeBodyConstraint = false) {
+  const queries = {
+    relations: `select c.oid, n.nspname, c.relname, c.relkind, c.relacl,
+      c.relrowsecurity, c.relforcerowsecurity, c.relreplident
+      from pg_class c join pg_namespace n on n.oid=c.relnamespace
+      where n.nspname in ('public','private','realtime') order by c.oid`,
+    columns: `select a.attrelid,a.attnum,a.attname,a.atttypid,a.atttypmod,
+      a.attnotnull,a.attidentity,a.attgenerated,pg_get_expr(d.adbin,d.adrelid) as default_value
+      from pg_attribute a join pg_class c on c.oid=a.attrelid
+      join pg_namespace n on n.oid=c.relnamespace
+      left join pg_attrdef d on d.adrelid=a.attrelid and d.adnum=a.attnum
+      where n.nspname in ('public','private','realtime') and a.attnum>0
+        and not a.attisdropped order by a.attrelid,a.attnum`,
+    policies: `select * from pg_policies where schemaname in ('public','private','realtime')
+      order by schemaname,tablename,policyname`,
+    constraints: `select oid,conrelid,conname,contype,convalidated,pg_get_constraintdef(oid,false) as definition
+      from pg_constraint where connamespace in ('public'::regnamespace,'private'::regnamespace,'realtime'::regnamespace)
+      ${includeBodyConstraint ? '' : "and not (conrelid='public.messages'::regclass and conname='messages_body_check')"}
+      order by oid`,
+    triggers: `select t.oid,pg_get_triggerdef(t.oid) as definition from pg_trigger t
+      join pg_class c on c.oid=t.tgrelid join pg_namespace n on n.oid=c.relnamespace
+      where n.nspname in ('public','private','realtime') order by t.oid`,
+    functions: `select p.oid,p.proacl,pg_get_functiondef(p.oid) as definition from pg_proc p
+      join pg_namespace n on n.oid=p.pronamespace
+      where n.nspname in ('public','private','realtime') order by p.oid`,
+    publications: `select * from pg_publication_tables order by pubname,schemaname,tablename`,
+    messages: `select id::text,sender_id,body,client_nonce,created_at from public.messages order by id`,
+  };
+  const snapshot = {};
+  for (const [name, sql] of Object.entries(queries)) snapshot[name] = (await db.query(sql)).rows;
+  return snapshot;
+}
 
 try {
   await db.exec(`
@@ -57,6 +89,43 @@ try {
   await db.exec(await readFile(migration, 'utf8'));
   await db.query('insert into auth.users(id) values ($1),($2),($3)', [husband, wife, outsider]);
   await db.query('insert into public.members(user_id,display_name) values ($1,$2),($3,$4)', [husband, 'Husband', wife, 'Wife']);
+  const characterLimitMigration = await readFile(new URL('../../supabase/migrations/202610190001_remove_message_character_limit.sql', import.meta.url), 'utf8');
+  await as(husband);
+  await insertMessage('Existing conversation survives the character-limit migration');
+  await admin();
+  await test('character-limit migration preserves existing rows, ACLs, policies, triggers, functions and other constraints', async () => {
+    const before = await schemaSnapshot();
+    await db.exec(characterLimitMigration);
+    assert.deepEqual(await schemaSnapshot(), before);
+  });
+  await test('character-limit migration replay is a no-op including constraint identity', async () => {
+    const before = await schemaSnapshot(true);
+    await db.exec(characterLimitMigration);
+    assert.deepEqual(await schemaSnapshot(true), before);
+  });
+  for (const [name, change, restore] of [
+    ['unexpected body check',
+      'alter table public.messages drop constraint messages_body_check; alter table public.messages add constraint messages_body_check check (char_length(body) between 1 and 1999)',
+      'alter table public.messages drop constraint messages_body_check; alter table public.messages add constraint messages_body_check check (body = btrim(body) and char_length(body) >= 1)'],
+    ['missing body check',
+      'alter table public.messages drop constraint messages_body_check',
+      'alter table public.messages add constraint messages_body_check check (body = btrim(body) and char_length(body) >= 1)'],
+    ['extra body check',
+      'alter table public.messages add constraint unexpected_body_check check (char_length(body) <= 2000)',
+      'alter table public.messages drop constraint unexpected_body_check'],
+    ['nullable body schema',
+      'alter table public.messages alter column body drop not null',
+      'alter table public.messages alter column body set not null'],
+  ]) {
+    await test(`character-limit migration refuses ${name} without changing state`, async () => {
+      await db.exec(change);
+      const before = await schemaSnapshot(true);
+      await assert.rejects(db.exec(characterLimitMigration), (e) => e.code === '55000');
+      await db.exec('rollback');
+      assert.deepEqual(await schemaSnapshot(true), before);
+      await db.exec(restore);
+    });
+  }
 
   await test('all client tables enforce RLS and default-deny writes', async () => {
     const { rows } = await db.query(`select relname, relrowsecurity from pg_class
@@ -155,13 +224,27 @@ try {
     assert.equal(result.rows[0].id, first.id);
     assert.equal(result.rows[0].body, first.body);
   });
-  await test('blank Unicode whitespace and 2001-character messages rejected', async () => {
-    await denied('insert into public.messages(sender_id,body,client_nonce) values ($1,$2,$3)', [husband, '\n\t\u00a0\u3000', randomUUID()], '23514');
-    await denied('insert into public.messages(sender_id,body,client_nonce) values ($1,$2,$3)', [husband, 'x'.repeat(2001), randomUUID()], '23514');
+  await test('empty and blank Unicode whitespace messages still rejected', async () => {
+    for (const body of ['', '   ', '\n\t\u00a0\u3000']) {
+      await denied('insert into public.messages(sender_id,body,client_nonce) values ($1,$2,$3)', [husband, body, randomUUID()], '23514');
+    }
   });
-  await test('2000 Unicode codepoints accepted', async () => {
-    const message = await insertMessage('😀'.repeat(2000));
-    assert.equal(Array.from(message.body).length, 2000);
+  await test('messages above 2000 ASCII and Unicode characters are stored intact', async () => {
+    for (const body of ['x'.repeat(2001), '😀'.repeat(2001), '한😀a'.repeat(16667)]) {
+      const message = await insertMessage(`\t\u3000${body}\n\u00a0`);
+      assert.equal(message.body, body);
+      assert.equal((await db.query('select body from public.messages where id=$1', [message.id])).rows[0].body, body);
+    }
+  });
+  await test('a 50000-character text is readable by both members with normal nonce protection', async () => {
+    const body = 'Long text\n'.repeat(4999) + 'Long text!';
+    assert.equal(body.length, 50000);
+    const longNonce = randomUUID();
+    const message = await insertMessage(body, husband, longNonce);
+    await denied('insert into public.messages(sender_id,body,client_nonce) values ($1,$2,$3)', [husband, body, longNonce], '23505');
+    await as(wife);
+    assert.equal((await db.query('select body from public.messages where id=$1', [message.id])).rows[0].body, body);
+    await as(husband);
   });
   await test('members cannot UPDATE or DELETE messages', async () => {
     await denied('update public.messages set body=$1 where id=$2', ['Changed', first.id]);

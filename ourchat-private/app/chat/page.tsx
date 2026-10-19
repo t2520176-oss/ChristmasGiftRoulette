@@ -20,5 +20,5 @@ export default async function ChatPage() {
   ]);
   throwDatabaseError(peerResult.error);
   const peer = peerResult.data ? memberSchema.parse(peerResult.data) : null;
-  return <ChatClient currentMember={context.member} peer={peer} initialMessages={messages.messages} initialReceipts={receipts} />;
+  return <ChatClient currentMember={context.member} peer={peer} initialMessages={messages.messages} initialHasMore={messages.hasMore} initialReceipts={receipts} />;
 }

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { ChatMessage, ReadReceipt } from "@/lib/types";
 import {
-  canSendDraft, codePointLength, compareMessageIds, highestVisibleMessageId,
+  canSendDraft, compareMessageIds, highestVisibleMessageId,
   isRead, mergeMessages, mergeReceipts, newestMessageId, oldestMessageId,
 } from "@/lib/chat-state";
 
@@ -94,21 +94,20 @@ describe("read positions", () => {
 });
 
 describe("Unicode and offline drafts", () => {
-  it("counts Unicode code points, including Korean and emoji", () => {
-    expect(codePointLength("안녕👋")).toBe(3);
-    expect(canSendDraft("👋".repeat(2000), true)).toBe(true);
-    expect(canSendDraft("👋".repeat(2001), true)).toBe(false);
+  it.each(["a".repeat(2001), "👋".repeat(2001), "안녕 👋\n".repeat(1000)])("allows long text and Unicode drafts without truncating (%#)", (draft) => {
+    expect(canSendDraft(draft, true)).toBe(true);
   });
 
   it("does not send blank messages", () => {
+    expect(canSendDraft("", true)).toBe(false);
     expect(canSendDraft("  \n\t  ", true)).toBe(false);
     expect(canSendDraft("  Hello  ", true)).toBe(true);
   });
 
   it("disables offline sending without changing the draft", () => {
-    const draft = "Keep this for later 👋";
+    const draft = "Keep this for later 👋".repeat(200);
     expect(canSendDraft(draft, false)).toBe(false);
-    expect(draft).toBe("Keep this for later 👋");
+    expect(draft).toBe("Keep this for later 👋".repeat(200));
     expect(canSendDraft(draft, true)).toBe(true);
   });
 });

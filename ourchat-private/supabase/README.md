@@ -1,8 +1,17 @@
 # Database setup
 
-Run `migrations/202610180001_ourchat.sql` as the project database owner, either
-through Supabase migrations or the SQL Editor. Do not expose the `private` schema
-through the Data API. The exposed application schema is `public` only.
+Run migrations in timestamp order as the project database owner, either through
+Supabase migrations or the SQL Editor. Keep `202610180001_ourchat.sql` unchanged.
+An existing installation also applies
+`202610190001_remove_message_character_limit.sql`, which replaces only the known
+message body check. It removes the 2000-character cap while retaining trimmed,
+nonempty `text NOT NULL` bodies. It preserves existing rows, grants, policies,
+triggers, nonce uniqueness, and rate limits. The migration accepts the exact
+original check or its own completed state, refuses unexpected body schemas or
+constraints, and uses an atomic transaction with a five-second table-lock
+timeout. If the room is busy and the lock times out, retry the same migration
+later. Do not expose the `private` schema through the Data API. The exposed
+application schema is `public` only.
 
 Create two real users in Auth with administrator access, turn off public signups
 and anonymous sign-in, then follow `seed-members.sql`. The sample deliberately
@@ -17,7 +26,9 @@ retiring either account.
 
 - `messages` supports member reads and self inserts only. A database trigger trims
   Unicode whitespace, stamps server time and limits each member to 30 messages per
-  UTC clock-minute, even for direct authenticated Data API calls. A duplicate
+  UTC clock-minute, even for direct authenticated Data API calls.
+  Message bodies have no application character cap after both migrations; they
+  must remain nonempty after trimming. A duplicate
   `(sender_id, client_nonce)` insert fails with SQLSTATE `23505`; the API should
   select and return that member's existing row instead of sending another push.
   A private **BEFORE INSERT FOR EACH STATEMENT** trigger acquires one single-room
@@ -65,7 +76,7 @@ hosted WebSocket authorization service.
 ## Local policy regression tests
 
 `npm run test:db` runs `tests/database/run.mjs` in isolated PGlite with synthetic
-Auth/Realtime fixtures. It executes the real migration, switches actual SQL roles,
+Auth/Realtime fixtures. It executes the real migrations, switches actual SQL roles,
 and tests ACLs, RLS, write forgery, limits, ownership and receipt monotonicity. It
 does not require or modify a hosted Supabase project. See `tests/database/README.md`
 for the live-project SQL check and the limitations of the local simulation.
