@@ -10,6 +10,7 @@ This is an independent project. Deploy it to its own Supabase project and its ow
 
 - Email/password sign-in for two administrator-approved members, with no public sign-up UI or API.
 - Text messages with Unicode/emoji and no product character cap, cursor history, retry deduplication, Realtime updates, and read receipts. Requests still have a 4 MiB transfer budget below the hosting gateway's limit; exceptionally large messages must be split.
+- A copy button on every message, with a selected-text fallback when clipboard permission is unavailable. Messages are kept for 168 hours, hidden at expiry and pruned by an owner-only scheduled job every minute.
 - Responsive light/dark UI, installation guidance, and optional privacy-preserving Web Push to the other person's registered devices.
 - SQL migrations, a two-member administrator seed template, database security tests, and a manual device test checklist.
 
@@ -72,7 +73,7 @@ Only the URL, publishable key, and VAPID **public** key are intended for the bro
 
 ## 2. Apply the database migration and register two members
 
-Apply the migrations in filename order: [`202610180001_ourchat.sql`](supabase/migrations/202610180001_ourchat.sql), then [`202610190001_remove_message_character_limit.sql`](supabase/migrations/202610190001_remove_message_character_limit.sql). Existing installations with the base schema apply only the new incremental migration.
+Apply migrations in filename order: [`202610180001_ourchat.sql`](supabase/migrations/202610180001_ourchat.sql), [`202610190001_remove_message_character_limit.sql`](supabase/migrations/202610190001_remove_message_character_limit.sql), [`202610190002_message_retention.sql`](supabase/migrations/202610190002_message_retention.sql), then [`202610190003_schedule_message_retention.sql`](supabase/migrations/202610190003_schedule_message_retention.sql). Existing installations apply only migrations they have not already applied. The final migration requires Supabase pg_cron; verify an actual successful scheduled run. See [database setup](supabase/README.md).
 
 Choose one migration method:
 

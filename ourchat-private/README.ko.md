@@ -37,12 +37,14 @@ npm run dev
 1. OurChat 전용 Supabase 프로젝트를 만듭니다.
 2. Authentication 설정에서 이메일·비밀번호 로그인을 켜고 **Allow new users to sign up**을 끕니다. 익명 로그인도 끕니다. 공개 가입 화면은 제공하지 않습니다.
 3. 관리자가 Authentication → Users에서 실제 사용자 두 명을 직접 생성하고 확인 완료 상태로 만듭니다. 각자 다른 강한 비밀번호를 사용합니다. 이메일·비밀번호를 SQL이나 Git에 넣지 마세요.
-4. [migration](supabase/migrations/202610180001_ourchat.sql)을 전용 프로젝트에 적용합니다. Supabase CLI의 `supabase link --project-ref YOUR_PROJECT_REF`, `supabase db push`를 사용하거나, 새 프로젝트의 SQL Editor에서 migration 전체를 한 번 실행합니다. 두 방식을 섞어 같은 migration을 중복 적용하지 마세요.
+4. `supabase/migrations/`의 SQL을 파일명 순서대로 전용 프로젝트에 적용합니다. 기존 설치에서는 아직 적용하지 않은 증분 migration만 실행합니다. Supabase CLI의 `supabase link --project-ref YOUR_PROJECT_REF`, `supabase db push`를 사용하거나 SQL Editor에서 각 파일을 한 번씩 실행합니다. 마지막 파일은 pg_cron을 통한 7일 보관 정리를 예약하므로 실제 예약 작업의 성공도 확인합니다. 자세한 내용은 [DB 안내](supabase/README.md)를 보세요.
 5. [관리자 seed](supabase/seed-members.sql)에 각 사용자의 **실제 Auth UUID**를 넣어 `members`에 등록합니다. 임의 UUID를 만들지 마세요. 기본 이름 Husband/Wife는 관리자 seed에서 바꿀 수 있습니다. `psql` 변수 문법을 사용하는 파일이므로 SQL Editor에서는 해당 표현식을 실제 따옴표로 감싼 UUID로 바꿔 실행합니다. 작성한 실제 seed는 Git에 저장하지 않습니다.
 6. API 노출 스키마에 `private`를 추가하지 마세요. 테이블 RLS를 끄지 마세요. 인증에 성공한 사용자라도 `members`에 없으면 채팅에 접근할 수 없습니다.
 7. `messages`와 `read_receipts`가 `supabase_realtime` publication에 있는지 확인합니다. Presence는 `ourchat:couple` 비공개 채널과 migration의 회원 정책을 사용합니다. Realtime 설정에 공개 채널 허용 옵션이 있으면 끕니다.
 
 데이터베이스에서 회원을 최대 두 명으로 제한합니다. 저장된 메시지가 있는 사용자의 삭제는 기록 보존을 위해 제한됩니다. 계정 교체는 일반 로그아웃과 다른 관리자 작업입니다.
+
+메시지 아래 **Copy message** 버튼으로 본문 전체를 복사합니다. 복사 권한이 없으면 전체 글이 선택된 창에서 수동으로 복사할 수 있습니다. 메시지는 보낸 시각부터 **168시간(7일)** 보관합니다. 만료되면 조회와 화면에서 제외하고 서버가 매분 정리합니다. 이 정책은 기존 메시지에도 적용됩니다. 이미 사용자가 복사한 글은 기기의 클립보드에 남을 수 있습니다.
 
 ## 3. 환경변수와 알림 키
 

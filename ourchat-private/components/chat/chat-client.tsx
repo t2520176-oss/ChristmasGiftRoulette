@@ -9,10 +9,12 @@ import {
 } from "lucide-react";
 import { cleanupCurrentPushSubscription } from "@/components/pwa-controls";
 import { PhoneAccess } from "@/components/phone-access";
+import { CopyMessageButton } from "@/components/copy-message-button";
 import { MessageSoundControl, useMessageSound } from "@/components/message-sound";
 import { IncomingMessageNotice, useIncomingMessageNotice } from "@/components/incoming-message-notice";
 import { createClient } from "@/lib/supabase/browser";
 import type { ChatMessage, Member, ReadReceipt } from "@/lib/types";
+import { nextMessageExpiryDelay, retainMessages } from "@/lib/message-retention";
 import {
   canSendDraft, compareMessageIds, highestVisibleMessageId,
   isMessageId, isRead, mergeMessages, mergeReceipts, messageIdentity,
@@ -25,15 +27,17 @@ type Props = {
   initialMessages: ChatMessage[];
   initialHasMore?: boolean;
   initialReceipts: ReadReceipt[];
+  initialServerTime?: number;
 };
 type MessagePage = { messages: ChatMessage[]; hasMore: boolean };
 type Connection = "connecting" | "connected" | "reconnecting";
 
-async function request<T>(url: string, init?: RequestInit): Promise<T> {
+async function request<T>(url: string, init?: RequestInit, onServerTime?: (value: string | null) => void): Promise<T> {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 20000);
   try {
     const response = await fetch(url, { ...init, signal: controller.signal, cache: "no-store", credentials: "same-origin" });
+    if (response.ok) onServerTime?.(response.headers.get("Date"));
     const data: unknown = await response.json().catch(() => null);
     if (!response.ok) {
       const message = data && typeof data === "object" && "error" in data &&
@@ -96,10 +100,16 @@ function subscribeTheme(callback: () => void) {
   };
 }
 
-export default function ChatClient({ currentMember, peer, initialMessages, initialHasMore, initialReceipts }: Props) {
+export default function ChatClient({ currentMember, peer, initialMessages, initialHasMore, initialReceipts, initialServerTime }: Props) {
   const router = useRouter();
   const hydrated = useSyncExternalStore(subscribeHydration, () => true, () => false);
-  const [messages, setMessages] = useState<VisibleMessage[]>(() => mergeMessages([], initialMessages));
+  const [initialClock] = useState(() => {
+    const server = Number.isFinite(initialServerTime) ? initialServerTime! : Date.now();
+    return { server, monotonic: performance.now(), wall: Date.now(), last: server };
+  });
+  const clockRef = useRef(initialClock);
+  const [clockRevision, setClockRevision] = useState(0);
+  const [messages, setMessages] = useState<VisibleMessage[]>(() => retainMessages(mergeMessages([], initialMessages), initialClock.server));
   const [receipts, setReceipts] = useState(initialReceipts);
   const [draft, setDraft] = useState("");
   const online = useSyncExternalStore(subscribeOnline, () => navigator.onLine, () => true);
@@ -143,11 +153,50 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
   const sessionActiveRef = useRef(true);
   const lastReadRef = useRef(initialReceipts.find((receipt) => receipt.user_id === currentMember.user_id)?.last_read_message_id ?? null);
 
+  const retentionNow = useCallback(() => {
+    const clock = clockRef.current;
+    // The server anchor removes an initially wrong device clock. Wall elapsed
+    // also covers platforms whose performance clock pauses during device sleep.
+    // Never let a backward clock edit make already elapsed time run backwards.
+    clock.last = Math.max(clock.last, clock.server + Math.max(0, performance.now() - clock.monotonic, Date.now() - clock.wall));
+    return clock.last;
+  }, []);
+
+  const pruneExpiredMessages = useCallback(() => {
+    const current = messagesRef.current;
+    const next = retainMessages(current, retentionNow());
+    const retainedIds = new Set(next.map((message) => message.id));
+    for (const id of visibleIdsRef.current) if (!retainedIds.has(id)) visibleIdsRef.current.delete(id);
+    if (next.length === current.length || !mountedRef.current) return;
+    messagesRef.current = next;
+    setMessages(next);
+    setNewCount(0);
+    dismissIncomingNotice();
+  }, [dismissIncomingNotice, retentionNow]);
+
+  const updateServerTime = useCallback((value: string | null) => {
+    const server = value ? Date.parse(value) : NaN;
+    if (!Number.isFinite(server) || !mountedRef.current) return;
+    const monotonic = performance.now();
+    const previous = clockRef.current;
+    // HTTP Date has whole-second precision. Do not move the trusted monotonic
+    // estimate backwards for rounding, but do correct a device wall-clock jump.
+    const trusted = Math.max(server, previous.server + Math.max(0, monotonic - previous.monotonic));
+    clockRef.current = { server: trusted, monotonic, wall: Date.now(), last: trusted };
+    pruneExpiredMessages();
+    setClockRevision((revision) => revision + 1);
+  }, [pruneExpiredMessages]);
+
+  const requestWithTime = useCallback(<T,>(url: string, init?: RequestInit) => request<T>(url, init, updateServerTime), [updateServerTime]);
+
   const acceptMessages = useCallback((incoming: readonly VisibleMessage[], countNew = true) => {
-    if (!mountedRef.current || !incoming.length) return;
+    if (!mountedRef.current) return;
+    pruneExpiredMessages();
+    const retained = retainMessages(incoming, retentionNow());
+    if (!retained.length) return;
     const current = messagesRef.current;
     let freshPeerCount = 0;
-    for (const message of incoming) {
+    for (const message of retained) {
       if (!isMessageId(message.id)) continue;
       if (message.sender_id === peer?.user_id && !knownIncomingIdsRef.current.has(message.id) &&
         (!initialNewestIdRef.current || compareMessageIds(message.id, initialNewestIdRef.current) > 0)) {
@@ -163,13 +212,13 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
     }
     if (countNew && !atBottomRef.current) {
       const known = new Set(current.map(messageIdentity));
-      const fresh = incoming.filter((message) => isMessageId(message.id) && message.sender_id !== currentMember.user_id && !known.has(messageIdentity(message)));
+      const fresh = retained.filter((message) => isMessageId(message.id) && message.sender_id !== currentMember.user_id && !known.has(messageIdentity(message)));
       if (fresh.length) setNewCount((count) => count + fresh.length);
     }
-    const next = mergeMessages(current, incoming);
+    const next = mergeMessages(current, retained);
     messagesRef.current = next;
     setMessages(next);
-  }, [currentMember.user_id, peer?.user_id, playIncoming, showIncomingNotice]);
+  }, [currentMember.user_id, peer?.user_id, playIncoming, pruneExpiredMessages, retentionNow, showIncomingNotice]);
 
   const acceptReceipts = useCallback((incoming: readonly ReadReceipt[]) => {
     if (!mountedRef.current) return;
@@ -181,12 +230,13 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
   }, [currentMember.user_id]);
 
   const flushRead = useCallback(async function flushVisibleRead() {
+    pruneExpiredMessages();
     if (!mountedRef.current || !sessionActiveRef.current || !onlineRef.current || readingRef.current || document.visibilityState !== "visible") return;
     const candidate = highestVisibleMessageId(visibleIdsRef.current);
     if (!candidate || (lastReadRef.current && compareMessageIds(candidate, lastReadRef.current) <= 0)) return;
     readingRef.current = true;
     try {
-      const result = await request<{ receipt: ReadReceipt }>("/api/read", {
+      const result = await requestWithTime<{ receipt: ReadReceipt }>("/api/read", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message_id: candidate }),
       });
@@ -200,7 +250,7 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
     } finally {
       readingRef.current = false;
     }
-  }, [acceptReceipts]);
+  }, [acceptReceipts, pruneExpiredMessages, requestWithTime]);
 
   const queueRead = useCallback(() => {
     if (readTimerRef.current) clearTimeout(readTimerRef.current);
@@ -218,7 +268,7 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
         let more = true;
         while (more && mountedRef.current && sessionActiveRef.current && onlineRef.current) {
           const query = cursor ? `?after=${encodeURIComponent(cursor)}` : "";
-          const page = await request<MessagePage>(`/api/messages${query}`);
+          const page = await requestWithTime<MessagePage>(`/api/messages${query}`);
           if (!mountedRef.current) break;
           acceptMessages(page.messages);
           const next = newestMessageId(page.messages);
@@ -227,7 +277,7 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
           if (next) cursor = next;
         }
         if (!mountedRef.current || !sessionActiveRef.current) break;
-        const result = await request<{ receipts: ReadReceipt[] }>("/api/read");
+        const result = await requestWithTime<{ receipts: ReadReceipt[] }>("/api/read");
         acceptReceipts(result.receipts);
         queueRead();
         setError(null);
@@ -237,26 +287,40 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
     } finally {
       syncRunningRef.current = false;
     }
-  }, [acceptMessages, acceptReceipts, queueRead]);
+  }, [acceptMessages, acceptReceipts, queueRead, requestWithTime]);
 
   useEffect(() => {
     mountedRef.current = true;
     const isOnline = navigator.onLine;
     onlineRef.current = isOnline;
-    const onOnline = () => { onlineRef.current = true; void synchronize(); queueRead(); };
+    const onOnline = () => { onlineRef.current = true; pruneExpiredMessages(); void synchronize(); queueRead(); };
     const onOffline = () => { onlineRef.current = false; setPeerOnline(false); };
-    const onVisible = () => { if (document.visibilityState === "visible") { void synchronize(); queueRead(); } };
+    const onResume = () => { pruneExpiredMessages(); void synchronize(); queueRead(); };
+    const onVisible = () => { if (document.visibilityState === "visible") onResume(); };
     window.addEventListener("online", onOnline);
     window.addEventListener("offline", onOffline);
     document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("focus", onResume);
     return () => {
       mountedRef.current = false;
       window.removeEventListener("online", onOnline);
       window.removeEventListener("offline", onOffline);
       document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("focus", onResume);
       if (readTimerRef.current) clearTimeout(readTimerRef.current);
     };
-  }, [queueRead, synchronize]);
+  }, [pruneExpiredMessages, queueRead, synchronize]);
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    const expire = () => {
+      pruneExpiredMessages();
+      const delay = nextMessageExpiryDelay(messagesRef.current, retentionNow());
+      if (delay !== null) timer = setTimeout(expire, Math.max(1, delay));
+    };
+    expire();
+    return () => { if (timer !== null) clearTimeout(timer); };
+  }, [messages, clockRevision, pruneExpiredMessages, retentionNow]);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
@@ -394,7 +458,7 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
     loadingOlderRef.current = true;
     setLoadingOlder(true);
     try {
-      const page = await request<MessagePage>(`/api/messages?before=${encodeURIComponent(cursor)}`);
+      const page = await requestWithTime<MessagePage>(`/api/messages?before=${encodeURIComponent(cursor)}`);
       if (!mountedRef.current) return;
       const viewport = viewportRef.current;
       if (viewport) restoreScrollRef.current = { height: viewport.scrollHeight, top: viewport.scrollTop };
@@ -413,7 +477,7 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
     sendInFlightRef.current.add(message.client_nonce);
     acceptMessages([{ ...message, status: "pending", error: undefined }]);
     try {
-      const result = await request<{ message: ChatMessage }>("/api/messages", {
+      const result = await requestWithTime<{ message: ChatMessage }>("/api/messages", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ body: message.body, client_nonce: message.client_nonce }),
       });
@@ -466,7 +530,7 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
     if (readTimerRef.current) clearTimeout(readTimerRef.current);
     try {
       await cleanupCurrentPushSubscription();
-      await request<{ ok: boolean }>("/api/auth/signout", { method: "POST" });
+      await requestWithTime<{ ok: boolean }>("/api/auth/signout", { method: "POST" });
       router.replace("/login");
       router.refresh();
     } catch (cause) {
@@ -558,6 +622,7 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
                   <div className={`max-w-[86%] sm:max-w-[75%] ${own ? "items-end" : "items-start"} flex min-w-0 flex-col`}>
                     {!own && !grouped && <span className="mb-1.5 ml-1 text-[10px] font-medium text-[#8b967f] dark:text-[#abbb9d]">{peerName}</span>}
                     <div className={`whitespace-pre-wrap wrap-anywhere px-4 py-3 text-[14px] leading-[1.7] ${own ? "rounded-[20px] rounded-br-md bg-[#dfe9d3] text-[#344e35] dark:bg-[#425f3b] dark:text-[#f0f6e8]" : "rounded-[20px] rounded-bl-md border border-[#e8eadf] bg-[#f3f3ec] text-[#4b5845] dark:border-[#3b4b38] dark:bg-[#2a3829] dark:text-[#e0e8d7]"} ${status === "pending" ? "opacity-60" : ""}`}>{message.body}</div>
+                    <CopyMessageButton body={message.body} />
                     {(groupEnd || status !== "sent" || read) && <div className={`mt-1.5 flex flex-wrap items-center gap-1.5 px-1 text-[10px] text-[#9aA18e] dark:text-[#a7b598] ${own ? "justify-end" : "justify-start"}`}><time dateTime={message.created_at}>{hydrated ? timeFormatter.format(new Date(message.created_at)) : "…"}</time>{own && status === "pending" && <span className="inline-flex items-center gap-1"><LoaderCircle size={10} className="animate-spin" />Sending…</span>}{own && status === "failed" && <><span className="text-[#b2664b] dark:text-[#e9ae91]">Failed to send</span><button type="button" disabled={!online || signingOut} title={message.error} onClick={() => void deliver(message)} className="rounded px-1 font-semibold text-[#926043] underline underline-offset-2 disabled:opacity-40 dark:text-[#f0c2a0]" aria-label="Retry failed message">Retry</button></>}{own && status === "sent" && (read ? <span className="inline-flex items-center gap-0.5 text-[#6b8855] dark:text-[#c0d5a2]"><CheckCheck size={13} />Read</span> : <><Check size={11} /><span className="sr-only">Sent</span></>)}</div>}
                   </div>
                 </div>
@@ -574,7 +639,7 @@ export default function ChatClient({ currentMember, peer, initialMessages, initi
               }} placeholder="Type a message..." rows={1} aria-describedby="composer-help" className="min-h-11 max-h-[min(9rem,calc(var(--chat-viewport-height,100dvh)*0.22))] min-w-0 flex-1 resize-none bg-transparent px-2 py-2.5 text-base leading-6 text-[#3b5137] outline-none placeholder:text-[#a3ac96] dark:text-[#e7efdd] dark:placeholder:text-[#93a486]" />
               <button type="submit" disabled={!canSendDraft(draft, online) || signingOut} aria-label="Send message" className="flex size-11 shrink-0 items-center justify-center rounded-[14px] bg-[#386044] text-[#f7faef] transition hover:bg-[#284e35] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#456e3c] disabled:cursor-not-allowed disabled:bg-[#d8dfcc] disabled:text-[#9da98d] dark:bg-[#a8c08c] dark:text-[#24371c] dark:hover:bg-[#c4d8aa] dark:disabled:bg-[#405037] dark:disabled:text-[#7d8d6d]"><Send size={18} strokeWidth={1.6} /></button>
             </div>
-            <div id="composer-help" className="mt-2.5 px-1 text-[10px] text-[#a1aa92] dark:text-[#9daf8a]"><span className="hidden sm:inline">Enter to send <span className="px-1.5">·</span> Shift + Enter for a new line</span><span className="sm:hidden">A little note goes a long way.</span></div>
+            <div id="composer-help" className="mt-2.5 px-1 text-[10px] text-[#a1aa92] dark:text-[#9daf8a]"><span className="hidden sm:inline">Enter to send <span className="px-1.5">·</span> Shift + Enter for a new line <span className="px-1.5">·</span></span><span>Messages are kept for 7 days.</span></div>
           </form>
         </section>
       </main>

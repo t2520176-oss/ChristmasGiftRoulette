@@ -20,5 +20,8 @@ export default async function ChatPage() {
   ]);
   throwDatabaseError(peerResult.error);
   const peer = peerResult.data ? memberSchema.parse(peerResult.data) : null;
-  return <ChatClient currentMember={context.member} peer={peer} initialMessages={messages.messages} initialHasMore={messages.hasMore} initialReceipts={receipts} />;
+  // This dynamic Server Component anchors retention to the current request's clock.
+  // eslint-disable-next-line react-hooks/purity -- Request time is intentionally read on the server.
+  const initialServerTime = Date.now();
+  return <ChatClient currentMember={context.member} peer={peer} initialMessages={messages.messages} initialHasMore={messages.hasMore} initialReceipts={receipts} initialServerTime={initialServerTime} />;
 }

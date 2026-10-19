@@ -377,6 +377,206 @@ try {
     assert.ok(result.rows.length >= 7);
     assert.ok(result.rows.every((r) => r.prosecdef && r.proconfig.includes('search_path=""') && !r.anon_exec));
   });
+
+  const retentionMigration = await readFile(new URL('../../supabase/migrations/202610190002_message_retention.sql', import.meta.url), 'utf8');
+  await test('retention installation changes only its read policy, index and owner helper without pruning any rows', async () => {
+    const before = await schemaSnapshot(true);
+    await db.exec(retentionMigration);
+    const after = await schemaSnapshot(true);
+    const indexId = (await db.query("select 'public.messages_created_at_idx'::regclass::oid as id")).rows[0].id;
+    const functionId = (await db.query("select 'private.prune_expired_messages()'::regprocedure::oid as id")).rows[0].id;
+    after.relations = after.relations.filter((row) => row.oid !== indexId);
+    after.columns = after.columns.filter((row) => row.attrelid !== indexId);
+    after.functions = after.functions.filter((row) => row.oid !== functionId);
+    const previousPolicy = before.policies.find((row) => row.tablename === 'messages' && row.policyname === 'messages_read_pair');
+    const nextPolicy = after.policies.find((row) => row.tablename === 'messages' && row.policyname === 'messages_read_pair');
+    assert.match(nextPolicy.qual, /private\.is_member\(\).*created_at > .*statement_timestamp\(\).*168:00:00/s);
+    nextPolicy.qual = previousPolicy.qual;
+    assert.deepEqual(after, before);
+  });
+  await test('retention replay preserves all row, function, policy, constraint and index identities', async () => {
+    const before = await schemaSnapshot(true);
+    await db.exec(retentionMigration);
+    assert.deepEqual(await schemaSnapshot(true), before);
+  });
+  const cleanupDefinition = (await db.query("select pg_get_functiondef('private.prune_expired_messages()'::regprocedure) as definition")).rows[0].definition;
+  for (const [name, change, restore] of [
+    ['weakened message read policy',
+      'alter policy messages_read_pair on public.messages using (true)',
+      "alter policy messages_read_pair on public.messages using ((select private.is_member()) and created_at > statement_timestamp() - interval '168 hours')"],
+    ['missing read policy expression',
+      'drop policy messages_read_pair on public.messages; create policy messages_read_pair on public.messages for select to authenticated',
+      "alter policy messages_read_pair on public.messages using ((select private.is_member()) and created_at > statement_timestamp() - interval '168 hours')"],
+    ['different retention duration',
+      "alter policy messages_read_pair on public.messages using ((select private.is_member()) and created_at > statement_timestamp() - interval '169 hours')",
+      "alter policy messages_read_pair on public.messages using ((select private.is_member()) and created_at > statement_timestamp() - interval '168 hours')"],
+    ['additional permissive message policy',
+      'create policy unexpected_retention_read on public.messages for select to authenticated using (true)',
+      'drop policy unexpected_retention_read on public.messages'],
+    ['restored character cap',
+      'alter table public.messages drop constraint messages_body_check; alter table public.messages add constraint messages_body_check check (body = btrim(body) and char_length(body) between 1 and 1000000)',
+      'alter table public.messages drop constraint messages_body_check; alter table public.messages add constraint messages_body_check check (body = btrim(body) and char_length(body) >= 1)'],
+    ['changed receipt foreign key action',
+      'alter table public.read_receipts drop constraint read_receipts_last_read_message_id_fkey; alter table public.read_receipts add constraint read_receipts_last_read_message_id_fkey foreign key(last_read_message_id) references public.messages(id) on delete set null',
+      'alter table public.read_receipts drop constraint read_receipts_last_read_message_id_fkey; alter table public.read_receipts add constraint read_receipts_last_read_message_id_fkey foreign key(last_read_message_id) references public.messages(id) on delete restrict'],
+    ['changed receipt trigger security',
+      'alter function private.prepare_receipt() security invoker',
+      'alter function private.prepare_receipt() security definer'],
+    ['client message DELETE grant',
+      'grant delete on public.messages to authenticated',
+      'revoke delete on public.messages from authenticated'],
+    ['conflicting cleanup index',
+      'drop index public.messages_created_at_idx; create index messages_created_at_idx on public.messages(id)',
+      'drop index public.messages_created_at_idx; create index messages_created_at_idx on public.messages(created_at)'],
+    ['conflicting cleanup implementation',
+      "create or replace function private.prune_expired_messages() returns bigint language plpgsql security definer set search_path='' set lock_timeout='5s' as $$begin return 0;end;$$",
+      cleanupDefinition],
+    ['client execution grant on cleanup',
+      'grant execute on function private.prune_expired_messages() to authenticated',
+      'revoke execute on function private.prune_expired_messages() from authenticated'],
+  ]) {
+    await test(`retention migration refuses ${name} atomically`, async () => {
+      await db.exec(change);
+      const before = await schemaSnapshot(true);
+      await assert.rejects(db.exec(retentionMigration), (e) => e.code === '55000');
+      await db.exec('rollback');
+      assert.deepEqual(await schemaSnapshot(true), before);
+      await db.exec(restore);
+    });
+  }
+  await test('cleanup function is owner-only with empty search_path, fixed timeout and no configurable age', async () => {
+    const { rows } = await db.query(`select p.pronargs,p.prorettype='int8'::regtype as returns_count,
+      p.prosecdef,p.proconfig,
+      has_function_privilege('anon',p.oid,'execute') as anon_exec,
+      has_function_privilege('authenticated',p.oid,'execute') as member_exec,
+      has_function_privilege('service_role',p.oid,'execute') as server_exec
+      from pg_proc p where p.oid='private.prune_expired_messages()'::regprocedure`);
+    assert.deepEqual(rows[0], { pronargs: 0, returns_count: true, prosecdef: true,
+      proconfig: ['search_path=""', 'lock_timeout=5s'], anon_exec: false, member_exec: false, server_exec: false });
+    for (const [user, role] of [[husband, 'authenticated'], [wife, 'authenticated'], [outsider, 'authenticated'], [null, 'anon'], [null, 'service_role']]) {
+      await as(user, role);
+      await denied('select private.prune_expired_messages()');
+    }
+    await admin();
+  });
+
+  await db.exec('delete from private.api_rate_limits');
+  await as(husband);
+  const boundaryBefore = await insertMessage('One millisecond expired');
+  const boundaryExact = await insertMessage('Exactly seven days old');
+  const boundaryAfter = await insertMessage('One millisecond retained');
+  await admin();
+  await test('both members lose exact-168-hour and older rows immediately before physical cleanup', async () => {
+    // One DO command fixes statement_timestamp across the writes and policy reads.
+    // Fixture timestamps are owner-only updates and are rolled back afterwards.
+    await db.exec('begin');
+    try {
+      await db.exec(`do $$declare v_user uuid; v_count integer; begin
+        update public.messages set created_at=statement_timestamp()-interval '168 hours'-interval '1 millisecond' where id=${boundaryBefore.id};
+        update public.messages set created_at=statement_timestamp()-interval '168 hours' where id=${boundaryExact.id};
+        update public.messages set created_at=statement_timestamp()-interval '168 hours'+interval '1 millisecond' where id=${boundaryAfter.id};
+        foreach v_user in array array['${husband}'::uuid,'${wife}'::uuid] loop
+          perform set_config('request.jwt.claim.sub',v_user::text,true);
+          set local role authenticated;
+          select count(*) into v_count from public.messages where id in (${boundaryBefore.id},${boundaryExact.id},${boundaryAfter.id});
+          if v_count<>1 or not exists(select 1 from public.messages where id=${boundaryAfter.id}) then
+            raise exception 'Seven-day member visibility boundary failed';
+          end if;
+          begin
+            perform public.mark_read(${boundaryExact.id});
+            raise exception 'Expired message accepted by mark_read';
+          exception when invalid_parameter_value then null;
+          end;
+          reset role;
+        end loop;
+        perform set_config('request.jwt.claim.sub','${outsider}',true);
+        set local role authenticated;
+        if exists(select 1 from public.messages) then raise exception 'Outsider retention policy bypass';end if;
+        reset role;
+        set local role anon;
+        begin
+          perform 1 from public.messages;
+          raise exception 'Anonymous retention read unexpectedly allowed';
+        exception when insufficient_privilege then null;
+        end;
+        reset role;
+        if (select count(*) from public.messages where id in (${boundaryBefore.id},${boundaryExact.id},${boundaryAfter.id}))<>3 then
+          raise exception 'Visibility filtering deleted a stored row';
+        end if;
+      end;$$;`);
+    } finally { await db.exec('rollback'); }
+  });
+  await test('fixed 168 hours is seven elapsed days even across a daylight-saving change', async () => {
+    await db.exec("set time zone 'America/New_York'");
+    try {
+      const { rows } = await db.query(`select extract(epoch from ('2026-11-03T00:00:00-05:00'::timestamptz -
+        ('2026-11-03T00:00:00-05:00'::timestamptz - interval '168 hours')))::integer as elapsed,
+        extract(epoch from ('2026-11-03T00:00:00-05:00'::timestamptz -
+        ('2026-11-03T00:00:00-05:00'::timestamptz - interval '7 days')))::integer as calendar_elapsed`);
+      assert.equal(rows[0].elapsed, 604800);
+      assert.notEqual(rows[0].calendar_elapsed, 604800);
+    } finally { await db.exec("set time zone 'UTC'"); }
+  });
+
+  await db.exec('delete from public.read_receipts');
+  await as(husband);
+  const expiredA = await insertMessage('Expired A', husband);
+  const expiredB = await insertMessage('Expired B', husband);
+  const retained = await insertMessage('Retained long body ' + '한글 👋'.repeat(2000), husband);
+  await db.query('select * from public.mark_read($1)', [expiredA.id]);
+  await as(wife);
+  await db.query('select * from public.mark_read($1)', [retained.id]);
+  await admin();
+  await db.query("update public.messages set created_at=clock_timestamp()-interval '192 hours' where id in ($1,$2)", [expiredA.id, expiredB.id]);
+  await test('expired IDs cannot be read or marked even while their stored rows await cron', async () => {
+    for (const user of [husband, wife]) {
+      await as(user);
+      assert.equal((await db.query('select id from public.messages where id in ($1,$2)', [expiredA.id, expiredB.id])).rows.length, 0);
+      await denied('select * from public.mark_read($1)', [expiredA.id], '22023');
+      await denied('delete from public.messages where id=$1', [expiredA.id]);
+    }
+    await admin();
+    assert.equal((await db.query('select count(*)::integer as n from public.messages where id in ($1,$2)', [expiredA.id, expiredB.id])).rows[0].n, 2);
+  });
+  await test('owner cleanup deletes expired rows and only their referencing receipts atomically', async () => {
+    await db.query("select set_config('request.jwt.claim.sub','',false)");
+    const before = await schemaSnapshot(true);
+    const memberRows = (await db.query('select * from public.members order by user_id')).rows;
+    const freshReceipt = (await db.query('select * from public.read_receipts where user_id=$1', [wife])).rows;
+    const result = await db.query('select private.prune_expired_messages()::text as deleted');
+    assert.equal(result.rows[0].deleted, '2');
+    assert.equal((await db.query('select count(*)::integer as n from public.messages where id in ($1,$2)', [expiredA.id, expiredB.id])).rows[0].n, 0);
+    assert.equal((await db.query('select * from public.read_receipts where user_id=$1', [husband])).rows.length, 0);
+    assert.deepEqual((await db.query('select * from public.read_receipts where user_id=$1', [wife])).rows, freshReceipt);
+    assert.deepEqual((await db.query('select * from public.members order by user_id')).rows, memberRows);
+    const after = await schemaSnapshot(true);
+    before.messages = before.messages.filter((row) => ![expiredA.id, expiredB.id].includes(row.id));
+    assert.deepEqual(after, before);
+    await as(husband);
+    assert.equal((await db.query('select body from public.messages where id=$1', [retained.id])).rows[0].body, retained.body);
+    const next = await insertMessage('Normal sending and receipt recreation after pruning');
+    await db.query('select * from public.mark_read($1)', [next.id]);
+    await admin();
+  });
+  await test('repeated cleanup is a no-op and preserves a null read receipt', async () => {
+    await db.query('delete from public.read_receipts where user_id=$1', [husband]);
+    await as(husband);
+    await db.query('insert into public.read_receipts(user_id,last_read_message_id) values($1,null)', [husband]);
+    await admin();
+    const before = await schemaSnapshot(true);
+    const receipts = (await db.query('select * from public.read_receipts order by user_id')).rows;
+    assert.equal((await db.query('select private.prune_expired_messages()::text as deleted')).rows[0].deleted, '0');
+    assert.deepEqual(await schemaSnapshot(true), before);
+    assert.deepEqual((await db.query('select * from public.read_receipts order by user_id')).rows, receipts);
+  });
+  await test('scheduler fails closed when pg_cron is unavailable instead of claiming automatic cleanup', async () => {
+    const scheduleMigration = await readFile(new URL('../../supabase/migrations/202610190003_schedule_message_retention.sql', import.meta.url), 'utf8');
+    assert.equal((await db.query("select name from pg_available_extensions where name='pg_cron'")).rows.length, 0);
+    const before = await schemaSnapshot(true);
+    await assert.rejects(db.exec(scheduleMigration), (error) => error.code === '55000' && /pg_cron is unavailable/.test(error.message));
+    await db.exec('rollback');
+    assert.deepEqual(await schemaSnapshot(true), before);
+  });
   console.log(`\nPASS: ${checks} database ACL/RLS/trigger/RPC checks against the actual migration.`);
 } finally {
   await db.close();
