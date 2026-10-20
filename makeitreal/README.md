@@ -29,3 +29,4 @@ ELEGOO DAY "Make It Real" (Nexprint, 2026-09-10 ~ 10-30). 내 손그림·아이�
 ## 보너스
 - [03 Halloween Ghost Keyring](03-halloween-keyring/) — 마녀 모자 유령 + 이름 키링(멀티컬러). 공모전 10선과 별개로 만든 핼러윈 작품.
 - [04 Halloween Skull Keyring](04-skull-keyring/) — 해골 + 뼈 + 이름 키링(4색: 회색·검정·흰색·파랑).
+- [05 Halloween Black Cat Keyring](05-cat-keyring/) — 이름 위로 얼굴을 내민 검정 고양이(4색 기본, 흰 수염 5색 선택).
