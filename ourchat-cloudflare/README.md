@@ -24,9 +24,15 @@ Messages have a copy button with a manual-copy fallback. Incoming messages can d
 
 The old Supabase project is inactive, and the user has explicitly requested that it **not be restored**. Old accounts, passwords and chat history are not imported automatically. This deployment uses the two newly supplied logins and a new D1 database. Importing old history would require a separately available export.
 
-Local verification passed 30 real Workers/D1 checks, Chromium/service-worker scenarios, and two-account real local server tests for reciprocal chat, persistence, copying and sign-out. Local results do not establish a working hosted login; verify each deployment at its own URL. Actual hosted Cron execution and physical-phone notification behavior also need verification there.
+Local verification passed 40 real Workers/D1 checks, Chromium/service-worker scenarios, and two-account real local server tests for reciprocal chat, persistence, copying and sign-out. Local results do not establish a working hosted login; verify each deployment at its own URL. Actual hosted Cron execution and physical-phone notification behavior also need verification there.
 
 ## Free-plan limits
+
+### Photos
+
+Use the photo button beside the message box, select a photo, optionally add a caption, and send. Photos are resized and compressed on the device to JPEG, at most128KiB and1600px on the longest edge; difficult images may be resized further. Decodable JPEG, PNG and WebP inputs work; HEIC depends on the browser. Originals larger than20MiB are rejected before processing. The original file is not uploaded or retained by OurChat.
+
+Photos appear inline and can be opened or saved. Their URLs require an active login, are never cached by the service worker, and stop working at the same168-hour boundary as the message. Existing text copy, retries and notifications remain available. The dedicated D1 database stores small chunks with a64MiB total-photo budget; expired-message cleanup releases the space. A full photo budget rejects the photo without creating a partial message, while text still works. No additional storage service, credit card or paid resource is required for this implementation; Cloudflare's free request/database limits still apply.
 
 Workers Free allows 100,000 requests per account per day and 10ms CPU per invocation. D1 Free includes 5 million rows read and 100,000 rows written per day, 500MB per database and 5GB per account. The account can have five Cron triggers; this app uses one every minute. D1 values and rows are limited to 2,000,000 bytes. Exceeding free limits can stop requests or database operations. Do not enable a paid plan or additional paid products for this free-only setup. Card requirements must be checked in the actual signup/account screen.
 

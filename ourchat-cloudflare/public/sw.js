@@ -1,6 +1,6 @@
 "use strict";
-const SHELL_CACHE = "ourchat-shell-20261019-1";
-const SHELL = ["/", "/index.html", "/styles.css?v=20261019-1", "/app.js?v=20261019-1", "/manifest.webmanifest", "/icons/icon-192.png", "/icons/icon-512.png", "/icons/icon-maskable-512.png", "/icons/apple-touch-icon.png", "/icons/badge-96.png"];
+const SHELL_CACHE = "ourchat-shell-20261020-photos-1";
+const SHELL = ["/", "/index.html", "/styles.css?v=20261020-photos-1", "/app.js?v=20261020-photos-1", "/manifest.webmanifest", "/icons/icon-192.png", "/icons/icon-512.png", "/icons/icon-maskable-512.png", "/icons/apple-touch-icon.png", "/icons/badge-96.png"];
 self.addEventListener("install", (event) => {
   event.waitUntil((async () => { const cache = await caches.open(SHELL_CACHE); await cache.addAll(SHELL); await self.skipWaiting(); })());
 });

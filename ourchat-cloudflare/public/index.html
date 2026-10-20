@@ -11,8 +11,8 @@
   <link rel="icon" href="/icons/icon-192.png">
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="stylesheet" href="/styles.css?v=20261019-1">
-  <script type="module" src="/app.js?v=20261019-1"></script>
+  <link rel="stylesheet" href="/styles.css?v=20261020-photos-1">
+  <script type="module" src="/app.js?v=20261020-photos-1"></script>
 </head>
 <body>
   <main id="login" class="login-shell" hidden>
@@ -54,12 +54,22 @@
       <button id="notice-dismiss" class="icon-button" type="button" aria-label="Dismiss new message">×</button>
     </aside>
     <footer class="composer-wrap">
+      <div id="photo-selection" class="photo-selection" hidden>
+        <img id="photo-preview" alt="Photo to send" hidden>
+        <div class="photo-selection-detail">
+          <p id="photo-status" role="status" aria-live="polite">Preparing photo…</p>
+          <div class="photo-selection-actions"><button id="change-photo" type="button">Change photo</button><button id="remove-photo" type="button">Remove photo</button></div>
+        </div>
+      </div>
+      <p id="photo-error" class="error photo-error" role="alert" hidden></p>
       <form id="composer-form" class="composer">
+        <input id="photo-input" class="sr-only" type="file" accept="image/*" tabindex="-1" aria-label="Choose one photo">
+        <button id="attach-photo" class="attach-photo" type="button" aria-label="Attach photo" title="Attach photo">＋</button>
         <label class="sr-only" for="draft">Message</label>
         <textarea id="draft" placeholder="Type a message…" rows="1" enterkeyhint="enter"></textarea>
         <button id="send" class="send" type="submit" aria-label="Send message">➤</button>
       </form>
-      <p class="composer-note">Messages are kept for 7 days.</p>
+      <p class="composer-note">Messages and photos are kept for 7 days.</p>
     </footer>
   </main>
 
@@ -73,7 +83,7 @@
     <button id="push-button" type="button" class="setting-button" hidden>Enable background notifications</button>
     <p id="push-status" class="fine" role="status" hidden></p>
     <button type="button" class="setting-button install-help">Add OurChat to your home screen</button>
-    <p class="fine">Messages disappear 7 days (168 hours) after they are sent. Text you copy elsewhere is outside OurChat.</p>
+    <p class="fine">Messages and photos disappear 7 days (168 hours) after they are sent. Anything you copy or save elsewhere is outside OurChat.</p>
     <button id="signout" type="button" class="setting-button danger">Sign out</button>
   </dialog>
 
@@ -92,6 +102,12 @@
     <label class="sr-only" for="copy-text">Entire message to copy</label>
     <textarea id="copy-text" readonly spellcheck="false"></textarea>
     <button id="select-copy" type="button" class="primary">Select entire message</button>
+  </dialog>
+  <dialog id="photo-dialog" class="modal photo-modal" aria-labelledby="photo-title">
+    <div class="modal-heading"><h2 id="photo-title">Photo</h2><button class="icon-button close-dialog" type="button" aria-label="Close photo">×</button></div>
+    <img id="viewer-photo" alt="Shared photo">
+    <a id="save-photo" class="photo-save" download="ourchat-photo.jpg">Save photo</a>
+    <p class="fine">Saved photos stay on your device after they disappear from OurChat.</p>
   </dialog>
   <noscript><p class="noscript">Please enable JavaScript to use OurChat.</p></noscript>
 </body>

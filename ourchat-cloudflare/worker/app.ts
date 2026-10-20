@@ -12,6 +12,9 @@ export const RETENTION_MS = 168 * 60 * 60 * 1000;
 export const MAX_REQUEST_BYTES = 4 * 1024 * 1024;
 export const MAX_PAGE_BYTES = 4_400_000;
 export const SESSION_MS = 30 * 24 * 60 * 60 * 1000;
+export const MAX_IMAGE_BYTES = 128 * 1024;
+export const MAX_IMAGE_EDGE = 1600;
+export const IMAGE_CHUNK_BYTES = 32 * 1024;
 const COOKIE_NAME = '__Host-ourchat-session';
 const encoder = new TextEncoder();
 const PASSWORD_CONTEXT = encoder.encode('OurChat Cloudflare password verification v1');
@@ -31,6 +34,16 @@ interface MessageRow {
   created_at: number;
   body_bytes: number;
   body_sha256: string;
+  image_bytes: number | null;
+  image_width: number | null;
+  image_height: number | null;
+}
+export interface MessageImage {
+  url: string;
+  width: number;
+  height: number;
+  bytes: number;
+  mimeType: 'image/jpeg';
 }
 export interface ChatMessage {
   id: string;
@@ -38,7 +51,10 @@ export interface ChatMessage {
   body: string;
   client_nonce: string;
   created_at: string;
+  image?: MessageImage;
 }
+
+interface ValidImage { bytes: Uint8Array; width: number; height: number; sha256: string }
 
 class HttpError extends Error {
   constructor(public readonly status: number, public readonly publicMessage: string) {
@@ -255,12 +271,118 @@ export function splitMessage(body: string): string[] {
   return parts;
 }
 
+/** Check JPEG framing and dimensions before any supplied bytes enter storage. */
+function jpegDimensions(bytes: Uint8Array): { width: number; height: number } {
+  const invalid = () => new HttpError(400, 'Choose a valid JPEG image.');
+  if (bytes.length < 4 || bytes[0] !== 0xff || bytes[1] !== 0xd8) throw invalid();
+  let offset = 2;
+  let dimensions: { width: number; height: number } | undefined;
+  let frameComponents: number[] = [];
+  let scanned = false;
+  while (offset < bytes.length) {
+    if (bytes[offset++] !== 0xff) throw invalid();
+    while (bytes[offset] === 0xff) offset++;
+    const marker = bytes[offset++];
+    if (marker === 0xd9) {
+      if (!dimensions || !scanned || offset !== bytes.length) throw invalid();
+      return dimensions;
+    }
+    if (marker === undefined || marker === 0 || marker === 0xd8 || (marker >= 0xd0 && marker <= 0xd7)) throw invalid();
+    if (offset + 2 > bytes.length) throw invalid();
+    const length = (bytes[offset] << 8) | bytes[offset + 1];
+    const end = offset + length;
+    if (length < 2 || end > bytes.length) throw invalid();
+    const isFrame = marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker);
+    if (isFrame) {
+      // Browser canvas produces an 8-bit baseline JPEG. Progressive JPEG is
+      // also accepted; arithmetic/lossless and unsupported frames are refused.
+      if (![0xc0, 0xc1, 0xc2].includes(marker) || dimensions || length < 11 || bytes[offset + 2] !== 8) throw invalid();
+      const height = (bytes[offset + 3] << 8) | bytes[offset + 4];
+      const width = (bytes[offset + 5] << 8) | bytes[offset + 6];
+      const components = bytes[offset + 7];
+      if (![1, 3].includes(components) || length !== 8 + 3 * components || width < 1 || height < 1) throw invalid();
+      if (width > MAX_IMAGE_EDGE || height > MAX_IMAGE_EDGE) throw new HttpError(413, 'Image dimensions are too large.');
+      frameComponents = [];
+      for (let component = offset + 8; component < end; component += 3) {
+        const sampling = bytes[component + 1];
+        if (frameComponents.includes(bytes[component]) || (sampling >> 4) < 1 || (sampling >> 4) > 4
+            || (sampling & 15) < 1 || (sampling & 15) > 4 || bytes[component + 2] > 3) throw invalid();
+        frameComponents.push(bytes[component]);
+      }
+      dimensions = { width, height };
+    }
+    if (marker === 0xda) {
+      const components = bytes[offset + 2];
+      if (!dimensions || components < 1 || components > frameComponents.length || length !== 6 + 2 * components) throw invalid();
+      const scanComponents = new Set<number>();
+      for (let component = offset + 3; component < offset + 3 + 2 * components; component += 2) {
+        const selector = bytes[component];
+        const tables = bytes[component + 1];
+        if (!frameComponents.includes(selector) || scanComponents.has(selector) || (tables >> 4) > 3 || (tables & 15) > 3) throw invalid();
+        scanComponents.add(selector);
+      }
+      scanned = true;
+      offset = end;
+      // Entropy data may contain escaped FF bytes and restart markers.
+      // The next unescaped marker begins another scan or the final EOI.
+      let entropyBytes = 0;
+      while (offset < bytes.length) {
+        if (bytes[offset] !== 0xff) { offset++; entropyBytes++; continue; }
+        let markerAt = offset + 1;
+        while (bytes[markerAt] === 0xff) markerAt++;
+        const next = bytes[markerAt];
+        if (next === 0 || (next >= 0xd0 && next <= 0xd7)) { offset = markerAt + 1; entropyBytes++; continue; }
+        break;
+      }
+      if (!entropyBytes) throw invalid();
+    } else {
+      offset = end;
+    }
+  }
+  throw invalid();
+}
+
+async function readImage(input: unknown): Promise<ValidImage | undefined> {
+  if (input === undefined) return undefined;
+  if (!input || typeof input !== 'object' || Array.isArray(input)) throw new HttpError(400, 'Choose a valid JPEG image.');
+  const value = input as Record<string, unknown>;
+  if (value.mimeType !== 'image/jpeg' || typeof value.data !== 'string') throw new HttpError(400, 'Choose a valid JPEG image.');
+  if (value.data.length > 4 * Math.ceil(MAX_IMAGE_BYTES / 3)) throw new HttpError(413, 'Image is too large.');
+  // Canonical standard base64 only: no URL, data prefix, whitespace, URL-safe
+  // alphabet, missing padding, or alternate encodings of the same bytes.
+  if (!value.data.length || value.data.length % 4 !== 0) {
+    throw new HttpError(400, 'Choose a valid JPEG image.');
+  }
+  let binary: string;
+  try { binary = atob(value.data); }
+  catch { throw new HttpError(400, 'Choose a valid JPEG image.'); }
+  if (btoa(binary) !== value.data) throw new HttpError(400, 'Choose a valid JPEG image.');
+  if (binary.length > MAX_IMAGE_BYTES) throw new HttpError(413, 'Image is too large.');
+  const bytes = new Uint8Array(binary.length);
+  for (let index = 0; index < binary.length; index++) bytes[index] = binary.charCodeAt(index);
+  const dimensions = jpegDimensions(bytes);
+  const hash = new Uint8Array(await crypto.subtle.digest('SHA-256', bytes));
+  return { bytes, ...dimensions, sha256: Array.from(hash, (byte) => byte.toString(16).padStart(2, '0')).join('') };
+}
+
+function publicImage(row: MessageRow): MessageImage | undefined {
+  if (row.image_bytes === null) return undefined;
+  if (!row.image_bytes || !row.image_width || !row.image_height) throw new Error('Stored image metadata incomplete');
+  return { url: `/api/images/${row.id}`, width: row.image_width, height: row.image_height, bytes: row.image_bytes, mimeType: 'image/jpeg' };
+}
+
+function publicMessage(row: MessageRow, body: string): ChatMessage {
+  if (encoder.encode(body).length + (row.image_bytes || 0) !== row.body_bytes) throw new Error('Stored message incomplete');
+  const image = publicImage(row);
+  return { id: row.id, sender_id: row.sender_id, body, client_nonce: row.client_nonce,
+    created_at: new Date(row.created_at).toISOString(), ...(image ? { image } : {}) };
+}
+
 async function loadMessage(env: Env, row: MessageRow): Promise<ChatMessage> {
   const chunks = await env.DB.prepare('SELECT body FROM message_chunks WHERE message_id = ? ORDER BY chunk_index')
     .bind(row.id).all<{ body: string }>();
   const body = chunks.results.map((part) => part.body).join('');
-  if (encoder.encode(body).length !== row.body_bytes) throw new Error('Stored message incomplete');
-  return { id: row.id, sender_id: row.sender_id, body, client_nonce: row.client_nonce, created_at: new Date(row.created_at).toISOString() };
+  return publicMessage(row, body);
 }
 
 async function loadPageBodies(env: Env, rows: MessageRow[]): Promise<Map<string, string>> {
@@ -278,7 +400,9 @@ async function loadPageBodies(env: Env, rows: MessageRow[]): Promise<Map<string,
   return new Map(Array.from(pieces, ([id, parts]) => [id, parts.join('')]));
 }
 
-const MESSAGE_COLUMNS = 'CAST(id AS TEXT) AS id, sender_id, client_nonce, created_at, body_bytes, body_sha256';
+const MESSAGE_COLUMNS = `CAST(messages.id AS TEXT) AS id, sender_id, client_nonce, created_at, body_bytes, body_sha256,
+  message_images.byte_length AS image_bytes, message_images.width AS image_width, message_images.height AS image_height`;
+const MESSAGE_FROM = 'messages LEFT JOIN message_images ON message_images.message_id = messages.id';
 
 async function listMessages(request: Request, env: Env, auth: Auth): Promise<Response> {
   const url = new URL(request.url);
@@ -292,7 +416,7 @@ async function listMessages(request: Request, env: Env, auth: Auth): Promise<Res
   const cursorCondition = before ? 'AND messages.id < CAST(? AS INTEGER)' : after ? 'AND messages.id > CAST(? AS INTEGER)' : '';
   const parameters: (number | string)[] = [now - RETENTION_MS];
   if (before || after) parameters.push((before || after)!);
-  const rows = await env.DB.prepare(`SELECT ${MESSAGE_COLUMNS} FROM messages
+  const rows = await env.DB.prepare(`SELECT ${MESSAGE_COLUMNS} FROM ${MESSAGE_FROM}
     WHERE created_at > ? ${cursorCondition} ORDER BY messages.id ${direction} LIMIT ${MESSAGE_LIMIT + 1}`)
     .bind(...parameters).all<MessageRow>();
   const messages: ChatMessage[] = [];
@@ -307,12 +431,7 @@ async function listMessages(request: Request, env: Env, auth: Auth): Promise<Res
   const bodies = await loadPageBodies(env, bodyRows);
   let totalBytes = 1024;
   for (const row of bodyRows) {
-    const body = bodies.get(row.id);
-    if (body === undefined || encoder.encode(body).length !== row.body_bytes) throw new Error('Stored message incomplete');
-    const message: ChatMessage = {
-      id: row.id, sender_id: row.sender_id, body, client_nonce: row.client_nonce,
-      created_at: new Date(row.created_at).toISOString(),
-    };
+    const message = publicMessage(row, bodies.get(row.id) ?? '');
     const bytes = encoder.encode(JSON.stringify(message)).length + 1;
     if (totalBytes + bytes > MAX_PAGE_BYTES && messages.length > 0) break;
     // Escaped control characters can expand JSON beyond the body byte count.
@@ -339,24 +458,33 @@ async function listMessages(request: Request, env: Env, auth: Auth): Promise<Res
 
 async function createMessage(request: Request, env: Env, auth: Auth, ctx: ExecutionContext): Promise<Response> {
   const input = await readJson(request);
-  if (typeof input.body !== 'string' || !input.body.trim() || /[\uD800-\uDFFF]/u.test(input.body)
+  if (typeof input.body !== 'string' || /[\uD800-\uDFFF]/u.test(input.body)
       || typeof input.client_nonce !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(input.client_nonce)) {
     throw new HttpError(400, 'Enter a message and a valid client nonce.');
   }
+  const image = await readImage(input.image);
+  if (!input.body.trim() && !image) throw new HttpError(400, 'Enter a message or choose an image.');
   const body = input.body;
   const nonce = input.client_nonce.toLowerCase();
-  const bodyBytes = encoder.encode(body).length;
+  const bodyBytes = encoder.encode(body).length + (image?.bytes.length || 0);
   if (bodyBytes > MAX_REQUEST_BYTES) throw new HttpError(413, 'Message is too large for one request.');
-  const hash = await sha256(body);
-  const old = await env.DB.prepare(`SELECT ${MESSAGE_COLUMNS} FROM messages WHERE sender_id = ? AND client_nonce = ?`)
+  // Preserve every existing text nonce hash. Image messages include the exact
+  // caption and content hash, rather than an encoding or an external URL.
+  const hash = image ? `image-v1:${await sha256(JSON.stringify({ body, image: {
+    mimeType: 'image/jpeg', sha256: image.sha256, width: image.width, height: image.height, bytes: image.bytes.length,
+  } }))}` : await sha256(body);
+  const matches = (row: MessageRow) => row.body_sha256 === hash && (row.image_bytes !== null) === !!image;
+  const old = await env.DB.prepare(`SELECT ${MESSAGE_COLUMNS} FROM ${MESSAGE_FROM} WHERE sender_id = ? AND client_nonce = ?`)
     .bind(auth.member.id, nonce).first<MessageRow>();
   if (old) {
-    if (old.body_sha256 !== hash) throw new HttpError(409, 'This send identifier has already been used.');
+    if (!matches(old)) throw new HttpError(409, 'This send identifier has already been used.');
     if (old.created_at <= Date.now() - RETENTION_MS) throw new HttpError(410, 'This message has expired.');
     return json({ message: await loadMessage(env, old) });
   }
   await consumeBuckets(env, [{ key: `send:${auth.member.id}`, limit: 120, duration: 60_000 }]);
   const now = Date.now();
+  // The image-v1 prefix also separates text and image nonce identities during
+  // concurrent requests, including text matching the canonical JSON exactly.
   const statements = [env.DB.prepare(`INSERT INTO messages(sender_id, client_nonce, created_at, body_bytes, body_sha256)
     VALUES (?, ?, ?, ?, ?) ON CONFLICT(sender_id, client_nonce) DO NOTHING`)
     .bind(auth.member.id, nonce, now, bodyBytes, hash)];
@@ -364,19 +492,69 @@ async function createMessage(request: Request, env: Env, auth: Auth, ctx: Execut
     // The hash condition prevents concurrent different bodies sharing a nonce
     // from filling another request's message with their own chunks.
     statements.push(env.DB.prepare(`INSERT INTO message_chunks(message_id, chunk_index, body)
-      SELECT id, ?, ? FROM messages WHERE sender_id = ? AND client_nonce = ? AND body_sha256 = ?
-      ON CONFLICT(message_id, chunk_index) DO NOTHING`).bind(index, chunk, auth.member.id, nonce, hash));
+      SELECT id, ?, ? FROM messages WHERE sender_id = ? AND client_nonce = ? AND body_sha256 = ? AND body_bytes = ?
+      ON CONFLICT(message_id, chunk_index) DO NOTHING`).bind(index, chunk, auth.member.id, nonce, hash, bodyBytes));
   }
-  await env.DB.batch(statements);
-  const saved = await env.DB.prepare(`SELECT ${MESSAGE_COLUMNS} FROM messages WHERE sender_id = ? AND client_nonce = ?`)
+  if (image) {
+    statements.push(env.DB.prepare(`INSERT INTO message_images(message_id, mime_type, byte_length, width, height)
+      SELECT id, 'image/jpeg', ?, ?, ? FROM messages
+      WHERE sender_id = ? AND client_nonce = ? AND body_sha256 = ? AND body_bytes = ?
+        AND NOT EXISTS (SELECT 1 FROM message_images WHERE message_id = messages.id)
+      ON CONFLICT(message_id) DO NOTHING`)
+      .bind(image.bytes.length, image.width, image.height, auth.member.id, nonce, hash, bodyBytes));
+    for (let offset = 0, index = 0; offset < image.bytes.length; offset += IMAGE_CHUNK_BYTES, index++) {
+      statements.push(env.DB.prepare(`INSERT INTO image_chunks(message_id, chunk_index, data)
+        SELECT messages.id, ?, ? FROM messages JOIN message_images ON message_images.message_id = messages.id
+        WHERE sender_id = ? AND client_nonce = ? AND body_sha256 = ? AND body_bytes = ?
+        ON CONFLICT(message_id, chunk_index) DO NOTHING`)
+        .bind(index, image.bytes.slice(offset, offset + IMAGE_CHUNK_BYTES).buffer, auth.member.id, nonce, hash, bodyBytes));
+    }
+  }
+  try { await env.DB.batch(statements); }
+  catch (error) {
+    if (error instanceof Error && error.message.includes('image_storage_quota_exceeded')) {
+      throw new HttpError(413, 'Image storage is full. Older images are removed automatically.');
+    }
+    throw error;
+  }
+  const saved = await env.DB.prepare(`SELECT ${MESSAGE_COLUMNS} FROM ${MESSAGE_FROM} WHERE sender_id = ? AND client_nonce = ?`)
     .bind(auth.member.id, nonce).first<MessageRow>();
   if (!saved) throw new Error('Message insert failed');
-  if (saved.body_sha256 !== hash) throw new HttpError(409, 'This send identifier has already been used.');
+  if (!matches(saved)) throw new HttpError(409, 'This send identifier has already been used.');
   const message = await loadMessage(env, saved);
   // A raced retry may send a duplicate generic push, but never creates a
   // duplicate stored message or exposes message text in a notification.
   ctx.waitUntil(notifyPeer(env, auth.peer.id, new URL(request.url).origin).catch(() => undefined));
   return json({ message }, 201);
+}
+
+async function loadImage(path: string, env: Env): Promise<Response> {
+  const id = parseId(path.slice('/api/images/'.length))!;
+  const image = await env.DB.prepare(`SELECT message_images.byte_length AS bytes FROM message_images
+    JOIN messages ON messages.id = message_images.message_id
+    WHERE messages.id = CAST(? AS INTEGER) AND messages.created_at > ?`)
+    .bind(id, Date.now() - RETENTION_MS).first<{ bytes: number }>();
+  if (!image) throw new HttpError(404, 'Image is no longer available.');
+  const chunks = await env.DB.prepare(`SELECT chunk_index, data FROM image_chunks
+    WHERE message_id = CAST(? AS INTEGER) ORDER BY chunk_index`)
+    .bind(id).all<{ chunk_index: number; data: number[] | ArrayBuffer }>();
+  const bytes = new Uint8Array(image.bytes);
+  let offset = 0;
+  for (const [index, chunk] of chunks.results.entries()) {
+    const data = new Uint8Array(chunk.data);
+    if (chunk.chunk_index !== index || !data.length || data.length > IMAGE_CHUNK_BYTES || offset + data.length > bytes.length) {
+      throw new Error('Stored image incomplete');
+    }
+    bytes.set(data, offset);
+    offset += data.length;
+  }
+  if (offset !== bytes.length) throw new Error('Stored image incomplete');
+  return new Response(bytes, { headers: {
+    'Content-Type': 'image/jpeg', 'Content-Length': String(bytes.length),
+    'Cache-Control': 'private, no-store', 'Vary': 'Cookie', 'X-Content-Type-Options': 'nosniff',
+    'Referrer-Policy': 'no-referrer', 'Cross-Origin-Resource-Policy': 'same-origin',
+    'Content-Disposition': 'inline; filename="chat-image.jpg"',
+  } });
 }
 
 async function acknowledge(request: Request, env: Env, auth: Auth): Promise<Response> {
@@ -516,6 +694,7 @@ async function api(request: Request, env: Env, ctx: ExecutionContext): Promise<R
     if (request.method === 'GET') return listMessages(request, env, auth);
     if (request.method === 'POST') return createMessage(request, env, auth, ctx);
   }
+  if (path.startsWith('/api/images/') && request.method === 'GET') return loadImage(path, env);
   if (path === '/api/read' && request.method === 'POST') return acknowledge(request, env, auth);
   if (path === '/api/presence' && request.method === 'POST') {
     const input = await readJson(request);
@@ -547,7 +726,7 @@ export default {
     headers.set('Referrer-Policy', 'no-referrer');
     headers.set('X-Frame-Options', 'DENY');
     headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
-    headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; font-src 'self'; worker-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'");
+    headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data: blob:; font-src 'self'; worker-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'");
     // App assets may contain cached shells, but authenticated responses and
     // message bodies are never cached by this worker or its service worker.
     return new Response(response.body, { status: response.status, statusText: response.statusText, headers });

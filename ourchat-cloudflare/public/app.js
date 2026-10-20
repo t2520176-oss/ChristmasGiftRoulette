@@ -3,6 +3,9 @@
 const $ = (id) => document.getElementById(id);
 const KEEP_MS = 168 * 60 * 60 * 1000;
 const MAX_TIMEOUT = 2147483000;
+const MAX_PHOTO_INPUT = 20 * 1024 * 1024;
+const MAX_PHOTO_BYTES = 128 * 1024;
+const MAX_REQUEST_BYTES = 4 * 1024 * 1024;
 const state = {
   member: null, peer: null, messages: [], receipts: [], nodes: new Map(),
   seen: new Set(), cursor: "0", initialBoundary: "0", initialized: false,
@@ -11,6 +14,7 @@ const state = {
   pollTimer: null, expiryTimer: null, noticeTimer: null, readTimer: null,
   composing: false, unread: 0, copyTarget: null, copyRestore: null, copyRevision: 0,
   sound: false, audio: null, registration: null, pushAvailable: false, pushRegistered: false, lastPresence: 0,
+  photo: null, photoRevision: 0, objectUrls: new Set(), uploads: new Set(), viewer: null,
   clock: { server: Date.now(), mono: performance.now(), wall: Date.now(), last: Date.now() },
 };
 const compare = (a, b) => {
@@ -39,6 +43,15 @@ function anchor(value) {
 class ApiError extends Error {
   constructor(message, status) { super(message); this.status = status; }
 }
+function responseError(status, data) {
+  let message = "Something went wrong. Please try again.";
+  if (status === 401) message = "Please sign in again.";
+  else if (status === 413) message = typeof data?.error === "string" ? data.error.slice(0, 300) : "This message is too large to transfer in one request. Please split it and try again.";
+  else if (status === 429) message = "Please wait a moment and try again.";
+  else if (status === 503) message = "This OurChat server is not ready yet. Please try again after setup is complete.";
+  else if (data && typeof data.error === "string") message = data.error.slice(0, 300);
+  return new ApiError(message, status);
+}
 async function api(path, options = {}) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 20000);
@@ -47,15 +60,7 @@ async function api(path, options = {}) {
   try {
     const response = await fetch(path, { ...options, headers, credentials: "same-origin", cache: "no-store", signal: controller.signal });
     const data = await response.json().catch(() => null);
-    if (!response.ok) {
-      let message = "Something went wrong. Please try again.";
-      if (response.status === 401) message = "Please sign in again.";
-      else if (response.status === 413) message = "This message is too large to transfer in one request. Please split it and try again.";
-      else if (response.status === 429) message = "Please wait a moment and try again.";
-      else if (response.status === 503) message = "This OurChat server is not ready yet. Please try again after setup is complete.";
-      else if (data && typeof data.error === "string") message = data.error.slice(0, 300);
-      throw new ApiError(message, response.status);
-    }
+    if (!response.ok) throw responseError(response.status, data);
     if (data && Number.isFinite(data.serverTime)) anchor(data.serverTime);
     else if (response.headers.get("Date")) anchor(response.headers.get("Date"));
     return data;
@@ -72,7 +77,136 @@ function autosize() {
   const input = $("draft");
   input.style.height = "auto";
   input.style.height = `${Math.min(input.scrollHeight, Math.min(innerHeight * .27, 180))}px`;
-  $("send").disabled = !input.value.trim();
+  $("send").disabled = state.photo?.status === "preparing" || (!input.value.trim() && state.photo?.status !== "ready");
+}
+function objectUrl(blob) {
+  const url = URL.createObjectURL(blob); state.objectUrls.add(url); return url;
+}
+function revokeUrl(url) {
+  if (url && state.objectUrls.delete(url)) URL.revokeObjectURL(url);
+}
+function photoError(message = "") {
+  $("photo-error").textContent = message; $("photo-error").hidden = !message;
+}
+function clearPhoto({ release = true } = {}) {
+  ++state.photoRevision;
+  if (release) revokeUrl(state.photo?.url);
+  state.photo = null;
+  $("photo-input").value = ""; $("photo-preview").removeAttribute("src"); $("photo-preview").hidden = true;
+  $("photo-selection").hidden = true; $("photo-status").textContent = "";
+  autosize();
+}
+async function decodePhoto(file, source) {
+  // Browsers apply EXIF orientation while decoding; drawing strips the original metadata.
+  if (typeof createImageBitmap === "function") {
+    try { return await createImageBitmap(file); } catch { /* Some browser-supported formats only decode through Image. */ }
+  }
+  const image = new Image(); image.decoding = "async";
+  await new Promise((resolve, reject) => { image.onload = resolve; image.onerror = reject; image.src = source; });
+  return image;
+}
+const jpegBlob = (canvas, quality) => new Promise((resolve, reject) => canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error("encoding")), "image/jpeg", quality));
+const photoBase64 = (blob) => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.onload = () => resolve(String(reader.result).split(",")[1]);
+  reader.onerror = reject; reader.readAsDataURL(blob);
+});
+async function preparePhoto(file) {
+  if (!state.member || !file) return;
+  clearPhoto(); photoError();
+  if (file.size > MAX_PHOTO_INPUT) { photoError("Choose a photo smaller than 20 MiB."); return; }
+  const revision = state.photoRevision;
+  const source = objectUrl(file);
+  state.photo = { url: source, status: "preparing" };
+  $("photo-selection").hidden = false; $("photo-status").textContent = "Preparing photo…"; autosize();
+  let decoded;
+  try {
+    decoded = await decodePhoto(file, source);
+    const width = decoded.width || decoded.naturalWidth, height = decoded.height || decoded.naturalHeight;
+    if (!width || !height) throw new Error("decoding");
+    const scale = Math.min(1, 1600 / Math.max(width, height));
+    let targetWidth = Math.max(1, Math.round(width * scale)), targetHeight = Math.max(1, Math.round(height * scale));
+    const canvas = document.createElement("canvas");
+    let blob;
+    for (;;) {
+      if (revision !== state.photoRevision) return;
+      canvas.width = targetWidth; canvas.height = targetHeight;
+      const context = canvas.getContext("2d");
+      if (!context) throw new Error("encoding");
+      context.fillStyle = "#fff"; context.fillRect(0, 0, targetWidth, targetHeight);
+      context.drawImage(decoded, 0, 0, targetWidth, targetHeight);
+      for (const quality of [.88, .78, .68, .58, .48]) {
+        blob = await jpegBlob(canvas, quality);
+        if (blob.type !== "image/jpeg") throw new Error("encoding");
+        if (blob.size <= MAX_PHOTO_BYTES) break;
+      }
+      if (blob.size <= MAX_PHOTO_BYTES) break;
+      if (targetWidth === 1 && targetHeight === 1) throw new Error("encoding");
+      targetWidth = Math.max(1, Math.floor(targetWidth * .8)); targetHeight = Math.max(1, Math.floor(targetHeight * .8));
+    }
+    const data = await photoBase64(blob);
+    if (revision !== state.photoRevision || !state.member) return;
+    const url = objectUrl(blob); revokeUrl(source);
+    state.photo = { url, data, width: targetWidth, height: targetHeight, bytes: blob.size, status: "ready" };
+    $("photo-preview").src = url; $("photo-preview").hidden = false;
+    $("photo-status").textContent = "Photo ready. Add a caption if you like.";
+    announce("Photo ready to send."); autosize();
+  } catch {
+    if (revision !== state.photoRevision) return;
+    clearPhoto();
+    photoError(/hei[cf]/i.test(`${file.type} ${file.name}`) ? "This browser cannot open this HEIC photo. Choose a JPG or PNG photo instead." : "This photo could not be opened. Choose a JPG, PNG, or another photo your browser supports.");
+  } finally {
+    decoded?.close?.();
+    if (state.photo?.url !== source) revokeUrl(source);
+  }
+}
+function imageSource(message) {
+  const image = message.image;
+  if (!image || image.mimeType !== "image/jpeg" || !Number.isInteger(image.width) || !Number.isInteger(image.height) || image.width < 1 || image.height < 1 || image.width > 1600 || image.height > 1600) return null;
+  if (message._photoUrl && image.url === message._photoUrl && state.objectUrls.has(image.url)) return image.url;
+  // API image paths are fixed, same-origin identifiers; server-supplied external URLs are never followed.
+  return typeof image.url === "string" && /^\/api\/images\/[A-Za-z0-9_-]+$/.test(image.url) ? image.url : null;
+}
+function closeViewer() {
+  if ($("photo-dialog").open) $("photo-dialog").close();
+  $("viewer-photo").removeAttribute("src"); $("save-photo").removeAttribute("href");
+  state.viewer = null;
+}
+function viewPhoto(message) {
+  const source = imageSource(message);
+  if (!source || !retained(message) || !state.nodes.has(message.id)) { prune(); return; }
+  state.viewer = { id: message.id, restore: rememberFocus() };
+  $("viewer-photo").src = source; $("viewer-photo").width = message.image.width; $("viewer-photo").height = message.image.height;
+  $("save-photo").href = source; openDialog($("photo-dialog"));
+}
+function releaseMessage(message) {
+  if (state.viewer?.id === message.id) closeViewer();
+  revokeUrl(message._photoUrl);
+  delete message._payload; delete message._photoUrl;
+}
+function uploadPhoto(message) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest(); state.uploads.add(xhr);
+    const finish = (error, data) => { state.uploads.delete(xhr); error ? reject(error) : resolve(data); };
+    xhr.open("POST", "/api/messages"); xhr.withCredentials = true; xhr.timeout = 20000;
+    xhr.responseType = "json"; xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.upload.onprogress = (event) => {
+      if (!event.lengthComputable) return;
+      message.uploadProgress = Math.min(100, Math.round(event.loaded / event.total * 100));
+      const row = state.nodes.get(message.id); if (row) updateRow(row, message);
+    };
+    xhr.onload = () => {
+      const data = xhr.response;
+      if (xhr.status < 200 || xhr.status >= 300) { finish(responseError(xhr.status, data)); return; }
+      if (data && Number.isFinite(data.serverTime)) anchor(data.serverTime);
+      else if (xhr.getResponseHeader("Date")) anchor(xhr.getResponseHeader("Date"));
+      finish(null, data);
+    };
+    xhr.onerror = () => finish(new ApiError("Unable to connect. Check your internet connection and try again.", 0));
+    xhr.ontimeout = () => finish(new ApiError("The connection took too long. Please try again.", 0));
+    xhr.onabort = () => finish(new ApiError("Photo upload was cancelled.", 0));
+    xhr.send(message._payload);
+  });
 }
 function viewport() {
   const visual = window.visualViewport;
@@ -173,7 +307,10 @@ function makeRow(message) {
   row.dataset.messageId = message.id;
   const bubble = document.createElement("div"); bubble.className = "message-bubble";
   const body = document.createElement("p"); body.className = "message-body"; body.textContent = message.body;
-  bubble.append(body);
+  const photo = document.createElement("button"); photo.type = "button"; photo.className = "message-photo"; photo.setAttribute("aria-label", "Open photo");
+  const image = document.createElement("img"); image.alt = "Shared photo"; image.loading = "lazy"; image.decoding = "async";
+  photo.append(image); photo.addEventListener("click", () => viewPhoto(row._message));
+  bubble.append(photo, body);
   const meta = document.createElement("div"); meta.className = "message-meta";
   const copy = document.createElement("button"); copy.type = "button"; copy.className = "copy-button"; copy.textContent = "Copy message";
   copy.addEventListener("pointerdown", () => { row._copySaved = rememberFocus(); });
@@ -183,18 +320,27 @@ function makeRow(message) {
   const retry = document.createElement("button"); retry.type = "button"; retry.className = "retry-button"; retry.textContent = "Not sent · Retry";
   retry.addEventListener("click", () => sendMessage(row._message));
   meta.append(copy, time, status, retry); row.append(bubble, meta);
-  row._elements = { body, time, status, retry };
+  row._elements = { body, time, status, retry, copy, photo, image };
   return row;
 }
 function updateRow(row, message) {
   row._message = message;
-  const { body, time, status, retry } = row._elements;
+  const { body, time, status, retry, copy, photo, image } = row._elements;
   if (body.textContent !== message.body) body.textContent = message.body;
+  body.hidden = !message.body; copy.hidden = !message.body;
+  const source = imageSource(message);
+  row.querySelector(".message-bubble").classList.toggle("has-photo", Boolean(source));
+  photo.hidden = !source;
+  if (source) {
+    image.width = message.image.width; image.height = message.image.height;
+    photo.style.aspectRatio = `${message.image.width} / ${message.image.height}`;
+    if (image.getAttribute("src") !== source) image.src = source;
+  } else image.removeAttribute("src");
   time.dateTime = message.created_at;
   time.textContent = new Date(message.created_at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
   const own = message.sender_id === state.member.id;
   const peerReceipt = state.receipts.find((receipt) => receipt.user_id !== state.member.id)?.last_read_message_id;
-  status.textContent = message.status === "sending" ? "Sending…" : validId(message.id) && own ? peerReceipt && compare(peerReceipt, message.id) >= 0 ? "✓✓" : "✓" : "";
+  status.textContent = message.status === "sending" ? message._photoUrl ? message.uploadProgress === 100 ? "Finishing…" : `Uploading photo… ${message.uploadProgress || 0}%` : "Sending…" : validId(message.id) && own ? peerReceipt && compare(peerReceipt, message.id) >= 0 ? "✓✓" : "✓" : "";
   status.setAttribute("aria-label", status.textContent === "✓✓" ? "Read" : status.textContent === "✓" ? "Sent" : status.textContent);
   retry.hidden = message.status !== "failed";
 }
@@ -210,6 +356,7 @@ function render({ prepend = false, forceBottom = false } = {}) {
   const oldHeight = viewport.scrollHeight, oldTop = viewport.scrollTop;
   const keep = new Set(state.messages.map((message) => message.id));
   for (const [id, row] of state.nodes) if (!keep.has(id)) {
+    row._elements.image.removeAttribute("src");
     messageObserver.unobserve(row); row.remove(); state.nodes.delete(id); state.visible.delete(id);
   }
   const list = $("message-list");
@@ -239,6 +386,7 @@ function armExpiry() {
 }
 function prune() {
   const next = state.messages.filter(retained);
+  for (const message of state.messages) if (!next.includes(message)) releaseMessage(message);
   const clearOlder = state.hasMore && state.messages.some((message) => validId(message.id)) && !next.some((message) => validId(message.id));
   if (clearOlder) state.hasMore = false;
   if (state.copyTarget && !next.some((message) => message.id === state.copyTarget)) closeCopy();
@@ -257,7 +405,11 @@ function accept(incoming, { notify = false, prepend = false, forceBottom = false
     if (notify && !known && message.sender_id === state.peer?.id && compare(message.id, state.initialBoundary) > 0) peers.push(message);
     state.seen.add(message.id);
     // A server response or a poll can win the race. Reconcile by nonce and sender either way.
-    state.messages = state.messages.filter((item) => item.id !== message.id && !(item.client_nonce === message.client_nonce && item.sender_id === message.sender_id));
+    state.messages = state.messages.filter((item) => {
+      const replaced = item.id === message.id || (item.client_nonce === message.client_nonce && item.sender_id === message.sender_id);
+      if (replaced && item !== message && (item._photoUrl || item.id !== message.id || item.image?.url !== message.image?.url)) releaseMessage(item);
+      return !replaced;
+    });
     state.messages.push(message);
   }
   state.messages.sort((left, right) => validId(left.id) && validId(right.id) ? compare(left.id, right.id) : validId(left.id) ? -1 : validId(right.id) ? 1 : Date.parse(left.created_at) - Date.parse(right.created_at));
@@ -366,9 +518,9 @@ async function sendMessage(message) {
   if (!state.member || state.senders.has(message.client_nonce)) return;
   const generation = state.generation;
   state.senders.add(message.client_nonce);
-  message.status = "sending"; render();
+  message.status = "sending"; message.uploadProgress = 0; render();
   try {
-    const result = await post("/api/messages", { body: message.body, client_nonce: message.client_nonce });
+    const result = message._photoUrl ? await uploadPhoto(message) : await post("/api/messages", { body: message.body, client_nonce: message.client_nonce });
     if (generation !== state.generation) return;
     if (!result?.message) throw new ApiError("The message could not be confirmed. Please retry.", 0);
     accept([result.message]); setError("");
@@ -384,9 +536,17 @@ async function sendMessage(message) {
 function submit() {
   if (!state.member || state.composing) return;
   const body = $("draft").value;
-  if (!body.trim()) return;
+  if (state.photo?.status === "preparing" || (!body.trim() && !state.photo)) return;
   const nonce = crypto.randomUUID();
   const message = { id: `pending:${nonce}`, sender_id: state.member.id, body, client_nonce: nonce, created_at: new Date(now()).toISOString(), status: "sending" };
+  if (state.photo?.status === "ready") {
+    const photo = state.photo;
+    message._payload = JSON.stringify({ body, client_nonce: nonce, image: { mimeType: "image/jpeg", data: photo.data } });
+    if (new Blob([message._payload]).size > MAX_REQUEST_BYTES) { setError("This message is too large to transfer in one request. Please split it and try again."); return; }
+    message._photoUrl = photo.url;
+    message.image = { url: photo.url, width: photo.width, height: photo.height, bytes: photo.bytes, mimeType: "image/jpeg" };
+    clearPhoto({ release: false }); photoError();
+  }
   state.messages.push(message);
   $("draft").value = ""; saveDraft(); autosize();
   render({ forceBottom: true }); sendMessage(message);
@@ -401,6 +561,10 @@ function endSession(message = "") {
   ++state.generation;
   clearTimeout(state.pollTimer); clearTimeout(state.expiryTimer); clearTimeout(state.readTimer);
   dismissNotice(); closeCopy();
+  closeViewer(); clearPhoto(); photoError();
+  for (const xhr of state.uploads) xhr.abort();
+  for (const message of state.messages) releaseMessage(message);
+  for (const url of state.objectUrls) revokeUrl(url);
   for (const dialog of document.querySelectorAll("dialog[open]")) dialog.close();
   messageObserver.disconnect(); state.nodes.clear(); state.visible.clear(); state.seen.clear();
   state.messages = []; state.receipts = []; state.member = null; state.peer = null;
@@ -527,7 +691,11 @@ $("login-form").addEventListener("submit", async (event) => {
   }
 });
 $("composer-form").addEventListener("submit", (event) => { event.preventDefault(); submit(); });
-$("draft").addEventListener("input", () => { saveDraft(); autosize(); $("send").disabled = !$("draft").value.trim(); });
+$("draft").addEventListener("input", () => { saveDraft(); autosize(); });
+$("attach-photo").addEventListener("click", () => $("photo-input").click());
+$("change-photo").addEventListener("click", () => $("photo-input").click());
+$("photo-input").addEventListener("change", () => { const file = $("photo-input").files?.[0]; if (file) preparePhoto(file); });
+$("remove-photo").addEventListener("click", () => { clearPhoto(); photoError(); $("attach-photo").focus({ preventScroll: true }); announce("Photo removed."); });
 $("draft").addEventListener("compositionstart", () => { state.composing = true; });
 $("draft").addEventListener("compositionend", () => { state.composing = false; });
 $("draft").addEventListener("keydown", (event) => {
@@ -549,6 +717,11 @@ $("notice-dismiss").addEventListener("click", () => { const saved = noticeFocus 
 $("settings-button").addEventListener("click", () => openDialog($("settings-dialog")));
 document.querySelectorAll(".close-dialog").forEach((button) => button.addEventListener("click", () => button.closest("dialog").close()));
 $("copy-dialog").addEventListener("close", () => { const saved = state.copyRestore; state.copyRestore = null; state.copyTarget = null; $("copy-text").value = ""; restoreFocus(saved); });
+$("photo-dialog").addEventListener("close", () => { const saved = state.viewer?.restore; closeViewer(); restoreFocus(saved); });
+$("save-photo").addEventListener("click", (event) => {
+  const message = state.messages.find((item) => item.id === state.viewer?.id);
+  if (!message || !retained(message) || !imageSource(message)) { event.preventDefault(); closeViewer(); prune(); }
+});
 $("select-copy").addEventListener("click", () => { $("copy-text").focus({ preventScroll: true }); $("copy-text").select(); $("copy-text").setSelectionRange(0, $("copy-text").value.length); });
 document.querySelectorAll(".install-help").forEach((button) => button.addEventListener("click", () => {
   $("app-address").value = `${location.origin}/`; openDialog($("install-dialog"));
