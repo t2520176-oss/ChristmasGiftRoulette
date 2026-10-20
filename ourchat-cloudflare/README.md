@@ -11,7 +11,7 @@ A separate two-person web chat deployment using Cloudflare Workers, static asset
 1. Verify that the selected Cloudflare account is the separate new account.
 2. Connect GitHub. The button imports only the self-contained `ourchat-cloudflare/` folder from the approved `codex/ourchat-download` branch into a new repository.
 3. Choose a Worker name that does not already exist in that account. Do not select an existing Worker or D1 database. Wrangler 4.151.2 provisions the `DB` binding automatically when both `database_name` and `database_id` are omitted. Reusing an existing Worker name can inherit that Worker's existing binding.
-4. Enter these four values as **encrypted Worker secrets**: `MEMBER_1_EMAIL`, `MEMBER_1_PASSWORD`, `MEMBER_2_EMAIL`, `MEMBER_2_PASSWORD`. Use different emails and two different new passwords, each at least 16 characters long. Keep values out of chat, source files and plaintext configuration.
+4. Enter these four values as **encrypted Worker secrets**: `MEMBER_1_EMAIL`, `MEMBER_1_PASSWORD`, `MEMBER_2_EMAIL`, `MEMBER_2_PASSWORD`. Use different emails and two different new passwords, each at least 8 characters long. Keep values out of chat, source files and plaintext configuration.
 5. Confirm that **Deploy command is `npm run deploy`**. The deployment button automatically detects the repository's custom deploy script. It deploys the Worker and its new D1 binding, then applies remote D1 migrations using the binding name `DB`. Wait for the complete command to succeed; the chat API is unavailable until the initial schema migration completes. Open the resulting `workers.dev` URL and check both logins, two-way delivery, persistence after reload and an actual successful retention Cron run.
 
 The button and instructions do not establish that a deployment has succeeded. Confirm the generated account, resources and URL in the dashboard. Stop to check the selection if the secret fields are missing or an existing resource is selected.
@@ -24,7 +24,7 @@ Messages have a copy button with a manual-copy fallback. Incoming messages can d
 
 The old Supabase project is inactive, and the user has explicitly requested that it **not be restored**. Old accounts, passwords and chat history are not imported automatically. This deployment uses the two newly supplied logins and a new D1 database. Importing old history would require a separately available export.
 
-Local verification passed 29 real Workers/D1 checks, Chromium/service-worker scenarios, and two-account real local server tests for reciprocal chat, persistence, copying and sign-out. This is a prepared migration template, not an already deployed replacement. Actual hosted Cron and physical-phone notification behavior still need verification at the new URL.
+Local verification passed 30 real Workers/D1 checks, Chromium/service-worker scenarios, and two-account real local server tests for reciprocal chat, persistence, copying and sign-out. Local results do not establish a working hosted login; verify each deployment at its own URL. Actual hosted Cron execution and physical-phone notification behavior also need verification there.
 
 ## Free-plan limits
 

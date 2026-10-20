@@ -98,7 +98,7 @@ async function configuration(env: Env): Promise<Config> {
   const password2 = env.MEMBER_2_PASSWORD || '';
   const emailValid = (email: string) => email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   if (!emailValid(email1) || !emailValid(email2) || email1 === email2
-      || password1.length < 16 || password2.length < 16 || password1 === password2
+      || password1.length < 8 || password2.length < 8 || password1 === password2
       || encoder.encode(password1).length > 1024 || encoder.encode(password2).length > 1024) {
     throw new HttpError(503, 'Chat is not configured yet.');
   }

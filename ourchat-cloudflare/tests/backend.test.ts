@@ -95,13 +95,29 @@ describe('private authentication and request protection', () => {
 
   it('fails closed for missing, short, identical passwords or identical accounts', async () => {
     for (const overrides of [
-      { MEMBER_1_PASSWORD: '' }, { MEMBER_2_PASSWORD: 'short' },
-      { MEMBER_2_PASSWORD: bindings.MEMBER_1_PASSWORD },
+      { MEMBER_1_PASSWORD: '' },
+      { MEMBER_1_PASSWORD: 'seven07' }, { MEMBER_2_PASSWORD: 'seven07' },
+      { MEMBER_1_PASSWORD: 'equal008', MEMBER_2_PASSWORD: 'equal008' },
       { MEMBER_2_EMAIL: bindings.MEMBER_1_EMAIL },
     ]) {
       const result = await call('/api/session', { env: { ...bindings, ...overrides } });
       expect(result.status).toBe(503);
       expect(await result.json()).toEqual({ error: 'Chat is not configured yet.' });
+    }
+  });
+
+  it('lets both members sign in and use their session with different eight-character passwords', async () => {
+    const minimumPasswordEnv = { ...bindings, MEMBER_1_PASSWORD: 'first008', MEMBER_2_PASSWORD: 'second08' };
+    for (const index of [1, 2] as const) {
+      const response = await call('/api/auth/signin', { env: minimumPasswordEnv, body: {
+        email: index === 1 ? minimumPasswordEnv.MEMBER_1_EMAIL : minimumPasswordEnv.MEMBER_2_EMAIL,
+        password: index === 1 ? minimumPasswordEnv.MEMBER_1_PASSWORD : minimumPasswordEnv.MEMBER_2_PASSWORD,
+      } });
+      expect(response.status).toBe(200);
+      const cookie = response.headers.get('Set-Cookie')!.split(';', 1)[0];
+      const session = await call('/api/session', { env: minimumPasswordEnv, cookie });
+      expect(session.status).toBe(200);
+      expect(await session.json()).toMatchObject({ member: { id: `member-${index}` } });
     }
   });
 

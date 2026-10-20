@@ -1,6 +1,6 @@
 # These four values belong to the NEW OurChat app only.
 # Set them as encrypted secrets in the Cloudflare deployment form.
-# Use two different emails and two different passwords of at least 16 characters.
+# Use two different emails and two different passwords of at least 8 characters.
 # This does not modify any existing Cloudflare or Supabase login.
 MEMBER_1_EMAIL=""
 MEMBER_1_PASSWORD=""
