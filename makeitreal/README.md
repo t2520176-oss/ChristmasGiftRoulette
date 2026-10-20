@@ -25,3 +25,6 @@ ELEGOO DAY "Make It Real" (Nexprint, 2026-09-10 ~ 10-30). 내 손그림·아이�
 - 탈락: Triple-Shadow(2D/3D 그림자 조각) — 계산해 보니 지지대 부피가 본체의 절반이고 조각 하나가 떠 있어 연결되지 않음.
 - 보류: Sketch Walker(고난도), Marble Logic, Bloom, Zoetrope(조립·전자부품).
 - 다음 후보(쉬운 순): Halftone Mail(조립 없는 프린트 천), Spiral Tree, Labyrinth Lock Box(부품 3개), Parallax Window(판 5장 꽂기).
+
+## 보너스
+- [03 Halloween Ghost Keyring](03-halloween-keyring/) — 마녀 모자 유령 + 이름 키링(멀티컬러). 공모전 10선과 별개로 만든 핼러윈 작품.
