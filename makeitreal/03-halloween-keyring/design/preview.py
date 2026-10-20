@@ -5,8 +5,9 @@ import numpy as np
 sys.path.insert(0, os.path.dirname(__file__))
 from render_stl import load_stl, render
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(__file__), "..", "out")
-COL = {"cream": (238, 220, 180), "black": (28, 28, 32), "white": (250, 250, 250), "green": (132, 200, 52),
-       "gold": (242, 190, 40), "purple": (140, 100, 210), "pink": (250, 150, 175)}
+COL = {"cream": (238, 220, 180), "black": (17, 17, 19), "white": (250, 250, 250), "green": (133, 199, 51),
+       "gold": (242, 190, 40), "purple": (140, 100, 210), "pink": (255, 153, 166)}
+COL = {k: v for k, v in COL.items() if os.path.exists(os.path.join(OUT, k + ".stl"))}
 tris, cols = [], []
 for k, c in COL.items():
     t = load_stl(os.path.join(OUT, f"{k}.stl")); tris.append(t); cols += [c] * len(t)

@@ -1,6 +1,5 @@
-// Overlap test: every pair of colour parts must share (almost) zero volume.   openscad -D 'A="white"' -D 'B="green"' ...
-include <keyring.scad>;
-PART = "none"; A = "white"; B = "green";
-module p(n) { if (n == "cream") cream(); else if (n == "black") black(); else if (n == "white") white(); else if (n == "green") green();
-              else if (n == "gold") gold(); else if (n == "purple") purple(); else if (n == "pink") pink(); }
+// Overlap test for the 4-colour keyring: each pair of colour parts must share (almost) zero volume.
+include <keyring_4color.scad>;
+part = "none"; A = "white"; B = "black";
+module p(n) { if (n == "white") white_part(); else if (n == "black") black_part(); else if (n == "green") green_part(); else if (n == "pink") pink_part(); }
 intersection() { p(A); p(B); }

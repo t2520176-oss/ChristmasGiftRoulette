@@ -1,7 +1,7 @@
 #!/bin/bash
-# prints the overlap volume (mm^3) of every colour pair
+# prints the overlap volume (mm^3) of every colour pair of the 4-colour keyring
 cd "$(dirname "$0")"
-names="cream black white green gold purple pink"
+names="white black green pink"
 for a in $names; do for b in $names; do
   [[ "$a" < "$b" ]] || continue
   openscad -D "A=\"$a\"" -D "B=\"$b\"" -o /tmp/ov_$$.stl overlap_test.scad > /tmp/ov_$$.log 2>&1

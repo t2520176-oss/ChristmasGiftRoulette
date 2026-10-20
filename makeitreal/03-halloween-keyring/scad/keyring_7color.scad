@@ -1,21 +1,41 @@
 // =====================================================================================
-//  HALLOWEEN GHOST KEYRING  -  ghost in a witch hat + your name       (OpenSCAD >= 2021.01)
-//  Flat multi-colour keyring, stacked layers (all heights are multiples of 0.2 mm):
-//     z 0.0-1.6  cream   : base + border + key-ring loop
-//     z 1.6-2.8  black   : plate (under everything)     [loop: cream continues up to 2.8]
-//     z 2.8-3.6  colours : ghost white, green name, gold star/buckle, purple band,
-//                          black hat + eyes + mouth, pink cheeks + tongue
-//  Every colour is its own part (own STL), all in the same coordinates:
-//     openscad -D 'PART="green"' -o green.stl keyring.scad     PART = all | cream | black | white | green | gold | purple | pink
-//  Change the name:  NAME = "Liam";   (long names: lower TEXT_SIZE or raise KEY_SCALE)
+//  HALLOWEEN GHOST KEYRING (colour version)  -  ghost in a witch hat + your name
+//  Flat multi-colour keyring. Every colour is its own top-level object so the colours stay separate.
+//
+//  LAYERS (all heights are multiples of 0.2 mm):
+//     z 0.0-1.6  cream   : base + border + key-ring loop (loop goes up to 2.8)
+//     z 1.6-2.8  black   : plate
+//     z 2.8-3.6  colours : ghost white, green name, gold star + buckle, purple band,
+//                          black hat/eyes/mouth, pink cheeks + tongue
+//
+//  HOW TO PRINT IN BAMBU STUDIO (pick ONE route)
+//   A) Newer OpenSCAD (2024+ snapshot / 2025.x that has 3MF export):
+//        1. Edit > Preferences > Features > tick "lazy-union"   (keeps the colours as separate objects)
+//        2. PART = "all"  ->  F5 shows the colours, F6 renders, File > Export > Export as 3MF
+//        3. Open the saved .3MF in Bambu Studio (do NOT use "send to slicer") and give each part a filament.
+//   B) Any OpenSCAD (also 2021.01):  export one STL per colour and load all of them together in Bambu Studio
+//        ("load as one object with multiple parts"):
+//        set PART to cream, black, white, green, gold, purple, pink  (one export each, F6 -> Export STL)
+//   C) One colour only (paint it afterwards):  PART = "onecolor"  -> export STL
+//
+//  CHANGE THE NAME:  NAME = "Liam";   (long names: lower TEXT_SIZE or raise KEY_SCALE)
 // =====================================================================================
 NAME      = "Liam";
 TEXT_SIZE = 14.4;           // cap height of the name in mm (design units, before KEY_SCALE)
 TEXT_X    = 2.6;            // left edge of the name
 KEY_SCALE = 0.9;            // overall size: 0.9 -> about 51 x 54 mm
 HOLE_D    = 4.8;            // key-ring hole
-PART      = "all";
+PART      = "all";           // all | cream | black | white | green | gold | purple | pink | onecolor
 $fn       = 48;
+
+// filament colours (for the preview and for the 3MF export) - change them to match your spools
+C_CREAM  = "#EBDDB4";
+C_BLACK  = "#1C1C20";
+C_WHITE  = "#FAFAFA";
+C_GREEN  = "#84C834";
+C_GOLD   = "#F2BE28";
+C_PURPLE = "#8C64D2";
+C_PINK   = "#FA96AF";
 
 T_CREAM = 1.6;  T_BASE = 2.8;  T_TOP = 3.6;      // layer tops
 EYELET  = [49.6, 35.4];                          // key-ring loop centre
@@ -92,10 +112,22 @@ module pink()   { slab(T_BASE, T_TOP) pink2d(); }
 module top_union2d() { union() { black_top2d(); white2d(); name2d(); gold2d(); band_purple2d(); pink2d(); } }
 module onecolor()    { union() { cream(); slab(T_CREAM, T_BASE) black_base2d(); slab(T_BASE, T_TOP) top_union2d(); } }
 
-module part() {
-    if (PART == "all") { cream(); black(); white(); green(); gold(); purple(); pink(); }
-    else if (PART == "onecolor") onecolor();
-    else if (PART == "cream") cream(); else if (PART == "black") black(); else if (PART == "white") white();
-    else if (PART == "green") green(); else if (PART == "gold") gold(); else if (PART == "purple") purple(); else if (PART == "pink") pink();
+module S() { scale([KEY_SCALE, KEY_SCALE, 1]) children(); }     // scale each part separately (keeps them as separate objects)
+
+if (PART == "all") {
+    color(C_CREAM)  S() cream();
+    color(C_BLACK)  S() black();
+    color(C_WHITE)  S() white();
+    color(C_GREEN)  S() green();
+    color(C_GOLD)   S() gold();
+    color(C_PURPLE) S() purple();
+    color(C_PINK)   S() pink();
 }
-scale([KEY_SCALE, KEY_SCALE, 1]) part();
+else if (PART == "onecolor") S() onecolor();
+else if (PART == "cream")  color(C_CREAM)  S() cream();
+else if (PART == "black")  color(C_BLACK)  S() black();
+else if (PART == "white")  color(C_WHITE)  S() white();
+else if (PART == "green")  color(C_GREEN)  S() green();
+else if (PART == "gold")   color(C_GOLD)   S() gold();
+else if (PART == "purple") color(C_PURPLE) S() purple();
+else if (PART == "pink")   color(C_PINK)   S() pink();
