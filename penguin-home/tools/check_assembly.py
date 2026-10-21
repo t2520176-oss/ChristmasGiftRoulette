@@ -26,6 +26,11 @@ def to_m(mesh):
     return m3d.Manifold(m3d.Mesh(vert_properties=np.asarray(mesh.vertices, dtype=np.float32), tri_verts=np.asarray(mesh.faces, dtype=np.uint32)))
 
 
+def udist(pq, pts, chunk=150):
+    """unsigned distance of the points to the mesh (in chunks: the candidate lists of big flat triangles can fill the memory)"""
+    return np.concatenate([pq.on_surface(pts[i:i + chunk])[1] for i in range(0, len(pts), chunk)])
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("dir")
@@ -55,7 +60,7 @@ def main():
             continue
         m = meshes[p]
         pts, _ = trimesh.sample.sample_surface(m, 4000, seed=1)
-        d = pq.on_surface(pts)[1]
+        d = udist(pq, pts)
         low = m.bounds[0][2]
         seated = a.top - low
         # contact partners
@@ -65,7 +70,7 @@ def main():
                 continue
             if np.any(m.bounds[1] < mq.bounds[0] - 0.4) or np.any(mq.bounds[1] < m.bounds[0] - 0.4):
                 continue
-            dq = trimesh.proximity.ProximityQuery(mq).on_surface(pts)[1]          # unsigned distance
+            dq = udist(trimesh.proximity.ProximityQuery(mq), pts)
             if dq.min() < 0.35:
                 touch.append(q)
         # lift test

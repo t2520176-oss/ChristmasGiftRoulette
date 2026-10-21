@@ -39,12 +39,12 @@
     "tree0",
     "tree1"
    ],
-   "footprint_pct": 63.1,
+   "footprint_pct": 61.5,
    "solid_volume_cm3": {
-    "WHITE": 185.4,
+    "WHITE": 187.2,
     "GREEN": 4.7,
-    "BLACK": 2.7,
-    "ORANGE": 10.8
+    "BLACK": 1.0,
+    "ORANGE": 9.7
    }
   },
   {
@@ -62,10 +62,10 @@
     "lid",
     "trim"
    ],
-   "footprint_pct": 41.2,
+   "footprint_pct": 39.6,
    "solid_volume_cm3": {
-    "WHITE": 146.7,
-    "BLUE": 19.3
+    "WHITE": 117.6,
+    "BLUE": 28.6
    }
   }
  ]

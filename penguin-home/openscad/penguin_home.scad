@@ -78,13 +78,16 @@ module fit_text(s, size, maxw, fnt = font_serif, k0 = 1) {   // never stretched,
 R   = 58;
 LAT = [0, 10, 20, 30, 40, 50, 60, 70];          // latitude of every course boundary (deg)
 NK  = [24, 24, 22, 20, 18, 16, 14];             // blocks per course
-BODY_K = 3;                                     // the body is courses 0 .. BODY_K-1 (up to latitude LAT[BODY_K]); the lid is the rest
-T   = [3.2, 3.6, 4.4, 5.6, 6.0];                // horizontal wall thickness at boundaries 0..BODY_K (body only)
+BODY_K = 4;                                     // the body is courses 0 .. BODY_K-1 (up to latitude LAT[BODY_K] = 40 deg, 37 mm high - the door needs the height); the lid is the rest
+RI_BOT = 54.8;  RI_TOP = 39.6;                  // inner radius at the floor and at the rim: the inside is a straight cone (22 deg lean)
 GD  = 0.8;                                      // groove depth
 CH  = 1.0;                                      // length of the chamfer on both sides of a groove
 function rc(k) = R * cos(LAT[k]);
 function zc(k) = R * sin(LAT[k]);
-function ri(k) = rc(k) - T[k];                  // inner radius at boundary k (k = 0..4)
+// The inside is a straight cone that leans only 22 deg.  (A cone that follows the dome - up to 37 deg at the top -
+// is too steep: where the 40-deg roof of the door meets it, the two lean in different directions and the corner
+// of every layer would hang 0.23 mm past the layer below, more than the 0.2 mm a 45-deg overhang allows.)
+function ri(k) = RI_BOT + (RI_TOP - RI_BOT) * zc(k) / zc(BODY_K);          // inner radius at boundary k (k = 0 .. BODY_K)
 SLOPE = 0.84;                                   // every overhang in the model leans at most atan(0.84) = 40 deg
 function ucrs(k) = let(dx = rc(k + 1) - rc(k), dz = zc(k + 1) - zc(k), L = sqrt(dx * dx + dz * dz)) [dx / L, dz / L];
 function tl(k) = -(rc(k + 1) - rc(k)) / (zc(k + 1) - zc(k));              // tan of the inward lean of course k
@@ -120,16 +123,12 @@ module vjoint(k) {
 }
 module blocks(k0, k1) difference() { outer_solid(k0, k1); for (k = [k0 : k1]) vjoint(k); }
 
-// the hollow inside (same facets, so the wall has the same thickness everywhere)
-function cav_pts(k) =
-    k == 0 ? [[0, -1], [ri(0), -1], [ri(0), zc(0)], [ri(1), zc(1)], [0, zc(1)]] :
-    k == BODY_K - 1 ? [[0, zc(k)], [ri(k), zc(k)], [ri(k + 1), zc(k + 1)], [ri(k + 1), zc(k + 1) + 1], [0, zc(k + 1) + 1]] :
-             [[0, zc(k)], [ri(k), zc(k)], [ri(k + 1), zc(k + 1)], [0, zc(k + 1)]];
-// the inside is smooth (a faceted inside would have ledges over the empty cavity)
+// the hollow inside: smooth (a faceted inside would have ledges over the empty cavity)
 module cavity() rotate_extrude($fn = 96) polygon(concat([[0, -LIP - 1], [ri(0), -LIP - 1]], [for (k = [0 : BODY_K]) [ri(k), zc(k)]], [[ri(BODY_K), zc(BODY_K) + 1], [0, zc(BODY_K) + 1]]));
 
-// ---- the entrance: a low-poly arch (short vertical walls, then a pointed 40-degree roof) -------
-BORE_W = 11;  BORE_H1 = 6.5;  BORE_TOP = 0;              // half width, height of the walls, half width of the flat top (0 = pointed roof)
+// ---- the entrance: a low-poly arch (vertical walls, then a pointed 40-degree roof): 32 mm wide, 32 mm high,
+//      so the adult penguin (62 %, 26 mm) and the chick (45 %) walk in with >= 1.5 mm to spare (tools/check_door.py) ----
+BORE_W = 16;  BORE_H1 = 13;  BORE_TOP = 0;              // half width, height of the walls, half width of the flat top (0 = pointed roof)
 TUN_WALL = 6;                                           // wall of the tunnel
 TUN_FRONT = -(R + 20);                                  // y of the front face of the tunnel
 TRIM_T = 5;  TRIM_W = 3.5;                              // the blue arch ring (separate piece)
@@ -204,15 +203,16 @@ function stand(p) =
     p == "sign"  ? [-64, -58,  26, 12, 5.5] :
     p == "tree0" ? [-78,  30, -18, 10, 4.0] :
     p == "tree1" ? [ 72, -22,  14, 10, 4.0] :
-    p == "peng0" ? [ 47, -72, -10, 14, 5.0] :
-    p == "peng1" ? [ 70, -52, -24, 14 * PS1, 5.0 * PS1] : [0, 0, 0, 0, 0];
-PS1 = 0.62;                                             // the chick is the adult at 62 %
+    p == "peng0" ? [ 47, -74, -10, TAB_W[0], TAB_T[0]] :
+    p == "peng1" ? [ 68, -54, -24, TAB_W[1], TAB_T[1]] : [0, 0, 0, 0, 0];
+PS = [0.62, 0.45];                                      // adult and chick (scale of the 42 mm model) - small enough to walk through the door
+TAB_W = [10, 8];  TAB_T = [3.6, 3.2];                   // the tabs are NOT scaled with the figure (a small figure still needs a sturdy plug)
 MOUNDS = [[-39, -62, 6, 3.4], [-69, -34, 5, 3.0], [54, -36, 5.5, 3.2]];     // x, y, radius, height - all fully on the plate (checked)
 module ground_outline() offset(r = -7) offset(r = 7) union() {   // closing: fills the notches between the lobes
     translate([0, 2]) circle(r = 66, $fn = 120);
     translate([-62, -56]) circle(r = 30, $fn = 80);
     translate([48, -66]) circle(r = 34, $fn = 80);
-    translate([0, -66]) circle(r = 26, $fn = 80);
+    translate([0, -68]) circle(r = 31, $fn = 80);
     translate([-76, 28]) circle(r = 24, $fn = 60);
     translate([72, -24]) circle(r = 24, $fn = 60);
 }
@@ -292,7 +292,6 @@ module P_BODY() union() {
     intersection() { D([0, 16], [11.5, 16.5, 9.5]); clipy(0.4); }
     D([0, 33.5], [8.6, 8.4, 8.2]);                                           // head
     for (s = [-1, 1]) translate([s * 11.4, 20.5]) rotate(s * 14) D([0, 0], [2.9, 8.8, 4.2]);   // flippers
-    translate([-7 / 1, -TABL]) cube([14, TABL + 1.5, 5]);                    // tab
 }
 module P_BELLY() intersection() { D([0, 15], [7.5, 12.6, 10.6]); clipy(1.6); }
 module P_PATCH() union() { for (s = [-1, 1]) D([s * 3.1, 33.6], [4.3, 4.7, 9.1]); D([0, 31.2], [3.2, 3.2, 9.0]); }
@@ -300,8 +299,10 @@ module P_EYES() for (s = [-1, 1]) E([s * 3.2, 35.2, dz([s * 3.1, 33.6], [4.3, 4.
 module P_BEAK() hull() { D([0, 33.0], [3.0, 1.9, 9.6]); D([0, 30.0], [1.5, 1.1, 9.9]); }
 module P_FEET() intersection() { for (s = [-1, 1]) D([s * 4.3, 2.4], [4.0, 2.6, 6.4]); clipy(0.05); }
 module P_SCARF() union() { D([0, 25.2], [9.8, 2.9, 9.2]); translate([4.8, 19.4]) rotate(-8) D([0, 0], [2.3, 5.4, 9.6]); }
-module peng_role(r) {
-    if (r == "body")   difference() { P_BODY(); P_BELLY(); P_PATCH(); P_EYES(); P_BEAK(); P_FEET(); P_SCARF(); }
+// the tab keeps its real size whatever the scale of the figure (so it is divided by the scale here)
+module P_TAB(i) translate([-TAB_W[i] / 2, -TABL, 0] / PS[i]) cube([TAB_W[i], TABL + 1.5, TAB_T[i]] / PS[i]);
+module peng_role(r, i) {
+    if (r == "body")   difference() { union() { P_BODY(); P_TAB(i); } P_BELLY(); P_PATCH(); P_EYES(); P_BEAK(); P_FEET(); P_SCARF(); }
     if (r == "belly")  difference() { P_BELLY(); P_SCARF(); P_FEET(); }
     if (r == "patch")  difference() { P_PATCH(); P_EYES(); P_BEAK(); P_SCARF(); }
     if (r == "eyes")   P_EYES();
@@ -309,7 +310,7 @@ module peng_role(r) {
     if (r == "feet")   P_FEET();
     if (r == "scarf")  P_SCARF();
 }
-module peng(i, r) { s = i == 0 ? 1 : PS1; scale([s, s, s]) peng_role(r); }
+module peng(i, r) scale([PS[i], PS[i], PS[i]]) peng_role(r, i);
 
 // ---- a tea-light, only for the renders ----------------------------------------------------
 module tealight(r) {
@@ -351,7 +352,7 @@ module local(p) {
     else children();
 }
 
-// colours of the preview (the real filament colours are in palettes/penguin_home.json)
+// colours of the preview (the real filament colours are in tools/family_palette.py)
 C_WHITE = "#F5F7FA";  C_BLUE = "#8CC4EA";  C_GREEN = "#2F7048";  C_BLACK = "#20232B";  C_ORANGE = "#E58A2E";
 function filament(p, r) =
     p == "ground" ? C_WHITE : p == "body" ? (r == "belt" ? C_BLUE : C_WHITE) : p == "lid" ? (r == "flake" ? C_BLUE : C_WHITE) :

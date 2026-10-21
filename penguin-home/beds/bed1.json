@@ -20,12 +20,12 @@
   "tree0",
   "tree1"
  ],
- "footprint_pct": 63.1,
+ "footprint_pct": 61.5,
  "solid_volume_cm3": {
-  "WHITE": 185.4,
+  "WHITE": 187.2,
   "GREEN": 4.7,
-  "BLACK": 2.7,
-  "ORANGE": 10.8
+  "BLACK": 1.0,
+  "ORANGE": 9.7
  },
  "volumes": [
   {
@@ -71,6 +71,22 @@
   {
    "file": "bed1/tree0__snow__WHITE.stl",
    "piece": "tree0",
+   "role": "snow",
+   "color": "WHITE",
+   "hex": "#F5F7FA",
+   "slot": 1
+  },
+  {
+   "file": "bed1/tree1__green__GREEN.stl",
+   "piece": "tree1",
+   "role": "green",
+   "color": "GREEN",
+   "hex": "#2F7048",
+   "slot": 2
+  },
+  {
+   "file": "bed1/tree1__snow__WHITE.stl",
+   "piece": "tree1",
    "role": "snow",
    "color": "WHITE",
    "hex": "#F5F7FA",
@@ -131,22 +147,6 @@
    "color": "ORANGE",
    "hex": "#E58A2E",
    "slot": 4
-  },
-  {
-   "file": "bed1/tree1__green__GREEN.stl",
-   "piece": "tree1",
-   "role": "green",
-   "color": "GREEN",
-   "hex": "#2F7048",
-   "slot": 2
-  },
-  {
-   "file": "bed1/tree1__snow__WHITE.stl",
-   "piece": "tree1",
-   "role": "snow",
-   "color": "WHITE",
-   "hex": "#F5F7FA",
-   "slot": 1
   },
   {
    "file": "bed1/peng1__body__BLACK.stl",

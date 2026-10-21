@@ -27,7 +27,7 @@ import family_palette as fp  # noqa: E402
 
 BLENDER_SCRIPT = os.path.join(HERE, "..", "blender", "render_showcase.py")
 BOKEH = ["#FFD27A", "#FFF2D0", "#9CD3FF", "#FF9A2E", "#FFFFFF"]
-HINGE = [50.2, 0.0, 29.0]            # right-hand edge of the lid (R cos 30 deg, Z_CUT)
+HINGE = [44.4, 0.0, 37.3]            # right-hand edge of the lid (R cos 40 deg, Z_CUT = R sin 40 deg)
 
 
 def colors_for(stems, overrides):
@@ -106,7 +106,7 @@ def main():
     jobs = {}
     jobs["hero"] = dict(base, output=os.path.join(a.out, "hero.png"),
                         items=[{"dir": a.assembled, "pos": [0, 0, 0], "rot": 0, "colors": cols}],
-                        camera={"location": [150, -330, 165], "target": [-5, -10, 24], "lens": 50, "fstop": 9.0})
+                        camera={"location": [140, -300, 150], "target": [-4, -14, 24], "lens": 50, "fstop": 24.0})
     jobs["glow"] = dict(base, output=os.path.join(a.out, "glow.png"), world_color="#0B1428", world_strength=0.22, floor_color="#2C4468", exposure=-0.15,
                         props=True, bokeh=36, bokeh_colors=BOKEH, bokeh_strength=0.8,
                         items=[{"dir": ajar, "pos": [0, 0, 0], "rot": 0, "colors": cols}, props_item], extras=[flame],
@@ -114,19 +114,19 @@ def main():
                                 "rim": [-300, 260, 260], "rim_target": [0, 0, 30], "rim_power": 2.0,
                                 "fill": [-200, -300, 120], "fill_target": [0, 0, 20], "fill_power": 0.5},
                         light_colors={"key": (1.0, 0.82, 0.62), "rim": (0.55, 0.7, 1.0), "fill": (0.8, 0.9, 1.0)},
-                        camera={"location": [190, -300, 190], "target": [0, -10, 22], "lens": 52, "fstop": 8.0})
+                        camera={"location": [190, -300, 190], "target": [0, -10, 22], "lens": 52, "fstop": 16.0})
     jobs["top"] = dict(base, output=os.path.join(a.out, "top.png"), exposure=-1.0,
                        items=[{"dir": a.assembled, "pos": [0, 0, 0], "rot": 0, "colors": cols, "skip": ["lid__ice", "lid__flake"]}, props_item], extras=[flame],
                        camera={"location": [0, -150, 330], "target": [0, -8, 12], "lens": 50, "fstop": 12.0})
     offs = {}
     for s in stems:
         p = s.split("__")[0]
-        offs[s] = {"lid": [0, 0, 78], "body": [0, 0, 22], "trim": [0, -46, 22], "sign": [0, 0, 26], "tree0": [0, 0, 26], "tree1": [0, 0, 26],
+        offs[s] = {"lid": [0, 0, 62], "body": [0, 0, 22], "trim": [0, -46, 22], "sign": [0, 0, 26], "tree0": [0, 0, 26], "tree1": [0, 0, 26],
                    "peng0": [0, 0, 26], "peng1": [0, 0, 26]}.get(p, [0, 0, 0])
     jobs["exploded"] = dict(base, output=os.path.join(a.out, "exploded.png"), floor_color="#7E96B5", world_color="#C9D6E6", world_strength=0.5,
                             items=[{"dir": a.assembled, "pos": [0, 0, 0], "rot": 0, "colors": cols, "offsets": offs}],
                             camera={"location": [-130, -400, 250], "target": [0, -10, 40], "lens": 52, "fstop": 10.0})
-    jobs["closeup"] = dict(base, output=os.path.join(a.out, "closeup.png"), exposure=-0.4,
+    jobs["closeup"] = dict(base, output=os.path.join(a.out, "closeup.png"), exposure=-0.9,
                            items=[{"dir": a.assembled, "pos": [0, 0, 0], "rot": 0, "colors": cols}],
                            camera={"location": [10, -235, 65], "target": [20, -70, 24], "lens": 70, "fstop": 6.0, "focus": [30, -74, 22]})
 

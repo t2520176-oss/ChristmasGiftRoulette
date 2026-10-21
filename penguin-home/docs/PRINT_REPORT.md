@@ -6,12 +6,12 @@ Every piece is analysed in its print orientation (all colour regions together).
 
 | piece | size mm | volume cm3 | closed | faces >45 deg mm2 | layer test mm3 | % of piece | worst layer mm2 @ z |
 |---|---|---:|:-:|---:|---:|---:|---|
-| ground | 196 x 168 x 11 | 179.9 | yes | 0 | 0.0 | 0.00 | 0.0 @ 0.0 |
-| body | 116 x 136 x 32 | 43.6 | yes | 2241 | 0.0 | 0.00 | 0.0 @ 0.0 |
-| lid | 99 x 99 x 27 | 119.2 | yes | 397 | 0.0 | 0.00 | 0.0 @ 0.0 |
-| trim | 41 x 34 x 9 | 3.2 | yes | 0 | 0.0 | 0.00 | 0.0 @ 0.0 |
+| ground | 196 x 168 x 11 | 183.8 | yes | 0 | 0.0 | 0.00 | 0.0 @ 0.0 |
+| body | 116 x 136 x 40 | 79.1 | yes | 3922 | 0.0 | 0.00 | 0.0 @ 0.0 |
+| lid | 89 x 88 x 18 | 62.6 | yes | 397 | 0.0 | 0.00 | 0.0 @ 0.0 |
+| trim | 51 x 47 x 9 | 4.6 | yes | 0 | 0.0 | 0.00 | 0.0 @ 0.0 |
 | sign | 56 x 56 x 6 | 9.9 | yes | 229 | 0.0 | 0.00 | 0.0 @ 0.0 |
 | tree0 | 34 x 61 x 5 | 4.2 | yes | 283 | 0.0 | 0.00 | 0.0 @ 0.0 |
 | tree1 | 26 x 47 x 5 | 2.6 | yes | 210 | 0.0 | 0.00 | 0.0 @ 0.0 |
-| peng0 | 30 x 48 x 11 | 5.7 | yes | 40 | 0.0 | 0.00 | 0.0 @ 0.0 |
-| peng1 | 19 x 29 x 7 | 1.4 | yes | 15 | 0.0 | 0.00 | 0.0 @ 0.0 |
+| peng0 | 19 x 32 x 7 | 1.5 | yes | 16 | 0.0 | 0.00 | 0.0 @ 0.0 |
+| peng1 | 13 x 24 x 5 | 0.6 | yes | 11 | 0.0 | 0.00 | 0.0 @ 0.0 |
