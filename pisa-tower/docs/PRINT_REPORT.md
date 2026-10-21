@@ -6,7 +6,7 @@ Every piece is analysed in its print orientation (all colour regions together).
 
 | piece | size mm | volume cm3 | closed | faces >45 deg mm2 | layer test mm3 | % of piece | worst layer mm2 @ z |
 |---|---|---:|:-:|---:|---:|---:|---|
-| base | 88 x 88 x 41 | 67.2 | yes | 3145 | 0.0 | 0.00 | 0.0 @ 0.0 |
+| base | 88 x 88 x 39 | 68.3 | yes | 3145 | 0.0 | 0.00 | 0.0 @ 0.0 |
 | tower | 55 x 50 x 92 | 44.4 | yes | 6988 | 0.0 | 0.00 | 0.0 @ 0.0 |
-| top | 37 x 36 x 41 | 17.5 | yes | 1051 | 0.0 | 0.00 | 0.1 @ 25.9 |
-| flag | 15 x 8 x 1 | 0.1 | yes | 0 | 0.0 | 0.00 | 0.0 @ 0.0 |
+| top | 37 x 36 x 34 | 17.7 | yes | 1051 | 0.0 | 0.00 | 0.1 @ 25.9 |
+| flag | 15 x 17 x 1 | 0.2 | yes | 0 | 0.0 | 0.00 | 0.0 @ 0.0 |

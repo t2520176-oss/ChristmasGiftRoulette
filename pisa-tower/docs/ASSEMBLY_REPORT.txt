@@ -1,7 +1,7 @@
 9 meshes, 0 overlapping pairs above 0.05 mm3
 piece      seated  gap to base touching                     lift
-flag      -136.2       59.50  top                          glue-on: slides in along the glue direction
-top       -105.4       69.11  flag,tower                   free
+flag      -133.8      102.19  top                          free
+top       -105.4       70.36  flag,tower                   free
 tower      -13.5        0.00  base,top                     free
 
 no problems found

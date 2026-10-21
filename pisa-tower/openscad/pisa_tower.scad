@@ -3,8 +3,8 @@
  * ----------------------------------------------------------------------------------------------
  *   base    snow-white plinth with a lawn, a stone plaza, steps, a fence, cypress trees and the tea-light pocket
  *   tower   ground floor + 6 arcaded floors (tapering a little) with a stone cornice between the floors
- *   top     the belfry with its roof, a parapet and a flag pole
- *   flag    the Italian tricolour (printed flat, 3 colours in 5 layers), slides into the slot of the pole
+ *   top     the belfry with its roof, a parapet and a small socket for the flag pole
+ *   flag    flag pole + Italian tricolour in ONE flat piece (3 colours in 6 layers); the foot of the pole plugs into the socket
  *
  * Built so that (almost) nothing needs support:
  *   - the lean is a SHEAR (every layer is a plain circle, shifted by 0.1 mm per mm of height) - no layer hangs over the one below
@@ -100,14 +100,15 @@ module tower(r) {
 }
 
 // ----------------------------------------------------------------------------------------
-//  THE BELFRY  (local frame: z = 0 is the bottom, the flag pole is at the top)
+//  THE BELFRY  (local frame: z = 0 is the bottom, the socket of the flag pole is at the top)
 // ----------------------------------------------------------------------------------------
 N_BEL = 10;  FB = 9.5;  BB = 2.2;  BLIP = 1.0;
 CONE_H = BEL_RI / SLF;  ROOF_T = 1.6;
 Z_ROOF = FB + BB + CONE_H + ROOF_T;                                  // flat top of the roof
 PARAPET_H = 2.0;
-POLE_R = 1.5;  POLE_H = 14;  Z_POLE = Z_ROOF + POLE_H;
-SLIT_W = 1.3;  SLIT_Z0 = Z_POLE - 11;  SLIT_ZS = Z_POLE - 1.9;       // slit for the flag: straight up to SLIT_ZS, then a pointed head (no flat roof)
+STUB_R = 3.6;  STUB_H = 6.5;                                         // a little round stump on the roof carries the socket
+POLE_W = 2.8;  FT = 1.2;                                             // flag pole and flag are a flat strip: 2.8 x 1.2 mm
+SOCK_X = POLE_W + 2 * tol;  SOCK_Y = FT + 2 * tol;  SOCK_D = 5.5;   // the socket (a vertical rectangular hole, open at the top)
 module belfry_wall() difference() {
     union() {
         tube(BEL_R, BEL_RI, FB);
@@ -119,12 +120,9 @@ module roof() translate([0, 0, FB + BB]) difference() {
     union() {
         cylinder(r = BEL_R, h = CONE_H + ROOF_T);
         translate([0, 0, CONE_H + ROOF_T]) tube(BEL_R - 0.4, BEL_R - 1.6, PARAPET_H);           // parapet
-        translate([0, 0, CONE_H + ROOF_T - eps]) difference() {                                   // flag pole with a slit for the flag
-            cylinder(r = POLE_R, h = POLE_H + eps, $fn = 32);
-            translate([-5, 0, SLIT_Z0 - Z_ROOF]) rotate([90, 0, 90]) linear_extrude(10)
-                polygon([[-SLIT_W / 2, 0], [SLIT_W / 2, 0], [SLIT_W / 2, SLIT_ZS - SLIT_Z0], [0, SLIT_ZS - SLIT_Z0 + SLIT_W / 2 / SL], [-SLIT_W / 2, SLIT_ZS - SLIT_Z0]]);
-        }
+        translate([0, 0, CONE_H + ROOF_T - eps]) cylinder(r = STUB_R, h = STUB_H + eps, $fn = 40);   // stump for the flag pole
     }
+    translate([-SOCK_X / 2, -SOCK_Y / 2, CONE_H + ROOF_T + STUB_H - SOCK_D]) cube([SOCK_X, SOCK_Y, SOCK_D + 1]);   // its socket
         cylinder(r1 = BEL_RI, r2 = 0.3, h = CONE_H);                                                    // cone under the roof
     for (k = [0 : N_BEL - 1]) rotate(270 + k * 360 / N_BEL) arch_cut(4.8, 1.8, 6.4, BEL_R - 1.2, BEL_R + 4);   // blind arcade on the upper stage
 }
@@ -134,14 +132,18 @@ module top(r) {
 }
 
 // ----------------------------------------------------------------------------------------
-//  THE FLAG   (flat: the tab on the left slides into the slit of the pole)    roles: green, white, red
+//  THE FLAG   (pole + flag, ONE flat strip: x = along the flag, y = up the pole, z = thickness)    roles: green, white (pole and white stripe), red
 // ----------------------------------------------------------------------------------------
-FLAG_TAB = 3.0;  FLAG_L = 15.2;  FLAG_H = 8.0;  FLAG_T = SLIT_W - 2 * 0.15;
-STRIPE = (FLAG_L - FLAG_TAB) / 3;
+PLUG = SOCK_D - 0.3;  POLE_UP = 12;  FLAG_L = 15.2;  FLAG_H = 8.0;
+FLAG_Y0 = PLUG + POLE_UP - 9.5;                                      // bottom of the flag
+STRIPE = (FLAG_L - POLE_W) / 3;
 module flag(r) {
-    x0 = r == "green" ? 0 : r == "white" ? FLAG_TAB + STRIPE : FLAG_TAB + 2 * STRIPE;
-    x1 = r == "green" ? FLAG_TAB + STRIPE : r == "white" ? FLAG_TAB + 2 * STRIPE : FLAG_L;
-    translate([x0, 0, 0]) cube([x1 - x0, FLAG_H, FLAG_T]);
+    if (r == "white") union() {
+        cube([POLE_W, PLUG + POLE_UP, FT]);                                                  // the pole (with its foot)
+        translate([POLE_W + STRIPE, FLAG_Y0, 0]) cube([STRIPE, FLAG_H, FT]);
+    }
+    if (r == "green") translate([POLE_W, FLAG_Y0, 0]) cube([STRIPE, FLAG_H, FT]);
+    if (r == "red")   translate([POLE_W + 2 * STRIPE, FLAG_Y0, 0]) cube([STRIPE, FLAG_H, FT]);
 }
 
 // ----------------------------------------------------------------------------------------
@@ -153,8 +155,21 @@ SEAT = BASE_H + PLAZA_H;        // z of the bottom of the tower
 POCKET_R = 19.4;  POCKET_D = 9;   // pocket of the 38 mm LED tea-light
 COLLAR_R = T_R + 0.4;           // the tower stands inside a low ring
 FENCE_R = 42.2;
-TREES = [[150, 34.2, 30, 4.0], [118, 36, 22, 3.4], [62, 35.5, 27, 3.8], [27, 34.5, 20, 3.3], [195, 35.5, 25, 3.7], [335, 34.5, 23, 3.5], [92, 38, 16, 2.8]];   // angle, radius, height, foot radius
+TREES = [[150, 34.2, 28, 3.7, 0, -3], [118, 36, 22, 3.2, 50, 2], [62, 35.5, 26, 3.5, 110, 3], [27, 34.5, 20, 3.1, 170, -2],
+         [195, 35.5, 25, 3.5, 230, 1.5], [335, 34.5, 23, 3.2, 290, -3], [92, 37, 16, 2.7, 340, 2.5]];   // angle, radius, height, widest radius, wave phase, tilt (deg)
 BUSHES = [[135, 36.5, 3.0], [172, 32, 2.6], [215, 36.5, 2.8], [8, 32, 2.6], [315, 37, 3.0], [45, 38.5, 2.6], [75, 32.5, 2.4]];                                        // angle, radius, radius of the dome
+
+// A cypress: a thin trunk, a crown that widens at 29 deg (so it never hangs over more than the cones of the rest of the model),
+// is widest at about a quarter of its height, then closes in with a rounded top; two slow waves of different length give the
+// foliage its irregular bulges (every bulge widens by less than 25 deg, so nothing needs support).
+CY_TR = 1.7;  CY_TH = 2.6;  CY_FLARE = 0.55;  CY_P = 2.0;     // a thick trunk (3.4 mm) on a flared foot (5.6 mm) that is sunk into the lawn
+function cypress_pts(H, Rm, ph) = let(zc = CY_TH + (Rm - CY_TR) / CY_FLARE, b = H - zc, n = 30) concat(
+    [[0, -1], [2.8, -1], [2.8, 0], [CY_TR, 1.8], [CY_TR, CY_TH], [Rm, zc]],
+    [for (k = [1 : n - 1]) let(t = k / n, w = 0.22 * sin(360 * t * b / 4.1 + ph) + 0.12 * sin(360 * t * b / 2.4 + 1.7 * ph),
+                               r = Rm * pow(1 - pow(t, CY_P), 1 / CY_P) + w * (1 - t))
+        [max(r, 0.15), zc + b * t]],
+    [[0, H]]);
+module cypress(H, Rm, ph = 0) rotate_extrude($fn = 30) polygon(cypress_pts(H, Rm, ph));
 
 module plinth() rotate_extrude() polygon(concat([[0, 0], [BASE_R, 0]],
     [for (g = [3.7, 7.4]) each [[BASE_R, g - 0.8], [BASE_R - 0.55, g], [BASE_R, g + 0.8]]], [[BASE_R, BASE_H], [0, BASE_H]]));
@@ -176,7 +191,7 @@ module fence() {                                                         // a lo
 module base(r) {
     if (r == "green") union() {
         intersection() { plinth(); lawn_zone(); }
-        for (t = TREES) rotate(t[0]) translate([t[1], 0, BASE_H - eps]) cylinder(r1 = t[3], r2 = 0.35, h = t[2], $fn = 28);
+        for (t = TREES) rotate(t[0]) translate([t[1], 0, BASE_H]) rotate([0, t[5], 0]) cypress(t[2], t[3], t[4]);
         for (b = BUSHES) rotate(b[0]) translate([b[1], 0, BASE_H - eps]) scale([b[2], b[2], b[2] * 0.85]) hemi();
     }
     if (r == "stone") difference() {
@@ -212,9 +227,9 @@ module emit(p, r) {
     else if (p == "flag") flag(r);
     else if (p == "tealight") tealight(r);
 }
-// the flag in the slit of the pole (world frame): the pole is sheared with the tower, the flag is not
-ZP_MID  = ZT + (SLIT_Z0 + SLIT_ZS) / 2;                              // height of the middle of the slit above SEAT
-module flag_assembled() translate([ZP_MID * LT - FLAG_TAB / 2, 0, SEAT + ZT + SLIT_Z0 + 0.4]) rotate([90, 0, 0]) translate([0, 0, -FLAG_T / 2]) children();
+// the flag stands in the socket of the roof (world frame).  The socket is sheared with the tower, so the pole is tilted by LEAN too
+Z_SOCK = Z_ROOF + STUB_H - SOCK_D + 0.1;                              // the foot of the pole, in the frame of the belfry
+module flag_assembled() translate([(ZT + Z_SOCK) * LT, 0, SEAT + ZT + Z_SOCK]) rotate([0, LEAN, 0]) rotate([90, 0, 0]) translate([-POLE_W / 2, 0, -FT / 2]) children();
 module place(p) {
     if (p == "base" || p == "tealight") children();
     else if (p == "tower") translate([0, 0, SEAT]) lean() children();

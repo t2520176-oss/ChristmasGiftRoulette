@@ -16,7 +16,7 @@ rm -rf "$OUT/beds" && $PY tools/plan_beds.py --print-dir "$OUT/stl/print" --out 
 if [ "${CHECKS:-1}" = "1" ]; then
   $PY tools/check_pieces.py "$OUT/stl/print" --islands 5 --solid tower.stone,top.stone,tower.band,top.band --wall tower.stone --wall-zmax 999 --md "$OUT/docs/PRINT_REPORT.md"
   { $PY tools/check_fit.py "$OUT/stl/assembled" --min-mm3 0.05;
-    $PY tools/check_assembly.py "$OUT/stl/assembled" --top 0 --base base --tabbed "" --glued flag --glue-dir 1,0,0 --after "tower:top,flag;top:flag" || true; } | tee "$OUT/docs/ASSEMBLY_REPORT.txt"
+    $PY tools/check_assembly.py "$OUT/stl/assembled" --top 0 --base base --tabbed "" --lift-dir "flag=0.0963,0,1" --after "tower:top,flag;top:flag" || true; } | tee "$OUT/docs/ASSEMBLY_REPORT.txt"
 fi
 if [ "${SLICE:-1}" = "1" ] && command -v prusa-slicer >/dev/null; then
   $PY tools/slice_check.py --beds "$OUT/beds" --ini slicer/prusaslicer_4color_256.ini --json "$OUT/beds/slice_summary.json"

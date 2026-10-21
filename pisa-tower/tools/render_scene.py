@@ -7,6 +7,7 @@
   night.png     the tea-light burning inside, light pouring out of the arches
   exploded.png  base, tower, belfry and flag lifted apart (the tea-light in its pocket)
   detail.png    the arcades and cornices, close up
+  garden.png    the base: lawn, steps, fence and cypresses
   bed1/2.png    top-down print layouts (see compose_beds.py for the legend)
 """
 import argparse
@@ -104,6 +105,9 @@ def main():
     jobs["exploded"] = dict(base, output=os.path.join(a.out, "exploded.png"), floor_color="#D2D7DE", world_color="#E4EAF2", world_strength=0.7,
                             props=False, items=[{"dir": a.assembled, "pos": [0, 0, 0], "rot": 0, "colors": cols, "offsets": offs}, props_item],
                             camera={"location": [315, -545, 190], "target": [8, 0, 116], "lens": 85, "fstop": 26.0})
+    jobs["garden"] = dict(base, output=os.path.join(a.out, "garden.png"), exposure=-0.3,
+                          items=[{"dir": a.assembled, "pos": [0, 0, 0], "rot": 0, "colors": cols}],
+                          camera={"location": [150, -250, 85], "target": [-4, -8, 24], "lens": 70, "fstop": 12.0, "focus": [0, -30, 22]})
     jobs["detail"] = dict(base, output=os.path.join(a.out, "detail.png"), exposure=-0.4,
                           items=[{"dir": a.assembled, "pos": [0, 0, 0], "rot": 0, "colors": cols}],
                           camera={"location": [120, -230, 96], "target": [8, -12, 70], "lens": 100, "fstop": 10.0, "focus": [6, -22, 70]})

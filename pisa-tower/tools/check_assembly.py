@@ -40,9 +40,11 @@ def main():
     ap.add_argument("--tabbed", default="sign,tree", help="prefixes of pieces that plug into the base with a tab")
     ap.add_argument("--after", default="", help="pieces that are put on LATER and must not count as blockers, e.g. body:lid,trim")
     ap.add_argument("--glue-dir", default="0,-1,0", help="direction in which glued-on pieces are slid in (unit vector, x,y,z)")
+    ap.add_argument("--lift-dir", default="", help="pieces that come out along a slanted axis, e.g. flag=0.0963,0,1 (x,y,z; z = 1)")
     ap.add_argument("--min-tab", type=float, default=3.0, help="smallest accepted depth of a tab inside the base (mm)")
     a = ap.parse_args()
     glued = tuple(a.glued.split(","))
+    lifts = {kv.split("=")[0]: [float(v) for v in kv.split("=")[1].split(",")] for kv in a.lift_dir.split(";") if "=" in kv}
 
     groups = {}
     for f in sorted(os.listdir(a.dir)):
@@ -80,8 +82,9 @@ def main():
         later = dict(x.split(":") for x in a.after.split(";") if ":" in x)
         others = [q for q in meshes if q != p and q not in later.get(p, "").split(",")]
         for dz in steps:
-            mv = mani[p].translate([0, 0, float(dz)])
-            lo, hi = m.bounds[0] + [0, 0, dz], m.bounds[1] + [0, 0, dz]
+            sh = np.array(lifts.get(p, [0.0, 0.0, 1.0])) * dz
+            mv = mani[p].translate([float(v) for v in sh])
+            lo, hi = m.bounds[0] + sh, m.bounds[1] + sh
             hit = [q for q in others
                    if not (np.any(hi < meshes[q].bounds[0]) or np.any(meshes[q].bounds[1] < lo))   # bounding boxes apart
                    and (mv ^ mani[q]).volume() > 0.05]
