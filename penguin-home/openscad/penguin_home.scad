@@ -4,14 +4,14 @@
  * ----------------------------------------------------------------------------------------------
  * Designed so that NOTHING needs support material:
  *   - igloo body   printed upright, open at the top; every inner and outer surface leans <= 40 deg,
- *                  the door is a 45-deg "low-poly" arch (no round roof to bridge)
- *   - lid          solid lens printed flat side down (sparse infill carries the dome), 3 keyed pegs
- *   - arch trim    printed flat, snaps onto the tunnel with two diamond pegs
+ *                  the door is a pointed 40-deg "A-frame" arch (no round roof to bridge)
+ *   - lid          solid lens printed flat side down (sparse infill carries the dome); a V-ridge on the body locates it
+ *   - arch trim    printed flat, pushes onto the tunnel with two small house-shaped pegs
  *   - ground       flat snow plate with sockets for the sign, the trees and the penguins
  *   - sign, trees, penguins   flat-back relief pieces (like the family ornament): they lie on their back,
  *                  domes grow from the bed, a tab plugs them into the ground
  *
- *  Every piece has ROLES, every role is ONE filament colour (see palettes/penguin_home.json).
+ *  Every piece has ROLES, every role is ONE filament colour (see tools/family_palette.py).
  *  Local (print) frame: the piece lies flat, z = 0 is the bed.  Assembled frame: z up, front = -Y.
  *
  *  part   = piece name | "all" | "tealight" (render-only prop) | "manifest"
@@ -128,8 +128,8 @@ function cav_pts(k) =
 // the inside is smooth (a faceted inside would have ledges over the empty cavity)
 module cavity() rotate_extrude($fn = 96) polygon(concat([[0, -LIP - 1], [ri(0), -LIP - 1]], [for (k = [0 : BODY_K]) [ri(k), zc(k)]], [[ri(BODY_K), zc(BODY_K) + 1], [0, zc(BODY_K) + 1]]));
 
-// ---- the entrance: a low-poly arch (vertical walls, then 45-degree roof, flat top) -----------
-BORE_W = 11;  BORE_H1 = 6.5;  BORE_TOP = 0;              // half width, height of the walls, half width of the flat top (0 = pointed 45-degree roof)
+// ---- the entrance: a low-poly arch (short vertical walls, then a pointed 40-degree roof) -------
+BORE_W = 11;  BORE_H1 = 6.5;  BORE_TOP = 0;              // half width, height of the walls, half width of the flat top (0 = pointed roof)
 TUN_WALL = 6;                                           // wall of the tunnel
 TUN_FRONT = -(R + 20);                                  // y of the front face of the tunnel
 TRIM_T = 5;  TRIM_W = 3.5;                              // the blue arch ring (separate piece)
@@ -155,7 +155,7 @@ module body_solid() union() {
         union() { blocks(0, BODY_K - 1); prism_y(-30, TUN_FRONT) tunnel_outer2d(); }
         cavity();
         prism_y(-30, TUN_FRONT - 20) bore2d();
-        // two diamond sockets for the trim, in the front face of the tunnel wall
+        // two house-shaped sockets for the trim, in the front face of the tunnel wall
         for (sx = [-1, 1]) translate([sx * PEG_X, TUN_FRONT - eps, PEG_Z]) rotate([-90, 0, 0]) linear_extrude(4.6) scale([1, -1]) peg2d(tol + 0.2);
     }
     rim_ridge();
@@ -186,7 +186,7 @@ module lid(r) {
     if (r == "flake") flake_prism();
 }
 
-// ---- the arch trim: flat ring, front face on the bed, two diamond pegs on the back --------------
+// ---- the arch trim: flat ring, front face on the bed, two house-shaped pegs on the back ---------
 module trim(r) {
     if (r == "ring") union() {
         slab(TRIM_T) trim_ring2d();
@@ -195,7 +195,7 @@ module trim(r) {
 }
 
 // ----------------------------------------------------------------------------------------
-//  THE GROUND: a snow plate with a seat for the igloo, a tea-light pocket and sockets
+//  THE GROUND: a snow plate with a low ring that centres the igloo, a tea-light pocket and sockets
 // ----------------------------------------------------------------------------------------
 GH = 8;                                                 // plate thickness (top at z = 0)
 SLOT_D = 6.2;  TABL = 5.6;                              // socket depth, tab length of all standees
