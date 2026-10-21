@@ -61,7 +61,7 @@ def main():
                 continue
             if np.any(m.bounds[1] < mq.bounds[0] - 0.4) or np.any(mq.bounds[1] < m.bounds[0] - 0.4):
                 continue
-            dq = np.abs(trimesh.proximity.ProximityQuery(mq).signed_distance(pts))
+            dq = trimesh.proximity.ProximityQuery(mq).on_surface(pts)[1]          # unsigned distance
             if dq.min() < 0.35:
                 touch.append(q)
         # lift test
