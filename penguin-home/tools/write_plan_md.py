@@ -13,10 +13,10 @@ sys.path.insert(0, HERE)
 import family_palette as fp  # noqa: E402
 
 KO = {"WHITE": "흰색", "BLUE": "아이스 블루", "GREEN": "초록", "BLACK": "검정", "ORANGE": "주황"}
-PIECE_KO = {"ground": "눈 덮인 바닥판(티라이트 홈 + 소켓)", "body": "이글루 몸통(얼음 블록 7단 중 아래 4단, 입구 터널 포함)", "lid": "이글루 뚜껑(솔리드, 눈 결정)",
-            "trim": "입구 아치 장식(블루)", "sign": "팻말", "tree": "소나무", "peng0": "펭귄(어른)", "peng1": "펭귄(아기)"}
+PIECE_KO = {"ground": "눈 덮인 바닥판(티라이트 홈 + 소켓)", "body": "이글루 몸통(얼음 블록 7단 중 아래 3단, 입구 터널 포함)", "lid": "이글루 뚜껑(솔리드, 눈 결정)",
+            "trim": "입구 아치 장식(블루)", "sign": "팻말", "tree": "소나무"}
 ROLE_KO = {"snow": "눈", "ice": "얼음 블록", "belt": "블루 띠", "flake": "눈 결정", "ring": "아치 링", "wood": "나무 판", "text": "글자",
-           "green": "잎", "body": "몸", "belly": "배", "patch": "얼굴 무늬", "eyes": "눈", "beak": "부리", "feet": "발", "scarf": "목도리"}
+           "green": "잎"}
 
 
 def main():

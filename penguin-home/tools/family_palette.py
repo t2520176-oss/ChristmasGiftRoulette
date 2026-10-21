@@ -1,9 +1,8 @@
 """Role -> filament colour table of PENGUIN HOME (shared by the planner, the legend and Blender).
 
-Six filament colours are used; a bed holds at most 4 of them (AMS / MMU):
-   WHITE   snow, ice blocks, text, bellies          BLUE    ice band, snow crystal, arch trim
-   GREEN   trees                                    BLACK   penguin bodies, eyes
-   ORANGE  sign board, beaks, feet, scarves
+Four filament colours are used (a bed holds at most 4: AMS / MMU); BLACK is only there for your own overrides:
+   WHITE   snow, ice blocks, text                   BLUE    ice band, snow crystal, arch trim
+   GREEN   trees                                    ORANGE  sign board
 Change a colour here (or pass --palette my.json, optionally with "_hex") and the beds are re-planned.
 """
 import json
@@ -20,14 +19,12 @@ BASE_ROLES = {
     "trim.ring": "BLUE",
     "sign.wood": "ORANGE", "sign.text": "WHITE", "sign.snow": "WHITE",
     "tree.green": "GREEN", "tree.snow": "WHITE",
-    "peng.body": "BLACK", "peng.belly": "WHITE", "peng.patch": "WHITE", "peng.eyes": "BLACK",
-    "peng.beak": "ORANGE", "peng.feet": "ORANGE", "peng.scarf": "ORANGE",
     "tealight.cup": "WHITE", "tealight.flame": "ORANGE",
 }
 
 
 def kind_of(piece, members=None):
-    return re.sub(r"\d+$", "", piece)          # tree0 -> tree, peng1 -> peng, ground -> ground
+    return re.sub(r"\d+$", "", piece)          # tree0 -> tree, ground -> ground
 
 
 def role_color(piece, role, members=None, overrides=None):

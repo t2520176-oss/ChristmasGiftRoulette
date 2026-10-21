@@ -7,7 +7,7 @@
   glow.png      lid ajar, tea-light burning inside (dusk)
   top.png       lid off, looking down onto the tea-light pocket
   exploded.png  every piece lifted out of its place
-  closeup.png   penguin family, sign and the entrance
+  closeup.png   the entrance and the sign
   bed1/2.png    top-down print layouts (see compose_beds.py for the legend)
 """
 import argparse
@@ -27,7 +27,7 @@ import family_palette as fp  # noqa: E402
 
 BLENDER_SCRIPT = os.path.join(HERE, "..", "blender", "render_showcase.py")
 BOKEH = ["#FFD27A", "#FFF2D0", "#9CD3FF", "#FF9A2E", "#FFFFFF"]
-HINGE = [44.4, 0.0, 37.3]            # right-hand edge of the lid (R cos 40 deg, Z_CUT = R sin 40 deg)
+HINGE = [50.2, 0.0, 29.0]            # right-hand edge of the lid (R cos 30 deg, Z_CUT)
 
 
 def colors_for(stems, overrides):
@@ -121,14 +121,13 @@ def main():
     offs = {}
     for s in stems:
         p = s.split("__")[0]
-        offs[s] = {"lid": [0, 0, 62], "body": [0, 0, 22], "trim": [0, -46, 22], "sign": [0, 0, 26], "tree0": [0, 0, 26], "tree1": [0, 0, 26],
-                   "peng0": [0, 0, 26], "peng1": [0, 0, 26]}.get(p, [0, 0, 0])
+        offs[s] = {"lid": [0, 0, 78], "body": [0, 0, 22], "trim": [0, -46, 22], "sign": [0, 0, 26], "tree0": [0, 0, 26], "tree1": [0, 0, 26]}.get(p, [0, 0, 0])
     jobs["exploded"] = dict(base, output=os.path.join(a.out, "exploded.png"), floor_color="#7E96B5", world_color="#C9D6E6", world_strength=0.5,
                             items=[{"dir": a.assembled, "pos": [0, 0, 0], "rot": 0, "colors": cols, "offsets": offs}],
                             camera={"location": [-130, -400, 250], "target": [0, -10, 40], "lens": 52, "fstop": 10.0})
     jobs["closeup"] = dict(base, output=os.path.join(a.out, "closeup.png"), exposure=-0.9,
                            items=[{"dir": a.assembled, "pos": [0, 0, 0], "rot": 0, "colors": cols}],
-                           camera={"location": [10, -235, 65], "target": [20, -70, 24], "lens": 70, "fstop": 6.0, "focus": [30, -74, 22]})
+                           camera={"location": [10, -300, 70], "target": [-14, -70, 26], "lens": 50, "fstop": 14.0, "focus": [-14, -78, 22]})
 
     bw, bh = plan["bed"]
     tow = plan.get("tower") or [45, 70]

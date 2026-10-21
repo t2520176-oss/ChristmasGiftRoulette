@@ -1,16 +1,10 @@
-27 meshes, 0 overlapping pairs above 0.05 mm3
+13 meshes, 0 overlapping pairs above 0.05 mm3
 piece      seated  gap to base touching                     lift
 body         0.0        0.00  ground,lid,trim              free
-lid        -37.3       36.62  body                         free
-peng0        5.6        0.20  ground                       free
-peng1        5.6        0.20  ground                       free
+lid        -29.0       27.55  body                         free
 sign         5.6        0.20  ground                       free
 tree0        5.6        0.20  ground                       free
 tree1        5.6        0.20  ground                       free
 trim         0.0       59.50  body,ground                  glue-on: slides in from the front
 
 no problems found
-door: 32.0 wide, 32.0 high (walls 13.0, pointed roof)
-  peng0  26.0 high x 18.5 wide  ->  clearance 2.0 mm  OK
-  peng1  18.9 high x 13.4 wide  ->  clearance 7.1 mm  OK
-RESULT: every penguin fits through the door

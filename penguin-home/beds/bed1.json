@@ -3,29 +3,24 @@
  "colors": [
   "WHITE",
   "GREEN",
-  "BLACK",
   "ORANGE"
  ],
  "slots": {
   "1": "WHITE",
   "2": "GREEN",
-  "3": "BLACK",
-  "4": "ORANGE"
+  "3": "ORANGE"
  },
  "pieces": [
   "ground",
-  "peng0",
-  "peng1",
   "sign",
   "tree0",
   "tree1"
  ],
- "footprint_pct": 61.5,
+ "footprint_pct": 59.8,
  "solid_volume_cm3": {
-  "WHITE": 187.2,
+  "WHITE": 167.0,
   "GREEN": 4.7,
-  "BLACK": 1.0,
-  "ORANGE": 9.7
+  "ORANGE": 9.3
  },
  "volumes": [
   {
@@ -42,7 +37,7 @@
    "role": "wood",
    "color": "ORANGE",
    "hex": "#E58A2E",
-   "slot": 4
+   "slot": 3
   },
   {
    "file": "bed1/sign__text__WHITE.stl",
@@ -91,118 +86,6 @@
    "color": "WHITE",
    "hex": "#F5F7FA",
    "slot": 1
-  },
-  {
-   "file": "bed1/peng0__body__BLACK.stl",
-   "piece": "peng0",
-   "role": "body",
-   "color": "BLACK",
-   "hex": "#20232B",
-   "slot": 3
-  },
-  {
-   "file": "bed1/peng0__belly__WHITE.stl",
-   "piece": "peng0",
-   "role": "belly",
-   "color": "WHITE",
-   "hex": "#F5F7FA",
-   "slot": 1
-  },
-  {
-   "file": "bed1/peng0__patch__WHITE.stl",
-   "piece": "peng0",
-   "role": "patch",
-   "color": "WHITE",
-   "hex": "#F5F7FA",
-   "slot": 1
-  },
-  {
-   "file": "bed1/peng0__eyes__BLACK.stl",
-   "piece": "peng0",
-   "role": "eyes",
-   "color": "BLACK",
-   "hex": "#20232B",
-   "slot": 3
-  },
-  {
-   "file": "bed1/peng0__beak__ORANGE.stl",
-   "piece": "peng0",
-   "role": "beak",
-   "color": "ORANGE",
-   "hex": "#E58A2E",
-   "slot": 4
-  },
-  {
-   "file": "bed1/peng0__feet__ORANGE.stl",
-   "piece": "peng0",
-   "role": "feet",
-   "color": "ORANGE",
-   "hex": "#E58A2E",
-   "slot": 4
-  },
-  {
-   "file": "bed1/peng0__scarf__ORANGE.stl",
-   "piece": "peng0",
-   "role": "scarf",
-   "color": "ORANGE",
-   "hex": "#E58A2E",
-   "slot": 4
-  },
-  {
-   "file": "bed1/peng1__body__BLACK.stl",
-   "piece": "peng1",
-   "role": "body",
-   "color": "BLACK",
-   "hex": "#20232B",
-   "slot": 3
-  },
-  {
-   "file": "bed1/peng1__belly__WHITE.stl",
-   "piece": "peng1",
-   "role": "belly",
-   "color": "WHITE",
-   "hex": "#F5F7FA",
-   "slot": 1
-  },
-  {
-   "file": "bed1/peng1__patch__WHITE.stl",
-   "piece": "peng1",
-   "role": "patch",
-   "color": "WHITE",
-   "hex": "#F5F7FA",
-   "slot": 1
-  },
-  {
-   "file": "bed1/peng1__eyes__BLACK.stl",
-   "piece": "peng1",
-   "role": "eyes",
-   "color": "BLACK",
-   "hex": "#20232B",
-   "slot": 3
-  },
-  {
-   "file": "bed1/peng1__beak__ORANGE.stl",
-   "piece": "peng1",
-   "role": "beak",
-   "color": "ORANGE",
-   "hex": "#E58A2E",
-   "slot": 4
-  },
-  {
-   "file": "bed1/peng1__feet__ORANGE.stl",
-   "piece": "peng1",
-   "role": "feet",
-   "color": "ORANGE",
-   "hex": "#E58A2E",
-   "slot": 4
-  },
-  {
-   "file": "bed1/peng1__scarf__ORANGE.stl",
-   "piece": "peng1",
-   "role": "scarf",
-   "color": "ORANGE",
-   "hex": "#E58A2E",
-   "slot": 4
   }
  ]
 }

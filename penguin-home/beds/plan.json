@@ -12,7 +12,6 @@
   "WHITE": "#F5F7FA",
   "BLUE": "#8CC4EA",
   "GREEN": "#2F7048",
-  "BLACK": "#20232B",
   "ORANGE": "#E58A2E"
  },
  "overrides": {},
@@ -22,29 +21,24 @@
    "colors": [
     "WHITE",
     "GREEN",
-    "BLACK",
     "ORANGE"
    ],
    "slots": {
     "1": "WHITE",
     "2": "GREEN",
-    "3": "BLACK",
-    "4": "ORANGE"
+    "3": "ORANGE"
    },
    "pieces": [
     "ground",
-    "peng0",
-    "peng1",
     "sign",
     "tree0",
     "tree1"
    ],
-   "footprint_pct": 61.5,
+   "footprint_pct": 59.8,
    "solid_volume_cm3": {
-    "WHITE": 187.2,
+    "WHITE": 167.0,
     "GREEN": 4.7,
-    "BLACK": 1.0,
-    "ORANGE": 9.7
+    "ORANGE": 9.3
    }
   },
   {
@@ -62,10 +56,10 @@
     "lid",
     "trim"
    ],
-   "footprint_pct": 39.6,
+   "footprint_pct": 41.9,
    "solid_volume_cm3": {
-    "WHITE": 117.6,
-    "BLUE": 28.6
+    "WHITE": 154.6,
+    "BLUE": 26.4
    }
   }
  ]

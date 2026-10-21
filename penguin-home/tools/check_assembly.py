@@ -37,7 +37,7 @@ def main():
     ap.add_argument("--top", type=float, default=27.0, help="z of the top of the snow")
     ap.add_argument("--glued", default="trim", help="pieces that are glued on (no tab): only the contact is checked")
     ap.add_argument("--base", default="ground", help="the piece everything stands on")
-    ap.add_argument("--tabbed", default="sign,tree,peng", help="prefixes of pieces that plug into the base with a tab")
+    ap.add_argument("--tabbed", default="sign,tree", help="prefixes of pieces that plug into the base with a tab")
     ap.add_argument("--after", default="", help="pieces that are put on LATER and must not count as blockers, e.g. body:lid,trim")
     ap.add_argument("--min-tab", type=float, default=3.0, help="smallest accepted depth of a tab inside the base (mm)")
     a = ap.parse_args()

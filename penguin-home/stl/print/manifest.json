@@ -46,29 +46,5 @@
    "green",
    "snow"
   ]
- },
- {
-  "piece": "peng0",
-  "roles": [
-   "body",
-   "belly",
-   "patch",
-   "eyes",
-   "beak",
-   "feet",
-   "scarf"
-  ]
- },
- {
-  "piece": "peng1",
-  "roles": [
-   "body",
-   "belly",
-   "patch",
-   "eyes",
-   "beak",
-   "feet",
-   "scarf"
-  ]
  }
 ]

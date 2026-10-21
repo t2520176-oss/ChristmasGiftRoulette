@@ -13,10 +13,10 @@
   "lid",
   "trim"
  ],
- "footprint_pct": 39.6,
+ "footprint_pct": 41.9,
  "solid_volume_cm3": {
-  "WHITE": 117.6,
-  "BLUE": 28.6
+  "WHITE": 154.6,
+  "BLUE": 26.4
  },
  "volumes": [
   {

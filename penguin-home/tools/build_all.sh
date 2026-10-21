@@ -22,7 +22,7 @@ if [ "${SKIP_EXPORT:-0}" != "1" ]; then
 fi
 rm -rf "$OUT/beds" && $PY tools/plan_beds.py --print-dir "$OUT/stl/print" --out "$OUT/beds" --groups palettes/groups.json
 if [ "${CHECKS:-1}" = "1" ]; then
-  $PY tools/check_pieces.py "$OUT/stl/print" --islands 5 --md "$OUT/docs/PRINT_REPORT.md"
+  $PY tools/check_pieces.py "$OUT/stl/print" --islands 5 --solid ice,ring,belt --wall lid.ice --md "$OUT/docs/PRINT_REPORT.md"
   { $PY tools/check_fit.py "$OUT/stl/assembled" --min-mm3 0.05;
     $PY tools/check_assembly.py "$OUT/stl/assembled" --top 0 --after "body:lid,trim" || true; } | tee "$OUT/docs/ASSEMBLY_REPORT.txt"
 fi

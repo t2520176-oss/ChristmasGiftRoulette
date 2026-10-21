@@ -1,14 +1,14 @@
 /*
  * PENGUIN HOME  -  a faceted "ice-block" igloo with a lift-off lid, an LED tea-light inside,
- *                  a penguin family and a name sign.            (OpenSCAD 2021.01+, millimetres)
+ *                  a name sign and two pine trees.              (OpenSCAD 2021.01+, millimetres)
  * ----------------------------------------------------------------------------------------------
  * Designed so that NOTHING needs support material:
  *   - igloo body   printed upright, open at the top; every inner and outer surface leans <= 40 deg,
  *                  the door is a pointed 40-deg "A-frame" arch (no round roof to bridge)
  *   - lid          solid lens printed flat side down (sparse infill carries the dome); a V-ridge on the body locates it
  *   - arch trim    printed flat, pushes onto the tunnel with two small house-shaped pegs
- *   - ground       flat snow plate with sockets for the sign, the trees and the penguins
- *   - sign, trees, penguins   flat-back relief pieces (like the family ornament): they lie on their back,
+ *   - ground       flat snow plate with sockets for the sign and the trees
+ *   - sign, trees  flat-back relief pieces (like the family ornament): they lie on their back,
  *                  domes grow from the bed, a tab plugs them into the ground
  *
  *  Every piece has ROLES, every role is ONE filament colour (see tools/family_palette.py).
@@ -78,13 +78,14 @@ module fit_text(s, size, maxw, fnt = font_serif, k0 = 1) {   // never stretched,
 R   = 58;
 LAT = [0, 10, 20, 30, 40, 50, 60, 70];          // latitude of every course boundary (deg)
 NK  = [24, 24, 22, 20, 18, 16, 14];             // blocks per course
-BODY_K = 4;                                     // the body is courses 0 .. BODY_K-1 (up to latitude LAT[BODY_K] = 40 deg, 37 mm high - the door needs the height); the lid is the rest
-RI_BOT = 54.8;  RI_TOP = 39.6;                  // inner radius at the floor and at the rim: the inside is a straight cone (22 deg lean)
+BODY_K = 3;                                     // the body is courses 0 .. BODY_K-1 (up to latitude LAT[BODY_K] = 30 deg, 29 mm high); the lid is the rest
+// (a higher cut makes the lid's rim so steep that the seat groove breaks through its outer skin - tried, see README)
+RI_BOT = 54.8;  RI_TOP = 44.6;                  // inner radius at the floor and at the rim: the inside is a straight cone (19 deg lean)
 GD  = 0.8;                                      // groove depth
 CH  = 1.0;                                      // length of the chamfer on both sides of a groove
 function rc(k) = R * cos(LAT[k]);
 function zc(k) = R * sin(LAT[k]);
-// The inside is a straight cone that leans only 22 deg.  (A cone that follows the dome - up to 37 deg at the top -
+// The inside is a straight cone that leans only 19 deg.  (A cone that follows the dome - up to 37 deg at the top -
 // is too steep: where the 40-deg roof of the door meets it, the two lean in different directions and the corner
 // of every layer would hang 0.23 mm past the layer below, more than the 0.2 mm a 45-deg overhang allows.)
 function ri(k) = RI_BOT + (RI_TOP - RI_BOT) * zc(k) / zc(BODY_K);          // inner radius at boundary k (k = 0 .. BODY_K)
@@ -126,9 +127,8 @@ module blocks(k0, k1) difference() { outer_solid(k0, k1); for (k = [k0 : k1]) vj
 // the hollow inside: smooth (a faceted inside would have ledges over the empty cavity)
 module cavity() rotate_extrude($fn = 96) polygon(concat([[0, -LIP - 1], [ri(0), -LIP - 1]], [for (k = [0 : BODY_K]) [ri(k), zc(k)]], [[ri(BODY_K), zc(BODY_K) + 1], [0, zc(BODY_K) + 1]]));
 
-// ---- the entrance: a low-poly arch (vertical walls, then a pointed 40-degree roof): 32 mm wide, 32 mm high,
-//      so the adult penguin (62 %, 26 mm) and the chick (45 %) walk in with >= 1.5 mm to spare (tools/check_door.py) ----
-BORE_W = 16;  BORE_H1 = 13;  BORE_TOP = 0;              // half width, height of the walls, half width of the flat top (0 = pointed roof)
+// ---- the entrance: a low-poly arch (vertical walls, then a pointed 40-degree roof), 28 mm wide and 24 mm high ----
+BORE_W = 14;  BORE_H1 = 7.5;  BORE_TOP = 0;              // half width, height of the walls, half width of the flat top (0 = pointed roof)
 TUN_WALL = 6;                                           // wall of the tunnel
 TUN_FRONT = -(R + 20);                                  // y of the front face of the tunnel
 TRIM_T = 5;  TRIM_W = 3.5;                              // the blue arch ring (separate piece)
@@ -144,10 +144,13 @@ module trim_ring2d() difference() { intersection() { offset(delta = TUN_WALL + T
 module prism_y(y0, y1) translate([0, y0, 0]) rotate([90, 0, 0]) linear_extrude(height = y0 - y1) children();   // 2D (x, z) -> solid from y0 down to y1
 
 // the lid is located by a continuous V-ridge on the rim of the body and a V-groove in the underside of the lid
-// (both only 30 deg from vertical: nothing to bridge, nothing to support)
-RIM_R = (rc(BODY_K) - GD + ri(BODY_K)) / 2 - 0.3;       // middle of the rim
+// (both only 30 deg from vertical: nothing to bridge, nothing to support).  The groove must stay well inside the
+// outer skin of the lid (>= 1.5 mm everywhere - tools/check_pieces.py --wall checks it), so the ridge hugs the inner edge of the rim.
+RIM_R = ri(BODY_K) + 1.6;                               // middle of the ridge (the rim is ri .. rc-GD = 44.6 .. 49.4 wide)
+RIDGE_W = 1.3;  RIDGE_H = 2.2;                          // ridge on the body
+GROOVE_W = 1.6;  GROOVE_H = 2.7;                        // groove in the lid: 0.3 mm wider and 0.5 mm deeper
 module ridge2d(w, h) polygon([[RIM_R - w, 0], [RIM_R + w, 0], [RIM_R, h]]);
-module rim_ridge() translate([0, 0, Z_CUT - eps]) rotate_extrude($fn = 96) ridge2d(1.7, 2.8 + eps);
+module rim_ridge() translate([0, 0, Z_CUT - eps]) rotate_extrude($fn = 96) ridge2d(RIDGE_W, RIDGE_H + eps);
 
 module body_solid() union() {
     difference() {
@@ -178,7 +181,7 @@ module flake2d(Rf = 15.5) union() {
 module flake_prism() translate([0, 0, Z_TOP - 2]) slab(3) rotate(15) flake2d();           // 2 mm inlay + 1 mm raised
 module lid_solid() difference() {
     blocks(BODY_K, 6);
-    translate([0, 0, Z_CUT - eps]) rotate_extrude($fn = 96) ridge2d(2.0, 3.4);
+    translate([0, 0, Z_CUT - eps]) rotate_extrude($fn = 96) ridge2d(GROOVE_W, GROOVE_H);
 }
 module lid(r) {
     if (r == "ice")   difference() { lid_solid(); flake_prism(); }
@@ -202,23 +205,18 @@ SLOT_D = 6.2;  TABL = 5.6;                              // socket depth, tab len
 function stand(p) =
     p == "sign"  ? [-64, -58,  26, 12, 5.5] :
     p == "tree0" ? [-78,  30, -18, 10, 4.0] :
-    p == "tree1" ? [ 72, -22,  14, 10, 4.0] :
-    p == "peng0" ? [ 47, -74, -10, TAB_W[0], TAB_T[0]] :
-    p == "peng1" ? [ 68, -54, -24, TAB_W[1], TAB_T[1]] : [0, 0, 0, 0, 0];
-PS = [0.62, 0.45];                                      // adult and chick (scale of the 42 mm model) - small enough to walk through the door
-TAB_W = [10, 8];  TAB_T = [3.6, 3.2];                   // the tabs are NOT scaled with the figure (a small figure still needs a sturdy plug)
-MOUNDS = [[-39, -62, 6, 3.4], [-69, -34, 5, 3.0], [54, -36, 5.5, 3.2]];     // x, y, radius, height - all fully on the plate (checked)
+    p == "tree1" ? [ 72, -22,  14, 10, 4.0] : [0, 0, 0, 0, 0];
+MOUNDS = [[-39, -62, 6, 3.4], [-69, -34, 5, 3.0], [64, -38, 5.5, 3.2]];     // x, y, radius, height - all fully on the plate (checked)
 module ground_outline() offset(r = -7) offset(r = 7) union() {   // closing: fills the notches between the lobes
     translate([0, 2]) circle(r = 66, $fn = 120);
     translate([-62, -56]) circle(r = 30, $fn = 80);
-    translate([48, -66]) circle(r = 34, $fn = 80);
     translate([0, -68]) circle(r = 31, $fn = 80);
     translate([-76, 28]) circle(r = 24, $fn = 60);
     translate([72, -24]) circle(r = 24, $fn = 60);
 }
 module standee_slot(p) translate([stand(p)[0], stand(p)[1], 0]) rotate(stand(p)[2])
     translate([-stand(p)[3] / 2 - tol, -stand(p)[4] - tol, -SLOT_D]) cube([stand(p)[3] + 2 * tol, stand(p)[4] + 2 * tol, SLOT_D + 1]);
-module standee_slots() for (p = ["sign", "tree0", "tree1", "peng0", "peng1"]) standee_slot(p);
+module standee_slots() for (p = ["sign", "tree0", "tree1"]) standee_slot(p);
 module ground(r) {
     if (r == "snow") difference() {
         union() {
@@ -284,34 +282,6 @@ module tree(i, r) {
     if (r == "snow") translate([0, 0, 1.0]) slab(4.2) tree_snow2d(w, h);
 }
 
-// ----------------------------------------------------------------------------------------
-//  PENGUINS (flat-back relief of flat-bottomed domes, y = 0 at the feet)
-//  roles: body, belly, patch, eyes, beak, feet, scarf
-// ----------------------------------------------------------------------------------------
-module P_BODY() union() {
-    intersection() { D([0, 16], [11.5, 16.5, 9.5]); clipy(0.4); }
-    D([0, 33.5], [8.6, 8.4, 8.2]);                                           // head
-    for (s = [-1, 1]) translate([s * 11.4, 20.5]) rotate(s * 14) D([0, 0], [2.9, 8.8, 4.2]);   // flippers
-}
-module P_BELLY() intersection() { D([0, 15], [7.5, 12.6, 10.6]); clipy(1.6); }
-module P_PATCH() union() { for (s = [-1, 1]) D([s * 3.1, 33.6], [4.3, 4.7, 9.1]); D([0, 31.2], [3.2, 3.2, 9.0]); }
-module P_EYES() for (s = [-1, 1]) E([s * 3.2, 35.2, dz([s * 3.1, 33.6], [4.3, 4.7, 9.1], s * 3.2, 35.2) - 0.3], [1.0, 1.25, 1.0]);
-module P_BEAK() hull() { D([0, 33.0], [3.0, 1.9, 9.6]); D([0, 30.0], [1.5, 1.1, 9.9]); }
-module P_FEET() intersection() { for (s = [-1, 1]) D([s * 4.3, 2.4], [4.0, 2.6, 6.4]); clipy(0.05); }
-module P_SCARF() union() { D([0, 25.2], [9.8, 2.9, 9.2]); translate([4.8, 19.4]) rotate(-8) D([0, 0], [2.3, 5.4, 9.6]); }
-// the tab keeps its real size whatever the scale of the figure (so it is divided by the scale here)
-module P_TAB(i) translate([-TAB_W[i] / 2, -TABL, 0] / PS[i]) cube([TAB_W[i], TABL + 1.5, TAB_T[i]] / PS[i]);
-module peng_role(r, i) {
-    if (r == "body")   difference() { union() { P_BODY(); P_TAB(i); } P_BELLY(); P_PATCH(); P_EYES(); P_BEAK(); P_FEET(); P_SCARF(); }
-    if (r == "belly")  difference() { P_BELLY(); P_SCARF(); P_FEET(); }
-    if (r == "patch")  difference() { P_PATCH(); P_EYES(); P_BEAK(); P_SCARF(); }
-    if (r == "eyes")   P_EYES();
-    if (r == "beak")   difference() { P_BEAK(); P_EYES(); }
-    if (r == "feet")   P_FEET();
-    if (r == "scarf")  P_SCARF();
-}
-module peng(i, r) scale([PS[i], PS[i], PS[i]]) peng_role(r, i);
-
 // ---- a tea-light, only for the renders ----------------------------------------------------
 module tealight(r) {
     if (r == "cup")   translate([0, 0, -5.2]) difference() { cylinder(r = 18.9, h = 14, $fn = 72); translate([0, 0, 11]) cylinder(r = 16.5, h = 4, $fn = 72); }
@@ -321,13 +291,12 @@ module tealight(r) {
 // ----------------------------------------------------------------------------------------
 //  PIECES, ROLES, PLACEMENT
 // ----------------------------------------------------------------------------------------
-function piece_names() = ["ground", "body", "lid", "trim", "sign", "tree0", "tree1", "peng0", "peng1"];
+function piece_names() = ["ground", "body", "lid", "trim", "sign", "tree0", "tree1"];
 function starts(p, pre) = len(p) >= len(pre) && _join([for (i = [0 : len(pre) - 1]) p[i]]) == pre;
 function pidx(p, n) = ord(p[n]) - 48;
 function piece_roles(p) =
     p == "ground" ? ["snow"] : p == "body" ? ["ice", "belt"] : p == "lid" ? ["ice", "flake"] : p == "trim" ? ["ring"] :
     p == "sign" ? ["wood", "text", "snow"] : starts(p, "tree") ? ["green", "snow"] :
-    starts(p, "peng") ? ["body", "belly", "patch", "eyes", "beak", "feet", "scarf"] :
     p == "tealight" ? ["cup", "flame"] : [];
 
 module emit(p, r) {
@@ -337,7 +306,6 @@ module emit(p, r) {
     else if (p == "trim") trim(r);
     else if (p == "sign") sign(r);
     else if (starts(p, "tree")) tree(pidx(p, 4), r);
-    else if (starts(p, "peng")) peng(pidx(p, 4), r);
     else if (p == "tealight") tealight(r);
 }
 module standing(p) translate([stand(p)[0], stand(p)[1], 0]) rotate([0, 0, stand(p)[2]]) rotate([90, 0, 0]) children();
@@ -353,11 +321,10 @@ module local(p) {
 }
 
 // colours of the preview (the real filament colours are in tools/family_palette.py)
-C_WHITE = "#F5F7FA";  C_BLUE = "#8CC4EA";  C_GREEN = "#2F7048";  C_BLACK = "#20232B";  C_ORANGE = "#E58A2E";
+C_WHITE = "#F5F7FA";  C_BLUE = "#8CC4EA";  C_GREEN = "#2F7048";  C_ORANGE = "#E58A2E";
 function filament(p, r) =
     p == "ground" ? C_WHITE : p == "body" ? (r == "belt" ? C_BLUE : C_WHITE) : p == "lid" ? (r == "flake" ? C_BLUE : C_WHITE) :
     p == "trim" ? C_BLUE : p == "sign" ? (r == "wood" ? C_ORANGE : C_WHITE) : starts(p, "tree") ? (r == "green" ? C_GREEN : C_WHITE) :
-    starts(p, "peng") ? ((r == "body" || r == "eyes") ? C_BLACK : (r == "belly" || r == "patch") ? C_WHITE : C_ORANGE) :
     p == "tealight" ? (r == "flame" ? "#FFC060" : "#C9CED6") : "#999999";
 
 module show(p) {
