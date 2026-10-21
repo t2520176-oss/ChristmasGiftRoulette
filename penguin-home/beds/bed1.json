@@ -1,0 +1,208 @@
+{
+ "bed": 1,
+ "colors": [
+  "WHITE",
+  "GREEN",
+  "BLACK",
+  "ORANGE"
+ ],
+ "slots": {
+  "1": "WHITE",
+  "2": "GREEN",
+  "3": "BLACK",
+  "4": "ORANGE"
+ },
+ "pieces": [
+  "ground",
+  "peng0",
+  "peng1",
+  "sign",
+  "tree0",
+  "tree1"
+ ],
+ "footprint_pct": 63.1,
+ "solid_volume_cm3": {
+  "WHITE": 185.4,
+  "GREEN": 4.7,
+  "BLACK": 2.7,
+  "ORANGE": 10.8
+ },
+ "volumes": [
+  {
+   "file": "bed1/ground__snow__WHITE.stl",
+   "piece": "ground",
+   "role": "snow",
+   "color": "WHITE",
+   "hex": "#F5F7FA",
+   "slot": 1
+  },
+  {
+   "file": "bed1/sign__wood__ORANGE.stl",
+   "piece": "sign",
+   "role": "wood",
+   "color": "ORANGE",
+   "hex": "#E58A2E",
+   "slot": 4
+  },
+  {
+   "file": "bed1/sign__text__WHITE.stl",
+   "piece": "sign",
+   "role": "text",
+   "color": "WHITE",
+   "hex": "#F5F7FA",
+   "slot": 1
+  },
+  {
+   "file": "bed1/sign__snow__WHITE.stl",
+   "piece": "sign",
+   "role": "snow",
+   "color": "WHITE",
+   "hex": "#F5F7FA",
+   "slot": 1
+  },
+  {
+   "file": "bed1/tree0__green__GREEN.stl",
+   "piece": "tree0",
+   "role": "green",
+   "color": "GREEN",
+   "hex": "#2F7048",
+   "slot": 2
+  },
+  {
+   "file": "bed1/tree0__snow__WHITE.stl",
+   "piece": "tree0",
+   "role": "snow",
+   "color": "WHITE",
+   "hex": "#F5F7FA",
+   "slot": 1
+  },
+  {
+   "file": "bed1/peng0__body__BLACK.stl",
+   "piece": "peng0",
+   "role": "body",
+   "color": "BLACK",
+   "hex": "#20232B",
+   "slot": 3
+  },
+  {
+   "file": "bed1/peng0__belly__WHITE.stl",
+   "piece": "peng0",
+   "role": "belly",
+   "color": "WHITE",
+   "hex": "#F5F7FA",
+   "slot": 1
+  },
+  {
+   "file": "bed1/peng0__patch__WHITE.stl",
+   "piece": "peng0",
+   "role": "patch",
+   "color": "WHITE",
+   "hex": "#F5F7FA",
+   "slot": 1
+  },
+  {
+   "file": "bed1/peng0__eyes__BLACK.stl",
+   "piece": "peng0",
+   "role": "eyes",
+   "color": "BLACK",
+   "hex": "#20232B",
+   "slot": 3
+  },
+  {
+   "file": "bed1/peng0__beak__ORANGE.stl",
+   "piece": "peng0",
+   "role": "beak",
+   "color": "ORANGE",
+   "hex": "#E58A2E",
+   "slot": 4
+  },
+  {
+   "file": "bed1/peng0__feet__ORANGE.stl",
+   "piece": "peng0",
+   "role": "feet",
+   "color": "ORANGE",
+   "hex": "#E58A2E",
+   "slot": 4
+  },
+  {
+   "file": "bed1/peng0__scarf__ORANGE.stl",
+   "piece": "peng0",
+   "role": "scarf",
+   "color": "ORANGE",
+   "hex": "#E58A2E",
+   "slot": 4
+  },
+  {
+   "file": "bed1/tree1__green__GREEN.stl",
+   "piece": "tree1",
+   "role": "green",
+   "color": "GREEN",
+   "hex": "#2F7048",
+   "slot": 2
+  },
+  {
+   "file": "bed1/tree1__snow__WHITE.stl",
+   "piece": "tree1",
+   "role": "snow",
+   "color": "WHITE",
+   "hex": "#F5F7FA",
+   "slot": 1
+  },
+  {
+   "file": "bed1/peng1__body__BLACK.stl",
+   "piece": "peng1",
+   "role": "body",
+   "color": "BLACK",
+   "hex": "#20232B",
+   "slot": 3
+  },
+  {
+   "file": "bed1/peng1__belly__WHITE.stl",
+   "piece": "peng1",
+   "role": "belly",
+   "color": "WHITE",
+   "hex": "#F5F7FA",
+   "slot": 1
+  },
+  {
+   "file": "bed1/peng1__patch__WHITE.stl",
+   "piece": "peng1",
+   "role": "patch",
+   "color": "WHITE",
+   "hex": "#F5F7FA",
+   "slot": 1
+  },
+  {
+   "file": "bed1/peng1__eyes__BLACK.stl",
+   "piece": "peng1",
+   "role": "eyes",
+   "color": "BLACK",
+   "hex": "#20232B",
+   "slot": 3
+  },
+  {
+   "file": "bed1/peng1__beak__ORANGE.stl",
+   "piece": "peng1",
+   "role": "beak",
+   "color": "ORANGE",
+   "hex": "#E58A2E",
+   "slot": 4
+  },
+  {
+   "file": "bed1/peng1__feet__ORANGE.stl",
+   "piece": "peng1",
+   "role": "feet",
+   "color": "ORANGE",
+   "hex": "#E58A2E",
+   "slot": 4
+  },
+  {
+   "file": "bed1/peng1__scarf__ORANGE.stl",
+   "piece": "peng1",
+   "role": "scarf",
+   "color": "ORANGE",
+   "hex": "#E58A2E",
+   "slot": 4
+  }
+ ]
+}

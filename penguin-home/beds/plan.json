@@ -1,0 +1,72 @@
+{
+ "bed": [
+  256,
+  256
+ ],
+ "max_colors": 4,
+ "tower": [
+  45.0,
+  70.0
+ ],
+ "hex": {
+  "WHITE": "#F5F7FA",
+  "BLUE": "#8CC4EA",
+  "GREEN": "#2F7048",
+  "BLACK": "#20232B",
+  "ORANGE": "#E58A2E"
+ },
+ "overrides": {},
+ "beds": [
+  {
+   "bed": 1,
+   "colors": [
+    "WHITE",
+    "GREEN",
+    "BLACK",
+    "ORANGE"
+   ],
+   "slots": {
+    "1": "WHITE",
+    "2": "GREEN",
+    "3": "BLACK",
+    "4": "ORANGE"
+   },
+   "pieces": [
+    "ground",
+    "peng0",
+    "peng1",
+    "sign",
+    "tree0",
+    "tree1"
+   ],
+   "footprint_pct": 63.1,
+   "solid_volume_cm3": {
+    "WHITE": 185.4,
+    "GREEN": 4.7,
+    "BLACK": 2.7,
+    "ORANGE": 10.8
+   }
+  },
+  {
+   "bed": 2,
+   "colors": [
+    "WHITE",
+    "BLUE"
+   ],
+   "slots": {
+    "1": "WHITE",
+    "2": "BLUE"
+   },
+   "pieces": [
+    "body",
+    "lid",
+    "trim"
+   ],
+   "footprint_pct": 41.2,
+   "solid_volume_cm3": {
+    "WHITE": 146.7,
+    "BLUE": 19.3
+   }
+  }
+ ]
+}

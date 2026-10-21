@@ -1,0 +1,74 @@
+[
+ {
+  "piece": "ground",
+  "roles": [
+   "snow"
+  ]
+ },
+ {
+  "piece": "body",
+  "roles": [
+   "ice",
+   "belt"
+  ]
+ },
+ {
+  "piece": "lid",
+  "roles": [
+   "ice",
+   "flake"
+  ]
+ },
+ {
+  "piece": "trim",
+  "roles": [
+   "ring"
+  ]
+ },
+ {
+  "piece": "sign",
+  "roles": [
+   "wood",
+   "text",
+   "snow"
+  ]
+ },
+ {
+  "piece": "tree0",
+  "roles": [
+   "green",
+   "snow"
+  ]
+ },
+ {
+  "piece": "tree1",
+  "roles": [
+   "green",
+   "snow"
+  ]
+ },
+ {
+  "piece": "peng0",
+  "roles": [
+   "body",
+   "belly",
+   "patch",
+   "eyes",
+   "beak",
+   "feet",
+   "scarf"
+  ]
+ },
+ {
+  "piece": "peng1",
+  "roles": [
+   "body",
+   "belly",
+   "patch",
+   "eyes",
+   "beak",
+   "feet",
+   "scarf"
+  ]
+ }
+]

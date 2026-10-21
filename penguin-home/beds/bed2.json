@@ -1,0 +1,63 @@
+{
+ "bed": 2,
+ "colors": [
+  "WHITE",
+  "BLUE"
+ ],
+ "slots": {
+  "1": "WHITE",
+  "2": "BLUE"
+ },
+ "pieces": [
+  "body",
+  "lid",
+  "trim"
+ ],
+ "footprint_pct": 41.2,
+ "solid_volume_cm3": {
+  "WHITE": 146.7,
+  "BLUE": 19.3
+ },
+ "volumes": [
+  {
+   "file": "bed2/body__ice__WHITE.stl",
+   "piece": "body",
+   "role": "ice",
+   "color": "WHITE",
+   "hex": "#F5F7FA",
+   "slot": 1
+  },
+  {
+   "file": "bed2/body__belt__BLUE.stl",
+   "piece": "body",
+   "role": "belt",
+   "color": "BLUE",
+   "hex": "#8CC4EA",
+   "slot": 2
+  },
+  {
+   "file": "bed2/lid__ice__WHITE.stl",
+   "piece": "lid",
+   "role": "ice",
+   "color": "WHITE",
+   "hex": "#F5F7FA",
+   "slot": 1
+  },
+  {
+   "file": "bed2/lid__flake__BLUE.stl",
+   "piece": "lid",
+   "role": "flake",
+   "color": "BLUE",
+   "hex": "#8CC4EA",
+   "slot": 2
+  },
+  {
+   "file": "bed2/trim__ring__BLUE.stl",
+   "piece": "trim",
+   "role": "ring",
+   "color": "BLUE",
+   "hex": "#8CC4EA",
+   "slot": 2
+  }
+ ]
+}

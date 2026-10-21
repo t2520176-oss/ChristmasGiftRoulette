@@ -1,0 +1,68 @@
+{
+ "1": {
+  "tower_xy": [
+   210.1,
+   248.9,
+   183.5,
+   247.5
+  ],
+  "time": "10h 46m 12s",
+  "filament_g": [
+   86.36,
+   8.51,
+   8.42,
+   12.28
+  ],
+  "tools": [
+   "T0",
+   "T1",
+   "T2",
+   "T3"
+  ],
+  "extrusion_mm": {
+   "Wipe tower": 23151,
+   "Perimeter": 6404,
+   "External perimeter": 6075,
+   "Solid infill": 11803,
+   "Internal infill": 9079,
+   "Bridge infill": 3048,
+   "Top solid infill": 2149
+  },
+  "auto_support_extrusion_mm": {},
+  "tower_gap_to_pieces_mm": 11.8,
+  "tower_inside_bed": true,
+  "tower_extrusion_mm": 23151
+ },
+ "2": {
+  "tower_xy": [
+   209.8,
+   249.2,
+   182.5,
+   203.5
+  ],
+  "time": "8h 29m 32s",
+  "filament_g": [
+   76.73,
+   28.93,
+   0.0,
+   0.0
+  ],
+  "tools": [
+   "T0",
+   "T1"
+  ],
+  "extrusion_mm": {
+   "Wipe tower": 21879,
+   "Perimeter": 12225,
+   "External perimeter": 6983,
+   "Solid infill": 9263,
+   "Internal infill": 10797,
+   "Bridge infill": 492,
+   "Top solid infill": 330
+  },
+  "auto_support_extrusion_mm": {},
+  "tower_gap_to_pieces_mm": 96.0,
+  "tower_inside_bed": true,
+  "tower_extrusion_mm": 21879
+ }
+}
