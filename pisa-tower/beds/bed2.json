@@ -1,0 +1,54 @@
+{
+ "bed": 2,
+ "colors": [
+  "IVORY",
+  "GRAY"
+ ],
+ "slots": {
+  "1": "IVORY",
+  "2": "GRAY"
+ },
+ "pieces": [
+  "top",
+  "tower"
+ ],
+ "footprint_pct": 6.2,
+ "solid_volume_cm3": {
+  "IVORY": 43.8,
+  "GRAY": 18.1
+ },
+ "volumes": [
+  {
+   "file": "bed2/tower__stone__IVORY.stl",
+   "piece": "tower",
+   "role": "stone",
+   "color": "IVORY",
+   "hex": "#EFE6D2",
+   "slot": 1
+  },
+  {
+   "file": "bed2/tower__band__GRAY.stl",
+   "piece": "tower",
+   "role": "band",
+   "color": "GRAY",
+   "hex": "#8E9098",
+   "slot": 2
+  },
+  {
+   "file": "bed2/top__stone__IVORY.stl",
+   "piece": "top",
+   "role": "stone",
+   "color": "IVORY",
+   "hex": "#EFE6D2",
+   "slot": 1
+  },
+  {
+   "file": "bed2/top__band__GRAY.stl",
+   "piece": "top",
+   "role": "band",
+   "color": "GRAY",
+   "hex": "#8E9098",
+   "slot": 2
+  }
+ ]
+}

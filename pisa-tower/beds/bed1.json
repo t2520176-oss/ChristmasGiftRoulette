@@ -1,0 +1,65 @@
+{
+ "bed": 1,
+ "colors": [
+  "IVORY",
+  "GREEN",
+  "RED"
+ ],
+ "slots": {
+  "1": "IVORY",
+  "2": "GREEN",
+  "3": "RED"
+ },
+ "pieces": [
+  "base",
+  "flag"
+ ],
+ "footprint_pct": 12.0,
+ "solid_volume_cm3": {
+  "IVORY": 61.7,
+  "GREEN": 5.6,
+  "RED": 0.0
+ },
+ "volumes": [
+  {
+   "file": "bed1/base__stone__IVORY.stl",
+   "piece": "base",
+   "role": "stone",
+   "color": "IVORY",
+   "hex": "#EFE6D2",
+   "slot": 1
+  },
+  {
+   "file": "bed1/base__green__GREEN.stl",
+   "piece": "base",
+   "role": "green",
+   "color": "GREEN",
+   "hex": "#2F7048",
+   "slot": 2
+  },
+  {
+   "file": "bed1/flag__green__GREEN.stl",
+   "piece": "flag",
+   "role": "green",
+   "color": "GREEN",
+   "hex": "#2F7048",
+   "slot": 2
+  },
+  {
+   "file": "bed1/flag__white__IVORY.stl",
+   "piece": "flag",
+   "role": "white",
+   "color": "IVORY",
+   "hex": "#EFE6D2",
+   "slot": 1
+  },
+  {
+   "file": "bed1/flag__red__RED.stl",
+   "piece": "flag",
+   "role": "red",
+   "color": "RED",
+   "hex": "#C8383E",
+   "slot": 3
+  }
+ ]
+}

@@ -1,0 +1,63 @@
+{
+ "bed": [
+  256,
+  256
+ ],
+ "max_colors": 4,
+ "tower": [
+  45.0,
+  70.0
+ ],
+ "hex": {
+  "IVORY": "#EFE6D2",
+  "GRAY": "#8E9098",
+  "GREEN": "#2F7048",
+  "RED": "#C8383E"
+ },
+ "overrides": {},
+ "beds": [
+  {
+   "bed": 1,
+   "colors": [
+    "IVORY",
+    "GREEN",
+    "RED"
+   ],
+   "slots": {
+    "1": "IVORY",
+    "2": "GREEN",
+    "3": "RED"
+   },
+   "pieces": [
+    "base",
+    "flag"
+   ],
+   "footprint_pct": 12.0,
+   "solid_volume_cm3": {
+    "IVORY": 61.7,
+    "GREEN": 5.6,
+    "RED": 0.0
+   }
+  },
+  {
+   "bed": 2,
+   "colors": [
+    "IVORY",
+    "GRAY"
+   ],
+   "slots": {
+    "1": "IVORY",
+    "2": "GRAY"
+   },
+   "pieces": [
+    "top",
+    "tower"
+   ],
+   "footprint_pct": 6.2,
+   "solid_volume_cm3": {
+    "IVORY": 43.8,
+    "GRAY": 18.1
+   }
+  }
+ ]
+}
