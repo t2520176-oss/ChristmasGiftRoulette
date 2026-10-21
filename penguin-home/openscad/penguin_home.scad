@@ -216,8 +216,9 @@ module ground_outline() offset(r = -7) offset(r = 7) union() {   // closing: fil
     translate([-76, 28]) circle(r = 24, $fn = 60);
     translate([72, -24]) circle(r = 24, $fn = 60);
 }
-module standee_slots() for (p = ["sign", "tree0", "tree1", "peng0", "peng1"]) let(s = stand(p))
-    translate([s[0], s[1], 0]) rotate(s[2]) translate([-s[3] / 2 - tol, -s[4] - tol, -SLOT_D]) cube([s[3] + 2 * tol, s[4] + 2 * tol, SLOT_D + 1]);
+module standee_slot(p) translate([stand(p)[0], stand(p)[1], 0]) rotate(stand(p)[2])
+    translate([-stand(p)[3] / 2 - tol, -stand(p)[4] - tol, -SLOT_D]) cube([stand(p)[3] + 2 * tol, stand(p)[4] + 2 * tol, SLOT_D + 1]);
+module standee_slots() for (p = ["sign", "tree0", "tree1", "peng0", "peng1"]) standee_slot(p);
 module ground(r) {
     if (r == "snow") difference() {
         union() {
@@ -338,7 +339,7 @@ module emit(p, r) {
     else if (starts(p, "peng")) peng(pidx(p, 4), r);
     else if (p == "tealight") tealight(r);
 }
-module standing(p) let(s = stand(p)) translate([s[0], s[1], 0]) rotate([0, 0, s[2]]) rotate([90, 0, 0]) children();
+module standing(p) translate([stand(p)[0], stand(p)[1], 0]) rotate([0, 0, stand(p)[2]]) rotate([90, 0, 0]) children();
 module place(p) {
     if (p == "ground" || p == "body" || p == "lid" || p == "tealight") children();
     else if (p == "trim") translate([0, TUN_FRONT - TRIM_T, 0]) rotate([0, 0, 180]) rotate([90, 0, 0]) children();   // local (x,y,z) -> (-x, z, y)

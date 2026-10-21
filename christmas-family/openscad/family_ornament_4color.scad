@@ -589,14 +589,15 @@ module emit(p, r) {
     else if (starts(p, "tag")) tag(idx(p, 3), r);
 }
 
+function side(p, n) = idx(p, n) == 0 ? -1 : 1;                // -1 = left, +1 = right
 module place(p) {
     if (p == "sky") translate([0, PY, TOP]) rotate([90, 0, 0]) children();
     else if (starts(p, "tree")) translate([tree_x(idx(p, 4)), DECOR_Y, TOP + 0.5]) rotate([90, 0, 0]) children();
     else if (p == "house") translate([0, DECOR_Y, TOP + 0.5]) rotate([90, 0, 0]) children();
     else if (p == "base") children();
     else if (p == "plaque") translate([0, -BASE_D / 2, BASE_H / 2]) rotate([90, 0, 0]) children();
-    else if (starts(p, "holly")) let(s = idx(p, 5) == 0 ? -1 : 1) translate([s * (W / 2 - 10), -BASE_D / 2 + 11, TOP]) rotate(s * -20) children();
-    else if (starts(p, "lantern")) let(s = idx(p, 7) == 0 ? -1 : 1) translate([s * (W / 2 - 9), 6, TOP]) rotate([90, 0, 0]) children();
+    else if (starts(p, "holly")) translate([side(p, 5) * (W / 2 - 10), -BASE_D / 2 + 11, TOP]) rotate(side(p, 5) * -20) children();
+    else if (starts(p, "lantern")) translate([side(p, 7) * (W / 2 - 9), 6, TOP]) rotate([90, 0, 0]) children();
     else if (starts(p, "fig")) translate([fx(idx(p, 3)), FY, TOP]) rotate([90, 0, 0]) children();
     else if (starts(p, "tag")) translate([fx(idx(p, 3)), TAGY, TOP]) rotate([90, 0, 0]) children();
 }
