@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Presentation renders of the SANTA SOUND AMPLIFIER (Blender / Cycles, headless).
 
-  python3 render_scene.py --assembled ../stl/assembled --beds ../beds --scad ../openscad/santa_horn.scad --out ../renders [--quality draft|final] [--only hero,glow]
+  python3 render_scene.py --assembled ../stl/assembled --beds ../beds --params <build>/params.json --out ../renders [--quality draft|final] [--only hero,night]
 
   hero.png      Santa on a table, phone in the slot (day)
   night.png     lights out: a candle-glow inside the grin, spooky background
@@ -35,24 +35,22 @@ def colors_for(stems, overrides):
     return {s: fp.COLOR_HEX[fp.role_color(s.split("__")[0], s.split("__")[1], None, overrides)] for s in stems}
 
 
-def scad_num(scad, name):
-    import re
-    return float(re.search(r"\b%s\s*=\s*([-0-9.]+)" % name, open(scad).read()).group(1))
+def pj(path):
+    return json.load(open(path))
 
 
-def grin_y(scad):
-    """y of the front of the beard where the mouth starts (x = 0), and of the back wall of the mouth"""
-    n = lambda k: scad_num(scad, k)
-    zp, bz = n("MZC") + n("MZH"), n("BD_ZC")
-    bprof = n("BD_R") * (np.sqrt(max(0, 1 - ((bz - zp) / n("BD_ZL")) ** 2)) if zp <= bz else (max(0, 1 - ((zp - bz) / n("BD_ZU")) ** n("BD_PU"))) ** (1 / n("BD_PU")))
-    yf = n("BD_Y") + n("BD_RY") * bprof
-    return yf, yf - n("ROOM")
-
-
-def make_phone(scad, d):
+def make_phone(P, d):
+    """the phone in its slot: body (black) and the glass of the screen (a thin slab on the FRONT face, towards the bell)"""
     os.makedirs(d, exist_ok=True)
-    for r in ("body", "screen"):
-        subprocess.run(["openscad", "-o", os.path.join(d, f"phone__{r}.stl"), scad, "-D", 'part="phone"', "-D", f'role="{r}"'], capture_output=True, check=True)
+    w, t, h = 71.5, 7.65, 146.7
+    y_s, z0 = P["Y_S"], P["Z_SF"] + 0.5
+    body = trimesh.creation.box(extents=[w, t, h])
+    body = body.smoothed() if False else body
+    body.apply_translation([0, y_s, z0 + h / 2])
+    body.export(os.path.join(d, "phone__body.stl"))
+    screen = trimesh.creation.box(extents=[w - 3.0, 0.12, h - 3.0])
+    screen.apply_translation([0, y_s + t / 2 + 0.06, z0 + h / 2])
+    screen.export(os.path.join(d, "phone__screen.stl"))
 
 
 def cut_open(src, dst, names):
@@ -64,14 +62,10 @@ def cut_open(src, dst, names):
         m.export(os.path.join(dst, n + ".stl"))
 
 
-def sound_arrows(scad, path):
-    """arrows along the sound path (chamber -> throat -> mouth), one STL"""
-    y_s, hz0, slot_d = scad_num(scad, "Y_S"), scad_num(scad, "HZ0"), scad_num(scad, "slot_d")
-    phone_t = scad_num(scad, "phone_t")
-    z_sf = scad_num(scad, "RZT") - slot_d
-    y_h0 = y_s + phone_t / 2
-    yf, yb = grin_y(scad)
-    pts = np.array([[2, y_s, z_sf - 3], [2, y_s, hz0 + 7], [2, y_h0 + 4, hz0 + 7], [2, yb - 4, hz0 + 8], [2, yf - 6, hz0 + 14], [2, yf + 34, hz0 + 24]], float)
+def sound_arrows(P, path):
+    """arrows along the sound path (chamber -> tunnel -> bell), one STL"""
+    y_s, z_sf = P["Y_S"], P["Z_SF"]
+    pts = np.array([[2, y_s, z_sf - 3], [2, y_s, P["tun_zc"] + 2], [2, P["throat_y"], P["throat_z"] + 8], [2, P["mouth_y"] + 6, P["mouth_z"] - 2], [2, P["mouth_y"] + 36, P["mouth_z"] + 8]], float)
     parts = []
     for a, b in zip(pts[:-1], pts[1:]):
         parts.append(trimesh.creation.cylinder(radius=1.5, segment=[a, b], sections=16))
@@ -92,12 +86,12 @@ def sound_arrows(scad, path):
     trimesh.util.concatenate(parts).export(path)
 
 
-def make_ui(scad, d):
+def make_ui(P, d):
     """what the phone shows (a music player): a grey disc with a note, a progress bar, three buttons - flat parts just in front of the screen"""
     os.makedirs(d, exist_ok=True)
-    y_s, slot_d = scad_num(scad, "Y_S"), scad_num(scad, "slot_d")
-    z_sf = scad_num(scad, "RZT") - slot_d
-    y = y_s + 3.95 + 0.12
+    y_s = P["Y_S"]
+    z_sf = P["Z_SF"]
+    y = y_s + 3.825 + 0.18
     z0 = z_sf + 0.5
     R = trimesh.transformations.rotation_matrix(np.pi / 2, [1, 0, 0])
 
@@ -134,7 +128,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--assembled", required=True)
     ap.add_argument("--beds", required=True)
-    ap.add_argument("--scad", required=True)
+    ap.add_argument("--params", required=True, help="params.json written by the Blender build")
     ap.add_argument("--out", required=True)
     ap.add_argument("--quality", default="draft", choices=["draft", "final"])
     ap.add_argument("--only", default="")
@@ -147,7 +141,8 @@ def main():
     cols = colors_for(stems, overrides)
     tmp = tempfile.mkdtemp(prefix="santa_render_")
     phone_dir = os.path.join(tmp, "phone")
-    make_phone(a.scad, phone_dir)
+    P = pj(a.params)
+    make_phone(P, phone_dir)
     pc = {"phone__body": fp.COLOR_HEX["BLACK"], "phone__screen": fp.COLOR_HEX["BLUE"]}
     both = os.path.join(tmp, "both")
     os.makedirs(both)
@@ -169,49 +164,48 @@ def main():
                         "fill": [-250, -300, 120], "fill_target": [0, 0, 50], "fill_power": 1.2},
                 light_colors={"key": (1.0, 0.82, 0.62), "rim": (0.62, 0.55, 1.0), "fill": (1.0, 0.9, 0.85)})
     ui_dir = os.path.join(tmp, "ui")
-    make_ui(a.scad, ui_dir)
+    make_ui(P, ui_dir)
     glass = {"stl": os.path.join(phone_dir, "phone__screen.stl"), "pos": [0, 0, 0], "rot": 180, "color": "#0B0D13", "emit": 0.0}
     disc = {"stl": os.path.join(ui_dir, "ui_disc.stl"), "pos": [0, 0, 0], "rot": 180, "color": "#3A3D49", "emit": 0.35}
     marks = {"stl": os.path.join(ui_dir, "ui_marks.stl"), "pos": [0, 0, 0], "rot": 180, "color": "#F1F3F8", "emit": 1.6}
     screen = [glass, disc, marks]
-    yf, yb = grin_y(a.scad)
-    candle = {"stl": os.path.join(ui_dir, "glow.stl"), "pos": [0, -(yb + 6), 0], "rot": 0, "color": "#FFB347", "emit": 0.0,
-              "light": {"power": 1.6, "color": "#FFA23A", "z": 24}}
+    glow = {"stl": os.path.join(ui_dir, "glow.stl"), "pos": [0, -(P["mouth_y"] - 8), 0], "rot": 0, "color": "#FFB347", "emit": 0.0,
+            "light": {"power": 1.2, "color": "#FFB060", "z": P["mouth_z"]}}
     item_both = {"dir": both, "pos": [0, 0, 0], "rot": 180, "colors": allcols, "skip": ["phone__screen"]}
     
     jobs = {}
+    hero_cam = {"location": [250, -430, 150], "target": [0, -8, 78], "lens": 62, "fstop": 24.0}
     jobs["hero"] = dict(base, output=os.path.join(a.out, "hero.png"), floor_color="#8A5C38", world_color="#5A3A26", world_strength=0.8, exposure=0.1,
                         props=True, bokeh=28, bokeh_colors=BOKEH, bokeh_strength=0.5,
-                        items=[item_both], extras=screen,
-                        camera={"location": [250, -470, 170], "target": [0, 0, 88], "lens": 60, "fstop": 22.0})
+                        items=[item_both], extras=screen, camera=hero_cam)
     jobs["night"] = dict(base, output=os.path.join(a.out, "night.png"), world_color="#0B0605", world_strength=0.2, floor_color="#2A1A10", exposure=0.35,
                          props=True, bokeh=46, bokeh_colors=BOKEH, bokeh_strength=0.9, sss={"santa__red": 0.3, "santa__white": 0.6, "santa__peach": 0.5},
-                         items=[item_both], extras=screen + [candle],
-                         lights={"key": [250, -330, 150], "key_target": [0, 0, 30], "key_power": 1.0,
+                         items=[item_both], extras=screen + [glow],
+                         lights={"key": [250, -330, 150], "key_target": [0, 0, 40], "key_power": 1.0,
                                  "rim": [-320, 260, 260], "rim_target": [0, 0, 70], "rim_power": 3.2,
                                  "fill": [-250, -300, 100], "fill_target": [0, 0, 40], "fill_power": 0.25},
                          light_colors={"key": (1.0, 0.55, 0.2), "rim": (0.5, 0.45, 1.0), "fill": (1.0, 0.6, 0.4)},
-                         camera={"location": [250, -470, 170], "target": [0, 0, 88], "lens": 60, "fstop": 16.0})
-    jobs["face"] = dict(base, output=os.path.join(a.out, "face.png"), resolution=wide, exposure=-0.15,
+                         camera=dict(hero_cam, fstop=16.0))
+    jobs["face"] = dict(base, output=os.path.join(a.out, "face.png"), resolution=wide, exposure=-0.1,
                         items=[item_both], extras=screen,
-                        camera={"location": [60, -330, 80], "target": [0, 0, 44], "lens": 62, "fstop": 14.0, "focus": [0, -55, 40]})
-    jobs["top"] = dict(base, output=os.path.join(a.out, "top.png"), resolution=wide, exposure=-0.3,
-                       items=[{"dir": a.assembled, "pos": [0, 0, 0], "rot": 180, "colors": cols}],
-                       camera={"location": [10, -150, 340], "target": [0, 5, 62], "lens": 55, "fstop": 18.0})
+                        camera={"location": [70, -300, 95], "target": [0, -35, 50], "lens": 70, "fstop": 12.0, "focus": [0, -45, 55]})
+    jobs["bell"] = dict(base, output=os.path.join(a.out, "bell.png"), resolution=wide, exposure=-0.05,
+                        items=[item_both], extras=screen,
+                        camera={"location": [40, -250, 70], "target": [0, -42, 30], "lens": 62, "fstop": 12.0, "focus": [0, -48, 28]})
     jobs["side"] = dict(base, output=os.path.join(a.out, "side.png"), resolution=wide, exposure=-0.1,
-                        items=[{"dir": a.assembled, "pos": [0, 0, 0], "rot": 180, "colors": cols}],
-                        camera={"location": [-290, 340, 240], "target": [0, 0, 52], "lens": 55, "fstop": 20.0})
+                        items=[item_both], extras=screen,
+                        camera={"location": [-300, 330, 190], "target": [0, 0, 75], "lens": 58, "fstop": 20.0})
     cut = os.path.join(tmp, "cut")
     cut_open(both, cut, ["santa__red", "santa__white", "santa__peach", "santa__black", "phone__body"])
     arrows = os.path.join(tmp, "arrows.stl")
-    sound_arrows(a.scad, arrows)
+    sound_arrows(P, arrows)
     jobs["section"] = dict(base, output=os.path.join(a.out, "section.png"), resolution=wide, floor_color="#8A5C38", world_color="#5A3A26", world_strength=0.8, exposure=0.1,
                            items=[{"dir": cut, "pos": [0, 0, 0], "rot": 180, "colors": allcols}],
                            extras=[{"stl": arrows, "pos": [0, 0, 0], "rot": 180, "color": "#FFD34A", "emit": 6.0}],
                            lights={"key": [450, -250, 300], "key_target": [0, 0, 50], "key_power": 6.5,
                                    "rim": [-300, 300, 250], "rim_target": [0, 0, 60], "rim_power": 3.0,
                                    "fill": [450, 150, 150], "fill_target": [0, 0, 50], "fill_power": 1.6},
-                           camera={"location": [480, -40, 125], "target": [0, 0, 60], "lens": 70, "fstop": 24.0})
+                           camera={"location": [500, -20, 110], "target": [0, -8, 52], "lens": 62, "fstop": 24.0})
 
     bw, bh = plan["bed"]
     tow = plan.get("tower") or [45, 70]
