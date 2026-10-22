@@ -61,6 +61,7 @@ def layer_test(meshes, layer=0.2, angle=45.0, keep=None):
         parts = []
         for secs in per:
             polys = [Polygon(e[:, :2]) for e in secs[li] if len(e) >= 3]
+            polys = [p if p.is_valid else p.buffer(0) for p in polys]            # outlines that touch themselves (rope strands, curls) are valid after buffer(0)
             polys = [p for p in polys if p.is_valid and p.area > 1e-6]
             cur = None
             for p in sorted(polys, key=lambda q: -q.area):

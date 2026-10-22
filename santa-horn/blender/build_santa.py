@@ -191,7 +191,18 @@ mod.object = slab
 mod.solver = "EXACT"
 bpy.ops.object.modifier_apply(modifier=mod.name)
 remove(slab)
-keep(belt_src, "black__belt", vox=0.45)
+# a band, not a disc: take the body out again (the belt is a 2.2 mm thick shell round the red body)
+core_bm = ico_bm(body_c, (46 - 0.6, 40 - 0.6, 28 - 0.6), subdiv=6)
+core = obj_from_bm(core_bm, "belt_core")
+core_bm.free()
+_select_only(belt_src)
+mod = belt_src.modifiers.new("b2", "BOOLEAN")
+mod.operation = "DIFFERENCE"
+mod.object = core
+mod.solver = "EXACT"
+bpy.ops.object.modifier_apply(modifier=mod.name)
+remove(core)
+keep(belt_src, "black__belt", vox=0.4)
 
 y_back = body_c[1] - (40 + 1.6) * math.sqrt(1 - ((16 - 26) / 29.6) ** 2)
 outer = obj_from_bm(box_bm(-8.5, 8.5, y_back - 1.4, y_back + 2.0, 10.5, 21.5), "bk_o")

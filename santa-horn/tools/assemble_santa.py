@@ -122,21 +122,84 @@ def mesh_role(P, r, x0, y0, dx, dz, sig_mm=0.1, slab=40, halo=3, min_voxels=300)
 
 
 def decimate(m, target):
+    """fewer triangles with manifold3d's simplify (collapses edges inside a tolerance, keeps the surface closed and manifold - the quadric
+    decimators leave pinched 4-face edges); the smallest tolerance from the list that gets under `target` triangles"""
     if target <= 0 or len(m.faces) <= target:
         return m
-    try:
-        import fast_simplification
-    except ImportError:
-        print("   (fast_simplification missing: not decimated)")
-        return m
-    v, f = fast_simplification.simplify(np.asarray(m.vertices, np.float32), np.asarray(m.faces, np.int32), target_reduction=1.0 - target / len(m.faces))
-    out = trimesh.Trimesh(v.astype(float), f, process=False)
+    man = to_m(m)
+    out = None
+    for tol in (0.03, 0.05, 0.08, 0.12, 0.2):
+        out = to_t(man.simplify(tol))
+        if len(out.faces) <= target:
+            break
     out.merge_vertices(digits_vertex=4)
-    try:                                                              # manifold3d splits the pinched (4-face) edges that decimation leaves
-        out = to_t(to_m(out))
-        out.merge_vertices(digits_vertex=4)
-    except SystemExit:
-        pass
+    return out
+
+
+def _welded_bad_edges(v, faces):
+    """(welded vertex index per vertex, welded edges that do not belong to exactly two triangles)"""
+    key = np.round(np.asarray(v, float) * 1e6).astype(np.int64)
+    _, inv = np.unique(key, axis=0, return_inverse=True)
+    inv = inv.reshape(-1)
+    f = inv[faces]
+    e = np.sort(np.concatenate([f[:, [0, 1]], f[:, [1, 2]], f[:, [2, 0]]]), axis=1)
+    ue, cnt = np.unique(e, axis=0, return_counts=True)
+    return inv, ue[cnt != 2]
+
+
+def pinch_edges(t):
+    """number of edges that do not belong to exactly two triangles once the vertices are welded by position (what an STL reader sees)"""
+    return len(_welded_bad_edges(t.vertices, t.faces)[1])
+
+
+def unweld_pinches(t, eps=0.004):
+    """manifold3d keeps a pinch (two sheets that touch along an edge or in a point) as DIFFERENT vertices at the same place; an STL file has no
+    vertex numbers, so a reader welds them and sees a 4-face edge.  Move every vertex that sits on such an edge eps (4 microns) into its own
+    material: the sheets no longer touch, the mesh is closed whatever the reader does."""
+    v = np.asarray(t.vertices, float).copy()
+    moved = 0
+    for it in range(5):
+        inv, bad = _welded_bad_edges(v, t.faces)
+        if len(bad) == 0:
+            break
+        mask = np.isin(inv, np.unique(bad.ravel()))
+        vn = trimesh.Trimesh(v, t.faces, process=False).vertex_normals
+        v[mask] -= vn[mask] * eps * (it + 1)
+        moved += int(mask.sum())
+    return trimesh.Trimesh(v, t.faces, process=False), moved
+
+
+def clean_region(m):
+    """the zero-thickness crumbs that the trimming leaves out, the pinched vertices apart"""
+    keep = [b for b in m.decompose() if b.volume() > 0.5]
+    m = union_all(keep) if keep else m
+    t, moved = unweld_pinches(to_t(m))
+    return t, pinch_edges(t), moved
+
+
+def overlap_volume(meshes):
+    mans = {r: to_m(m) for r, m in meshes.items()}
+    names = list(mans)
+    tot = 0.0
+    for i in range(len(names)):
+        for j in range(i + 1, len(names)):
+            tot += max((mans[names[i]] ^ mans[names[j]]).volume(), 0.0)
+    return tot
+
+
+def finalize(meshes):
+    """Simplifying every colour region on its own moves the shared faces apart: slivers of one region lie inside another one.  Cut them off by
+    priority (black > peach > white > red; a region never contains anything of a stronger one), drop the zero-thickness crumbs this leaves
+    and make every region closed (no pinched edges) - one pass, nothing is simplified afterwards, so nothing moves again."""
+    order = [r for r in ("black", "peach", "white", "red") if r in meshes]
+    mans = {r: to_m(meshes[r]) for r in order}
+    out, acc, info = {}, None, {}
+    for r in order:
+        m = mans[r] if acc is None else mans[r] - acc
+        out[r], n, moved = clean_region(m)
+        info[r] = (n, moved)
+        acc = mans[r] if acc is None else acc + mans[r]
+    print("   overlap of the colour regions after the trim: %.3f mm3; pinched edges left / vertices unwelded: %s" % (overlap_volume(out), info), flush=True)
     return out
 
 
@@ -149,7 +212,7 @@ def main():
     ap.add_argument("--step", type=float, default=0.7, help="how far (in raster pixels) a layer may reach beyond the layer below; with the 56 degree pixel 0.7 = a 65 degree skirt (1.0 = 56 degrees, too tight for a slicer)")
     ap.add_argument("--no-fill", action="store_true")
     ap.add_argument("--reuse", action="store_true", help="re-use the layer stack of the last run (only meshing is redone)")
-    ap.add_argument("--tris", type=int, default=1200000, help="triangles of all regions together after decimation (0 = keep everything)")
+    ap.add_argument("--tris", type=int, default=1500000, help="triangles of all regions together after simplification (0 = keep everything)")
     ap.add_argument("--sigma", type=float, default=0.1, help="smoothing of the voxel surface (mm)")
     a = ap.parse_args()
     t0 = time.time()
@@ -237,6 +300,9 @@ def main():
         tgt = int(a.tris * len(m.faces) / total) if a.tris else 0
         meshes[r] = decimate(m, tgt)
         print("   %-6s %d -> %d triangles, watertight %s" % (r, len(m.faces), len(meshes[r].faces), meshes[r].is_watertight))
+    meshes = finalize(meshes)
+    for r, m in meshes.items():
+        print("   %-6s final: %d triangles, %.1f cm3, watertight %s, winding consistent %s" % (r, len(m.faces), m.volume / 1000, m.is_watertight, m.is_winding_consistent))
     for sub in ("assembled", "print"):
         os.makedirs(os.path.join(a.out, sub), exist_ok=True)
         for r, m in meshes.items():
