@@ -6,7 +6,7 @@
   hero.png      the pumpkin on a table, phone in the slot (day)
   night.png     lights out: a candle-glow inside the grin, spooky background
   face.png      close-up of the face / grin
-  parts.png     the three printed pieces pulled apart (body, face, garnish)
+  side.png      from behind: the cradle ("ears") of the phone slot, the stem and the leaf
   section.png   cut open: the path of the sound from the phone to the grin
   top.png       from above: the phone slot with its ears, the stem, the leaf and the vines
   bed1.png      top-down print layout of bed 1 (body + face), bed2.png = the garnish (see compose_beds.py for the legend)
@@ -40,6 +40,15 @@ def scad_num(scad, name):
     return float(re.search(r"\b%s\s*=\s*([-0-9.]+)" % name, open(scad).read()).group(1))
 
 
+def grin_y(scad):
+    """y of the front (x = 0) and of the back wall of the grin"""
+    n = lambda k: scad_num(scad, k)
+    zp, zc = n("D_ZT"), n("ZC")
+    prof = n("Rx") * (np.sqrt(max(0, 1 - ((zc - zp) / n("RZL")) ** 2)) if zp <= zc else (max(0, 1 - ((zp - zc) / n("RZU")) ** n("PU"))) ** (1 / n("PU")))
+    yf = n("RYF") * prof
+    return yf, yf - n("ROOM")
+
+
 def make_phone(scad, d):
     os.makedirs(d, exist_ok=True)
     for r in ("body", "screen"):
@@ -58,11 +67,12 @@ def cut_open(src, dst, names):
 def sound_arrows(scad, path):
     """arrows along the sound path (chamber -> throat -> mouth), one STL"""
     y_s, hz0, slot_d = scad_num(scad, "Y_S"), scad_num(scad, "HZ0"), scad_num(scad, "slot_d")
-    phone_t, yc, yd = scad_num(scad, "phone_t"), scad_num(scad, "YC"), scad_num(scad, "YD")
+    phone_t = scad_num(scad, "phone_t")
     zc, rzu, topf = scad_num(scad, "ZC"), scad_num(scad, "RZU"), scad_num(scad, "TOPF")
     z_sf = zc + topf * rzu - slot_d
     y_h0 = y_s + phone_t / 2
-    pts = np.array([[2, y_s, z_sf - 3], [2, y_s, hz0 + 7], [2, y_h0 + 4, hz0 + 7], [2, yc, hz0 + 11], [2, yd + 6, hz0 + 15], [2, yd + 40, hz0 + 22]], float)
+    yf, yb = grin_y(scad)
+    pts = np.array([[2, y_s, z_sf - 3], [2, y_s, hz0 + 7], [2, y_h0 + 4, hz0 + 7], [2, yb - 4, hz0 + 8], [2, yf - 6, hz0 + 14], [2, yf + 34, hz0 + 24]], float)
     parts = []
     for a, b in zip(pts[:-1], pts[1:]):
         parts.append(trimesh.creation.cylinder(radius=1.5, segment=[a, b], sections=16))
@@ -154,7 +164,7 @@ def main():
     q = {"draft": dict(samples=24, resolution=[650, 850]), "final": dict(samples=110, resolution=[1300, 1700])}[a.quality]
     wide = {"draft": [900, 650], "final": [1800, 1300]}[a.quality]
     base = dict(q, scene="studio", floor_z=-0.5, floor_color="#3B2F48", world_color="#241B33", world_strength=0.5, exposure=-0.2,
-                default_roughness=0.5, default_sss=0.15, sss={"body__shell": 0.3, "face__shell": 0.3}, props=False, balls=[],
+                default_roughness=0.5, default_sss=0.15, sss={"pumpkin__shell": 0.3}, props=False, balls=[],
                 lights={"key": [300, -380, 300], "key_target": [0, 0, 60], "key_power": 6.0,
                         "rim": [-320, 260, 260], "rim_target": [0, 0, 70], "rim_power": 4.0,
                         "fill": [-250, -300, 120], "fill_target": [0, 0, 50], "fill_power": 1.2},
@@ -165,19 +175,18 @@ def main():
     disc = {"stl": os.path.join(ui_dir, "ui_disc.stl"), "pos": [0, 0, 0], "rot": 180, "color": "#3A3D49", "emit": 0.35}
     marks = {"stl": os.path.join(ui_dir, "ui_marks.stl"), "pos": [0, 0, 0], "rot": 180, "color": "#F1F3F8", "emit": 1.6}
     screen = [glass, disc, marks]
-    yc, yd = scad_num(a.scad, "YC"), scad_num(a.scad, "YD")
-    candle = {"stl": os.path.join(ui_dir, "glow.stl"), "pos": [0, -(yc + 8), 0], "rot": 0, "color": "#FFB347", "emit": 0.0,
+    yf, yb = grin_y(a.scad)
+    candle = {"stl": os.path.join(ui_dir, "glow.stl"), "pos": [0, -(yb + 6), 0], "rot": 0, "color": "#FFB347", "emit": 0.0,
               "light": {"power": 1.6, "color": "#FFA23A", "z": 24}}
     item_both = {"dir": both, "pos": [0, 0, 0], "rot": 180, "colors": allcols, "skip": ["phone__screen"]}
-    soft = {"body__shell": 0.3, "face__shell": 0.3}
-
+    
     jobs = {}
     jobs["hero"] = dict(base, output=os.path.join(a.out, "hero.png"), floor_color="#4A3D58", world_color="#34284A", world_strength=0.7, exposure=0.1,
                         props=True, bokeh=28, bokeh_colors=BOKEH, bokeh_strength=0.5,
                         items=[item_both], extras=screen,
                         camera={"location": [230, -430, 150], "target": [0, 0, 80], "lens": 60, "fstop": 22.0})
     jobs["night"] = dict(base, output=os.path.join(a.out, "night.png"), world_color="#07040F", world_strength=0.18, floor_color="#1C1426", exposure=0.35,
-                         props=True, bokeh=46, bokeh_colors=BOKEH, bokeh_strength=0.9, sss={"body__shell": 0.55, "face__shell": 0.55},
+                         props=True, bokeh=46, bokeh_colors=BOKEH, bokeh_strength=0.9, sss={"pumpkin__shell": 0.55},
                          items=[item_both], extras=screen + [candle],
                          lights={"key": [250, -330, 150], "key_target": [0, 0, 30], "key_power": 1.0,
                                  "rim": [-320, 260, 260], "rim_target": [0, 0, 70], "rim_power": 3.2,
@@ -190,12 +199,11 @@ def main():
     jobs["top"] = dict(base, output=os.path.join(a.out, "top.png"), resolution=wide, exposure=-0.3,
                        items=[{"dir": a.assembled, "pos": [0, 0, 0], "rot": 180, "colors": cols}],
                        camera={"location": [10, -150, 330], "target": [0, 5, 60], "lens": 55, "fstop": 18.0})
-    jobs["parts"] = dict(base, output=os.path.join(a.out, "parts.png"), resolution=wide, exposure=-0.1,
-                         items=[{"dir": a.assembled, "pos": [0, 0, 0], "rot": 180, "colors": cols,
-                                 "offsets": {"face__shell": [0, 52, 0], "garnish__green": [0, 0, 34]}}],
-                         camera={"location": [-260, -330, 230], "target": [0, 5, 45], "lens": 55, "fstop": 20.0})
+    jobs["side"] = dict(base, output=os.path.join(a.out, "side.png"), resolution=wide, exposure=-0.1,
+                        items=[{"dir": a.assembled, "pos": [0, 0, 0], "rot": 180, "colors": cols}],
+                        camera={"location": [-280, 330, 230], "target": [0, 0, 50], "lens": 55, "fstop": 20.0})
     cut = os.path.join(tmp, "cut")
-    cut_open(both, cut, ["body__shell", "face__shell", "garnish__green", "phone__body"])
+    cut_open(both, cut, ["pumpkin__shell", "pumpkin__green", "phone__body"])
     arrows = os.path.join(tmp, "arrows.stl")
     sound_arrows(a.scad, arrows)
     jobs["section"] = dict(base, output=os.path.join(a.out, "section.png"), resolution=wide, floor_color="#56486A", world_color="#3C3052", world_strength=0.8, exposure=0.1,

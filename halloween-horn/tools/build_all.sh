@@ -12,13 +12,16 @@ if [ "${SKIP_EXPORT:-0}" != "1" ]; then
   $PY tools/export_roles.py --scad "$SCAD" --out "$OUT/stl/print" --layout local --members x --names x
   $PY tools/export_roles.py --scad "$SCAD" --out "$OUT/stl/assembled" --layout assembled --members x --names x
 fi
-rm -rf "$OUT/beds" && $PY tools/plan_beds.py --print-dir "$OUT/stl/print" --out "$OUT/beds" --groups palettes/groups.json
+rm -rf "$OUT/beds" "$OUT/beds_1color" && $PY tools/plan_beds.py --print-dir "$OUT/stl/print" --out "$OUT/beds" --groups palettes/groups.json
+# the same bed with ONE filament (no colour change, no wipe tower): the green role is printed in orange
+$PY tools/plan_beds.py --print-dir "$OUT/stl/print" --out "$OUT/beds_1color" --groups palettes/groups.json --palette palettes/one_color.json
 if [ "${CHECKS:-1}" = "1" ]; then
-  $PY tools/check_pieces.py "$OUT/stl/print" --islands 5 --solid body.shell,face.shell,garnish.green --md "$OUT/docs/PRINT_REPORT.md"
-  $PY tools/check_airpath.py --stl "$OUT/stl/assembled/body__shell.stl" "$OUT/stl/assembled/face__shell.stl" --scad "$SCAD" | tee "$OUT/docs/AIRPATH_REPORT.txt"
+  $PY tools/check_pieces.py "$OUT/stl/print" --islands 5 --solid pumpkin.shell,pumpkin.green --md "$OUT/docs/PRINT_REPORT.md"
+  $PY tools/check_airpath.py --stl "$OUT/stl/assembled/pumpkin__shell.stl" --scad "$SCAD" | tee "$OUT/docs/AIRPATH_REPORT.txt"
 fi
 if [ "${SLICE:-1}" = "1" ] && command -v prusa-slicer >/dev/null; then
   $PY tools/slice_check.py --beds "$OUT/beds" --ini slicer/prusaslicer_4color_256.ini --json "$OUT/beds/slice_summary.json"
+  $PY tools/slice_check.py --beds "$OUT/beds_1color" --ini slicer/prusaslicer_4color_256.ini --json "$OUT/beds_1color/slice_summary.json"
 fi
 $PY tools/write_plan_md.py --beds "$OUT/beds" --print-dir "$OUT/stl/print"
 if [ "${SKIP_RENDER:-0}" != "1" ]; then

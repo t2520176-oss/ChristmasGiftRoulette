@@ -1,35 +1,37 @@
 {
  "bed": 1,
  "colors": [
-  "ORANGE"
+  "ORANGE",
+  "GREEN"
  ],
  "slots": {
-  "1": "ORANGE"
+  "1": "ORANGE",
+  "2": "GREEN"
  },
  "pieces": [
-  "body",
-  "face"
+  "pumpkin"
  ],
- "footprint_pct": 33.6,
+ "footprint_pct": 28.0,
  "solid_volume_cm3": {
-  "ORANGE": 621.2
+  "ORANGE": 642.5,
+  "GREEN": 3.5
  },
  "volumes": [
   {
-   "file": "bed1/body__shell__ORANGE.stl",
-   "piece": "body",
+   "file": "bed1/pumpkin__shell__ORANGE.stl",
+   "piece": "pumpkin",
    "role": "shell",
    "color": "ORANGE",
    "hex": "#E8751A",
    "slot": 1
   },
   {
-   "file": "bed1/face__shell__ORANGE.stl",
-   "piece": "face",
-   "role": "shell",
-   "color": "ORANGE",
-   "hex": "#E8751A",
-   "slot": 1
+   "file": "bed1/pumpkin__green__GREEN.stl",
+   "piece": "pumpkin",
+   "role": "green",
+   "color": "GREEN",
+   "hex": "#4F8F3A",
+   "slot": 2
   }
  ]
 }

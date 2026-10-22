@@ -1,0 +1,34 @@
+{
+ "bed": 1,
+ "colors": [
+  "ORANGE"
+ ],
+ "slots": {
+  "1": "ORANGE"
+ },
+ "pieces": [
+  "pumpkin"
+ ],
+ "footprint_pct": 28.0,
+ "solid_volume_cm3": {
+  "ORANGE": 646.1
+ },
+ "volumes": [
+  {
+   "file": "bed1/pumpkin__shell__ORANGE.stl",
+   "piece": "pumpkin",
+   "role": "shell",
+   "color": "ORANGE",
+   "hex": "#E8751A",
+   "slot": 1
+  },
+  {
+   "file": "bed1/pumpkin__green__ORANGE.stl",
+   "piece": "pumpkin",
+   "role": "green",
+   "color": "ORANGE",
+   "hex": "#E8751A",
+   "slot": 1
+  }
+ ]
+}

@@ -17,33 +17,19 @@
   {
    "bed": 1,
    "colors": [
-    "ORANGE"
-   ],
-   "slots": {
-    "1": "ORANGE"
-   },
-   "pieces": [
-    "body",
-    "face"
-   ],
-   "footprint_pct": 33.6,
-   "solid_volume_cm3": {
-    "ORANGE": 621.2
-   }
-  },
-  {
-   "bed": 2,
-   "colors": [
+    "ORANGE",
     "GREEN"
    ],
    "slots": {
-    "1": "GREEN"
+    "1": "ORANGE",
+    "2": "GREEN"
    },
    "pieces": [
-    "garnish"
+    "pumpkin"
    ],
-   "footprint_pct": 3.0,
+   "footprint_pct": 28.0,
    "solid_volume_cm3": {
+    "ORANGE": 642.5,
     "GREEN": 3.5
    }
   }

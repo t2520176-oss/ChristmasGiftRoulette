@@ -6,6 +6,4 @@ Every piece is analysed in its print orientation (all colour regions together).
 
 | piece | size mm | volume cm3 | closed | faces >45 deg mm2 | layer test mm3 | % of piece | worst layer mm2 @ z |
 |---|---|---:|:-:|---:|---:|---:|---|
-| body | 169 x 81 x 99 | 534.8 | yes | 0 | 0.0 | 0.00 | 0.0 @ 0.0 |
-| face | 110 x 75 x 28 | 86.4 | yes | 1 | 0.0 | 0.00 | 0.0 @ 0.3 |
-| garnish | 64 x 31 x 21 | 3.5 | yes | 0 | 0.0 | 0.00 | 0.0 @ 0.0 |
+| pumpkin | 169 x 108 x 99 | 646.1 | yes | 940 | 0.0 | 0.00 | 0.0 @ 0.0 |

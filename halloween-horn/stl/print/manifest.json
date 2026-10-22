@@ -1,19 +1,8 @@
 [
  {
-  "piece": "body",
+  "piece": "pumpkin",
   "roles": [
-   "shell"
-  ]
- },
- {
-  "piece": "face",
-  "roles": [
-   "shell"
-  ]
- },
- {
-  "piece": "garnish",
-  "roles": [
+   "shell",
    "green"
   ]
  }

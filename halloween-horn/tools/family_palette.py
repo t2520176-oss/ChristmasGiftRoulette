@@ -11,7 +11,7 @@ ORDER = ["ORANGE", "GREEN", "BLACK", "BLUE"]
 
 # "piece-kind.role" -> colour
 BASE_ROLES = {
-    "body.shell": "ORANGE", "face.shell": "ORANGE", "garnish.green": "GREEN",
+    "pumpkin.shell": "ORANGE", "pumpkin.green": "GREEN",
     "phone.body": "BLACK", "phone.screen": "BLUE",
 }
 
