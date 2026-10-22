@@ -1,0 +1,51 @@
+{
+ "bed": [
+  256,
+  256
+ ],
+ "max_colors": 4,
+ "tower": [
+  45.0,
+  70.0
+ ],
+ "hex": {
+  "ORANGE": "#E8751A",
+  "GREEN": "#4F8F3A"
+ },
+ "overrides": {},
+ "beds": [
+  {
+   "bed": 1,
+   "colors": [
+    "ORANGE"
+   ],
+   "slots": {
+    "1": "ORANGE"
+   },
+   "pieces": [
+    "body",
+    "face"
+   ],
+   "footprint_pct": 33.6,
+   "solid_volume_cm3": {
+    "ORANGE": 621.2
+   }
+  },
+  {
+   "bed": 2,
+   "colors": [
+    "GREEN"
+   ],
+   "slots": {
+    "1": "GREEN"
+   },
+   "pieces": [
+    "garnish"
+   ],
+   "footprint_pct": 3.0,
+   "solid_volume_cm3": {
+    "GREEN": 3.5
+   }
+  }
+ ]
+}

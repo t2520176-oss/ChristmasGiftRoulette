@@ -1,0 +1,35 @@
+{
+ "bed": 1,
+ "colors": [
+  "ORANGE"
+ ],
+ "slots": {
+  "1": "ORANGE"
+ },
+ "pieces": [
+  "body",
+  "face"
+ ],
+ "footprint_pct": 33.6,
+ "solid_volume_cm3": {
+  "ORANGE": 621.2
+ },
+ "volumes": [
+  {
+   "file": "bed1/body__shell__ORANGE.stl",
+   "piece": "body",
+   "role": "shell",
+   "color": "ORANGE",
+   "hex": "#E8751A",
+   "slot": 1
+  },
+  {
+   "file": "bed1/face__shell__ORANGE.stl",
+   "piece": "face",
+   "role": "shell",
+   "color": "ORANGE",
+   "hex": "#E8751A",
+   "slot": 1
+  }
+ ]
+}

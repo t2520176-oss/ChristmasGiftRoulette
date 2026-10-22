@@ -1,0 +1,50 @@
+{
+ "1": {
+  "tower_xy": null,
+  "time": "12h 28m 52s",
+  "filament_g": [
+   192.43,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "tools": [],
+  "extrusion_mm": {
+   "Custom": 2,
+   "Perimeter": 19127,
+   "External perimeter": 11760,
+   "Solid infill": 8908,
+   "Internal infill": 37393,
+   "Bridge infill": 1002,
+   "Top solid infill": 644
+  },
+  "auto_support_extrusion_mm": {},
+  "tower_gap_to_pieces_mm": null,
+  "tower_inside_bed": null,
+  "tower_extrusion_mm": 0
+ },
+ "2": {
+  "tower_xy": null,
+  "time": "28m 1s",
+  "filament_g": [
+   3.31,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "tools": [],
+  "extrusion_mm": {
+   "Custom": 2,
+   "Perimeter": 442,
+   "External perimeter": 393,
+   "Solid infill": 740,
+   "Internal infill": 150,
+   "Top solid infill": 47,
+   "Bridge infill": 55
+  },
+  "auto_support_extrusion_mm": {},
+  "tower_gap_to_pieces_mm": null,
+  "tower_inside_bed": null,
+  "tower_extrusion_mm": 0
+ }
+}

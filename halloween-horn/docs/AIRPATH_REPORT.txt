@@ -1,0 +1,8 @@
+voxelised: 646 cm3 (4.0 % off the meshes), top of the pumpkin z = 74.7, slot floor z = 33.7
+slot sealed, air from the chamber reaches the outside: YES
+grin plugged: the chamber is closed (no other leak, also not through the joint)
+cross-section of the air channel (mm2), phone side -> grin:
+   throat y=-4: 396   horn y=+8: 569   horn end y=+24: 742   funnel y=+30: 1715   grin y=+35: 2448
+   throat 396 mm2  ->  grin 2448 mm2  (flare 6.2 : 1)
+gap around the phone at the top of the slot: 412 mm2 (phone 71.5 x 7.65 in a slot 78 x 14)  - stuff foam tape around the phone, or use phone_t = 9.2
+RESULT: ok

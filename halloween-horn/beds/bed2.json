@@ -1,0 +1,26 @@
+{
+ "bed": 2,
+ "colors": [
+  "GREEN"
+ ],
+ "slots": {
+  "1": "GREEN"
+ },
+ "pieces": [
+  "garnish"
+ ],
+ "footprint_pct": 3.0,
+ "solid_volume_cm3": {
+  "GREEN": 3.5
+ },
+ "volumes": [
+  {
+   "file": "bed2/garnish__green__GREEN.stl",
+   "piece": "garnish",
+   "role": "green",
+   "color": "GREEN",
+   "hex": "#4F8F3A",
+   "slot": 1
+  }
+ ]
+}

@@ -1,0 +1,20 @@
+[
+ {
+  "piece": "body",
+  "roles": [
+   "shell"
+  ]
+ },
+ {
+  "piece": "face",
+  "roles": [
+   "shell"
+  ]
+ },
+ {
+  "piece": "garnish",
+  "roles": [
+   "green"
+  ]
+ }
+]

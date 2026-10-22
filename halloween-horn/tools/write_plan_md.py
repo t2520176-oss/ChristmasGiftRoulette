@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+"""Write beds/PLAN.md (Korean) from plan.json, bedN.json and slice_summary.json.
+
+  python3 write_plan_md.py --beds ../beds --print-dir ../stl/print
+"""
+import argparse
+import json
+import os
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import family_palette as fp  # noqa: E402
+
+KO = {"ORANGE": "주황", "GREEN": "초록", "BLACK": "검정", "BLUE": "파랑"}
+PIECE_KO = {"body": "본체 — 폰 슬롯 · 챔버 · 목구멍 · 폰을 잡는 귀 · 옆의 작은 호박 (서서 출력)",
+            "face": "얼굴 앞판 — 눈 · 코 · 웃는 입 · 발 (얼굴이 위로 오게 눕혀서 출력)",
+            "garnish": "줄기 · 잎 · 덩굴 (납작한 한 조각, 본체 윗면의 홈에 접착)"}
+ROLE_KO = {"shell": "호박(주황)", "green": "초록"}
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--beds", required=True)
+    ap.add_argument("--print-dir", required=True)
+    a = ap.parse_args()
+    plan = json.load(open(os.path.join(a.beds, "plan.json")))
+    fp.COLOR_HEX.update(plan.get("hex", {}))
+    sl_path = os.path.join(a.beds, "slice_summary.json")
+    sl = json.load(open(sl_path)) if os.path.exists(sl_path) else {}
+    out = ["# 프린트 베드 계획 — HALLOWEEN PUMPKIN SOUND AMPLIFIER", "",
+           f"베드 {plan['bed'][0]:.0f} × {plan['bed'][1]:.0f} mm, 베드당 최대 {plan['max_colors']}색. 조각 하나의 모든 색은 같은 베드에서 출력됩니다.", "",
+           "| 베드 | 필라멘트 슬롯 | 조각 | 베드 점유율 | 예상 시간* | 필라멘트(g)* | 서포트 |", "|---|---|---|---|---|---|---|"]
+    for b in plan["beds"]:
+        s = sl.get(str(b["bed"]), {})
+        slots = " · ".join(b["colors"])
+        g = " / ".join(f"{x:.0f}" for x in s.get("filament_g", [])[:len(b["colors"])]) if s else "-"
+        sup = s.get("auto_support_extrusion_mm") or {}
+        out.append(f"| **{b['bed']}** | {slots} | {len(b['pieces'])} | {b['footprint_pct']} % | {s.get('time', '-')} | {g} | "
+                   f"{'없음' if s and not sup else ('약 %d mm' % round(sum(sup.values()))) if s else '-'} |")
+    out += ["", "\\* PrusaSlicer 2.7 CLI, 0.4 mm 노즐 · 0.2 mm 레이어 · 벽 3 · 인필 12 %(`slicer/prusaslicer_4color_256.ini`). "
+            "일반 프로파일 추정치라 실제 기계에서는 달라집니다. 베드마다 색이 하나뿐이라 색 교환·프라임 타워가 없습니다.", ""]
+    for b in plan["beds"]:
+        n = b["bed"]
+        info = json.load(open(os.path.join(a.beds, f"bed{n}.json")))
+        out += [f"## 베드 {n}", "", f"![bed {n}](../renders/bed{n}.png)", "", "| 슬롯 | 색 | HEX | 순수 모델 부피 |", "|---|---|---|---|"]
+        for slot, c in b["slots"].items():
+            out.append(f"| {slot} | {c} ({KO[c]}) | `{fp.COLOR_HEX[c]}` | {b['solid_volume_cm3'].get(c, 0)} cm³ |")
+        out += ["", "| 조각 | 의미 | 색 구성 |", "|---|---|---|"]
+        byp = {}
+        for v in info["volumes"]:
+            byp.setdefault(v["piece"], []).append(v)
+        for p in sorted(byp):
+            label = PIECE_KO.get(p) or PIECE_KO.get(p.rstrip("0123456789"), p)
+            parts = ", ".join(f"{ROLE_KO.get(v['role'], v['role'])}={v['color']}" for v in byp[p])
+            out.append(f"| `{p}` | {label} | {parts} |")
+        if str(n) in sl:
+            s = sl[str(n)]
+            sup = s.get("auto_support_extrusion_mm") or {}
+            out += ["", f"- 슬라이서 자동 서포트 점검(45°): {'**서포트 없음**' if not sup else '약 %d mm 필라멘트' % round(sum(sup.values()))}",
+                    (f"- 프라임 타워: x {s['tower_xy'][0]}–{s['tower_xy'][1]}, y {s['tower_xy'][2]}–{s['tower_xy'][3]} mm "
+                     f"(모델과 {s['tower_gap_to_pieces_mm']} mm 이상 떨어짐, 베드 안: {'예' if s['tower_inside_bed'] else '아니오'})") if s.get("tower_xy")
+                    else "- 색이 하나라 **색 교환·프라임 타워 없음**"]
+        out.append("")
+    open(os.path.join(a.beds, "PLAN.md"), "w").write("\n".join(out) + "\n")
+    print("wrote", os.path.join(a.beds, "PLAN.md"))
+
+
+if __name__ == "__main__":
+    main()
