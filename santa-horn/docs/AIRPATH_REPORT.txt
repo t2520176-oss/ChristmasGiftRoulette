@@ -1,0 +1,8 @@
+voxelised: 586 cm3 (3.6 % off the meshes), top of the figure z = 80.0, slot floor z = 40.0
+slot sealed, air from the chamber reaches the outside: YES
+horn plugged: the chamber is closed (no other leak)
+cross-section of the air channel (mm2), phone side -> grin:
+   throat: 300   horn: 300   horn end: 304   grin window (front view): 4769
+   throat 300 mm2  ->  grin window 4769 mm2  (flare 15.9 : 1)
+gap around the phone at the top of the slot: 231 mm2 (phone 71.5 x 7.65 in a slot 74 x 12)  - stuff foam tape around the phone, or use phone_t = 9.2
+RESULT: ok

@@ -1,0 +1,36 @@
+{
+ "1": {
+  "tower_xy": [
+   209.5,
+   249.5,
+   182.0,
+   249.0
+  ],
+  "time": "1d 0h 41m 17s",
+  "filament_g": [
+   186.84,
+   101.8,
+   14.82,
+   32.67
+  ],
+  "tools": [
+   "T0",
+   "T1",
+   "T2",
+   "T3"
+  ],
+  "extrusion_mm": {
+   "Wipe tower": 125710,
+   "Perimeter": 24958,
+   "External perimeter": 17677,
+   "Solid infill": 7389,
+   "Internal infill": 35084,
+   "Bridge infill": 1137,
+   "Top solid infill": 599
+  },
+  "auto_support_extrusion_mm": {},
+  "tower_gap_to_pieces_mm": 120.3,
+  "tower_inside_bed": true,
+  "tower_extrusion_mm": 125710
+ }
+}

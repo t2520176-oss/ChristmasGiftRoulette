@@ -1,0 +1,38 @@
+{
+ "bed": [
+  256,
+  256
+ ],
+ "max_colors": 4,
+ "tower": [
+  45.0,
+  70.0
+ ],
+ "hex": {
+  "RED": "#C8102E"
+ },
+ "overrides": {
+  "santa.red": "RED",
+  "santa.white": "RED",
+  "santa.peach": "RED",
+  "santa.black": "RED"
+ },
+ "beds": [
+  {
+   "bed": 1,
+   "colors": [
+    "RED"
+   ],
+   "slots": {
+    "1": "RED"
+   },
+   "pieces": [
+    "santa"
+   ],
+   "footprint_pct": 17.1,
+   "solid_volume_cm3": {
+    "RED": 565.2
+   }
+  }
+ ]
+}

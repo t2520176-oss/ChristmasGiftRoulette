@@ -1,0 +1,45 @@
+{
+ "bed": [
+  256,
+  256
+ ],
+ "max_colors": 4,
+ "tower": [
+  45.0,
+  70.0
+ ],
+ "hex": {
+  "RED": "#C8102E",
+  "WHITE": "#F3EFE6",
+  "PEACH": "#F2B79A",
+  "BLACK": "#1A1A1E"
+ },
+ "overrides": {},
+ "beds": [
+  {
+   "bed": 1,
+   "colors": [
+    "RED",
+    "WHITE",
+    "PEACH",
+    "BLACK"
+   ],
+   "slots": {
+    "1": "RED",
+    "2": "WHITE",
+    "3": "PEACH",
+    "4": "BLACK"
+   },
+   "pieces": [
+    "santa"
+   ],
+   "footprint_pct": 17.1,
+   "solid_volume_cm3": {
+    "RED": 378.0,
+    "WHITE": 162.9,
+    "PEACH": 3.2,
+    "BLACK": 21.1
+   }
+  }
+ ]
+}

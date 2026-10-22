@@ -1,0 +1,59 @@
+{
+ "bed": 1,
+ "colors": [
+  "RED",
+  "WHITE",
+  "PEACH",
+  "BLACK"
+ ],
+ "slots": {
+  "1": "RED",
+  "2": "WHITE",
+  "3": "PEACH",
+  "4": "BLACK"
+ },
+ "pieces": [
+  "santa"
+ ],
+ "footprint_pct": 17.1,
+ "solid_volume_cm3": {
+  "RED": 378.0,
+  "WHITE": 162.9,
+  "PEACH": 3.2,
+  "BLACK": 21.1
+ },
+ "volumes": [
+  {
+   "file": "bed1/santa__red__RED.stl",
+   "piece": "santa",
+   "role": "red",
+   "color": "RED",
+   "hex": "#C8102E",
+   "slot": 1
+  },
+  {
+   "file": "bed1/santa__white__WHITE.stl",
+   "piece": "santa",
+   "role": "white",
+   "color": "WHITE",
+   "hex": "#F3EFE6",
+   "slot": 2
+  },
+  {
+   "file": "bed1/santa__peach__PEACH.stl",
+   "piece": "santa",
+   "role": "peach",
+   "color": "PEACH",
+   "hex": "#F2B79A",
+   "slot": 3
+  },
+  {
+   "file": "bed1/santa__black__BLACK.stl",
+   "piece": "santa",
+   "role": "black",
+   "color": "BLACK",
+   "hex": "#1A1A1E",
+   "slot": 4
+  }
+ ]
+}

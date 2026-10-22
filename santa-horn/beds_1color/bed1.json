@@ -1,0 +1,50 @@
+{
+ "bed": 1,
+ "colors": [
+  "RED"
+ ],
+ "slots": {
+  "1": "RED"
+ },
+ "pieces": [
+  "santa"
+ ],
+ "footprint_pct": 17.1,
+ "solid_volume_cm3": {
+  "RED": 565.2
+ },
+ "volumes": [
+  {
+   "file": "bed1/santa__red__RED.stl",
+   "piece": "santa",
+   "role": "red",
+   "color": "RED",
+   "hex": "#C8102E",
+   "slot": 1
+  },
+  {
+   "file": "bed1/santa__white__RED.stl",
+   "piece": "santa",
+   "role": "white",
+   "color": "RED",
+   "hex": "#C8102E",
+   "slot": 1
+  },
+  {
+   "file": "bed1/santa__peach__RED.stl",
+   "piece": "santa",
+   "role": "peach",
+   "color": "RED",
+   "hex": "#C8102E",
+   "slot": 1
+  },
+  {
+   "file": "bed1/santa__black__RED.stl",
+   "piece": "santa",
+   "role": "black",
+   "color": "RED",
+   "hex": "#C8102E",
+   "slot": 1
+  }
+ ]
+}

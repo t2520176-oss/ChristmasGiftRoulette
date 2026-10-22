@@ -1,0 +1,26 @@
+{
+ "1": {
+  "tower_xy": null,
+  "time": "9h 30m 21s",
+  "filament_g": [
+   157.08,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "tools": [],
+  "extrusion_mm": {
+   "Custom": 2,
+   "Perimeter": 13976,
+   "External perimeter": 8376,
+   "Solid infill": 5540,
+   "Internal infill": 32547,
+   "Bridge infill": 1119,
+   "Top solid infill": 599
+  },
+  "auto_support_extrusion_mm": {},
+  "tower_gap_to_pieces_mm": null,
+  "tower_inside_bed": null,
+  "tower_extrusion_mm": 0
+ }
+}
