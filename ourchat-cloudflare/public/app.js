@@ -6,12 +6,15 @@ const MAX_TIMEOUT = 2147483000;
 const MAX_PHOTO_INPUT = 20 * 1024 * 1024;
 const MAX_PHOTO_BYTES = 128 * 1024;
 const MAX_REQUEST_BYTES = 4 * 1024 * 1024;
+// Seconds the server may hold an idle update request; it answers at once when something new arrives.
+const POLL_WAIT = 15;
 const state = {
   member: null, peer: null, messages: [], receipts: [], nodes: new Map(),
   seen: new Set(), cursor: "0", initialBoundary: "0", initialized: false,
   hasMore: false, loadingOlder: false, syncing: false, syncAgain: false,
   generation: 0, senders: new Set(), visible: new Set(), lastRead: "0", reading: false,
   pollTimer: null, expiryTimer: null, noticeTimer: null, readTimer: null,
+  pollAbort: null, serverTime: 0, peerOnline: null, fastEmpty: 0, retryDelay: 0,
   composing: false, unread: 0, copyTarget: null, copyRestore: null, copyRevision: 0,
   sound: false, audio: null, registration: null, pushAvailable: false, pushRegistered: false, lastPresence: 0,
   photo: null, photoRevision: 0, objectUrls: new Set(), uploads: new Set(), viewer: null,
@@ -53,22 +56,27 @@ function responseError(status, data) {
   return new ApiError(message, status);
 }
 async function api(path, options = {}) {
+  // `signal` lets the caller replace a held request; status -1 marks that, not a failure.
+  const { timeout: limit = 20000, signal: outer, ...init } = options;
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 20000);
-  const headers = new Headers(options.headers);
-  if (options.body !== undefined) headers.set("Content-Type", "application/json");
+  const timeout = setTimeout(() => controller.abort(), limit);
+  const replace = () => controller.abort();
+  outer?.addEventListener("abort", replace, { once: true });
+  const headers = new Headers(init.headers);
+  if (init.body !== undefined) headers.set("Content-Type", "application/json");
   try {
-    const response = await fetch(path, { ...options, headers, credentials: "same-origin", cache: "no-store", signal: controller.signal });
+    const response = await fetch(path, { ...init, headers, credentials: "same-origin", cache: "no-store", signal: controller.signal });
     const data = await response.json().catch(() => null);
     if (!response.ok) throw responseError(response.status, data);
     if (data && Number.isFinite(data.serverTime)) anchor(data.serverTime);
     else if (response.headers.get("Date")) anchor(response.headers.get("Date"));
     return data;
   } catch (error) {
+    if (outer?.aborted) throw new ApiError("The request was replaced.", -1);
     if (controller.signal.aborted) throw new ApiError("The connection took too long. Please try again.", 0);
     if (error instanceof ApiError) throw error;
     throw new ApiError("Unable to connect. Check your internet connection and try again.", 0);
-  } finally { clearTimeout(timeout); }
+  } finally { clearTimeout(timeout); outer?.removeEventListener("abort", replace); }
 }
 const post = (path, data) => api(path, { method: "POST", body: JSON.stringify(data) });
 function setError(message) { $("chat-error").textContent = message || ""; $("chat-error").hidden = !message; }
@@ -428,26 +436,40 @@ function acceptMetadata(data) {
     }
   }
   state.lastRead = state.receipts.find((receipt) => receipt.user_id === state.member.id)?.last_read_message_id || state.lastRead;
+  state.peerOnline = Boolean(data.peerOnline);
+  if (Number.isFinite(data.serverTime)) state.serverTime = Math.floor(data.serverTime);
   $("peer-status").textContent = !navigator.onLine ? "Offline" : data.peerOnline ? "Online" : "Away";
 }
 function schedulePoll(delay = 5000) {
   clearTimeout(state.pollTimer);
   if (state.member && visiblePage()) state.pollTimer = setTimeout(sync, delay);
 }
-async function sync() {
+// After the first load the server holds each update request until a message, the peer's read
+// receipt or the peer's online state changes, so news arrives in about a second without a
+// request every few seconds. `since` and `po` tell it what this device already knows.
+function updatePath() {
+  let path = `/api/messages?after=${encodeURIComponent(state.cursor)}&wait=${POLL_WAIT}`;
+  if (state.serverTime > 0) path += `&since=${state.serverTime}`;
+  if (state.peerOnline !== null) path += `&po=${state.peerOnline ? 1 : 0}`;
+  return path;
+}
+async function sync(interrupt = false) {
   if (!state.member || !visiblePage()) return;
-  if (state.syncing) { state.syncAgain = true; return; }
+  if (state.syncing) { state.syncAgain = true; if (interrupt) state.pollAbort?.abort(); return; }
   if (!navigator.onLine) { setConnection("You’re offline. Your draft stays here."); schedulePoll(); return; }
   state.syncing = true;
   const generation = state.generation;
-  let pendingMore = false;
+  const started = Date.now();
+  let pendingMore = false, failed = false, gotRows = false;
   try {
     for (let page = 0; page < 20; page++) {
       if (!visiblePage()) { pendingMore = false; return; }
       const initial = !state.initialized;
-      const data = await api(`/api/messages${initial ? "" : `?after=${encodeURIComponent(state.cursor)}`}`);
+      state.pollAbort = new AbortController();
+      const data = await api(initial ? "/api/messages" : updatePath(), initial ? { signal: state.pollAbort.signal } : { signal: state.pollAbort.signal, timeout: (POLL_WAIT + 10) * 1000 });
       if (generation !== state.generation || !state.member) return;
       const rows = Array.isArray(data.messages) ? data.messages : [];
+      if (rows.length) gotRows = true;
       const nextCursor = newest(rows);
       acceptMetadata(data);
       if (initial) {
@@ -468,13 +490,20 @@ async function sync() {
   } catch (error) {
     if (generation !== state.generation) return;
     if (error.status === 401) { endSession("Your session ended. Please sign in again."); return; }
-    setConnection(navigator.onLine ? "Reconnecting…" : "You’re offline. Your draft stays here.");
-    if (error.status === 503) setError(error.message);
+    // Status -1 means a newer request replaced this one (tab shown again, network back): not a failure.
+    if (error.status !== -1) {
+      failed = true;
+      setConnection(navigator.onLine ? "Reconnecting…" : "You’re offline. Your draft stays here.");
+      if (error.status === 503) setError(error.message);
+    }
   } finally {
     if (generation === state.generation) {
-      state.syncing = false;
+      state.syncing = false; state.pollAbort = null;
       const soon = pendingMore || state.syncAgain; state.syncAgain = false;
-      schedulePoll(soon ? 100 : 5000);
+      // Answers that come back at once with nothing new (an older server, or a bug) must not turn into a request storm.
+      state.fastEmpty = !failed && !gotRows && Date.now() - started < 1000 ? state.fastEmpty + 1 : 0;
+      if (failed) state.retryDelay = Math.min(5000, state.retryDelay ? state.retryDelay * 2 : 1500); else state.retryDelay = 0;
+      schedulePoll(failed ? state.retryDelay : soon ? 100 : state.fastEmpty >= 3 ? 3000 : 0);
     }
   }
 }
@@ -560,6 +589,8 @@ function endSession(message = "") {
   const oldKey = draftKey();
   ++state.generation;
   clearTimeout(state.pollTimer); clearTimeout(state.expiryTimer); clearTimeout(state.readTimer);
+  state.pollAbort?.abort(); state.pollAbort = null;
+  state.serverTime = 0; state.peerOnline = null; state.fastEmpty = 0; state.retryDelay = 0;
   dismissNotice(); closeCopy();
   closeViewer(); clearPhoto(); photoError();
   for (const xhr of state.uploads) xhr.abort();
@@ -764,18 +795,21 @@ $("signout").addEventListener("click", async () => {
 });
 document.addEventListener("visibilitychange", () => {
   prune();
-  if (visiblePage()) { sync(); presence(true); scheduleRead(); }
-  else { clearTimeout(state.pollTimer); clearTimeout(state.readTimer); dismissNotice(); presence(false); }
+  // A held request may sit on a connection the phone dropped while the tab was away, so always start a fresh one.
+  if (visiblePage()) { sync(true); presence(true); scheduleRead(); }
+  else { clearTimeout(state.pollTimer); clearTimeout(state.readTimer); state.pollAbort?.abort(); dismissNotice(); presence(false); }
 });
 window.addEventListener("focus", () => { prune(); if (state.member && visiblePage()) { sync(); scheduleRead(); } });
-window.addEventListener("online", () => { prune(); if (state.member) { sync(); presence(visiblePage()); } });
+window.addEventListener("online", () => { prune(); if (state.member) { sync(true); presence(visiblePage()); } });
 window.addEventListener("offline", () => { if (state.member) { setConnection("You’re offline. Your draft stays here."); $("peer-status").textContent = "Offline"; } });
-window.addEventListener("pageshow", () => { prune(); if (state.member && visiblePage()) sync(); });
+window.addEventListener("pageshow", () => { prune(); if (state.member && visiblePage()) sync(true); });
 window.addEventListener("pagehide", () => {
   saveDraft();
   // A same-origin credentialed keepalive uses JSON and preserves the server's Origin checks.
   if (state.member) fetch("/api/presence", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: '{"online":false}', keepalive: true }).catch(() => {});
 });
+// A sync can now last up to POLL_WAIT seconds, so the "online" heartbeat keeps its own clock (the server counts 45 s as away).
+setInterval(() => { if (state.member && visiblePage() && now() - state.lastPresence > 20000) presence(true); }, 5000);
 window.visualViewport?.addEventListener("resize", viewport);
 window.visualViewport?.addEventListener("scroll", viewport);
 window.addEventListener("resize", () => { viewport(); autosize(); });

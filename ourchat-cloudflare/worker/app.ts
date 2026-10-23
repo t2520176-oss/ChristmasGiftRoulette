@@ -19,6 +19,12 @@ const COOKIE_NAME = '__Host-ourchat-session';
 const encoder = new TextEncoder();
 const PASSWORD_CONTEXT = encoder.encode('OurChat Cloudflare password verification v1');
 const MESSAGE_LIMIT = 50;
+const PRESENCE_MS = 45_000;
+const POLL_WAIT_MAX_MS = 16_000;
+const POLL_STEP_MS = 700;
+// Workers Free allows 50 subrequests (D1 calls included) per invocation; 24 probes
+// (about 16 s of waiting) plus sign-in check and answer stay well below that.
+const POLL_MAX_PROBES = 24;
 const CHUNK_CODE_UNITS = 196_608;
 const MAX_ID = BigInt(Number.MAX_SAFE_INTEGER);
 
@@ -404,6 +410,45 @@ const MESSAGE_COLUMNS = `CAST(messages.id AS TEXT) AS id, sender_id, client_nonc
   message_images.byte_length AS image_bytes, message_images.width AS image_width, message_images.height AS image_height`;
 const MESSAGE_FROM = 'messages LEFT JOIN message_images ON message_images.message_id = messages.id';
 
+/** A held update request: answered as soon as something the caller has not seen yet appears. */
+interface PollWait { ms: number; since: number | null; peerOnline: boolean | null }
+
+function parsePollWait(url: URL, hasCursor: boolean): PollWait | null {
+  const wait = url.searchParams.get('wait');
+  if (!hasCursor || wait === null) return null;
+  const since = url.searchParams.get('since');
+  const peerOnline = url.searchParams.get('po');
+  if (!/^\d{1,2}$/.test(wait) || (since !== null && !/^\d{1,15}$/.test(since))
+      || (peerOnline !== null && peerOnline !== '0' && peerOnline !== '1')) {
+    throw new HttpError(400, 'Invalid update wait.');
+  }
+  const ms = Math.min(Number(wait) * 1000, POLL_WAIT_MAX_MS);
+  return ms > 0 ? { ms, since: since === null ? null : Number(since), peerOnline: peerOnline === null ? null : peerOnline === '1' } : null;
+}
+
+/**
+ * Holds an idle update request instead of answering "nothing new" every few
+ * seconds. One tiny indexed probe every 0.7 s keeps incoming messages, the
+ * peer's read receipts and the peer's online state within about a second,
+ * while the client makes far fewer requests than a short poll would.
+ */
+async function waitForChange(env: Env, auth: Auth, after: string, wait: PollWait, signal: AbortSignal): Promise<void> {
+  const deadline = Date.now() + wait.ms;
+  for (let probe = 0; probe < POLL_MAX_PROBES && !signal.aborted; probe++) {
+    const now = Date.now();
+    const seen = await env.DB.prepare(`SELECT
+        EXISTS (SELECT 1 FROM messages WHERE id > CAST(? AS INTEGER) AND created_at > ?) AS fresh,
+        EXISTS (SELECT 1 FROM read_receipts WHERE user_id = ? AND updated_at >= ?) AS receipt,
+        EXISTS (SELECT 1 FROM presence WHERE user_id = ? AND online = 1 AND last_seen > ?) AS online`)
+      .bind(after, now - RETENTION_MS, auth.peer.id, wait.since ?? Number.MAX_SAFE_INTEGER, auth.peer.id, now - PRESENCE_MS)
+      .first<{ fresh: number; receipt: number; online: number }>();
+    if (!seen || seen.fresh || seen.receipt || (wait.peerOnline !== null && !!seen.online !== wait.peerOnline)) return;
+    const remaining = deadline - Date.now();
+    if (remaining <= 0) return;
+    await new Promise<void>((resolve) => setTimeout(resolve, Math.min(POLL_STEP_MS, remaining)));
+  }
+}
+
 async function listMessages(request: Request, env: Env, auth: Auth): Promise<Response> {
   const url = new URL(request.url);
   const before = parseId(url.searchParams.get('before'), false);
@@ -411,18 +456,30 @@ async function listMessages(request: Request, env: Env, auth: Auth): Promise<Res
   const rawAfter = url.searchParams.get('after');
   const after = rawAfter === '0' ? '0' : parseId(rawAfter, false);
   if (before && after) throw new HttpError(400, 'Use only one page cursor.');
+  const wait = parsePollWait(url, !!after);
+  if (wait && after) await waitForChange(env, auth, after, wait, request.signal);
+  // Taken after any wait, so the client's next "since" is not older than what this answer reports.
   const now = Date.now();
   const direction = after ? 'ASC' : 'DESC';
   const cursorCondition = before ? 'AND messages.id < CAST(? AS INTEGER)' : after ? 'AND messages.id > CAST(? AS INTEGER)' : '';
   const parameters: (number | string)[] = [now - RETENTION_MS];
   if (before || after) parameters.push((before || after)!);
-  const rows = await env.DB.prepare(`SELECT ${MESSAGE_COLUMNS} FROM ${MESSAGE_FROM}
-    WHERE created_at > ? ${cursorCondition} ORDER BY messages.id ${direction} LIMIT ${MESSAGE_LIMIT + 1}`)
-    .bind(...parameters).all<MessageRow>();
+  // One round trip for the page, receipts and presence; D1 runs a batch together.
+  const [page, receiptRows, presenceRow] = await env.DB.batch<unknown>([
+    env.DB.prepare(`SELECT ${MESSAGE_COLUMNS} FROM ${MESSAGE_FROM}
+      WHERE created_at > ? ${cursorCondition} ORDER BY messages.id ${direction} LIMIT ${MESSAGE_LIMIT + 1}`)
+      .bind(...parameters),
+    env.DB.prepare(`SELECT r.user_id, CAST(m.id AS TEXT) AS last_read_message_id
+      FROM read_receipts r LEFT JOIN messages m ON m.id = r.last_read_message_id AND m.created_at > ?`)
+      .bind(now - RETENTION_MS),
+    env.DB.prepare('SELECT online, last_seen FROM presence WHERE user_id = ?').bind(auth.peer.id),
+  ]);
+  const rows = page.results as MessageRow[];
+  const peerPresence = presenceRow.results[0] as { online: number; last_seen: number } | undefined;
   const messages: ChatMessage[] = [];
   const bodyRows: MessageRow[] = [];
   let rawBudget = 0;
-  for (const row of rows.results.slice(0, MESSAGE_LIMIT)) {
+  for (const row of rows.slice(0, MESSAGE_LIMIT)) {
     if (rawBudget + row.body_bytes > MAX_PAGE_BYTES - 2048 && bodyRows.length) break;
     bodyRows.push(row);
     rawBudget += row.body_bytes;
@@ -440,20 +497,14 @@ async function listMessages(request: Request, env: Env, auth: Auth): Promise<Res
     messages.push(message);
     totalBytes += bytes;
   }
-  const hasMore = rows.results.length > messages.length;
+  const hasMore = rows.length > messages.length;
   if (!after) messages.reverse();
-  const [receiptRows, peerPresence] = await Promise.all([
-    env.DB.prepare(`SELECT r.user_id, CAST(m.id AS TEXT) AS last_read_message_id
-      FROM read_receipts r LEFT JOIN messages m ON m.id = r.last_read_message_id AND m.created_at > ?`)
-      .bind(now - RETENTION_MS).all<{ user_id: MemberId; last_read_message_id: string | null }>(),
-    env.DB.prepare('SELECT online, last_seen FROM presence WHERE user_id = ?')
-      .bind(auth.peer.id).first<{ online: number; last_seen: number }>(),
-  ]);
+  const receiptList = receiptRows.results as { user_id: MemberId; last_read_message_id: string | null }[];
   const receipts = auth.config.members.map(({ id }) => ({
     user_id: id,
-    last_read_message_id: receiptRows.results.find((receipt) => receipt.user_id === id)?.last_read_message_id ?? null,
+    last_read_message_id: receiptList.find((receipt) => receipt.user_id === id)?.last_read_message_id ?? null,
   }));
-  return json({ messages, hasMore, receipts, peerOnline: !!peerPresence?.online && peerPresence.last_seen > now - 45_000, serverTime: now });
+  return json({ messages, hasMore, receipts, peerOnline: !!peerPresence?.online && peerPresence.last_seen > now - PRESENCE_MS, serverTime: now });
 }
 
 async function createMessage(request: Request, env: Env, auth: Auth, ctx: ExecutionContext): Promise<Response> {

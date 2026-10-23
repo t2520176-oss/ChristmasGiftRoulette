@@ -354,6 +354,97 @@ describe('messages, chunk storage and bounded pagination', () => {
   });
 });
 
+describe('held update requests deliver news within about a second', () => {
+  const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+  const timed = async (path: string, cookie: string) => {
+    const started = Date.now();
+    const body = await (await call(path, { cookie })).json() as any;
+    return { body, ms: Date.now() - started };
+  };
+
+  it('answers at once when something newer than the cursor already exists', async () => {
+    const husband = await login();
+    const first = await seed('already here');
+    const second = await seed('also here');
+    const { body, ms } = await timed(`/api/messages?after=${first}&wait=10&po=0`, husband);
+    expect(body.messages.map((message: any) => message.id)).toEqual([second]);
+    expect(ms).toBeLessThan(1500);
+  });
+
+  it('holds an idle request and releases it when the other member sends', async () => {
+    const husband = await login();
+    const wife = await login(2);
+    const known = await seed('earlier');
+    const started = Date.now();
+    const held = timed(`/api/messages?after=${known}&wait=10&since=${Date.now()}`, husband);
+    await sleep(1500);
+    const sent = await send(wife, 'hello while you wait');
+    const { body, ms } = await held;
+    expect(body.messages.map((message: any) => message.id)).toEqual([sent.id]);
+    expect(ms).toBeGreaterThanOrEqual(1400);
+    expect(Date.now() - started).toBeLessThan(5000);
+  });
+
+  it('gives up empty after the requested wait and reports the server time to continue from', async () => {
+    const husband = await login();
+    const known = await seed('quiet');
+    const { body, ms } = await timed(`/api/messages?after=${known}&wait=2&since=${Date.now()}&po=0`, husband);
+    expect(body.messages).toEqual([]);
+    expect(body.hasMore).toBe(false);
+    expect(ms).toBeGreaterThanOrEqual(1800);
+    expect(ms).toBeLessThan(4500);
+    expect(Math.abs(body.serverTime - Date.now())).toBeLessThan(1000);
+  });
+
+  it('wakes for the other member read receipt but not for the caller own', async () => {
+    const husband = await login();
+    const wife = await login(2);
+    const mine = await send(husband, 'did you see this');
+    const held = timed(`/api/messages?after=${mine.id}&wait=10&since=${Date.now()}`, husband);
+    await sleep(1200);
+    expect((await call('/api/read', { cookie: wife, body: { message_id: mine.id } })).status).toBe(200);
+    const { body, ms } = await held;
+    expect(body.messages).toEqual([]);
+    expect(body.receipts).toContainEqual({ user_id: 'member-2', last_read_message_id: mine.id });
+    expect(ms).toBeLessThan(4500);
+    const own = timed(`/api/messages?after=${mine.id}&wait=2&since=${Date.now()}`, husband);
+    await sleep(500);
+    expect((await call('/api/read', { cookie: husband, body: { message_id: mine.id } })).status).toBe(200);
+    expect((await own).ms).toBeGreaterThanOrEqual(1800);
+  });
+
+  it('wakes when the other member goes online or away compared with what the caller shows', async () => {
+    const husband = await login();
+    const wife = await login(2);
+    const known = await seed('presence');
+    const online = timed(`/api/messages?after=${known}&wait=10&po=0`, husband);
+    await sleep(1200);
+    await call('/api/presence', { cookie: wife, body: { online: true } });
+    const arrived = await online;
+    expect(arrived.body.peerOnline).toBe(true);
+    expect(arrived.ms).toBeLessThan(4500);
+    const away = timed(`/api/messages?after=${known}&wait=10&po=1`, husband);
+    await sleep(1200);
+    await call('/api/presence', { cookie: wife, body: { online: false } });
+    expect((await away).body.peerOnline).toBe(false);
+  });
+
+  it('ignores the wait for first loads and older pages, and rejects malformed wait values', async () => {
+    const husband = await login();
+    const only = await seed('only message');
+    expect((await timed('/api/messages?wait=10', husband)).ms).toBeLessThan(1500);
+    expect((await timed(`/api/messages?before=${only}&wait=10`, husband)).ms).toBeLessThan(1500);
+    for (const query of ['wait=abc', 'wait=100', 'wait=-1', 'wait=1&since=abc', 'wait=1&po=2', 'wait=1.5']) {
+      expect((await call(`/api/messages?after=${only}&${query}`, { cookie: husband })).status).toBe(400);
+    }
+    expect((await timed(`/api/messages?after=${only}&wait=0`, husband)).ms).toBeLessThan(1500);
+  });
+
+  it('still requires a valid session while waiting', async () => {
+    expect((await call('/api/messages?after=0&wait=10')).status).toBe(401);
+  });
+});
+
 describe('rolling seven-day visibility and scheduled physical deletion', () => {
   it('hides at exactly 168 hours for both accounts and rejects expired read acknowledgements', async () => {
     const now = 1_800_000_000_000;

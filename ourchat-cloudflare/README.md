@@ -26,6 +26,12 @@ The old Supabase project is inactive, and the user has explicitly requested that
 
 Local verification passed 40 real Workers/D1 checks, Chromium/service-worker scenarios, and two-account real local server tests for reciprocal chat, persistence, copying and sign-out. Local results do not establish a working hosted login; verify each deployment at its own URL. Actual hosted Cron execution and physical-phone notification behavior also need verification there.
 
+## Message delivery speed
+
+An open chat no longer asks "anything new?" every five seconds. It sends one update request, and the Worker holds it for up to about 15 seconds, checking D1 every 0.7 seconds. The request is answered as soon as a message from the other member, their read receipt, or a change in their online status appears, so incoming messages show up in about a second. When nothing happens the request ends empty and the page immediately sends the next one. Hiding the tab cancels the held request, and showing it again starts a fresh one. If a server ever answers instantly with nothing new, the page backs off to one request every three seconds.
+
+This uses fewer requests than the old five-second polling (roughly one per 15 seconds instead of one per five), but more D1 row reads. Each wait makes about 22 small indexed D1 queries, well under the 50-subrequest limit of a Workers Free invocation. Tune `POLL_STEP_MS`, `POLL_MAX_PROBES` and `POLL_WAIT_MAX_MS` in `worker/app.ts` and `POLL_WAIT` in `public/app.js` together. After deploying, check the Workers dashboard for CPU-limit errors and the D1 "rows read" count over a day.
+
 ## Free-plan limits
 
 ### Photos
