@@ -1,0 +1,9 @@
+{
+  "appId": "com.pixelform.palmtarot",
+  "appName": "Palm Tarot",
+  "webDir": "www",
+  "backgroundColor": "#0d0b1a",
+  "plugins": {
+    "SystemBars": { "style": "DARK", "insetsHandling": "css" }
+  }
+}

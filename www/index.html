@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palm & Tarot · 손금 타로</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Gowun+Batang:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0b1a; --bg2:#17132b; --panel:rgba(255,255,255,.04); --line:rgba(226,191,120,.25);
+  --gold:#e2bf78; --gold2:#f6dfa6; --ink:#ece6f6; --muted:#a69cbf; --rose:#c98bb9;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:"Gowun Batang","Cormorant Garamond",serif;min-height:100vh;line-height:1.65;
+  background:radial-gradient(1200px 600px at 50% -10%,#2a1f4d 0%,transparent 60%),radial-gradient(800px 500px at 100% 100%,#251634 0%,transparent 60%),var(--bg);}
+body.en{font-family:"Cormorant Garamond","Gowun Batang",serif;font-size:18px}
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:calc(20px + var(--safe-area-inset-top,env(safe-area-inset-top,0px))) 18px calc(80px + var(--safe-area-inset-bottom,env(safe-area-inset-bottom,0px)))}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.brand{font-family:Cinzel,serif;letter-spacing:.18em;color:var(--gold);font-size:14px}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{background:none;border:0;color:var(--muted);font:600 13px Cinzel,serif;padding:7px 14px;cursor:pointer;letter-spacing:.08em}
+.lang button.on{background:var(--gold);color:#1b1430}
+.hero{text-align:center;padding:34px 0 26px}
+.hero h1{font-family:Cinzel,"Gowun Batang",serif;font-weight:700;font-size:clamp(28px,7vw,44px);letter-spacing:.06em;
+  background:linear-gradient(180deg,var(--gold2),var(--gold) 60%,#b48a45);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);margin-top:8px}
+.steps{display:flex;justify-content:center;gap:8px;margin:6px 0 22px}
+.steps span{width:30px;height:3px;border-radius:3px;background:rgba(255,255,255,.12)}
+.steps span.on{background:var(--gold)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:18px;backdrop-filter:blur(4px)}
+.panel h2{font-family:Cinzel,"Gowun Batang",serif;color:var(--gold);font-size:19px;letter-spacing:.05em;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.panel h2 .n{font-size:12px;border:1px solid var(--gold);border-radius:50%;width:24px;height:24px;display:inline-grid;place-items:center}
+label.lbl{display:block;color:var(--muted);font-size:14px;margin:4px 0 6px}
+textarea,select{width:100%;background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:12px;color:var(--ink);font:inherit;padding:12px}
+textarea{min-height:76px;resize:vertical}
+.drop{margin-top:16px;border:1.5px dashed var(--line);border-radius:16px;padding:22px;text-align:center;cursor:pointer;transition:.2s;position:relative}
+.drop:hover{border-color:var(--gold)}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.drop .ico{font-size:30px;color:var(--gold)}
+.drop small{display:block;color:var(--muted);margin-top:4px}
+.preview{display:none;margin-top:14px;text-align:center}
+.preview img{max-width:100%;max-height:300px;border-radius:12px;border:1px solid var(--line)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:18px;width:100%;padding:14px 18px;border-radius:14px;border:0;cursor:pointer;
+  background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1b1430;font:700 16px "Gowun Batang",Cinzel,serif;letter-spacing:.03em}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--gold)}
+.note{font-size:13px;color:var(--muted);margin-top:12px}
+.err{color:#ff9fa8;font-size:14px;margin-top:10px}
+.hidden{display:none!important}
+.loader{text-align:center;padding:30px 0;color:var(--muted)}
+.orb{width:64px;height:64px;margin:0 auto 14px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0%,#c9b4ff 18%,#5a3fa0 55%,#1d1240 100%);
+  box-shadow:0 0 40px #7d5fd0;animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.08);box-shadow:0 0 70px #a38cff}}
+.lines{display:grid;gap:12px}
+.lineItem{border-left:2px solid var(--gold);padding:4px 0 4px 14px}
+.lineItem b{color:var(--gold2);font-family:Cinzel,"Gowun Batang",serif;font-size:15px;letter-spacing:.03em}
+.lineItem p{color:var(--ink);font-size:15px}
+.summary{margin-top:16px;padding:14px;border-radius:12px;background:rgba(226,191,120,.08);font-style:italic}
+.manual{display:grid;gap:12px;margin-top:14px}
+/* tarot */
+.fan{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:6px}
+.fan .back{width:62px;height:104px;cursor:pointer;transition:transform .25s,opacity .25s}
+.fan .back:hover{transform:translateY(-6px)}
+.fan .back.picked{opacity:.15;pointer-events:none;transform:translateY(-10px)}
+.spread{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.slot{text-align:center}
+.slot .pos{font-family:Cinzel,"Gowun Batang",serif;color:var(--gold);font-size:13px;letter-spacing:.12em;margin-bottom:8px}
+.flip{perspective:900px;width:100%;max-width:150px;aspect-ratio:3/5;margin:0 auto}
+.flip .inner{position:relative;width:100%;height:100%;transition:transform .9s cubic-bezier(.3,.7,.3,1);transform-style:preserve-3d}
+.flip.show .inner{transform:rotateY(180deg)}
+.flip .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.flip .front{transform:rotateY(180deg)}
+.flip .front.rev svg{transform:rotate(180deg)}
+.flip svg{width:100%;height:100%;display:block;filter:drop-shadow(0 6px 18px rgba(0,0,0,.5))}
+.cname{margin-top:8px;font-size:14px;color:var(--ink);min-height:2.6em}
+.cname em{display:block;font-style:normal;color:var(--rose);font-size:12px}
+.kw{font-size:12px;color:var(--muted)}
+/* reading */
+.reading h3{font-family:Cinzel,"Gowun Batang",serif;color:var(--gold2);font-size:22px;text-align:center;margin-bottom:14px}
+.reading .sec{margin-top:16px}
+.reading .sec b{display:block;color:var(--gold);font-size:14px;letter-spacing:.08em;margin-bottom:4px}
+.reading p{white-space:pre-wrap}
+.advice{margin-top:18px;padding:16px;border:1px solid var(--gold);border-radius:14px;text-align:center;font-size:17px}
+/* palm scan */
+.scanBox{position:relative;display:inline-block;max-width:100%;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.scanBox img{display:block;max-width:100%;max-height:340px;border:0;border-radius:0}
+.scanBox svg.ov{position:absolute;inset:0;width:100%;height:100%}
+.scanBox .grid{position:absolute;inset:0;opacity:0;transition:opacity .6s;
+  background-image:linear-gradient(rgba(143,211,255,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(143,211,255,.18) 1px,transparent 1px);background-size:22px 22px}
+.scanBox .bar{position:absolute;left:0;right:0;height:60px;top:-60px;opacity:0;
+  background:linear-gradient(180deg,transparent,rgba(143,211,255,.35) 70%,#bfe8ff 98%,transparent);box-shadow:0 8px 24px rgba(143,211,255,.5)}
+.scanBox .tint{position:absolute;inset:0;background:rgba(10,8,30,.0);transition:background .6s}
+.scanBox .corner{position:absolute;width:22px;height:22px;border:2px solid #8fd3ff;opacity:0;transition:opacity .4s}
+.scanBox .c1{top:8px;left:8px;border-right:0;border-bottom:0}.scanBox .c2{top:8px;right:8px;border-left:0;border-bottom:0}
+.scanBox .c3{bottom:8px;left:8px;border-right:0;border-top:0}.scanBox .c4{bottom:8px;right:8px;border-left:0;border-top:0}
+.scanBox .hud{position:absolute;left:10px;right:10px;bottom:12px;text-align:center;font:600 12px Cinzel,"Gowun Batang",sans-serif;letter-spacing:.08em;color:#bfe8ff;text-shadow:0 0 8px #3aa0ff;opacity:0}
+.scanBox .pct{position:absolute;top:12px;left:0;right:0;text-align:center;font:700 13px Cinzel,monospace;color:#bfe8ff;text-shadow:0 0 8px #3aa0ff;opacity:0}
+.scanBox.scanning .grid,.scanBox.scanning .corner,.scanBox.scanning .hud,.scanBox.scanning .pct{opacity:1}
+.scanBox.scanning .tint{background:rgba(10,8,30,.35)}
+.scanBox.scanning .bar{opacity:1;animation:scan 2.2s ease-in-out infinite}
+@keyframes scan{0%{top:-60px}50%{top:calc(100% - 10px)}100%{top:-60px}}
+.scanBox.scanning .corner{animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:.3}}
+.ov path.ln{fill:none;stroke-width:1;stroke-linecap:round;filter:url(#glow);stroke-dasharray:100;stroke-dashoffset:100}
+.ov path.ln.draw{animation:draw 1.4s ease-out forwards}
+.ov path.ln.done{stroke-dashoffset:0}
+@keyframes draw{to{stroke-dashoffset:0}}
+.ov .dot{opacity:0}.ov .dot.on{opacity:1;animation:dotp 1s ease-in-out infinite}
+@keyframes dotp{50%{opacity:.4}}
+.palmFig{text-align:center;margin-bottom:16px}
+.legend{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:8px;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+/* shuffle stage */
+.stage{position:relative;height:300px;margin:10px auto 0;max-width:520px;touch-action:none;user-select:none;-webkit-user-select:none}
+.stage .tc{position:absolute;left:50%;top:50%;width:66px;height:110px;margin:-55px 0 0 -33px;transition:transform .45s cubic-bezier(.3,.7,.3,1),opacity .4s,filter .3s;will-change:transform;cursor:grab}
+.stage .tc svg{width:100%;height:100%;display:block;filter:drop-shadow(0 4px 10px rgba(0,0,0,.55))}
+.stage.fanned .tc{cursor:pointer}
+.stage.fanned .tc:hover{filter:brightness(1.25)}
+.stage .tc.gone{opacity:0;pointer-events:none}
+.stage .hint{position:absolute;left:0;right:0;bottom:0;text-align:center;font-size:13px;color:var(--muted);pointer-events:none}
+.ctrls{display:flex;gap:10px}.ctrls .btn{margin-top:12px}
+@media (max-width:420px){.stage{height:270px}.stage .tc{width:54px;height:90px;margin:-45px 0 0 -27px}}
+.gear{background:none;border:1px solid var(--line);color:var(--gold);width:34px;height:34px;border-radius:50%;font-size:17px;cursor:pointer}
+.modal{position:fixed;inset:0;z-index:50;background:rgba(5,4,15,.75);display:grid;place-items:center;padding:18px}
+.mbox{width:100%;max-width:420px;background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:22px}
+.mbox input{width:100%;background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:12px;color:var(--ink);font:inherit;padding:12px}
+.banner{margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:13px;color:var(--gold2);cursor:pointer}
+footer{text-align:center;color:var(--muted);font-size:12px;margin-top:20px}
+@media (max-width:420px){.fan .back{width:52px;height:88px}.spread{gap:8px}.panel{padding:18px}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div class="wrap">
+  <header>
+    <div class="brand">PALM · TAROT</div>
+    <div style="display:flex;gap:8px;align-items:center"><div class="lang"><button data-l="ko">한국어</button><button data-l="en">EN</button></div><button class="gear" id="gearBtn" aria-label="settings">⚙</button></div>
+  </header>
+
+  <div class="hero">
+    <h1 data-t="title"></h1>
+    <p data-t="subtitle"></p>
+  </div>
+  <div class="steps"><span></span><span></span><span></span><span></span></div>
+
+  <!-- STEP 1 -->
+  <section class="panel" id="s1">
+    <h2><span class="n">1</span><span data-t="s1h"></span></h2>
+    <label class="lbl" data-t="qLabel"></label>
+    <textarea id="q" data-ph="qPh"></textarea>
+
+    <div id="aiUpload">
+      <div class="drop" id="drop">
+        <input type="file" id="file" accept="image/*">
+        <div class="ico">✋</div>
+        <div data-t="upload"></div>
+        <small data-t="uploadTip"></small>
+      </div>
+      <div class="preview" id="preview">
+        <div class="scanBox" id="scanBox">
+          <img id="previewImg" alt="">
+          <div class="tint"></div><div class="grid"></div><div class="bar"></div>
+          <svg class="ov" id="ov" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+          <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
+          <div class="pct" id="pct"></div><div class="hud" id="hud"></div>
+        </div>
+      </div>
+      <button class="btn" id="analyzeBtn" disabled data-t="analyze"></button>
+    </div>
+
+    <div id="manualBox" class="hidden">
+      <p class="note" data-t="manualNote"></p><div class="banner" id="keyBanner" data-t="needKey"></div>
+      <div class="manual" id="manual"></div>
+      <button class="btn" id="manualBtn" data-t="manualGo"></button>
+    </div>
+    <div class="err hidden" id="err1"></div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="panel hidden" id="s2">
+    <h2><span class="n">2</span><span data-t="s2h"></span></h2>
+    <div class="loader hidden" id="palmLoad"><div class="orb"></div><span data-t="palmLoading"></span></div>
+    <div id="palmOut"></div>
+    <button class="btn hidden" id="toTarot" data-t="toTarot"></button>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="panel hidden" id="s3">
+    <h2><span class="n">3</span><span data-t="s3h"></span></h2>
+    <p class="note" id="pickNote"></p>
+    <div id="deckArea">
+      <div class="stage" id="stage"><div class="hint" id="stageHint"></div></div>
+      <div class="ctrls"><button class="btn ghost" id="shuffleBtn" data-t="shuffle"></button><button class="btn" id="spreadBtn" disabled data-t="spreadBtn"></button></div>
+    </div>
+    <div class="spread" id="spread"></div>
+    <button class="btn hidden" id="readBtn" data-t="readBtn"></button>
+  </section>
+
+  <!-- STEP 4 -->
+  <section class="panel hidden" id="s4">
+    <h2><span class="n">4</span><span data-t="s4h"></span></h2>
+    <div class="loader hidden" id="readLoad"><div class="orb"></div><span data-t="readLoading"></span></div>
+    <div class="reading" id="readOut"></div>
+    <div class="err hidden" id="err4"></div>
+    <button class="btn ghost hidden" id="restart" data-t="restart"></button>
+  </section>
+
+  <footer data-t="footer"></footer>
+</div>
+<div class="modal hidden" id="modal"><div class="mbox">
+  <h2 style="font-family:Cinzel,'Gowun Batang',serif;color:var(--gold);font-size:18px;margin-bottom:10px" data-t="setTitle"></h2>
+  <p class="note" style="margin-top:0" data-t="setDesc"></p>
+  <label class="lbl" style="margin-top:12px" data-t="setKey"></label>
+  <input id="keyIn" type="password" autocomplete="off" placeholder="sk-ant-...">
+  <label class="lbl" style="margin-top:12px" data-t="setModel"></label>
+  <input id="modelIn" type="text" autocomplete="off">
+  <p class="note">console.anthropic.com → API Keys</p>
+  <div class="err hidden" id="keyErr"></div>
+  <div class="ctrls"><button class="btn ghost" id="keyDel" data-t="setDel"></button><button class="btn" id="keySave" data-t="setSave"></button></div>
+  <button class="btn ghost" id="modalClose" style="margin-top:10px" data-t="setClose"></button>
+</div></div>
+
+<script>
+/* ---------- i18n ---------- */
+const T={
+ko:{title:"손금 × 타로",subtitle:"손바닥에 새겨진 길과 카드가 전하는 메시지를 함께 읽어요",
+ s1h:"질문과 손바닥",qLabel:"마음속 질문 (선택)",qPh:"예) 올해 이직해도 괜찮을까요?",
+ upload:"손바닥 사진 올리기",uploadTip:"밝은 곳에서 주로 쓰는 손을 펴고 찍어주세요",analyze:"손금 분석하기",
+ manualNote:"AI 사진 분석을 쓸 수 없는 환경이에요. 내 손금 모양을 직접 골라주세요.",manualGo:"손금 확인하기",
+ s2h:"손금 풀이",palmLoading:"손바닥의 선을 읽고 있어요…",toTarot:"타로 카드 뽑으러 가기",
+ notPalm:"손바닥이 잘 보이지 않아요. 손을 활짝 편 사진으로 다시 올려주세요.",
+ shuffle:"카드 섞기",spreadBtn:"카드 펼치기",hintWash:"덱을 손가락으로 문질러 섞을 수도 있어요",
+ shuffleNote:"질문을 떠올리며 카드를 섞어주세요. 충분히 섞였다면 펼치세요.",
+ scan:["손바닥 윤곽 감지 중","감정선 추적 중","두뇌선 추적 중","생명선 추적 중","운명선 추적 중","손금 패턴 해석 중"],scanDone:"분석 완료",
+ s3h:"카드 세 장 고르기",pick:n=>`마음을 가라앉히고 끌리는 카드를 골라주세요 (${n}/3)`,picked:"카드가 모두 펼쳐졌어요",
+ pos:["과거","현재","미래"],rev:"역방향",up:"정방향",readBtn:"손금과 카드 결합 해석 보기",
+ s4h:"결합 리딩",readLoading:"손금과 카드의 이야기를 엮고 있어요…",
+ secOverview:"전체 흐름",secCards:"카드별 메시지",secPalm:"손금과의 연결",secAdvice:"오늘의 조언",
+ restart:"처음부터 다시",hand:{left:"왼손",right:"오른손",unknown:"손"},
+ heart:"감정선",head:"두뇌선",life:"생명선",fate:"운명선",mounts:"손바닥 언덕",
+ setTitle:"AI 설정",setDesc:"Claude API 키를 입력하면 손금 사진 AI 분석과 AI 결합 해석이 켜져요. 키는 이 기기에만 저장돼요.",
+ setKey:"Claude API 키",setModel:"모델",setSave:"저장",setDel:"키 삭제",setClose:"닫기",
+ needKey:"⚙ 설정에서 API 키를 넣으면 손금 사진 AI 분석을 쓸 수 있어요",keyBad:"API 키가 올바르지 않아요. 설정에서 확인해 주세요.",keyEmpty:"키를 입력해 주세요.",
+ footer:"재미로 보는 운세예요. 중요한 결정은 스스로의 판단을 믿으세요.",
+ errAI:"해석을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.",errRate:"요청이 많아요. 잠시 후 다시 시도해 주세요."},
+en:{title:"Palm × Tarot",subtitle:"Read the paths in your palm together with the message of the cards",
+ s1h:"Your question & palm",qLabel:"Your question (optional)",qPh:"e.g. Is this a good year to change jobs?",
+ upload:"Upload a palm photo",uploadTip:"Open your dominant hand in good light",analyze:"Read my palm",
+ manualNote:"AI photo reading isn't available here. Pick the shape of your lines instead.",manualGo:"Read my lines",
+ s2h:"Palm reading",palmLoading:"Tracing the lines of your palm…",toTarot:"Draw tarot cards",
+ notPalm:"I can't see a palm clearly. Please upload a photo of an open hand.",
+ shuffle:"Shuffle",spreadBtn:"Spread the cards",hintWash:"You can also swirl the deck with your finger",
+ shuffleNote:"Hold your question in mind as you shuffle. Spread the cards when it feels right.",
+ scan:["DETECTING PALM OUTLINE","TRACING HEART LINE","TRACING HEAD LINE","TRACING LIFE LINE","TRACING FATE LINE","DECODING PATTERNS"],scanDone:"ANALYSIS COMPLETE",
+ s3h:"Choose three cards",pick:n=>`Breathe, and pick the cards that call to you (${n}/3)`,picked:"Your spread is revealed",
+ pos:["Past","Present","Future"],rev:"Reversed",up:"Upright",readBtn:"See the combined reading",
+ s4h:"Combined reading",readLoading:"Weaving your palm and cards together…",
+ secOverview:"The overall flow",secCards:"Card by card",secPalm:"Link to your palm",secAdvice:"Advice for today",
+ restart:"Start over",hand:{left:"Left hand",right:"Right hand",unknown:"Hand"},
+ heart:"Heart line",head:"Head line",life:"Life line",fate:"Fate line",mounts:"Mounts",
+ setTitle:"AI settings",setDesc:"Enter a Claude API key to enable AI palm photo reading and AI combined readings. The key is stored only on this device.",
+ setKey:"Claude API key",setModel:"Model",setSave:"Save",setDel:"Remove key",setClose:"Close",
+ needKey:"⚙ Add an API key in settings to enable AI palm photo reading",keyBad:"The API key is invalid. Please check it in settings.",keyEmpty:"Please enter a key.",
+ footer:"For entertainment only. Trust your own judgment for important decisions.",
+ errAI:"Couldn't get the reading. Please try again shortly.",errRate:"Too many requests. Please try again shortly."}
+};
+let lang="ko";
+try{const s=localStorage.getItem("pt_lang");if(s==="en"||s==="ko")lang=s;}catch(e){}
+const $=id=>document.getElementById(id);
+const L=o=>o?(o[lang]??o.ko??o.en??""):"";
+
+/* ---------- tarot deck ---------- */
+const MAJ=[
+["바보","The Fool","0","✦","새 출발·자유·모험","beginnings, freedom, a leap"],
+["마법사","The Magician","I","∞","의지·실현·재능","will, manifestation, skill"],
+["여사제","The High Priestess","II","☾","직관·비밀·내면의 지혜","intuition, mystery, inner wisdom"],
+["여황제","The Empress","III","♀","풍요·돌봄·창조","abundance, nurture, creation"],
+["황제","The Emperor","IV","♂","질서·책임·권위","structure, responsibility, authority"],
+["교황","The Hierophant","V","♉","전통·가르침·신뢰","tradition, guidance, trust"],
+["연인","The Lovers","VI","♡","사랑·선택·조화","love, choice, union"],
+["전차","The Chariot","VII","♋","추진력·의지·승리","drive, willpower, victory"],
+["힘","Strength","VIII","♌","용기·인내·부드러운 힘","courage, patience, gentle power"],
+["은둔자","The Hermit","IX","✧","성찰·고독·탐구","introspection, solitude, seeking"],
+["운명의 수레바퀴","Wheel of Fortune","X","☸","변화·순환·기회","cycles, change, opportunity"],
+["정의","Justice","XI","⚖","균형·공정·책임","balance, fairness, accountability"],
+["매달린 사람","The Hanged Man","XII","♆","내려놓음·관점 전환","surrender, new perspective"],
+["죽음","Death","XIII","♏","끝맺음·변환·새 국면","endings, transformation, renewal"],
+["절제","Temperance","XIV","♐","조화·절제·치유","harmony, moderation, healing"],
+["악마","The Devil","XV","♑","집착·유혹·속박","attachment, temptation, bondage"],
+["탑","The Tower","XVI","♨","격변·깨달음·해방","upheaval, revelation, release"],
+["별","The Star","XVII","★","희망·치유·영감","hope, healing, inspiration"],
+["달","The Moon","XVIII","☽","불안·환상·무의식","uncertainty, illusion, the subconscious"],
+["태양","The Sun","XIX","☉","기쁨·성공·활력","joy, success, vitality"],
+["심판","Judgement","XX","♇","각성·부름·재출발","awakening, calling, rebirth"],
+["세계","The World","XXI","⊕","완성·통합·성취","completion, wholeness, fulfilment"]];
+const SUITS=[
+ {k:"wands",ko:"완드",en:"Wands",kwKo:"열정·행동",kwEn:"passion, action"},
+ {k:"cups",ko:"컵",en:"Cups",kwKo:"감정·관계",kwEn:"emotion, relationships"},
+ {k:"swords",ko:"소드",en:"Swords",kwKo:"생각·갈등",kwEn:"thought, conflict"},
+ {k:"pentacles",ko:"펜타클",en:"Pentacles",kwKo:"재물·현실",kwEn:"money, material life"}];
+const RANKS=[
+ ["에이스","Ace","A","새로운 시작","a fresh start"],["2","Two","2","균형과 선택","balance and choice"],
+ ["3","Three","3","성장과 협력","growth and cooperation"],["4","Four","4","안정과 휴식","stability and rest"],
+ ["5","Five","5","갈등과 상실","conflict and loss"],["6","Six","6","회복과 조화","recovery and harmony"],
+ ["7","Seven","7","도전과 시험","challenge and testing"],["8","Eight","8","움직임과 숙련","movement and mastery"],
+ ["9","Nine","9","결실 직전","near fulfilment"],["10","Ten","10","완결과 무게","culmination"],
+ ["페이지","Page","P","소식과 배움","news and learning"],["나이트","Knight","Kn","추진과 모험","pursuit and adventure"],
+ ["퀸","Queen","Q","성숙한 내면","inner mastery"],["킹","King","K","통솔과 책임","command and responsibility"]];
+const DECK=[];
+MAJ.forEach((m,i)=>DECK.push({id:"M"+i,major:true,name:{ko:m[0],en:m[1]},num:m[2],glyph:m[3],kw:{ko:m[4],en:m[5]}}));
+SUITS.forEach(s=>RANKS.forEach((r,i)=>DECK.push({id:s.k+i,major:false,suit:s.k,rankIdx:i,
+  name:{ko:`${s.ko} ${r[0]}`,en:`${r[1]} of ${s.en}`},num:r[2],kw:{ko:`${s.kwKo} · ${r[3]}`,en:`${s.kwEn}; ${r[4]}`}})));
+
+const SUIT_ICON={
+ wands:'<g stroke="#e2bf78" stroke-width="3" fill="none" stroke-linecap="round"><path d="M0 -26 L0 26"/><path d="M0 -14 q8 -4 10 -12 M0 -2 q-9 -3 -11 -11 M0 10 q8 -3 10 -10"/></g>',
+ cups:'<g stroke="#e2bf78" stroke-width="2.6" fill="rgba(226,191,120,.15)"><path d="M-16 -20 h32 q0 22 -16 26 q-16 -4 -16 -26z"/><path d="M0 6 v12 M-10 22 h20" fill="none"/></g>',
+ swords:'<g stroke="#e2bf78" stroke-width="2.6" fill="rgba(226,191,120,.15)" stroke-linejoin="round"><path d="M0 -28 l5 8 v28 h-10 v-28z"/><path d="M-14 8 h28 M0 8 v14 M-4 24 h8" fill="none"/></g>',
+ pentacles:'<g stroke="#e2bf78" stroke-width="2.4" fill="none"><circle r="22"/><path d="M0 -18 L10.6 14.6 L-17.1 -5.6 L17.1 -5.6 L-10.6 14.6Z"/></g>'};
+
+function frame(inner){
+ return `<svg viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
+ <defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b2152"/><stop offset="1" stop-color="#120d26"/></linearGradient></defs>
+ <rect x="1" y="1" width="118" height="198" rx="9" fill="url(#cg)" stroke="#e2bf78" stroke-width="1.5"/>
+ <rect x="7" y="7" width="106" height="186" rx="6" fill="none" stroke="#e2bf78" stroke-opacity=".45"/>${inner}</svg>`;}
+function cardFace(c){
+ let mid;
+ if(c.major){
+  mid=`<circle cx="60" cy="98" r="34" fill="none" stroke="#e2bf78" stroke-opacity=".35"/>
+  <circle cx="60" cy="98" r="27" fill="rgba(226,191,120,.08)"/>
+  <text x="60" y="111" text-anchor="middle" font-size="38" fill="#f6dfa6" font-family="serif">${c.glyph}︎</text>`;
+ }else{
+  const i=c.rankIdx, icon=SUIT_ICON[c.suit];
+  if(i>=10){mid=`<g transform="translate(60 100) scale(1.35)">${icon}</g><text x="60" y="152" text-anchor="middle" font-size="12" fill="#c98bb9" font-family="Cinzel,serif" letter-spacing="2">${["PAGE","KNIGHT","QUEEN","KING"][i-10]}</text>`;}
+  else{const n=i+1, pts=[];const cols=n>3?2:1, rows=Math.ceil(n/cols);
+   for(let k=0;k<n;k++){const col=cols===1?0:(k%2), row=cols===1?k:Math.floor(k/2);
+    const x=cols===1?60:(col?78:42), y=100+(row-(rows-1)/2)*(rows>3?24:30);pts.push([x,y]);}
+   const sc=n===1?1.5:n<=3?.75:.55;
+   mid=pts.map(p=>`<g transform="translate(${p[0]} ${p[1]}) scale(${sc})">${icon}</g>`).join("");}
+ }
+ return frame(`<text x="60" y="30" text-anchor="middle" font-size="14" fill="#e2bf78" font-family="Cinzel,serif" letter-spacing="2">${c.num}</text>${mid}
+  <path d="M30 176 h60" stroke="#e2bf78" stroke-opacity=".5"/><text x="60" y="188" text-anchor="middle" font-size="8" fill="#e2bf78" fill-opacity=".7" font-family="Cinzel,serif" letter-spacing="1.5">${c.major?"ARCANA":c.suit.toUpperCase()}</text>`);}
+const BACK=frame(`<g fill="none" stroke="#e2bf78" stroke-opacity=".7">
+ <circle cx="60" cy="100" r="30"/><circle cx="60" cy="100" r="40" stroke-dasharray="2 4"/>
+ <path d="M60 52 L60 148 M12 100 L108 100" stroke-opacity=".25"/></g>
+ <path d="M68 86 a16 16 0 1 0 0 28 a12 12 0 1 1 0 -28z" fill="#f6dfa6"/>
+ <g fill="#f6dfa6"><circle cx="30" cy="40" r="1.4"/><circle cx="90" cy="34" r="1"/><circle cx="24" cy="160" r="1"/><circle cx="96" cy="166" r="1.4"/><circle cx="84" cy="62" r="1"/><circle cx="36" cy="138" r="1"/></g>`);
+
+/* ---------- manual palm options (fallback) ---------- */
+const MANUAL={
+ heart:[{ko:"길고 위로 휘어짐",en:"Long, curving upward",rk:"감정 표현이 풍부하고 사랑에 따뜻하게 마음을 여는 편이에요.",re:"You express feelings freely and open your heart warmly."},
+  {ko:"곧고 수평",en:"Straight and level",rk:"감정보다 이성을 앞세워 관계에서도 신중하고 차분해요.",re:"You lead with reason and stay calm and careful in relationships."},
+  {ko:"짧음",en:"Short",rk:"마음을 쉽게 열진 않지만 한번 믿으면 깊고 오래가요.",re:"You don't open up easily, but once you trust, it runs deep."},
+  {ko:"끝이 갈라짐",en:"Forked at the end",rk:"사교적이고 다른 사람의 감정을 잘 헤아려요.",re:"You're sociable and read others' feelings well."}],
+ head:[{ko:"길고 곧음",en:"Long and straight",rk:"논리적이고 계획적으로 생각하는 분석형이에요.",re:"You think logically and plan things through."},
+  {ko:"아래로 휘어짐",en:"Curving downward",rk:"상상력과 창의력이 뛰어나 예술적 감각이 있어요.",re:"Imaginative and creative, with an artistic streak."},
+  {ko:"짧음",en:"Short",rk:"직관이 빠르고 결정을 시원하게 내리는 실행형이에요.",re:"Quick instincts; you decide fast and act."}],
+ life:[{ko:"깊고 크게 둥긂",en:"Deep, wide arc",rk:"활력과 회복력이 좋아 어떤 일에도 에너지를 쏟을 수 있어요.",re:"Strong vitality and resilience to pour into what you do."},
+  {ko:"엄지 쪽에 가깝고 얕음",en:"Faint, close to the thumb",rk:"에너지를 아껴 쓰는 신중함이 있어요. 휴식이 곧 힘이에요.",re:"You pace your energy carefully; rest is your strength."},
+  {ko:"두 줄(이중선)",en:"Doubled line",rk:"주변의 든든한 지지를 받으며 위기에도 버팀목이 있어요.",re:"You have strong support around you, even in hard times."}],
+ fate:[{ko:"뚜렷함",en:"Clear and deep",rk:"인생의 방향이 분명하고 목표를 향해 꾸준히 나아가요.",re:"A clear direction; you move steadily toward your goals."},
+  {ko:"끊기거나 흐림",en:"Broken or faint",rk:"여러 번의 전환점을 거치며 유연하게 길을 바꾸는 타입이에요.",re:"Your path has turning points; you adapt and change course well."},
+  {ko:"거의 없음",en:"Barely visible",rk:"정해진 틀 없이 스스로 길을 만들어 가는 자유로운 운명이에요.",re:"No fixed track — you carve your own path freely."}]};
+
+/* ---------- state ---------- */
+const S={photo:null,palm:null,pool:[],picks:[],reading:null,ai:null,aiImages:false};
+
+/* ---------- render ---------- */
+function applyLang(){
+ document.documentElement.lang=lang;document.body.classList.toggle("en",lang==="en");
+ document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("on",b.dataset.l===lang));
+ document.querySelectorAll("[data-t]").forEach(el=>{const v=T[lang][el.dataset.t];if(typeof v==="string")el.textContent=v;});
+ document.querySelectorAll("[data-ph]").forEach(el=>el.placeholder=T[lang][el.dataset.ph]);
+ renderManual();renderPalm();renderSpread();renderReading();
+ if(S.palm && !$("s3").classList.contains("hidden"))updatePickNote();
+}
+document.querySelectorAll(".lang button").forEach(b=>b.onclick=()=>{lang=b.dataset.l;try{localStorage.setItem("pt_lang",lang)}catch(e){}applyLang();});
+function setStep(n){document.querySelectorAll(".steps span").forEach((s,i)=>s.classList.toggle("on",i<n));}
+function show(id){$(id).classList.remove("hidden");setTimeout(()=>$(id).scrollIntoView({behavior:"smooth",block:"start"}),60);}
+
+function renderManual(){
+ const box=$("manual");const prev={};box.querySelectorAll("select").forEach(s=>prev[s.name]=s.value);
+ box.innerHTML=Object.keys(MANUAL).map(k=>`<div><label class="lbl">${T[lang][k]}</label><select name="${k}">${MANUAL[k].map((o,i)=>`<option value="${i}">${L(o)}</option>`).join("")}</select></div>`).join("");
+ box.querySelectorAll("select").forEach(s=>{if(prev[s.name])s.value=prev[s.name];});
+}
+function renderPalm(){
+ const p=S.palm, out=$("palmOut");if(!p){out.innerHTML="";return;}
+ const keys=["heart","head","life","fate"];
+ out.innerHTML=`<p class="note" style="margin-top:0">${p.hand?T[lang].hand[p.hand]||T[lang].hand.unknown:""}</p>
+ ${S.photoURL&&p.trace?`<div class="palmFig"><div class="scanBox"><img src="${S.photoURL}" alt=""><svg class="ov" viewBox="0 0 100 100" preserveAspectRatio="none">${ovMarkup(p.trace,"done")}</svg></div>
+ <div class="legend">${keys.filter(k=>p.trace[k]).map(k=>`<span><i style="background:${COL[k]}"></i>${T[lang][k]}</span>`).join("")}</div></div>`:""}
+ <div class="lines">${keys.filter(k=>p.lines[k]).map(k=>`<div class="lineItem" style="border-color:${COL[k]}"><b>${T[lang][k]}</b><p>${esc(L(p.lines[k]))}</p></div>`).join("")}
+ ${p.mounts?`<div class="lineItem"><b>${T[lang].mounts}</b><p>${esc(L(p.mounts))}</p></div>`:""}</div>
+ ${p.summary?`<div class="summary">${esc(L(p.summary))}</div>`:""}`;
+}
+function renderSpread(){
+ const sp=$("spread");if(!S.picks.length){sp.innerHTML="";return;}
+ sp.innerHTML=[0,1,2].map(i=>{const pk=S.picks[i];
+  if(!pk)return `<div class="slot"><div class="pos">${T[lang].pos[i]}</div><div class="flip"><div class="inner"><div class="face">${BACK}</div></div></div><div class="cname"></div></div>`;
+  return `<div class="slot"><div class="pos">${T[lang].pos[i]}</div>
+  <div class="flip ${pk.shown?"show":""}" id="f${i}"><div class="inner"><div class="face">${BACK}</div><div class="face front ${pk.rev?"rev":""}">${cardFace(pk.card)}</div></div></div>
+  <div class="cname">${pk.shown?`${esc(L(pk.card.name))}<em>${pk.rev?T[lang].rev:T[lang].up}</em><span class="kw">${esc(L(pk.card.kw))}</span>`:""}</div></div>`;}).join("");
+}
+function renderReading(){
+ const r=S.reading,out=$("readOut");if(!r){out.innerHTML="";return;}
+ const x=r[lang]||r.ko||r.en;
+ out.innerHTML=`<h3>${esc(x.title||"")}</h3>
+ <div class="sec"><b>${T[lang].secOverview}</b><p>${esc(x.overview||"")}</p></div>
+ <div class="sec"><b>${T[lang].secCards}</b>${(x.cards||[]).map((c,i)=>`<p style="margin-bottom:8px"><span style="color:var(--gold2)">${T[lang].pos[i]} · ${esc(L(S.picks[i]?.card.name))}</span> — ${esc(c)}</p>`).join("")}</div>
+ <div class="sec"><b>${T[lang].secPalm}</b><p>${esc(x.palm_link||"")}</p></div>
+ <div class="advice"><b style="display:block;color:var(--gold);font-size:13px;letter-spacing:.1em;margin-bottom:6px">${T[lang].secAdvice}</b>${esc(x.advice||"")}</div>`;
+}
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+
+/* ---------- AI helpers ---------- */
+async function askJSON(prompt,opts={}){
+ const ai=S.ai;
+ if(typeof ai.json==="function"){try{return await ai.json(prompt,opts);}catch(e){if(e&&(e.code==="rate_limited"||e.code==="not_granted"))throw e;}}
+ const r=await ai(prompt,opts);const m=(r.text||"").match(/\{[\s\S]*\}/);if(!m)throw new Error("no json");return JSON.parse(m[0]);
+}
+function errMsg(e){if(e&&e.code==="auth")return T[lang].keyBad;return e&&e.code==="rate_limited"?T[lang].errRate:T[lang].errAI;}
+
+async function shrink(file){
+ let bmp;try{bmp=await createImageBitmap(file,{imageOrientation:"from-image"});}catch(e){bmp=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=URL.createObjectURL(file);});}
+ const max=1280,sc=Math.min(1,max/Math.max(bmp.width,bmp.height));
+ const c=document.createElement("canvas");c.width=Math.round(bmp.width*sc);c.height=Math.round(bmp.height*sc);
+ c.getContext("2d").drawImage(bmp,0,0,c.width,c.height);
+ return new Promise(r=>c.toBlob(r,"image/jpeg",.85));
+}
+
+/* ---------- step 1 ---------- */
+$("file").onchange=async e=>{
+ const f=e.target.files[0];if(!f)return;$("err1").classList.add("hidden");
+ S.photo=await shrink(f);S.photoURL=URL.createObjectURL(S.photo);$("previewImg").src=S.photoURL;$("ov").innerHTML="";$("preview").style.display="block";
+ $("analyzeBtn").disabled=false;
+};
+const COL={heart:"#ff8fb1",head:"#8fd3ff",life:"#9dffb0",fate:"#e2bf78"};
+const GENERIC={heart:[[20,40],[40,35],[60,34],[80,39]],head:[[20,47],[38,50],[55,55],[70,63]],life:[[32,44],[23,58],[25,75],[37,91]],fate:[[54,93],[52,77],[52,62],[55,46]]};
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function toPath(pts){
+ if(!Array.isArray(pts)||pts.length<2)return "";
+ const P=pts.map(p=>[Math.max(0,Math.min(100,+p[0])),Math.max(0,Math.min(100,+p[1]))]);
+ let d=`M${P[0][0]} ${P[0][1]}`;
+ for(let i=1;i<P.length-1;i++){const mx=(P[i][0]+P[i+1][0])/2,my=(P[i][1]+P[i+1][1])/2;d+=` Q${P[i][0]} ${P[i][1]} ${mx} ${my}`;}
+ const l=P[P.length-1];return d+` L${l[0]} ${l[1]}`;
+}
+function ovMarkup(trace,cls){
+ const keys=["heart","head","life","fate"];
+ return `<defs><filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation=".8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`+
+ keys.map(k=>{const pts=(trace&&trace[k])||null;const d=toPath(pts);if(!d)return "";const e=pts[pts.length-1];
+  return `<path class="ln ${cls}" data-k="${k}" pathLength="100" d="${d}" stroke="${COL[k]}"/><circle class="dot ${cls==="done"?"on":""}" data-k="${k}" cx="${e[0]}" cy="${e[1]}" r="1.1" fill="${COL[k]}"/>`;}).join("");
+}
+let scanTimer=null;
+function startScan(){
+ const box=$("scanBox"),ov=$("ov"),hud=$("hud"),pct=$("pct");
+ ov.innerHTML=ovMarkup(GENERIC,"");box.classList.add("scanning");
+ let step=0,p=0;hud.textContent=T[lang].scan[0];
+ const order=["heart","head","life","fate"];
+ scanTimer=setInterval(()=>{
+  p=Math.min(97,p+Math.random()*4+1.5);pct.textContent=Math.floor(p)+"%";
+  const s=Math.min(5,Math.floor(p/17));
+  if(s!==step){step=s;hud.textContent=T[lang].scan[s];
+   const k=order[s-1];if(k){ov.querySelector(`path[data-k="${k}"]`)?.classList.add("draw");ov.querySelector(`circle[data-k="${k}"]`)?.classList.add("on");}}
+ },160);
+}
+async function endScan(trace,ok){
+ clearInterval(scanTimer);const box=$("scanBox"),ov=$("ov");
+ if(!ok){box.classList.remove("scanning");ov.innerHTML="";return;}
+ $("pct").textContent="100%";$("hud").textContent=T[lang].scanDone;
+ ov.innerHTML=ovMarkup(trace&&Object.keys(trace).length?trace:GENERIC,"draw");
+ await sleep(1500);box.classList.remove("scanning");
+}
+$("analyzeBtn").onclick=async()=>{
+ if(!S.photo||!S.ai)return;$("analyzeBtn").disabled=true;$("err1").classList.add("hidden");
+ $("palmOut").innerHTML="";$("toTarot").classList.add("hidden");
+ $("scanBox").scrollIntoView({behavior:"smooth",block:"center"});startScan();
+ const prompt=`You are a warm, insightful palm reader for an entertainment app. Look at the attached photo.
+If it is not clearly a human palm, return {"is_palm":false}.
+Otherwise describe what you actually see in each major line (length, depth, curve, breaks, branches) and give a positive, non-fatalistic personality/tendency reading. Never predict death, illness, or lifespan; no medical claims.
+Write every text field in BOTH Korean (natural, friendly 해요체) and English.
+Also trace where each line lies in the image: 4-6 points along the line, as [x,y] percentages of image width and height (0-100, origin top-left). Omit a line from "trace" if it is not visible.
+Return ONLY JSON:
+{"is_palm":true,"hand":"left|right|unknown",
+"lines":{"heart":{"ko":"","en":""},"head":{"ko":"","en":""},"life":{"ko":"","en":""},"fate":{"ko":"","en":""}},
+"trace":{"heart":[[x,y],...],"head":[...],"life":[...],"fate":[...]},
+"mounts":{"ko":"","en":""},
+"summary":{"ko":"2-3 sentences","en":"2-3 sentences"}}
+Each line field: 1-2 sentences mentioning the visible feature and its meaning. If the fate line is not visible, say so kindly and interpret that.`;
+ try{
+  const [res]=await Promise.all([askJSON(prompt,{images:[S.photo],modelTier:"default"}),sleep(5200)]);
+  if(!res||res.is_palm===false){await endScan(null,false);$("err1").textContent=T[lang].notPalm;$("err1").classList.remove("hidden");$("analyzeBtn").disabled=false;return;}
+  await endScan(res.trace,true);
+  $("preview").style.display="none";S.palm=res;show("s2");setStep(2);renderPalm();$("toTarot").classList.remove("hidden");
+ }catch(e){
+  await endScan(null,false);$("err1").textContent=errMsg(e);$("err1").classList.remove("hidden");$("analyzeBtn").disabled=false;
+ }
+};
+$("manualBtn").onclick=()=>{
+ const lines={};$("manual").querySelectorAll("select").forEach(s=>{const o=MANUAL[s.name][+s.value];lines[s.name]={ko:`${o.ko} — ${o.rk}`,en:`${o.en} — ${o.re}`,_o:o};});
+ S.palm={hand:null,lines,summary:{ko:"당신의 손금은 고유한 성향과 가능성을 보여줘요. 이제 카드가 지금 이 순간의 흐름을 더해줄 거예요.",en:"Your lines reveal your own tendencies and potential. Now the cards will add the flow of this moment."}};
+ show("s2");setStep(2);renderPalm();$("toTarot").classList.remove("hidden");
+};
+
+/* ---------- step 3: shuffle & draw ---------- */
+const N=22;let tcs=[],busy=false,washing=false,lastWash=0;
+function shuffleArr(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function newPool(){S.pool=shuffleArr([...DECK]).slice(0,N);}
+function setT(el,x,y,r,s=1){el.style.transform=`translate(${x}px,${y}px) rotate(${r}deg) scale(${s})`;}
+function stack(stagger=0){tcs.forEach((el,i)=>{const go=()=>{el.style.zIndex=i;setT(el,(i-N/2)*.25,-i*.45,(Math.random()-.5)*3);};stagger?setTimeout(go,i*stagger):go();});}
+function buildStage(){
+ const st=$("stage");st.classList.remove("fanned");st.querySelectorAll(".tc").forEach(e=>e.remove());
+ tcs=[];for(let i=0;i<N;i++){const el=document.createElement("div");el.className="tc";el.dataset.i=i;el.innerHTML=BACK;el.onclick=()=>pickCard(el);st.appendChild(el);tcs.push(el);}
+ setT(tcs[0],0,0,0);requestAnimationFrame(()=>stack(18));
+}
+async function riffle(){
+ if(busy||$("stage").classList.contains("fanned"))return;busy=true;$("shuffleBtn").disabled=true;
+ const w=$("stage").clientWidth,dx=Math.min(110,w*.24);
+ for(let r=0;r<3;r++){
+  const half=N/2;
+  tcs.forEach((el,i)=>{const L=i<half;setT(el,(L?-dx:dx)+(Math.random()-.5)*4,-(i%half)*.6-6,L?-12:12);});
+  await sleep(380);
+  // lift edges like a riffle
+  tcs.forEach((el,i)=>{const L=i<half;setT(el,(L?-dx*.55:dx*.55),-(i%half)*1.2-24,L?-24:24);});
+  await sleep(260);
+  const order=[];for(let k=0;k<half;k++){if(Math.random()<.5){order.push(tcs[k],tcs[k+half]);}else{order.push(tcs[k+half],tcs[k]);}}
+  tcs=order;
+  tcs.forEach((el,i)=>setTimeout(()=>{el.style.zIndex=i;setT(el,(i-N/2)*.25,-i*.45,(Math.random()-.5)*4);},i*22));
+  await sleep(N*22+380);
+  // bridge squeeze
+  tcs.forEach((el,i)=>setT(el,(i-N/2)*.25,-i*.45-10,0,1.04));await sleep(220);stack();await sleep(320);
+ }
+ newPool();busy=false;$("shuffleBtn").disabled=false;$("spreadBtn").disabled=false;
+}
+function stagePoint(e){const r=$("stage").getBoundingClientRect();return [e.clientX-r.left-r.width/2,e.clientY-r.top-r.height/2];}
+$("stage").addEventListener("pointerdown",e=>{if(busy||$("stage").classList.contains("fanned"))return;washing=true;$("stage").setPointerCapture?.(e.pointerId);wash(e,true);});
+$("stage").addEventListener("pointermove",e=>{if(washing)wash(e);});
+const endWash=()=>{if(!washing)return;washing=false;tcs=shuffleArr(tcs);stack(14);newPool();$("spreadBtn").disabled=false;};
+$("stage").addEventListener("pointerup",endWash);$("stage").addEventListener("pointercancel",endWash);
+function wash(e,force){
+ const now=performance.now();if(!force&&now-lastWash<90)return;lastWash=now;
+ const [px,py]=stagePoint(e),w=$("stage").clientWidth/2-40,h=$("stage").clientHeight/2-60;
+ const n=force?N:7;
+ for(let k=0;k<n;k++){const el=tcs[Math.floor(Math.random()*N)];
+  const x=Math.max(-w,Math.min(w,px*.6+(Math.random()-.5)*170)),y=Math.max(-h,Math.min(h,py*.6+(Math.random()-.5)*110));
+  el.style.zIndex=Math.floor(Math.random()*N);setT(el,x,y,(Math.random()-.5)*160);}
+}
+function fanOut(){
+ const st=$("stage");if(busy)return;busy=true;st.classList.add("fanned");
+ const w=st.clientWidth,cw=tcs[0].offsetWidth,A=62*Math.PI/180,R=(w/2-cw/2-4)/Math.sin(A);
+ tcs.forEach((el,i)=>setTimeout(()=>{const a=-A+2*A*i/(N-1);el.style.zIndex=i;
+  setT(el,R*Math.sin(a),-46+R*(1-Math.cos(a)),a*180/Math.PI);},i*28));
+ setTimeout(()=>{busy=false;},N*28+400);
+ $("shuffleBtn").disabled=true;$("spreadBtn").disabled=true;$("stageHint").textContent="";updatePickNote();
+}
+$("shuffleBtn").onclick=riffle;$("spreadBtn").onclick=fanOut;
+$("toTarot").onclick=()=>{
+ $("toTarot").classList.add("hidden");S.picks=[];S.reading=null;newPool();
+ $("deckArea").classList.remove("hidden");$("readBtn").classList.add("hidden");
+ $("shuffleBtn").disabled=false;$("spreadBtn").disabled=true;
+ show("s3");setStep(3);buildStage();renderSpread();updatePickNote();
+};
+function updatePickNote(){
+ const fanned=$("stage").classList.contains("fanned");
+ $("pickNote").textContent=!fanned&&S.picks.length===0?T[lang].shuffleNote:(S.picks.length<3?T[lang].pick(S.picks.length):T[lang].picked);
+ $("stageHint").textContent=fanned?"":T[lang].hintWash;
+}
+function pickCard(el){
+ if(!$("stage").classList.contains("fanned")||busy||S.picks.length>=3||el.classList.contains("gone"))return;
+ const cur=el.style.transform;el.style.zIndex=99;el.style.transform=cur.replace(/scale\([^)]*\)/,"")+" translateY(-46px) scale(1.18)";
+ setTimeout(()=>el.classList.add("gone"),420);
+ const idx=S.picks.length;S.picks.push({card:S.pool[+el.dataset.i],rev:Math.random()<.3,shown:false});
+ renderSpread();updatePickNote();
+ setTimeout(()=>{S.picks[idx].shown=true;$("f"+idx)?.classList.add("show");setTimeout(renderSpread,950);
+  if(S.picks.length===3)setTimeout(()=>{$("deckArea").classList.add("hidden");$("readBtn").classList.remove("hidden");$("readBtn").scrollIntoView({behavior:"smooth",block:"center"});},1300);
+ },450);
+}
+
+/* ---------- step 4 ---------- */
+$("readBtn").onclick=async()=>{
+ $("readBtn").classList.add("hidden");show("s4");setStep(4);$("err4").classList.add("hidden");
+ $("readOut").innerHTML="";$("restart").classList.add("hidden");
+ const q=$("q").value.trim();
+ const cards=S.picks.map((p,i)=>`${["Past","Present","Future"][i]}: ${p.card.name.en} (${p.card.name.ko}) — ${p.rev?"REVERSED":"upright"}; keywords: ${p.card.kw.en}`).join("\n");
+ const palm=["heart","head","life","fate"].map(k=>`${k}: ${S.palm.lines[k]?.en||"-"}`).join("\n")+`\nsummary: ${S.palm.summary?.en||""}`;
+ if(S.ai){
+  $("readLoad").classList.remove("hidden");
+  const prompt=`You are a gentle, wise reader combining palmistry and tarot for an entertainment app.
+User's question: ${q||"(none — give a general reading for the coming period)"}
+Palm reading (the person's lasting nature):
+${palm}
+Tarot spread (Past / Present / Future):
+${cards}
+Weave them together: palm = who they are and their strengths; cards = the current flow around the question. Be specific, encouraging and honest; reversed cards mean blocked or inner energy. No medical, legal, financial certainty or fatalistic predictions.
+Write in BOTH Korean (natural 해요체) and English (not literal translation — natural in each).
+Return ONLY JSON:
+{"ko":{"title":"short evocative title","overview":"3-4 sentences","cards":["past 2 sentences","present 2 sentences","future 2 sentences"],"palm_link":"2-3 sentences linking palm traits to the cards","advice":"one memorable sentence"},
+"en":{same keys}}`;
+  try{S.reading=await askJSON(prompt,{modelTier:"default"});$("readLoad").classList.add("hidden");renderReading();}
+  catch(e){$("readLoad").classList.add("hidden");$("err4").textContent=errMsg(e);$("err4").classList.remove("hidden");$("readBtn").classList.remove("hidden");return;}
+ }else{
+  S.reading=templateReading(q);renderReading();
+ }
+ $("restart").classList.remove("hidden");
+};
+function templateReading(q){
+ const p=S.picks, ln=S.palm.lines;
+ const ko={title:`${p[1].card.name.ko}이(가) 비추는 지금`,
+  overview:`${q?`"${q}"에 대해 `:""}과거의 ${p[0].card.name.ko}에서 시작된 흐름이 현재 ${p[1].card.name.ko}의 에너지로 이어지고, ${p[2].card.name.ko}의 방향으로 나아가고 있어요.`,
+  cards:p.map(x=>`${x.rev?"역방향으로 나와 이 에너지가 아직 막혀 있거나 내면에서 다듬어지는 중이에요":"정방향으로 나와 이 에너지가 자연스럽게 흐르고 있어요"}. 핵심은 ${x.card.kw.ko}.`),
+  palm_link:`${ln.head?._o?.rk||""} ${ln.heart?._o?.rk||""} 이런 성향이 ${p[2].card.name.ko}의 흐름을 만나면 큰 힘이 돼요.`,
+  advice:`${p[2].card.kw.ko.split("·")[0].trim()}을(를) 믿고 한 걸음 내디뎌 보세요.`};
+ const en={title:`What ${p[1].card.name.en} illuminates now`,
+  overview:`${q?`About "${q}": `:""}A current that began with ${p[0].card.name.en} flows into the energy of ${p[1].card.name.en} today, moving toward ${p[2].card.name.en}.`,
+  cards:p.map(x=>`${x.rev?"Reversed — this energy is blocked or still forming within you":"Upright — this energy flows freely"}. Its core: ${x.card.kw.en}.`),
+  palm_link:`${ln.head?._o?.re||""} ${ln.heart?._o?.re||""} Those traits are real strengths as you meet the path of ${p[2].card.name.en}.`,
+  advice:`Trust ${p[2].card.kw.en.split(",")[0].split(";")[0].trim()} and take one step forward.`};
+ return {ko,en};
+}
+$("restart").onclick=()=>{
+ $("ov").innerHTML="";Object.assign(S,{photo:null,photoURL:null,palm:null,pool:[],picks:[],reading:null});
+ ["s2","s3","s4"].forEach(id=>$(id).classList.add("hidden"));
+ $("preview").style.display="none";$("file").value="";$("analyzeBtn").disabled=true;$("q").value="";
+ renderPalm();renderSpread();renderReading();setStep(1);window.scrollTo({top:0,behavior:"smooth"});
+};
+
+/* ---------- stars ---------- */
+(()=>{const c=$("stars"),x=c.getContext("2d");let W,H,st=[];
+ function rs(){W=c.width=innerWidth;H=c.height=innerHeight;st=Array.from({length:Math.min(140,W/6)},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+.2,p:Math.random()*6}));}
+ rs();addEventListener("resize",rs);
+ (function f(t){x.clearRect(0,0,W,H);st.forEach(s=>{x.globalAlpha=.35+.35*Math.sin(t/900+s.p);x.fillStyle="#f6dfa6";x.beginPath();x.arc(s.x,s.y,s.r,0,7);x.fill();});requestAnimationFrame(f);})(0);})();
+
+/* ---------- direct Claude API (app mode) ---------- */
+const DEFAULT_MODEL="claude-sonnet-5-5";
+const store={get:k=>{try{return localStorage.getItem(k)||""}catch(e){return ""}},set:(k,v)=>{try{v?localStorage.setItem(k,v):localStorage.removeItem(k)}catch(e){}}};
+function blobToB64(b){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(",")[1]);r.onerror=rej;r.readAsDataURL(b);});}
+function makeDirect(key,model){
+ const f=async(prompt,opts={})=>{
+  const content=[];
+  for(const im of (opts.images||[]))content.push({type:"image",source:{type:"base64",media_type:im.type||"image/jpeg",data:await blobToB64(im)}});
+  content.push({type:"text",text:prompt});
+  let r;
+  try{r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
+   body:JSON.stringify({model:model||DEFAULT_MODEL,max_tokens:3000,messages:[{role:"user",content}]})});}
+  catch(e){throw {code:"network",message:String(e)};}
+  if(r.status===401||r.status===403)throw {code:"auth"};
+  if(r.status===429||r.status===529)throw {code:"rate_limited"};
+  const j=await r.json().catch(()=>null);
+  if(!r.ok)throw {code:"api",message:j&&j.error&&j.error.message};
+  return {text:(j.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("")};
+ };
+ f.limits=async()=>({images:true});
+ return f;
+}
+function setMode(){
+ const on=!!(S.ai&&S.aiImages);
+ $("aiUpload").classList.toggle("hidden",!on);$("manualBox").classList.toggle("hidden",on);
+ $("keyBanner").classList.toggle("hidden",!!window.__inClaude);
+}
+function openModal(){$("keyIn").value=store.get("pt_key");$("modelIn").value=store.get("pt_model")||DEFAULT_MODEL;$("keyErr").classList.add("hidden");$("modal").classList.remove("hidden");}
+$("gearBtn").onclick=openModal;$("keyBanner").onclick=openModal;$("modalClose").onclick=()=>$("modal").classList.add("hidden");
+$("keySave").onclick=()=>{const k=$("keyIn").value.trim();if(!k){$("keyErr").textContent=T[lang].keyEmpty;$("keyErr").classList.remove("hidden");return;}
+ store.set("pt_key",k);store.set("pt_model",$("modelIn").value.trim()||DEFAULT_MODEL);
+ S.ai=makeDirect(k,store.get("pt_model"));S.aiImages=true;setMode();$("modal").classList.add("hidden");};
+$("keyDel").onclick=()=>{store.set("pt_key","");$("keyIn").value="";S.ai=null;S.aiImages=false;setMode();};
+
+/* ---------- boot ---------- */
+setStep(1);applyLang();
+(async()=>{
+ let ai=null,img=false;
+ if(window.claude&&typeof window.claude.use==="function"){
+  window.__inClaude=true;
+  try{ai=await window.claude.use("sample");}catch(e){}
+  if(ai){try{const lim=typeof ai.limits==="function"?await ai.limits():null;img=!!(lim&&lim.images);}catch(e){}}
+ }
+ if(!ai){const k=store.get("pt_key");if(k){ai=makeDirect(k,store.get("pt_model"));img=true;}}
+ if(!window.__inClaude)$("gearBtn").classList.remove("hidden");else $("gearBtn").classList.add("hidden");
+ S.ai=ai;S.aiImages=img;setMode();
+})();
+</script>
+</body>
+</html>

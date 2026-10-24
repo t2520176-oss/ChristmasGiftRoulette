@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Palm Tarot</string>
+    <string name="title_activity_main">Palm Tarot</string>
+    <string name="package_name">com.pixelform.palmtarot</string>
+    <string name="custom_url_scheme">com.pixelform.palmtarot</string>
+</resources>
