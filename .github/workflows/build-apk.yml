@@ -2,7 +2,7 @@ name: Build APK
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, palm-tarot-app ]
   workflow_dispatch:
 
 permissions:
@@ -47,7 +47,8 @@ jobs:
       - name: Publish to Releases
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: build-${{ github.run_number }}
+          tag_name: palm-tarot-${{ github.run_number }}
           name: Palm Tarot build ${{ github.run_number }}
           files: palm-tarot.apk
-          make_latest: true
+          make_latest: false
+          target_commitish: ${{ github.sha }}
